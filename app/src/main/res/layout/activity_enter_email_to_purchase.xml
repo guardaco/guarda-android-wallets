@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseWhiteBgColor"
+    android:fitsSystemWindows="true"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:theme="@style/EditTextHintLightBlue">
+
+            <com.guarda.ethereum.customviews.RobotoEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/et_hint_your_e_mail"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textAlignment="textStart"
+                android:textColor="@color/editTextBlueGreyColor"
+                android:textSize="20dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="250dp"
+            android:layout_marginTop="50dp"
+            android:layout_height="wrap_content"
+            style="@style/colorButtonStyle"
+            android:drawableEnd="@drawable/ic_arrow_right_wr"
+            android:elevation="5dp"
+            android:paddingEnd="15dp"
+            android:text="@string/app_next"
+            android:layout_below="@+id/til_email"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

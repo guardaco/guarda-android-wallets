@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/baseWhiteBgColor"
+    android:fitsSystemWindows="true"
+    android:padding="10dp">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_trans_details_sum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:theme="@style/EditTextHintLightGrey">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/coinify_send"
+                    app:backgroundTint="@color/baseWhiteBgColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:enabled="false"
+                    android:gravity="start"
+                    android:hint="You pay"
+                    android:textColorHint="@color/greyHintColor"
+                    android:inputType="number"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:text="---"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/editTextGreyColor"
+                    android:textSize="20sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+                <!--<com.guarda.ethereum.customviews.RobotoTextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/allTv"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:text="You send:"/>-->
+
+                <!--<com.guarda.ethereum.customviews.RobotoTextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/coinify_send"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:text=""/>-->
+            <!--</LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_fees"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/til_coinify_method_fee"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:theme="@style/EditTextHintLightGrey">
+
+            <com.guarda.ethereum.customviews.RobotoEditText
+                app:backgroundTint="@color/baseWhiteBgColor"
+                android:id="@+id/coinify_method_fee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="start"
+                android:enabled="false"
+                android:hint="Payment Fee"
+                android:textColorHint="@color/greyHintColor"
+                android:inputType="number"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:text="3 %"
+                android:textAlignment="textStart"
+                android:textColor="@color/darkGreyText"
+                android:textSize="16sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/til_trans_details_date"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:theme="@style/EditTextHintLightGrey">
+
+            <com.guarda.ethereum.customviews.RobotoEditText
+                android:id="@+id/et_trans_details_date"
+                app:backgroundTint="@color/baseWhiteBgColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="start"
+                android:enabled="false"
+                android:hint="Service Fee"
+                android:textColorHint="@color/greyHintColor"
+                android:inputType="number"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:text="0.0001 BTC"
+                android:textAlignment="textStart"
+                android:textColor="@color/darkGreyText"
+                android:textSize="16sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_trans_details_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:theme="@style/EditTextHintLightGrey">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/coinify_fee"
+                    app:backgroundTint="@color/baseWhiteBgColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:enabled="false"
+                    android:gravity="start"
+                    android:hint="Exchange Fee:"
+                    android:textColorHint="@color/greyHintColor"
+                    android:inputType="number"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:text="1.5 %"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/darkGreyText"
+                    android:textSize="16sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:theme="@style/EditTextHintLightGrey">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/coinify_rcv"
+                    app:backgroundTint="@color/baseWhiteBgColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:gravity="start"
+                    android:enabled="false"
+                    android:hint="You will approximately get"
+                    android:textColorHint="@color/greyHintColor"
+                    android:inputType="number"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textAlignment="textStart"
+                    android:textColor="@color/darkGreyText"
+                    android:textSize="16sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:theme="@style/EditTextHintLightGrey">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/coinify_email"
+                    app:backgroundTint="@color/baseWhiteBgColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:gravity="start"
+                    android:enabled="false"
+                    android:hint="E-mail"
+                    android:textColorHint="@color/greyHintColor"
+                    android:inputType="number"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textAlignment="textStart"
+                    android:textColor="@color/darkGreyText"
+                    android:textSize="16sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_quote"
+        android:layout_below="@+id/linearLayout4"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:focusable="true"
+            android:id="@+id/line_up"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/backupBorderXpl"
+            android:focusableInTouchMode="true"/>
+
+        <com.guarda.ethereum.customviews.RobotoLightTextView
+            android:id="@+id/quote_minutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/line_up"
+            android:background="@color/backupBorderXplBack"
+            android:gravity="fill_vertical|fill_horizontal"
+            android:lineSpacingExtra="6dp"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:text="Quote being valid only for 15 min"
+            android:textColor="@color/darkGreyText"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:focusable="true"
+            android:id="@+id/line_below"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/backupBorderXpl"
+            android:layout_below="@+id/quote_minutes"
+            android:focusableInTouchMode="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:id="@+id/ll_bank"
+        android:layout_below="@+id/ll_quote">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/coinify_bank_chb" />
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:id="@+id/coinify_bank_chb_text"
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:textSize="12sp"
+            android:text="@string/coinify_sell_confirm"
+            android:textColor="@color/editTextBlueGreyColor" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        style="@style/colorButtonStyle"
+        android:drawableEnd="@drawable/ic_arrow_right_wr"
+        android:elevation="5dp"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/app_next"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

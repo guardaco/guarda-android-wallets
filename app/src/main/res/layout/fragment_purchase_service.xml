@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_services_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp"
+        android:clipToPadding="false"
+        android:nestedScrollingEnabled="false" />
+
+    <!--<Spinner-->
+        <!--android:id="@+id/spinnerService"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:spinnerMode="dropdown"-->
+        <!--android:background="@drawable/ic_exchangespinner_background_wr"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_marginTop="52dp" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textViewService"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/spinnerExchange"-->
+        <!--android:layout_alignStart="@+id/spinnerExchange"-->
+        <!--android:layout_marginBottom="-45dp" />-->
+
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/rlCoinifyTerms"-->
+        <!--android:layout_below="@+id/spinnerService"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:layout_marginStart="20dp"-->
+        <!--android:layout_marginEnd="20dp">-->
+
+        <!--<com.guarda.ethereum.customviews.RobotoBoldTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/coinify_terms_title"-->
+            <!--android:text="Coinify account terms:"-->
+            <!--android:textStyle="bold"-->
+            <!--android:textColor="@color/backupBorderXpl"/>-->
+
+        <!--<com.guarda.ethereum.customviews.RobotoTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/coinify_terms_text"-->
+            <!--android:layout_below="@+id/coinify_terms_title"-->
+            <!--android:text="Coinify will process your transaction. When placing an order, Coinify will create an account for you associated to this email address."-->
+            <!--android:textColor="@color/backupBorderXpl"/>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_below="@+id/coinify_terms_text">-->
+            <!--<CheckBox-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/coinify_terms_chb" />-->
+
+            <!--<com.guarda.ethereum.customviews.RobotoTextView-->
+                <!--android:id="@+id/coinify_terms_chb_text"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="Accept Coinify’s Terms of Service and Privacy Policy."-->
+                <!--android:textColor="@color/backupBorderXpl" />-->
+        <!--</LinearLayout>-->
+
+
+    <!--</RelativeLayout>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/buttonStartPurchase"-->
+        <!--style="@style/colorButtonStyle"-->
+        <!--android:layout_width="280dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:drawableEnd="@drawable/ic_arrow_right_wr"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:elevation="5dp"-->
+        <!--android:paddingEnd="15dp"-->
+        <!--android:layout_marginBottom="25dp"-->
+        <!--android:text="Start Purchase" />-->
+
+</RelativeLayout>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="@color/baseWhiteBgColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/baseWhiteBgColor"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_trans_details_sum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:theme="@style/EditTextHintLightGrey">
+
+            <com.guarda.ethereum.customviews.RobotoEditText
+                android:id="@+id/et_trans_details_sum"
+                app:backgroundTint="@color/baseWhiteBgColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:enabled="false"
+                android:gravity="start"
+                android:hint="@string/transaction_detail_sum"
+                android:textColorHint="@color/greyHintColor"
+                android:inputType="number"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:text="---"
+                android:textAlignment="textStart"
+                android:textColor="@color/editTextGreyColor"
+                android:textSize="20sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_trans_details_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:theme="@style/EditTextHintLightGrey">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/et_trans_details_date"
+                    app:backgroundTint="@color/baseWhiteBgColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:gravity="start"
+                    android:enabled="false"
+                    android:hint="@string/transaction_detail_date"
+                    android:textColorHint="@color/greyHintColor"
+                    android:inputType="number"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:text="---"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/darkGreyText"
+                    android:textSize="16sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_trans_details_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:theme="@style/EditTextHintLightGrey">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/et_trans_details_time"
+                    app:backgroundTint="@color/baseWhiteBgColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:enabled="false"
+                    android:gravity="start"
+                    android:hint="@string/transaction_detail_time"
+                    android:textColorHint="@color/greyHintColor"
+                    android:inputType="number"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:text="---"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/darkGreyText"
+                    android:textSize="16sp" />
+
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_trans_details_hash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/btn_copy"
+                android:clickable="true"
+                android:focusable="false"
+                android:gravity="center"
+                android:theme="@style/EditTextHintLightGrey">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/et_trans_details_hash"
+                    app:backgroundTint="@color/baseWhiteBgColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:gravity="start"
+                    android:hint="@string/transaction_detail_hash"
+                    android:textColorHint="@color/greyHintColor"
+                    android:inputType="textMultiLine"
+                    android:editable="false"
+                    android:maxLength="100"
+                    android:maxLines="2"
+                    android:lines="2"
+                    android:text="---"
+                    android:textColor="@color/darkGreyText"
+                    android:textAlignment="textStart"
+                    android:textSize="14dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_copy"
+                android:layout_width="120dp"
+                android:layout_height="36dp"
+                style="?android:attr/buttonBarButtonStyle"
+                android:background="@drawable/btn_enable_gray"
+                android:text="@string/app_copy"
+                android:textAllCaps="false"
+                android:textColor="@color/baseBlueTextColor"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rl_trans_details_confirmations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:id="@+id/tv_trans_details_confirmations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/tv_confirmations"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="start"
+                android:text="@string/transaction_detail_confirmations"
+                android:textAlignment="textStart"
+                android:textColor="@color/greyHintColor"
+                android:textSize="14sp" />
+
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:id="@+id/tv_confirmations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="---"
+                android:textColor="@color/darkGreyText"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp">
+
+            <Button
+                android:id="@+id/btn_repeat"
+                android:layout_width="120dp"
+                android:layout_height="36dp"
+                style="?android:attr/buttonBarButtonStyle"
+                android:background="@drawable/btn_enable_gray"
+                android:text="@string/transaction_detail_repeat"
+                android:textAllCaps="false"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/baseBlueTextColor"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

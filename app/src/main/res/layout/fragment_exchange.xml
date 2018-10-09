@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/spinnerExchange"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:spinnerMode="dropdown"
+        android:background="@drawable/ic_exchangespinner_background_wr"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="52dp" />
+
+    <TextView
+        android:id="@+id/textViewExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spinnerExchange"
+        android:layout_alignStart="@+id/spinnerExchange"
+        android:layout_marginBottom="-45dp" />
+
+    <ImageView
+        android:id="@+id/imageViewAbout"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/textViewExchange"
+        android:layout_marginStart="11dp"
+        android:padding="5dp"
+        android:foregroundGravity="center"
+        android:layout_toEndOf="@+id/textViewExchange"
+        app:srcCompat="@drawable/ic_help_icon_wr" />
+
+    <Spinner
+        android:id="@+id/spinnerFromCoin"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:spinnerMode="dropdown"
+        android:background="@drawable/ic_exchangespinner_background_wr"
+        android:layout_below="@+id/spinnerExchange"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="45dp" />
+
+    <TextView
+        android:id="@+id/textViewSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spinnerFromCoin"
+        android:layout_alignStart="@+id/spinnerFromCoin"
+        android:layout_marginBottom="-38dp"
+        android:paddingBottom="0dp" />
+
+    <com.guarda.ethereum.customviews.SpinnerCrutch
+        android:id="@+id/spinnerToCoin"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/ic_exchangespinner_background_wr"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/spinnerFromCoin"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="45dp" />
+
+    <TextView
+        android:id="@+id/textViewReceive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spinnerToCoin"
+        android:layout_alignStart="@+id/spinnerToCoin"
+        android:layout_marginBottom="-38dp"
+        android:paddingBottom="0dp" />
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="154dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/textViewExchangeRateHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="Exchange rate (expected)" />
+
+        <TextView
+            android:id="@+id/textViewExchangeRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:text="Exchange rate (expected)" />
+
+        <RelativeLayout
+            android:paddingBottom="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/buttonStartExchange"
+                style="@style/colorButtonStyle"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawableEnd="@drawable/ic_arrow_right_wr"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:elevation="5dp"
+                android:paddingEnd="15dp"
+                android:text="Start Exchange" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

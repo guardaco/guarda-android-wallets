@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/whiteTextColor">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_next"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/bank_scroll"
+        android:background="@color/whiteTextColor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next">
+        <RelativeLayout
+            android:id="@+id/rl_bank_receipt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/whiteTextColor"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/ll_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/coinify_bank_explain"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/editTextGreyColor"
+                    android:text="Bank"/>
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/til_bank_name"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:theme="@style/EditTextHintLightGrey">-->
+
+                    <!--<com.guarda.ethereum.customviews.RobotoEditText-->
+                    <EditText
+                        android:id="@+id/tv_bank_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="Bank name"
+                        android:textColorHint="@color/greyHintColor"
+                        android:inputType="text"
+                        android:maxLength="200"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/darkGreyText"
+                        android:textSize="14sp" />
+
+                <!--</android.support.design.widget.TextInputLayout>-->
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/til_swift"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:theme="@style/EditTextHintLightGrey">-->
+
+                    <EditText
+                        android:id="@+id/tv_swift"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="Bank SWIFT/BIC"
+                        android:textColorHint="@color/greyHintColor"
+                        android:inputType="text"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/editTextGreyColor"
+                        android:textSize="14sp" />
+
+                <!--</android.support.design.widget.TextInputLayout>-->
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/til_iban"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:theme="@style/EditTextHintLightGrey">-->
+
+                    <EditText
+                        android:id="@+id/tv_iban"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="Account number (IBAN)"
+                        android:textColorHint="@color/greyHintColor"
+                        android:inputType="text"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/darkGreyText"
+                        android:textSize="14sp" />
+
+                <!--</android.support.design.widget.TextInputLayout>-->
+                <LinearLayout
+                    android:id="@+id/ll6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/greyHintColor"
+                        android:text="Account currency:"/>
+                    <Spinner
+                        android:id="@+id/sp_bank_currency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@color/transparent"
+                        android:entries="@array/wemovecoins_currencies" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_bank_addr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_bank"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/editTextGreyColor"
+                    android:text="Bank address"/>
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp_country_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:ccpDialog_textColor="@color/editTextBlueGreyColor"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_showFullName="true"
+                    app:ccp_contentColor="@color/editTextBlueGreyColor"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showPhoneCode="false"
+                    app:ccp_textGravity="CENTER"
+                    app:ccp_textSize="18dp" />
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/til_bank_state"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:theme="@style/EditTextHintLightGrey">-->
+                    <EditText
+                        android:id="@+id/tv_bank_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="State"
+                        android:textColorHint="@color/greyHintColor"
+                        android:inputType="text"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/darkGreyText"
+                        android:textSize="14sp" />
+                <!--</android.support.design.widget.TextInputLayout>-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_bank_addr"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/editTextGreyColor"
+                    android:text="Account holder:"/>
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/til_name"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:theme="@style/EditTextHintLightGrey">-->
+
+                    <EditText
+                        android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="Full name"
+                        android:textColorHint="@color/greyHintColor"
+                        android:inputType="textPersonName"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/editTextGreyColor"
+                        android:textSize="14sp" />
+
+                <!--</android.support.design.widget.TextInputLayout>-->
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/til_street"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:theme="@style/EditTextHintLightGrey">-->
+                    <EditText
+                        android:id="@+id/tv_street"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="Street and number"
+                        android:textColorHint="@color/greyHintColor"
+                        android:inputType="textPostalAddress"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/darkGreyText"
+                        android:textSize="14sp" />
+                <!--</android.support.design.widget.TextInputLayout>-->
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/til_zip"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:theme="@style/EditTextHintLightGrey">-->
+
+                    <EditText
+                        android:id="@+id/tv_zip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="Zip/Postal code"
+                        android:textColorHint="@color/greyHintColor"
+                        android:inputType="text"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/darkGreyText"
+                        android:textSize="14sp" />
+
+                <!--</android.support.design.widget.TextInputLayout>-->
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/til_city"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:theme="@style/EditTextHintLightGrey">-->
+
+                    <EditText
+                        android:id="@+id/tv_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="City"
+                        android:textColorHint="@color/greyHintColor"
+                        android:inputType="text"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/darkGreyText"
+                        android:textSize="14sp" />
+
+                <!--</android.support.design.widget.TextInputLayout>-->
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:id="@+id/til_state"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:theme="@style/EditTextHintLightGrey">-->
+                    <EditText
+                        android:id="@+id/tv_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="State"
+                        android:textColorHint="@color/greyHintColor"
+                        android:inputType="text"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/darkGreyText"
+                        android:textSize="14sp" />
+                <!--</android.support.design.widget.TextInputLayout>-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp_country_hold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        app:ccpDialog_textColor="@color/editTextBlueGreyColor"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_showFullName="true"
+                        app:ccp_contentColor="@color/editTextBlueGreyColor"
+                        app:ccp_showNameCode="false"
+                        app:ccp_showPhoneCode="false"
+                        app:ccp_textGravity="CENTER"
+                        app:ccp_textSize="18dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_expl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_holder"
+                android:orientation="vertical">
+
+                <com.guarda.ethereum.customviews.RobotoLightTextView
+                    android:id="@+id/tv_sell_expl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/baseBgColor"
+                    android:gravity="fill_vertical|fill_horizontal"
+                    android:lineSpacingExtra="6dp"
+                    android:padding="16dp"
+                    android:text="@string/coinify_bank_checks_agree"
+                    android:textColor="@color/darkGreyText"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="-5dp"
+                        android:id="@+id/bank_checks_chb" />
+
+                    <com.guarda.ethereum.customviews.RobotoTextView
+                        android:id="@+id/bank_checks_chb_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="I agree"
+                        android:textColor="@color/editTextBlueGreyColor" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_next"
+        style="@style/colorButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:drawableEnd="@drawable/ic_arrow_right_wr"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:text="@string/coinify_add_acc"
+        android:textAlignment="gravity"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.guarda.ethereum.customviews.RobotoTextView
+        android:id="@+id/id_guarda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_guarda"
+        android:textColor="@color/logo_clr_text_color"
+        android:textSize="31.5dp" />
+
+    <com.guarda.ethereum.customviews.RobotoTextView
+        android:id="@+id/id_wallet_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_guarda"
+        android:background="@color/logo_clr_bg_color"
+        android:text="@string/app_currency_name"
+        android:textColor="@color/logo_clr_currency_color"
+        android:textSize="24dp" />
+
+    <com.guarda.ethereum.customviews.RobotoTextView
+        android:id="@+id/id_wallet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_wallet_name"
+        android:text="@string/logo_wallet"
+        android:textColor="@color/logo_clr_text_color"
+        android:textSize="36dp" />
+
+</RelativeLayout>

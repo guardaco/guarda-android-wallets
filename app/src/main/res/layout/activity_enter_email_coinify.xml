@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/baseGreyBgColor"
+    android:fitsSystemWindows="true"
+    tools:layout_marginTop="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:id="@+id/ll_choose_ctr">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ccpDialog_textColor="@color/editTextBlueGreyColor"
+                app:ccp_autoDetectCountry="true"
+                app:ccp_showFullName="true"
+                app:ccp_contentColor="@color/editTextBlueGreyColor"
+                app:ccp_showNameCode="false"
+                app:ccp_showPhoneCode="false"
+                app:ccp_textGravity="CENTER"
+                app:ccp_textSize="18dp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:focusable="true"
+            android:id="@+id/line_up"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:background="@color/backupBorderXpl"
+            android:layout_below="@+id/rlCoinifyTerms"
+            android:focusableInTouchMode="true"/>
+
+        <com.guarda.ethereum.customviews.RobotoLightTextView
+            android:id="@+id/only_eu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:layout_below="@+id/line_up"
+            android:background="@color/backupBorderXplBack"
+            android:gravity="fill_vertical|fill_horizontal"
+            android:lineSpacingExtra="6dp"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:text="The service is available only for EU customers"
+            android:textColor="@color/darkGreyText"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:focusable="true"
+            android:id="@+id/line_below"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:background="@color/backupBorderXpl"
+            android:layout_below="@+id/only_eu"
+            android:focusableInTouchMode="true"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_choose_ctr"
+        android:layout_alignParentBottom="true"
+        android:background="@color/whiteTextColor">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativeLayout5">
+            <RelativeLayout
+                android:id="@+id/relativeLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="visible">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:textAlignment="center"
+                    android:theme="@style/EditTextHintLightGrey">
+
+                    <com.guarda.ethereum.customviews.RobotoEditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="@string/et_hint_your_e_mail"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/editTextBlueGreyColor"
+                        android:textSize="18sp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/til_email"
+                    android:gravity="center"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:textAlignment="center"
+                    android:theme="@style/EditTextHintLightGrey">
+
+                    <com.guarda.ethereum.customviews.RobotoEditText
+                        android:id="@+id/et_pass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:hint="@string/et_hint_your_pass"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:maxLength="300"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/editTextBlueGreyColor"
+                        android:textSize="18sp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rlCoinifyTerms"
+            android:layout_below="@+id/relativeLayout5"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp">
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/coinify_terms_title"
+                android:text="@string/coinify_terms"
+                android:textColor="@color/editTextBlueGreyColor"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_below="@+id/coinify_terms_title">
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-5dp"
+                    android:id="@+id/coinify_terms_chb" />
+
+                <com.guarda.ethereum.customviews.RobotoTextView
+                    android:id="@+id/coinify_terms_chb_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Accept Coinify’s Terms of Service and Privacy Policy."
+                    android:textColor="@color/editTextBlueGreyColor" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_height="wrap_content"
+            style="@style/colorButtonStyle"
+            android:drawableEnd="@drawable/ic_arrow_right_wr"
+            android:elevation="5dp"
+            android:textAlignment="gravity"
+            android:gravity="center"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_alignParentBottom="true"
+            android:text="@string/app_next"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

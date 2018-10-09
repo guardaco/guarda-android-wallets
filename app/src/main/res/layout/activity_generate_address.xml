@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/scroll_view"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@color/baseGreyBgColor">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_view_margin"
+            app:cardCornerRadius="@dimen/card_view_corner_radius">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/baseWhiteBgColor"
+                android:padding="15dp">
+
+                <Spinner
+                    android:id="@+id/sp_list_currency"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:entries="@array/currencies"
+                    android:background="@color/transparent"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <Button
+                    android:id="@+id/btn_currency_code"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/greyBtnBgColor"
+                    android:text="btc"
+                    android:textAllCaps="true"
+                    android:drawableEnd="@drawable/ic_arrow_down_blue_wr"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/baseBlueTextColor" />
+
+                <ImageView
+                    android:id="@+id/iv_qr_code"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/btn_gradient_background"
+                    android:layout_below="@+id/btn_currency_code"
+                    android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="false" />
+
+                <com.guarda.ethereum.customviews.RobotoTextView
+                    android:id="@+id/tv_address_wallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/iv_qr_code"
+                    android:layout_alignStart="@+id/iv_qr_code"
+                    android:layout_below="@+id/iv_qr_code"
+                    android:layout_marginBottom="16dp"
+                    android:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
+                    android:textColor="@color/baseBlueTextColor"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tv_destination_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/destination_tag"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/baseBlueTextColor"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="24dp"
+                    android:layout_below="@+id/tv_address_wallet"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_min_amount"
+                    android:drawableStart="@drawable/ic_alarm_wr"
+                    android:drawablePadding="8dp"
+                    android:text="@string/minimal_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:layout_below="@+id/tv_destination_tag"/>
+
+                <com.guarda.ethereum.customviews.RobotoLightTextView
+                    android:id="@+id/tv_tap_to_copy_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_min_amount"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/app_tap_to_copy"
+                    android:textColor="@color/baseLightGreyTextColor"
+                    android:textSize="14dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="14dp"
+            android:text="@string/app_top_up_width_other_currency"
+            android:textColor="@color/baseTextColor" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_view_margin"
+            app:cardCornerRadius="@dimen/card_view_corner_radius">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_crypto_purchase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/baseWhiteBgColor"
+                android:nestedScrollingEnabled="false" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

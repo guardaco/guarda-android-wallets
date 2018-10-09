@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="standard_btn_text_size">18sp</dimen>
+    <dimen name="toolbar_text_size">20sp</dimen>
+    <dimen name="edit_text_text_size">20sp</dimen>
+    <dimen name="toolbar_left_margin">15dp</dimen>
+    <dimen name="settings_row_height">60dp</dimen>
+    <dimen name="settings_row_horizontal_margin">20dp</dimen>
+    <dimen name="card_view_margin">10dp</dimen>
+    <dimen name="card_view_corner_radius">2dp</dimen>
+
+    <dimen name="scan_frame_size">300dp</dimen>
+
+    <dimen name="keyboard_input_text_size">24dp</dimen>
+    <dimen name="currency_icon_size">35dp</dimen>
+
+    <dimen name="token_adapter_height">50dp</dimen>
+    <dimen name="token_item_padding">5dp</dimen>
+
+</resources>

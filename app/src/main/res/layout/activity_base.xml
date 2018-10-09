@@ -1,0 +1,12 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/base_gradient_bg">
+
+    <include
+        android:id="@+id/toolbar_main"
+        layout="@layout/view_toolbar" />
+
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="restore_backup_passphrase">Enter Mnemonic, WIF or XPRV</string>
+    <string name="app_top_up_width_other_currency">Recharger avec une autre devise</string>
+    <string name="top_up_width_other_currency">Recharger avec une autre devise</string>
+    <string name="et_error_wrong_private_key">Mot de passe mnémotechnique erroné</string>
+    <string name="et_error_private_key_is_empty">Le champ du mot de passe mnémotechnique doit être rempli</string>
+    <string name="start_login_from_backup">Entrer en utilisant le mot de passe mnémotechnique</string>
+    <string name="title_restore_backup">Récupérer</string>
+    <string name="restore_backup_enter_backup_passphrase">Entrez le mot de passe mnémotechnique</string>
+</resources>

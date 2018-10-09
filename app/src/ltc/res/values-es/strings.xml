@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_top_up_width_other_currency">Recarga tu monedero LTC con</string>
+    <string name="top_up_width_other_currency">Recarga tu monedero LTC con</string>
+    <string name="et_error_wrong_private_key">Contraseña mnemotécnica incorrecta</string>
+    <string name="et_error_private_key_is_empty">El campo de contraseña mnemotécnica debe ser rellenado</string>
+    <string name="start_login_from_backup">Entrar usando la contraseña mnemotécnica</string>
+    <string name="title_restore_backup">Recuperar</string>
+    <string name="restore_backup_enter_backup_passphrase">Introduzca la contraseña mnemotécnica</string>
+    <string name="restore_backup_passphrase">Enter Mnemonic, WIF or XPRV</string>
+</resources>

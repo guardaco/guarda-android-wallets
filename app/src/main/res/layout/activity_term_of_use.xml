@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/baseWhiteBgColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="15dp"
+        android:layout_height="0dp">
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#747474"
+            android:id="@+id/tv_terms_of_service"
+            android:lineSpacingExtra="6dp"
+            android:textSize="14dp"/>
+
+    </LinearLayout>
+</ScrollView>

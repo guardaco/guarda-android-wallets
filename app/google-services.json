@@ -1,0 +1,633 @@
+{
+  "project_info": {
+    "project_number": "320631095533",
+    "firebase_url": "https://guardawallet.firebaseio.com",
+    "project_id": "guardawallet",
+    "storage_bucket": "guardawallet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:02474aa8d437a72a",
+        "android_client_info": {
+          "package_name": "com.guarda.bch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:c0aab10652c215d8",
+        "android_client_info": {
+          "package_name": "com.guarda.btc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-l4qpt46mhv69jltfb8r43p0psnspm7af.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.btc",
+            "certificate_hash": "d2508448cf7ce4c332757462781a245ee6869aad"
+          }
+        },
+        {
+          "client_id": "320631095533-qqrn30jaukdlsvj3a6290elbhjs622u9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.btc",
+            "certificate_hash": "bbc9a596602066435bd90aaccb85b01aec5291c8"
+          }
+        },
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:5998c124c350752b",
+        "android_client_info": {
+          "package_name": "com.guarda.btg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-bmu8tndl854tsqn9di414rft2p57s6t1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.btg",
+            "certificate_hash": "d2508448cf7ce4c332757462781a245ee6869aad"
+          }
+        },
+        {
+          "client_id": "320631095533-ur5qesnd1u00rh6mo89vosokbieq7g7c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.btg",
+            "certificate_hash": "bbc9a596602066435bd90aaccb85b01aec5291c8"
+          }
+        },
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:efb8cdd08909bbe3",
+        "android_client_info": {
+          "package_name": "com.guarda.bts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:1b1e9f02e41361b9",
+        "android_client_info": {
+          "package_name": "com.guarda.clo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:40494c75dd69acd3",
+        "android_client_info": {
+          "package_name": "com.guarda.dct"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-mkdrejut9jfk9ni2484fsn9pl96k1s3t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.dct",
+            "certificate_hash": "bbc9a596602066435bd90aaccb85b01aec5291c8"
+          }
+        },
+        {
+          "client_id": "320631095533-pn5m5aalv11506ide1hqi5m8m939hf31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.dct",
+            "certificate_hash": "d2508448cf7ce4c332757462781a245ee6869aad"
+          }
+        },
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:163bf24a605bb85d",
+        "android_client_info": {
+          "package_name": "com.guarda.dgb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:01a3f8a70e120627",
+        "android_client_info": {
+          "package_name": "com.guarda.etc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-l1eqdnnb5btjqm5mo8ll3nlfs06g7mfe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.etc",
+            "certificate_hash": "d2508448cf7ce4c332757462781a245ee6869aad"
+          }
+        },
+        {
+          "client_id": "320631095533-rtidmpmujptvh9bru11nq4t61gb63j5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.etc",
+            "certificate_hash": "bbc9a596602066435bd90aaccb85b01aec5291c8"
+          }
+        },
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:b2bc4f43bbf1f68d",
+        "android_client_info": {
+          "package_name": "com.guarda.ethereum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-5a8e8qf5tj1cpndg6hc34fp821aod2j9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.ethereum",
+            "certificate_hash": "da0040e37f99bf9381c5948400bc9f2f6f69cda8"
+          }
+        },
+        {
+          "client_id": "320631095533-g4l9a9evok64mie1to7b9t1u9ntf7nhe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.ethereum",
+            "certificate_hash": "bbc9a596602066435bd90aaccb85b01aec5291c8"
+          }
+        },
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:e3349ae7d71d369f",
+        "android_client_info": {
+          "package_name": "com.guarda.iota"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:2f3a4a4a6fd0d4aa",
+        "android_client_info": {
+          "package_name": "com.guarda.kmd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:496ca4cfdfa49e31",
+        "android_client_info": {
+          "package_name": "com.guarda.ltc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:8f2eb84221205064",
+        "android_client_info": {
+          "package_name": "com.guarda.qtum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:87724e394d5ba1e5",
+        "android_client_info": {
+          "package_name": "com.guarda.sbtc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:dbcaca7aa86a0541",
+        "android_client_info": {
+          "package_name": "com.guarda.xmr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-aa6caas1cegcjotkqlvjv25dghji71rq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.xmr",
+            "certificate_hash": "d2508448cf7ce4c332757462781a245ee6869aad"
+          }
+        },
+        {
+          "client_id": "320631095533-c814mfehb4ea27nrt96uk8kuaqjeeh48.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guarda.xmr",
+            "certificate_hash": "bbc9a596602066435bd90aaccb85b01aec5291c8"
+          }
+        },
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320631095533:android:665c441731fbdde5",
+        "android_client_info": {
+          "package_name": "com.guarda.zec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320631095533-qnpg3q4nsessil2dra38prmi1eg08st0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEaitZ_4aA6PUN3rPL_JaRManqpfKYkg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

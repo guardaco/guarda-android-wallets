@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseWhiteBgColor"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_coins_selector_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:padding="8dp"
+                android:layout_marginTop="40dp"
+                android:visibility="visible"
+                android:gravity="center">
+
+                <Spinner
+                    android:id="@+id/sp_list_currency"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:background="@color/transparent"
+                    android:entries="@array/currencies"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_currency_code"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:background="@color/greyBtnBgColor"
+                    android:drawableEnd="@drawable/ic_arrow_down_blue_wr"
+                    android:paddingRight="10dp"
+                    android:text="btc"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/baseBlueTextColor"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sending_coins"
+                    android:textColor="@color/txStatusGrey"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/btn_currency_code"
+                    app:layout_constraintTop_toTopOf="@+id/btn_currency_code"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_currency_code"
+                    app:layout_constraintHorizontal_bias="0.0" />
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cl_coins_selector_root"
+                android:orientation="horizontal"
+                android:layout_marginTop="40dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_send_coins_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center"
+                    app:theme="@style/EditTextHintLightGrey">
+
+                    <com.guarda.ethereum.customviews.RobotoLightEditText
+                        android:id="@+id/et_send_coins_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/email_send_coins_to_address"
+                        android:textColorHint="@color/greyHintColor"
+                        android:importantForAutofill="no"
+                        android:imeOptions="actionSend"
+                        android:inputType="textMultiLine|textNoSuggestions"
+                        android:maxLength="150"
+                        android:maxLines="10"
+                        android:scrollHorizontally="false"
+                        android:shrinkColumns="0, true"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/darkGreyText"
+                        android:textSize="18sp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_scan_qr"
+                    android:layout_weight="1"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/ic_qr_code" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="29dp"
+                style="@style/colorButtonStyle"
+                android:drawableEnd="@drawable/ic_arrow_right_wr"
+                android:elevation="5dp"
+                android:paddingEnd="15dp"
+                android:text="@string/app_next"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

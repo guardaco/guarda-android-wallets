@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:adnroid="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_view_margin"
+        app:cardCornerRadius="@dimen/card_view_corner_radius">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/baseWhiteBgColor"
+            android:orientation="vertical">
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_email"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/settings_row_height"-->
+                <!--android:layout_marginEnd="@dimen/settings_row_horizontal_margin"-->
+                <!--android:layout_marginStart="@dimen/settings_row_horizontal_margin"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentStart="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="@string/setting_email"-->
+                        <!--android:textColor="@color/settingsTextColor"-->
+                        <!--android:textSize="14sp" />-->
+                <!--</RelativeLayout>-->
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:id="@+id/tv_provided_email"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="@string/app_not_provided"-->
+                        <!--android:textColor="#e43834"-->
+                        <!--android:textSize="12sp" />-->
+                <!--</RelativeLayout>-->
+            <!--</LinearLayout>-->
+
+            <!--<include layout="@layout/separator_horizontal" />-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_language"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/settings_row_height"-->
+                <!--android:layout_marginEnd="@dimen/settings_row_horizontal_margin"-->
+                <!--android:layout_marginStart="@dimen/settings_row_horizontal_margin"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentStart="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="@string/setting_language"-->
+                        <!--android:textColor="@color/settingsTextColor"-->
+                        <!--android:textSize="14sp" />-->
+                <!--</RelativeLayout>-->
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="English"-->
+                        <!--android:textColor="#bcbcbc"-->
+                        <!--android:textSize="14sp" />-->
+                <!--</RelativeLayout>-->
+            <!--</LinearLayout>-->
+
+            <!--<include layout="@layout/separator_horizontal" />-->
+
+            <LinearLayout
+                android:id="@+id/ll_local_currency"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_row_height"
+                android:layout_marginEnd="@dimen/settings_row_horizontal_margin"
+                android:layout_marginStart="@dimen/settings_row_horizontal_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.guarda.ethereum.customviews.RobotoLightTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/setting_local_currency"
+                        android:textColor="@color/settingsTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <Spinner
+                        android:id="@+id/sp_local_currency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:entries="@array/currencies"
+                        android:background="@color/transparent"
+                        android:layout_centerVertical="true" />
+
+                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentEnd="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="USD"-->
+                        <!--android:textColor="#bcbcbc"-->
+                        <!--android:textSize="12sp" />-->
+                </RelativeLayout>
+            </LinearLayout>
+
+            <include layout="@layout/separator_horizontal" />
+
+            <LinearLayout
+                android:id="@+id/ll_security_code"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_row_height"
+                android:layout_marginEnd="@dimen/settings_row_horizontal_margin"
+                android:layout_marginStart="@dimen/settings_row_horizontal_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.guarda.ethereum.customviews.RobotoLightTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/setting_security_code"
+                        android:textColor="@color/settingsTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/switch_security_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:theme="@style/lightWalletSwitch" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <include layout="@layout/separator_horizontal" />
+
+            <LinearLayout
+                android:id="@+id/ll_terms_of_use"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_row_height"
+                android:layout_marginEnd="@dimen/settings_row_horizontal_margin"
+                android:layout_marginStart="@dimen/settings_row_horizontal_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.guarda.ethereum.customviews.RobotoLightTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/setting_terms_of_use"
+                        android:textColor="@color/settingsTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_arrow_right_grey" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <include layout="@layout/separator_horizontal" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_privacy_policy"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_row_height"
+                android:layout_marginEnd="@dimen/settings_row_horizontal_margin"
+                android:layout_marginStart="@dimen/settings_row_horizontal_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.guarda.ethereum.customviews.RobotoLightTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/setting_privacy_policy"
+                        android:textColor="@color/settingsTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_arrow_right_grey" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <include layout="@layout/separator_horizontal" />
+
+            <LinearLayout
+                android:id="@+id/ll_support"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_row_height"
+                android:layout_marginEnd="@dimen/settings_row_horizontal_margin"
+                android:layout_marginStart="@dimen/settings_row_horizontal_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.guarda.ethereum.customviews.RobotoLightTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/setting_support"
+                        android:textColor="@color/settingsTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_arrow_right_grey" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <include layout="@layout/separator_horizontal" />
+
+            <LinearLayout
+                android:id="@+id/ll_about_app"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_row_height"
+                android:layout_marginEnd="@dimen/settings_row_horizontal_margin"
+                android:layout_marginStart="@dimen/settings_row_horizontal_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.guarda.ethereum.customviews.RobotoLightTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/setting_about"
+                        android:textColor="@color/settingsTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="end">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="ver. 0.32"
+                        android:id="@+id/ver_about"/>
+                    <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:src="@drawable/ic_arrow_right_grey" />-->
+                </RelativeLayout>
+            </LinearLayout>
+
+            <include layout="@layout/separator_horizontal" />
+
+            <LinearLayout
+                android:id="@+id/ll_custom_node"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_row_height"
+                android:layout_marginEnd="@dimen/settings_row_horizontal_margin"
+                android:layout_marginStart="@dimen/settings_row_horizontal_margin"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <com.guarda.ethereum.customviews.RobotoLightTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/setting_node"
+                        android:textColor="@color/settingsTextColor"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_arrow_right_grey" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</ScrollView>

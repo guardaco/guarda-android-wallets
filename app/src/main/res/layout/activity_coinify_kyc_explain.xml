@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseWhiteBgColor"
+    android:fitsSystemWindows="true"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Verify your Identity (First Time Buyers Only)"/>
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="If this is your first order with Coinify, the system will ask you to upload documents that verify your identity and account ownership. This is a standard procedure following the Coinify AML policy."/>
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Your documents will be reviewed by our Compliance team (this might take up to 48 business hours) and you will be notified about the outcome via email. Once you are approved, please initiate a new order following the same steps as they were described up to this point."/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:id="@+id/ll_coinify_kyc_status">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.guarda.ethereum.customviews.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:visibility="visible"
+                    android:text="Status last KYC: "/>
+                <com.guarda.ethereum.customviews.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/coinify_kyc_status"
+                    android:layout_margin="5dp"
+                    android:visibility="visible"
+                    android:text="new"/>
+                <com.guarda.ethereum.customviews.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:visibility="visible"
+                    android:text="-"/>
+                <com.guarda.ethereum.customviews.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/coinify_kyc_explain"
+                    android:layout_margin="5dp"
+                    android:visibility="visible"
+                    android:text="Explain"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <WebView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/coinify_kyc"/>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        style="@style/colorButtonStyle"
+        android:drawableEnd="@drawable/ic_arrow_right_wr"
+        android:elevation="5dp"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/app_next"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

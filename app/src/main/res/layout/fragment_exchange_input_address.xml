@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="124dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/cardView3" >
+
+        <ImageView
+            android:id="@+id/imageViewExchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/ic_exchange" />
+
+        <ImageView
+            android:id="@+id/imageViewFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginLeft="87dp"
+            app:srcCompat="@drawable/ic_1st" />
+
+        <TextView
+            android:id="@+id/textViewFromCoin"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42dp"
+            android:layout_marginTop="75dp"
+            android:gravity="center_horizontal"
+            android:text="Bitcoin Gold"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageViewTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginLeft="242dp"
+            app:srcCompat="@drawable/ic_1st" />
+
+        <TextView
+            android:id="@+id/textViewToCoin"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="197dp"
+            android:layout_marginTop="75dp"
+            android:gravity="center_horizontal"
+            android:text="Bitcoin Cash"
+            android:textSize="18sp" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="373dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:paddingBottom="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.guarda.ethereum.customviews.RobotoLightTextView
+                android:id="@+id/textViewAddressLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="27dp"
+                android:text="address"
+                android:textColor="@color/baseLightGreyTextColor"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/editTextAddress"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:layout_marginEnd="27dp"
+                android:layout_marginStart="27dp"
+                android:layout_marginTop="45dp"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:background="@drawable/edit_text_background"
+                android:textColor="@color/baseTextColor"
+                android:padding="5dp"
+                android:paddingEnd="25dp"
+                android:text="" />
+
+            <ImageView
+                android:id="@+id/imageViewScanQr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/editTextAddress"
+                android:layout_alignTop="@id/editTextAddress"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:tint="@color/baseTextColor"
+                app:srcCompat="@drawable/ic_btn_scan_qr_wr" />
+
+            <com.guarda.ethereum.customviews.RobotoLightTextView
+                android:id="@+id/textViewMemoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="140dp"
+                android:layout_marginStart="27dp"
+                android:text="Memo"
+                android:textColor="@color/baseLightGreyTextColor"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/editTextMemo"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginEnd="27dp"
+                android:layout_marginStart="27dp"
+                android:layout_marginTop="165dp"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:background="@drawable/edit_text_background"
+                android:textColor="@color/baseTextColor"
+                android:padding="5dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/tv_min_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="215dp"
+                android:layout_centerHorizontal="true"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_alarm_wr"
+                android:text="@string/minimal_amount"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:paddingBottom="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/buttonNext"
+                style="@style/colorButtonStyle"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawableEnd="@drawable/ic_arrow_right_wr"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:elevation="5dp"
+                android:paddingEnd="15dp"
+                android:text="@string/app_next" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

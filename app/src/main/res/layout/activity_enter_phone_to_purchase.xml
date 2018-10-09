@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseWhiteBgColor"
+    android:fitsSystemWindows="true"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="23dp">
+
+        <com.guarda.ethereum.customviews.RobotoLightTextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/et_hint_your_mobile_phone"
+            android:textColor="@color/blueHintColor"
+            android:textSize="14dp" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/textView"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp_phone_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    app:ccpDialog_textColor="@color/editTextBlueGreyColor"
+                    app:ccp_arrowSize="1dp"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_contentColor="@color/editTextBlueGreyColor"
+                    app:ccp_showNameCode="false"
+                    app:ccp_textSize="18dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_corner_blue" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#818181" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="6">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/et_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/transparent"
+                    android:clickable="false"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:textColor="@color/editTextBlueGreyColor"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/blueSeparatorColor" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.guarda.ethereum.customviews.RobotoLightTextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/relativeLayout3"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_marginTop="5dp"
+        android:text="@string/number_will_be_used_by_confirm"
+        android:textAlignment="textEnd"
+        android:textColor="@color/baseLightGreyTextColor"
+        android:textSize="13dp" />
+
+    <com.guarda.ethereum.customviews.GuardaInputLayout
+        android:id="@+id/gi_country_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_next"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:visibility="visible"
+        app:isShowComma="false"
+        app:maxCount="11"
+        app:textSize="24" />
+
+    <Button
+        android:id="@+id/btn_next"
+        style="@style/colorButtonStyle"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:drawableEnd="@drawable/ic_arrow_right_wr"
+        android:elevation="5dp"
+        android:paddingEnd="15dp"
+        android:text="@string/app_next" />
+</RelativeLayout>

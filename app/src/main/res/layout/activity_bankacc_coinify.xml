@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:paddingTop="6dp"
+    android:background="@color/whiteTextColor">
+
+    <FrameLayout
+        android:id="@+id/fl_main_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/baseGreyBgColor"/>
+
+</RelativeLayout>

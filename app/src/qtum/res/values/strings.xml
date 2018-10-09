@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name" translatable="false">Qtum Wallet</string>
+    <string name="app_coin_currency" translatable="false">QTUM</string>
+    <string name="app_fee_kb_currency" translatable="false">QTUM/kB</string>
+    <string name="freshchat_file_provider_authority" translatable="false">com.guarda.qtum.provider</string>
+
+    <string name="restore_backup_passphrase">Enter Mnemonic, WIF or XPRV</string>
+    <string name="app_top_up_width_other_currency">Top Up Your QTUM Wallet With:</string>
+    <string name="top_up_width_other_currency">Purchase QTUM</string>
+    <string name="app_currency_name" translatable="false">Qtum</string>
+    <string name="et_error_wrong_private_key">Wrong mnemonic passphrase</string>
+    <string name="et_error_private_key_is_empty">Mnemonic passphrase can not be empty</string>
+    <string name="title_restore_backup">Restore</string>
+    <string name="start_login_from_backup">Login with mnemonic passphrase</string>
+    <string name="restore_backup_enter_backup_passphrase">Enter mnemonic passphrase</string>
+</resources>

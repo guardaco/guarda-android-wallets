@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="wemovecoins_currencies"
+        translatable="false">
+        <item>EUR</item>
+        <item>DKK</item>
+        <item>NOK</item>
+        <item>SEK</item>
+        <item>GBP</item>
+        <item>INR</item>
+
+        <!--<item>ISK</item>-->
+        <!--<item>CHF</item>-->
+        <!--<item>TRY</item>-->
+        <!--<item>ALL</item>-->
+        <!--<item>AZN</item>-->
+        <!--<item>BYR</item>-->
+        <!--<item>BAM</item>-->
+        <!--<item>HRK</item>-->
+        <!--<item>CZK</item>-->
+        <!--<item>GEL</item>-->
+        <!--<item>HUF</item>-->
+        <!--<item>MKD</item>-->
+        <!--<item>MDL</item>-->
+        <!--<item>PLN</item>-->
+        <!--<item>RSD</item>-->
+        <!--<item>ZAR</item>-->
+    </string-array>
+
+</resources>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/baseGreyBgColor"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.guarda.ethereum.customviews.RobotoTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/restore_title"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="left"
+        android:text="@string/restore_backup_passphrase"
+        android:textColor="@color/neutralGreyTextColor"
+        android:textSize="18sp" />
+
+    <Spinner
+        android:id="@+id/spinnerKey"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:spinnerMode="dropdown"
+        android:background="@drawable/ic_exchangespinner_background_wr"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="52dp"
+        android:visibility="gone"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:theme="@style/EditTextHintLightBlue"
+        android:id="@+id/tl_wallet_email"
+        android:visibility="gone">
+
+        <com.guarda.ethereum.customviews.RobotoEditText
+            android:id="@+id/et_wallet_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/restore_backup_email"
+            android:maxLength="300"
+            android:maxLines="3"
+            android:textColor="@color/editTextBlueGreyColor"
+            android:textColorHint="@color/blueHintColor"
+            android:textSize="@dimen/edit_text_text_size" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_backup_phrase">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tl_bp_phrase"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:theme="@style/EditTextHintLightBlue">
+            <com.guarda.ethereum.customviews.RobotoEditText
+                android:id="@+id/et_backup_phrase"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:maxLength="300"
+                android:maxLines="3"
+                android:background="@drawable/edit_text_background"
+                android:textColor="@color/baseTextColor"
+                android:padding="5dp"
+                android:paddingEnd="25dp"
+                android:text="" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <ImageView
+            android:id="@+id/imageViewScanQr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/tl_bp_phrase"
+            android:layout_alignTop="@id/tl_bp_phrase"
+            android:layout_marginTop="10dp"
+            android:paddingStart="5dp"
+            android:paddingBottom="5dp"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:tint="@color/baseTextColor"
+            app:srcCompat="@drawable/ic_btn_scan_qr_wr" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_json_up"
+        android:layout_marginTop="16dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_upload_json"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/baseBlueTextColor"
+            android:textSize="14sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/btn_light_blue"
+            android:text="@string/restore_backup_upload_json_file" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/rl_json_path"
+        android:background="@drawable/field_white_corner"
+        android:layout_margin="16dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="24dp"
+            app:srcCompat="@drawable/ic_file_img"/>
+
+        <com.guarda.ethereum.customviews.RobotoLightTextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_json_path"
+            android:layout_centerVertical="true"
+            android:lines="2"
+            android:text="file.jsonfile.jsonfile.jsonfile.jsonfile.jsonfile.jsonfile.jsonfile.jsonfile.jsonfile.jsonfile.jsonfile.json"
+            android:textColor="@color/baseDarkGreyTextColor"
+            android:layout_marginStart="56dp"/>
+
+        <Button
+            android:id="@+id/btn_json_clear"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="24dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_clear_x" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:id="@+id/tl_json_pwd"
+        android:visibility="gone"
+        android:theme="@style/EditTextHintLightBlue">
+
+        <com.guarda.ethereum.customviews.RobotoEditText
+            android:id="@+id/et_json_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/restore_backup_enter_json_pass"
+            android:maxLength="300"
+            android:maxLines="3"
+            android:textColor="@color/editTextBlueGreyColor"
+            android:textColorHint="@color/blueHintColor"
+            android:textSize="@dimen/edit_text_text_size" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_more_info"
+        android:layout_margin="16dp"
+        android:visibility="gone">
+
+        <com.guarda.ethereum.customviews.RobotoLightTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restore_backup_json_more_info"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            app:srcCompat="@drawable/ic_info_blue"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_restore"
+            style="@style/colorButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="25dp"
+            android:drawableEnd="@drawable/ic_arrow_right_wr"
+            android:paddingEnd="15dp"
+            android:paddingStart="25dp"
+            android:text="@string/restore_backup_restore" />
+    </RelativeLayout>
+</LinearLayout>

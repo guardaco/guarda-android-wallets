@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_transaction_history"
+        android:icon="@drawable/ic_history"
+        android:title="@string/app_transaction_history"/>
+
+    <item
+        android:id="@+id/menu_buy"
+        android:icon="@drawable/ic_purchase"
+        android:title="@string/app_menu_buy"/>
+
+    <item
+        android:id="@+id/menu_purchase"
+        android:icon="@drawable/ic_exchange"
+        android:title="@string/app_purchase"/>
+
+    <item
+        android:id="@+id/menu_withdraw"
+        android:icon="@drawable/ic_withdraw"
+        android:title="@string/app_withdraw"/>
+
+    <item
+        android:id="@+id/menu_deposit"
+        android:icon="@drawable/ic_deposit"
+        android:title="@string/app_deposit"/>
+
+    <item
+        android:id="@+id/menu_backup"
+        android:icon="@drawable/ic_backup"
+        android:title="@string/app_backup"
+        app:actionLayout="@layout/item_menu_backup"/>
+
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/app_setting"/>
+
+    <item
+        android:id="@+id/menu_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/app_log_out"/>
+
+</menu>

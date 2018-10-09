@@ -1,0 +1,350 @@
+<resources>
+    <string name="app_name" translatable="false">Ethereum Wallet</string>
+    <string name="start_create_wallet">Create wallet</string>
+    <string name="start_login_from_backup">Restore wallet</string>
+    <string name="title_restore_backup">Restore</string>
+    <string name="restore_backup_enter_backup_passphrase">Enter private key</string>
+    <string name="restore_backup_enter_json_pass">Enter password</string>
+    <string name="restore_backup_wrong_file_name">Wrong file path</string>
+    <string name="restore_backup_wrong_rest_file">Wrong restoring file</string>
+    <string name="restore_backup_wrong_json_password">Wrong JSON-file password</string>
+    <string name="restore_backup_json_password_empty">Password can not be empty</string>
+    <string name="restore_backup_upload_json_file">Upload JSON-file</string>
+    <string name="restore_backup_json_more_info">More information about JSON-file</string>
+    <string name="restore_backup_restore">Restore</string>
+    <string name="transaction_history_your_transactions">Your Transactions</string>
+    <string name="restore_backup_passphrase">ETH wallet private key</string>
+    <string name="deposit_address_share">Share</string>
+    <string name="app_coin_currency" translatable="false">ETH</string>
+    <string name="app_usd_currency">USD</string>
+    <string name="app_your_address">Your address</string>
+    <string name="app_your_address_alt">Encrypted alternate</string>
+    <string name="app_display_your_address">Display Address</string>
+    <string name="app_display_your_address_alt">Display Encrypted alternate</string>
+    <string name="app_show_qr">Show QR</string>
+    <string name="app_top_up_width_other_currency">Top Up Your ETH Wallet With:</string>
+    <string name="top_up_width_other_currency">Purchase ETH</string>
+    <string name="app_transaction_history">Home</string>
+    <string name="app_purchase">Exchange</string>
+    <string name="app_withdraw">Send</string>
+    <string name="app_deposit">Receive</string>
+    <string name="app_backup">Wallet Security</string>
+    <string name="app_setting">Options</string>
+    <string name="app_log_out">Log Out</string>
+    <string name="app_tap_to_copy">Tap to copy</string>
+    <string name="app_you_address">You address</string>
+    <string name="withdraw_withdraw_coins">Send coins</string>
+    <string name="app_scan_qr">Scan QR</string>
+    <string name="withdraw_the_withdrawal_address_is_incorrect">The sending address format is incorrect</string>
+    <string name="app_next">Next</string>
+    <string name="withdraw_amount_to_send">Amount to send</string>
+    <string name="withdraw_sending">Sending</string>
+    <string name="withdraw_sum_send">Sum Send</string>
+    <string name="withdraw_fee_amount">Fee Amount</string>
+    <string name="withdraw_arrival_amount">Arrival Amount</string>
+    <string name="withdraw_include">Include</string>
+    <string name="withdraw_exclude">Exclude</string>
+    <string name="withdraw_address_send">Destination Address</string>
+    <string name="result_transaction_sent">Transaction\n Sent</string>
+    <string name="backup_your_back_up_passphrase">Types of private key</string>
+    <string name="backup_instruction">Keeping this secure and private is very important, as it is the only way that you will be able to login to your account. We don\'t store your private login key on the server there is no way to recover it if it is lost!</string>
+    <string name="fragment_disabled_text">Service is temporarily unavailable</string>
+    <string name="setting_language">Language</string>
+    <string name="setting_local_currency">Local Currency</string>
+    <string name="setting_security_code">Security Code</string>
+    <string name="setting_about">About</string>
+    <string name="setting_terms_of_use">Terms of Service</string>
+    <string name="setting_privacy_policy">Privacy Policy</string>
+    <string name="setting_support">Support</string>
+    <string name="setting_node">Custom node</string>
+    <string name="app_provided">Provided</string>
+    <string name="app_not_provided">Not Provided</string>
+    <string name="pincode_create_access_code">Create Access Code</string>
+    <string name="pincode_access_code_again">Access Code Again</string>
+    <string name="result_code_created">Code \nCreated</string>
+    <string name="email_send_coins_to_address">Send coins to address</string>
+    <string name="transaction_detail_sum">Sum</string>
+    <string name="transaction_detail_date">Date</string>
+    <string name="transaction_detail_time">Time</string>
+    <string name="transaction_detail_hash">Hash</string>
+    <string name="transaction_detail_balance_before">Balance Before</string>
+    <string name="transaction_detail_balance_after">Balance After</string>
+    <string name="transaction_detail_confirmations">Confirmations</string>
+    <string name="transaction_detail_repeat">Repeat</string>
+    <string name="purchase_purchase">Exchange</string>
+    <string name="app_copy">Copy</string>
+    <string name="app_show">Show</string>
+    <string name="app_hide">Hide</string>
+    <string name="setting_email">E-mail</string>
+    <string name="withdraw_your_current_balance">Your current balance</string>
+
+    <string name="title_empty" translatable="false"> </string>
+    <string name="title_wallet">Wallet</string>
+    <string name="title_deposit">@string/app_your_address</string>
+    <string name="title_withdraw">@string/withdraw_withdraw_coins</string>
+    <string name="title_withdraw2">@string/withdraw_address_send</string>
+    <string name="title_withdraw3">@string/withdraw_sending</string>
+    <string name="title_backup">@string/title_empty</string>
+    <string name="title_purchase">@string/purchase_purchase</string>
+    <string name="title_purchase_detail">@string/app_your_address</string>
+    <string name="title_setting">@string/app_setting</string>
+    <string name="title_pincode">@string/title_empty</string>
+    <string name="title_email">Confirm E-mail</string>
+    <string name="title_transaction_history">@string/title_empty</string>
+    <string name="title_transaction_detail">Transaction Details</string>
+    <string name="title_start">@string/title_empty</string>
+    <string name="title_result">@string/title_empty</string>
+
+    <string name="title_fragment_exchange_about">About Exchange</string>
+    <string name="title_fragment_exchange_start">Exchange to</string>
+    <string name="title_fragment_exchange_input_address">Exchange</string>
+
+    <string name="exchange_choose_service">Exchange service</string>
+    <string name="exchange_send">Send</string>
+    <string name="exchange_receive">Receive</string>
+    <string name="exchange_rate">Exchange rate (estimated)</string>
+    <string name="exchange_start">Start Exchange</string>
+    <string name="exchange_unsupported_pair">Selected combination is not supported</string>
+    <string name="exchange_service_unavailable">Selected exchange is unavailable</string>
+
+    <string name="exchange_about">The exchange service is converting one crypto to another one. The variety of exchange services is available in-app. You can select as exchange service provider as coins for conversion.\n\nPlease follow the on-screen instruсtion step-by-step for the exchange.\n\nYou can either top up your wallet using other crypto, either convert your crypto to another blockchain. Please make sure that exchanged amount is greater than a minimum limit.</string>
+
+    <string name="title_fragment_decent_deposit_about">About</string>
+    <string name="deposit_decent_about">Notify: In Guarda Decent wallet, you are able to use two types of wallet addresses either your E-mail or the Encrypted alternative address to manage your DCT coins.</string>
+
+    <string name="exchange_generate_hint_left">Address and QR</string>
+    <string name="exchange_generate_hint_mid">\nto exchange to</string>
+    <string name="exchange_show_qr">Show QR</string>
+    <string name="exchange_show_address">Show Address</string>
+
+    <string name="exchange_dest_address_left">Destination</string>
+    <string name="exchange_dest_address_right">address</string>
+    <string name="exchange_error_internet_connection">Connection error, please try later</string>
+    <string name="exchange_error_unknown">Unexpected error, please try later</string>
+    <string name="exchange_progress_generate_address">Exchange address generation</string>
+    <string name="exchange_error_empty_address">Fill address field</string>
+    <string name="exchange_error_generate_address">Generating exchange address error, please try later</string>
+
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">Clear</string>
+    <string name="btn_backspace">Back</string>
+    <string name="withdraw_confirm">Confirm</string>
+
+    <string name="fab_deposit">@string/app_deposit</string>
+    <string name="fab_withdraw">@string/app_withdraw</string>
+    <string name="fab_purchase">@string/app_purchase</string>
+    <string name="fab_buy">@string/app_menu_buy</string>
+
+    <string name="hex_marker" translatable="false">0x</string>
+    <string name="currency_usd" translatable="false">USD</string>
+    <string name="currency_eur" translatable="false">EUR</string>
+    <string name="currency_rur" translatable="false">RUB</string>
+    <string name="currency_gbp" translatable="false">GBP</string>
+    <string name="currency_dkk" translatable="false">DKK</string>
+    <string name="currency_nok" translatable="false">NOK</string>
+    <string name="currency_sek" translatable="false">SEK</string>
+    <string name="currency_inr" translatable="false">INR</string>
+    <string name="gas" translatable="false">GAS</string>
+    <string name="fee" translatable="false">FEE</string>
+    <string name="hotline_file_provider_authority" translatable="false">com.example.demoapp.provider</string>
+    <string name="freshchat_file_provider_authority" translatable="false">com.guarda.ethereum.provider</string>
+    <string name="lorem_ipsum" translatable="false">lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh</string>
+    <string name="app_currency_name" translatable="false">Ethereum</string>
+    <string name="logo_wallet" translatable="false">Wallet</string>
+
+    <string-array name="currencies">
+        <item>@string/currency_usd</item>
+        <item>@string/currency_eur</item>
+        <item>@string/currency_rur</item>
+        <item>@string/currency_gbp</item>
+        <item>@string/currency_dkk</item>
+        <item>@string/currency_nok</item>
+        <item>@string/currency_sek</item>
+        <item>@string/currency_inr</item>
+    </string-array>
+
+    <string-array name="restore_way">
+        <item>Private key</item>
+        <item>JSON-file</item>
+    </string-array>
+
+    <!-- todo should to translate-->
+    <string name="menu_title_account">Account</string>
+    <string name="toolbar_title_wallet">Wallet</string>
+    <string name="hint_wallet_address">Wallet address…</string>
+    <string name="generating_wallet">Generating wallet</string>
+    <string name="restoring_wallet">Restoring wallet</string>
+    <string name="address">address</string>
+    <string name="copied_to_clipboard">copied to clipboard</string>
+    <string name="limited_functionality">Limited functionality</string>
+    <string name="get_permission_to_use_camera">You can not use the code reader until you give permission to use the camera.</string>
+    <string name="btn_send">Send</string>
+    <string name="do_you_really_want_to_exit">Do you really want to exit?</string>
+    <string name="dialog_title_exit">Exit</string>
+    <string name="logout_dialog_message">Security Alert! You are going to log out of the app. Please check that you have made your Private key Backup, otherwise you will lose the access to your wallet. Guarda won\'t be able to help you, as we do not have access to your private keys and funds. Do you really want to log out and exit?</string>
+    <string name="receiving_transactions">Receiving transactions</string>
+    <string name="btn_ok">Ok</string>
+    <string name="enter_pin_code">Enter Pin Code</string>
+    <string name="e_mail_address">E-mail address</string>
+    <string name="btn_save">Save</string>
+    <string name="saved">Saved</string>
+    <string name="email_is_not_valid">Email is not valid</string>
+    <string name="pass_is_not_valid">Password is not valid</string>
+    <string name="dialog_msg_please_wait">Please wait</string>
+    <string name="loader_loading_available_currencies">Loading available currencies</string>
+    <string name="title_about_app">About APP</string>
+    <string name="title_privacy_policy">Privacy Policy</string>
+    <string name="title_term_of_use">Term Of Use</string>
+    <string name="toolbar_title_generate_address">Your Address</string>
+    <string name="withdraw_amount_more_than_balance">Amount more than balance</string>
+    <string name="withdraw_address_not_valid">Wallet address can not be empty</string>
+    <string name="withdraw_amount_can_not_be_empty">Amount can not be empty</string>
+    <string name="app_about"><b>About Company</b>\n\nFounded in 2017, Guarda is innovation company focused on blockchain technologies. Founded by blockchain enthusiasts, based in EU. We have on board professionals from IT, blockchain and fintech that is key success factor for building exciting blockchain services.</string>
+    <string name="et_error_wrong_private_key">Wrong private key (only 0x, a&#8211;f, 0&#8211;9)</string>
+    <string name="et_error_wrong_private_key_or_email">Wrong private key or email</string>
+    <string name="et_error_private_key_is_empty">Private key can not be empty</string>
+    <string name="et_error_fee_more_than_amount">Fee can not be more than amount to send</string>
+    <string name="et_error_fee_more_than">Fee can not be more than current</string>
+    <string name="transaction_cant_be_sent">Transaction can\'t be sent with empty</string>
+    <string name="balance">balance</string>
+    <string name="et_error_fee_is_empty">Fee can not be empty</string>
+    <string name="et_error_gas_is_empty">Gas limit can not be empty</string>
+    <string name="progress_bar_sending_transaction">Sending transaction</string>
+    <string name="error_failed_to_create_currency_address">Failed to create an address for the selected currency. Please try later!</string>
+
+    <!--new-->
+    <string name="transaction_not_sent_gas">Warning! You’re using custom transaction gas parameters, so it can be ignored by blockchain.</string>
+    <string name="transaction_not_sent_fee">Warning! Not enough funds for the transaction commission fee.</string>
+    <string name="unable_to_connect_to_network">Unable to connect to the network, please check Internet connection or try again later.</string>
+    <string name="sanding_address_can_not_be_same">The sending address cannot be the same as yours</string>
+
+    <!--translated but not used-->
+       <string name="wallet_your_address">@string/app_your_address</string>
+       <string name="withdraw_send_coins_to_address">Send coins to the address</string>
+       <string name="purchase_purchase_monero">Purchase</string>
+       <string name="purchase_your_address">Ihre Adresse</string>
+       <string name="setting_setting">Einstellungen</string>
+       <string name="setting_about_app">Über die App</string>
+       <string name="navigation_drawer_open">Open navigation bar</string>
+       <string name="navigation_drawer_close">Close navigation bar</string>
+    <string name="pin_limit_block_message">Number of attempts exceeded, try again after %d seconds</string>
+    <string name="incorrect_pin_warning">Code you\'ve entered is incorrect</string>
+    <string name="warning_many_unsuccessful_attempts_pin_code">Too many unsuccessful attempts \n Wait %s minutes and try again</string>
+    <string name="app_guarda">Guarda</string>
+
+    <string name="app_menu_buy">Buy/Sell</string>
+    <string name="app_amount_to_purchase">Amount to purchase</string>
+    <string name="app_purchase_service">Select service</string>
+    <string name="edit_text_hint_amount_to_purchase">Amount to purchase</string>
+    <string name="btn_purchase">Purchase</string>
+    <string name="et_hint_name_and_surname">Your Name and Surname</string>
+    <string name="toolbar_title_enter_full_name">Enter full name</string>
+    <string name="et_warning_name_is_empty">Name is not valid</string>
+    <string name="et_hint_your_e_mail">Your e-mail</string>
+    <string name="et_hint_your_pass">Your password</string>
+    <string name="toolbar_title_enter_email">Enter E-mail</string>
+    <string name="toolbar_title_confirm_coinify">Confirm</string>
+    <string name="et_warning_email_is_empty">E-mail can not be empty</string>
+    <string name="et_hint_your_mobile_phone">Your mobile phone</string>
+    <string name="number_will_be_used_by_confirm">This number will be used to \nconfirm your purchase</string>
+    <string name="toolbar_title_enter_phone">Enter phone</string>
+    <string name="title_purchase_wemovecoin">Purchase</string>
+    <string name="phone_is_not_valid">Phone number is not valid</string>
+    <string name="you_will_approximately_get">You will approximately get:</string>
+    <string name="commission">Commission:</string>
+    <string name="result_transaction_successful">Transaction \n Successful</string>
+    <string name="tokens">Tokens</string>
+    <string name="small_sum_of_tx">Amount of sending is very small</string>
+    <string name="not_enough_money_to_send">Not enough money to send</string>
+    <string name="sending_coins">Sending coins</string>
+    <string name="comission_fee">Commission fee</string>
+    <string name="can_t_save_your_private_key">Can\'t save your private key in Secure Storage, your device is incompatible. Don\'t use this wallet to store coins</string>
+    <string name="minimal_amount">Minimal amount:</string>
+    <string name="your_exchange_address">Your exchange address</string>
+    <string name="destination_tag">Destination tag:</string>
+    <string name="sup_intent_email" translatable="false">hello@guarda.co</string>
+    <string name="sup_intent_subject">Android support request</string>
+    <string name="sup_intent_cant_send">Can\'t send. Please, use support chat</string>
+    <string name="rate_no_stars">The rating is not selected</string>
+    <string name="send_wrong_address">Only %s address for send</string>
+    <string name="empty_string" translatable="false"></string>
+    <string name="restore_backup_email">Wallet email</string>
+    <string name="rate_app">Rate app</string>
+    <string name="rate_xpl">It does not take a lot of time</string>
+    <string name="rate_later">Later</string>
+    <string name="rate_rate">Rate</string>
+    <string name="rate_report">Report a problem by:</string>
+    <string name="rate_cancel">@string/cancel</string>
+    <string name="rate_support">Support</string>
+    <string name="gas_limit">Gas limit</string>
+    <string name="custom_data">Custom data</string>
+    <string name="about_ver" translatable="false">ver.</string>
+    <string name="max">Max</string>
+    <string name="root_dialog_message">You are using root device! Please, pay attention, that there are notable security risks. The secure private key storage will work incorrectly. We can not guarantee the secure app working in this case. If you apply this, you\'ll use the app at your own risk.</string>
+    <string name="exit">Exit</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout_title">Are you sure you want to log out?</string>
+    <string name="logout_text">@string/logout_dialog_message</string>
+    <string name="logout_backup">Backup private key</string>
+    <string name="logout_confirm_exit">@string/app_log_out</string>
+    <string name="coinify_terms"><b>Account terms:</b> Coinify will process your transaction. When placing an order, Coinify will create an account for you associated to this email address.</string>
+
+    <!--Toast error's ,messages-->
+    <string name="err_get_balance">Balance is temporarily unavailable</string>
+    <string name="err_get_history">Transaction history is temporarily unavailable</string>
+    <string name="err_network">Network is temporarily unavailable</string>
+    <string name="err_tokens">Token balance is temporarily unavailable</string>
+    <string name="err_tokens_txs">Tokens transactions is temporarily unavailable</string>
+    <string name="err_usd">USD balance is temporarily unavailable</string>
+    <string name="err_claim">Unable to claim rewards</string>
+
+    <!--Transaction status-->
+    <string name="tx_status_node">Sending to the node</string>
+    <string name="tx_status_wait">Awaiting confirmation</string>
+    <string name="tx_status_fail">Fail</string>
+
+    <!-- Coinify -->
+    <string name="amount_coinify_title">Sell</string>
+    <string name="amount_coinify_you_sell">You sell</string>
+    <string name="amount_coinify_you_get">You get</string>
+    <string name="coinify_new_purchase">New order</string>
+    <string name="coinify_details_to_email">The order confirmation will be sent to your e-mail address.</string>
+    <string name="coinify_make_transfer">Coinify will send you an e-mail with payment instructions and terms of processing - Please read it carefully - If you agree to them, make a bank transfer to the following account to complete the order.</string>
+    <string name="coinify_remember">Remember to insert the reference (%s) as the bank transfer text. Without the reference we can not process your trade. \n\nBank transfers must come from a bank account in your own name. Transfers from third party accounts will be rejected.</string>
+    <string name="coinify_amount_min">Minimum sell:</string>
+    <string name="coinify_amount_max">Maximum sell:</string>
+    <string name="coinify_amount_exchange">Exchange fee:</string>
+    <string name="coinify_amount_rate">Exchange rate:</string>
+    <string name="coinify_terms_accept">Accept Coinify’s Terms of Service and Privacy Policy.</string>
+    <string name="coinify_add_bank">Add bank account</string>
+    <string name="coinify_new_bank">New bank account</string>
+    <string name="coinify_bank_name">Bank name:</string>
+    <string name="coinify_acc_holder">Account holder:</string>
+    <string name="coinify_acc_cur">Account currency:</string>
+    <string name="coinify_acc_number">Account number:</string>
+    <string name="coinify_add_int">Add international bank account</string>
+    <string name="coinify_add_dan">Add danish bank account</string>
+    <string name="coinify_add_acc">Add bank account</string>
+    <string name="coinify_sell_explain">Your purchase of %s %s for %s %s is waiting for transaction confirmation.</string>
+    <string name="coinify_sell_confirm">I accept that cryptocurrency will be traded at the current available exchange rate at the time Coinify processes my order which might differ from the rate displayed above. I am aware of the risks involved with digital currencies and accept Coinify terms and conditions.</string>
+    <string name="coinify_min_amount">Amount less than minimum</string>
+    <string name="coinify_rejected_state">Unfortunately, we cannot process trade order %s. Due to security regulations, the reason cannot be disclosed. In case your card has been charged, an automatic refund has been issued for your order but please be aware that it may take a few more days for the funds to show in your bank account. You can still buy cryptocurrency by using our Bank transfer option.</string>
+    <string name="coinify_bank_days">If the transaction is made within 15 min, Coinify will send a bank transfer within 2 bank days to a bank account in your name provided that all details are correct and complete.</string>
+    <string name="coinify_bank_checks_agree">This sell cryptocurrency option is subjected to AML and Compliance checks.\n\nThis means that you might be requested to provide a proof source of founds/cryptocurrency before Coinify can send you a payout.\n\nBut do not worry, your fiat payout amount will be guaranteed. Learn more about this at </string>
+    <string name="coinify_addbank_expl">Remember that you can only use a bank account registered in your own name to receive the payout.\n\nThe bank account selected needs to have the same currency on the Sell Order. On the contrary, conversation fees might apply.\n\nIt is your responsibility to check with your bank if they receive transfers from cryptocurrency companies.</string>
+    <string name="coinify_chb_altcoin">I’d like to get %s. Provide the automatic exchange and send funds to my wallet. </string>
+    <string name="coinify_expl_exch_titile">In-app exchange</string>
+    <string name="coinify_expl_exch_text">Coinify service provides BTC purchase only. To receive BTC after the purchase you need to provide a destination BTC wallet address. You are not able to manage you BTC within this wallet app, you may use Guarda Bitcoin Wallet or any other wallet available on the market.\n\nGuarda may provide an automatic exchange from BTC to the chosen currency within the current wallet. (You will purchase BTC and receive the amount converted into chosen currency)</string>
+
+    <!-- Custom node -->
+    <string name="custom_node_expl">Your node must be HTTPS in order to connect.</string>
+</resources>

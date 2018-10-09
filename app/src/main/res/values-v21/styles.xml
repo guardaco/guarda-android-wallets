@@ -1,0 +1,65 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/navBarColor</item>
+        <!--<item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>-->
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="baseBtnStyle" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">@dimen/standard_btn_text_size</item>
+        <item name="background">@drawable/btn_white</item>
+        <item name="android:layout_width">250dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="EditTextHintLightBlue" parent="Widget.Design.TextInputLayout">
+        <item name="colorAccent">@color/blueSeparatorColor</item>
+        <item name="android:textColorHint">@color/greyHintTextInput</item>
+        <item name="android:textColor">@color/neutralGreyTextColor</item>
+        <item name="colorControlNormal">@color/neutralGreyTextColor</item>
+        <item name="colorControlHighlight">@color/blueSeparatorColor</item>
+        <item name="errorEnabled">false</item>
+        <item name="colorControlActivated">@color/blueSeparatorColor</item>
+        <item name="textColorError">@color/errorTextColor</item>
+    </style>
+
+    <style name="EditTextHintLightGrey" parent="Widget.Design.TextInputLayout">
+        <item name="colorAccent">@color/greyHintColor</item>
+        <item name="android:textColorHint">@color/txStatusGrey</item>
+        <item name="android:textColor">@color/greyHintColor</item>
+        <item name="colorControlNormal">@color/neutralGreyTextColor</item>
+        <item name="colorControlHighlight">@color/greyHintColor</item>
+        <item name="colorControlActivated">@color/greyHintColor</item>
+        <!--<item name="textColorError">@color/errorTextColor</item>-->
+    </style>
+
+    <style name="lightWalletSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">#8d81d5</item>
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#bfc2d6</item>
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">#bac4ff</item>
+    </style>
+
+    <style name="SwitchGasFeeStyle" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">#8d81d5</item>
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/switch_thumb_transaction</item>
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">#bac4ff</item>
+    </style>
+</resources>

@@ -1,0 +1,49 @@
+[{
+    "name": "Bytecoin",
+    "ticker": "BCN",
+    "field": "Payment ID"
+}, {
+    "name": "Monero",
+    "ticker": "XMR",
+    "field": "Payment ID"
+}, {
+    "name": "DigitalNote",
+    "ticker": "XDN",
+    "field": "Payment ID"
+}, {
+    "name": "QuazarCoin",
+    "ticker": "QCN",
+    "field": "Payment ID"
+}, {
+    "name": "Dashcoin",
+    "ticker": "DSH",
+    "field": "Payment ID"
+}, {
+    "name": "Fantomcoin",
+    "ticker": "FCN",
+    "field": "Payment ID"
+}, {
+    "name": "Ripple",
+    "ticker": "XRP",
+    "field": "Destination Tag"
+}, {
+    "name": "Next",
+    "ticker": "NXT",
+    "field": "Message"
+}, {
+    "name": "Aeon",
+    "ticker": "AEON",
+    "field": "Payment ID"
+}, {
+    "name": "NEM",
+    "ticker": "XEM",
+    "field": "Message"
+}, {
+    "name": "Steem",
+    "ticker": "STEEM",
+    "field": "Memo"
+}, {
+    "name": "Stellar",
+    "ticker": "STR",
+    "field": "Memo"
+}]

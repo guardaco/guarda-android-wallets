@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name" translatable="false">Monero Wallet</string>
+    <string name="app_coin_currency" translatable="false">XMR</string>
+    <string name="freshchat_file_provider_authority" translatable="false">com.guarda.xmr.provider</string>
+
+    <string name="restore_backup_passphrase">XMR wallet private key</string>
+    <string name="app_top_up_width_other_currency">Top Up Your XMR Wallet With:</string>
+    <string name="top_up_width_other_currency">Purchase XMR</string>
+
+</resources>

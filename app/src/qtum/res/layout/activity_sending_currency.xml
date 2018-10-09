@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseWhiteBgColor"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_send"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"/>
+
+            <!--<android.support.constraint.ConstraintLayout-->
+            <!--android:id="@+id/cl_switch_container"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:focusable="true"-->
+            <!--android:focusableInTouchMode="true">-->
+
+            <!--<com.guarda.ethereum.customviews.RobotoLightTextView-->
+            <!--android:id="@+id/tv_gas"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:focusable="true"-->
+            <!--android:focusableInTouchMode="true"-->
+            <!--android:text="@string/gas"-->
+            <!--android:textColor="@color/baseBlueTextColor"-->
+            <!--android:textSize="14sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintRight_toLeftOf="@+id/switch_gas_fee"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--<com.guarda.ethereum.customviews.RobotoLightTextView-->
+            <!--android:id="@+id/tv_fee"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:text="@string/fee"-->
+            <!--android:textColor="@color/baseBlueTextColor"-->
+            <!--android:textSize="14sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintLeft_toRightOf="@+id/switch_gas_fee"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--<android.support.v7.widget.SwitchCompat-->
+            <!--android:id="@+id/switch_gas_fee"-->
+            <!--style="@style/SwitchGasFeeStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:theme="@style/SwitchGasFeeStyle" />-->
+            <!--</android.support.constraint.ConstraintLayout>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_sum_send_label"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:text="@string/withdraw_sum_send" />-->
+
+            <TextView
+                android:id="@+id/tv_sum_send_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/withdraw_amount_to_send"
+                android:textColor="@color/txStatusGrey"
+                android:layout_marginTop="24dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:theme="@style/EditTextHintLightGrey">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.guarda.ethereum.customviews.RobotoEditText
+                            android:id="@+id/et_sum_send"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:hint="@string/withdraw_sum_send"
+                            android:inputType="numberDecimal"
+                            android:maxLength="25"
+                            android:maxLines="1"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/darkGreyText"
+                            android:textSize="20dp" />
+
+                        <com.guarda.ethereum.customviews.RobotoLightTextView
+                            android:id="@+id/eth_hint_sum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_below="@id/tv_sum_send_label"
+                            android:layout_marginEnd="5dp"
+                            android:text="@string/app_coin_currency"
+                            android:textColor="@color/neutralGreyTextColor"
+                            android:textSize="24dp"
+                            android:visibility="visible" />
+
+                    </RelativeLayout>
+                </android.support.design.widget.TextInputLayout>
+
+            </RelativeLayout>
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/ll_gas_container"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<android.support.design.widget.TextInputLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:gravity="center"-->
+            <!--android:theme="@style/EditTextHintLightGrey">-->
+
+            <!--<com.guarda.ethereum.customviews.RobotoLightEditText-->
+            <!--android:id="@+id/et_gas_limit"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="start"-->
+            <!--android:hint="Gas limit"-->
+            <!--android:inputType="numberSigned"-->
+            <!--android:maxLength="25"-->
+            <!--android:maxLines="1"-->
+            <!--android:textAlignment="textStart"-->
+            <!--android:textColor="#36464e"-->
+            <!--android:textSize="16dp" />-->
+
+            <!--</android.support.design.widget.TextInputLayout>-->
+
+            <!--<android.support.design.widget.TextInputLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:gravity="center"-->
+            <!--android:theme="@style/EditTextHintLightGrey">-->
+
+            <!--<com.guarda.ethereum.customviews.RobotoLightEditText-->
+            <!--android:id="@+id/et_custom_data"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="start"-->
+            <!--android:hint="Custom data"-->
+            <!--android:inputType="text"-->
+            <!--android:maxLength="25"-->
+            <!--android:maxLines="1"-->
+            <!--android:textAlignment="textStart"-->
+            <!--android:textColor="#36464e"-->
+            <!--android:textSize="16dp" />-->
+
+            <!--</android.support.design.widget.TextInputLayout>-->
+            <!--</LinearLayout>-->
+
+            <LinearLayout
+                android:id="@+id/ll_fee_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_fee_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comission_fee"
+                    android:textColor="@color/txStatusGrey"
+                    android:layout_marginTop="8dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:theme="@style/EditTextHintLightGrey">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.guarda.ethereum.customviews.RobotoLightEditText
+                                android:id="@+id/et_fee_amount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="start"
+                                android:hint="@string/withdraw_fee_amount"
+                                android:inputType="numberDecimal"
+                                android:maxLength="25"
+                                android:maxLines="1"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/darkGreyText"
+                                android:textSize="16dp" />
+
+                            <com.guarda.ethereum.customviews.RobotoLightTextView
+                                android:id="@+id/eth_hint_fee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="5dp"
+                                android:text="@string/app_fee_kb_currency"
+                                android:textColor="@color/neutralGreyTextColor"
+                                android:textSize="18dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+                    </android.support.design.widget.TextInputLayout>
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_arrival_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/withdraw_arrival_amount"
+                    android:textColor="@color/txStatusGrey"
+                    android:layout_marginTop="8dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:theme="@style/EditTextHintLightGrey">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.guarda.ethereum.customviews.RobotoLightEditText
+                                android:id="@+id/et_arrival_amount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:enabled="false"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:gravity="start"
+                                android:hint="@string/withdraw_arrival_amount"
+                                android:inputType="text"
+                                android:maxLength="25"
+                                android:maxLines="1"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/darkGreyText"
+                                android:textSize="16dp" />
+
+                            <com.guarda.ethereum.customviews.RobotoLightTextView
+                                android:id="@+id/eth_hint_arrival"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="5dp"
+                                android:text="@string/app_coin_currency"
+                                android:textColor="@color/neutralGreyTextColor"
+                                android:textSize="18dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+                    </android.support.design.widget.TextInputLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <Button
+                        android:id="@+id/btn_include"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_border_blue"
+                        android:text="@string/withdraw_include"
+                        android:textColor="@color/baseBlueTextColor"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btn_exclude"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_enable_gray"
+                        android:text="@string/withdraw_exclude"
+                        android:textColor="@color/baseBlueTextColor"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_send_coins_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:theme="@style/EditTextHintLightGrey">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/et_send_coins_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:gravity="start"
+                    android:hint="@string/withdraw_address_send"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:maxLength="100"
+                    android:maxLines="2"
+                    android:shrinkColumns="0, true"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/darkGreyText"
+                    android:textSize="20dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="15dp"
+                style="@style/colorButtonStyle"
+                android:elevation="5dp"
+                android:paddingEnd="15dp"
+                android:text="@string/withdraw_confirm" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</ScrollView>

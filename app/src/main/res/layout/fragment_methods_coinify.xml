@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv_card"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/whiteTextColor">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="16dp"
+                android:id="@+id/image_service"
+                app:srcCompat="@drawable/buy_card"/>
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_service"
+                android:text="Credit/Debit Card"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/image_service"
+                android:textColor="@color/darkGreyText"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_buy"
+            android:layout_marginTop="66dp"
+            android:layout_marginStart="60dp">
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_buy"
+                android:text="\u2022 Receive cryptocurrency instantly"
+                android:layout_gravity="center"
+                android:textColor="@color/lightGrey"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_sell"
+            android:layout_marginTop="96dp"
+            android:layout_marginStart="60dp">
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_sell"
+                android:text="\u2022 3% convenience fee"
+                android:layout_gravity="center"
+                android:textColor="@color/lightGrey"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="126dp"
+            android:layout_marginBottom="26dp"
+            android:layout_marginStart="60dp">
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_fee_title"
+                android:text="\u2022 Visa or Mastercard"
+                android:layout_gravity="center"
+                android:textColor="@color/lightGrey"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv_bank"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/whiteTextColor">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="16dp"
+                android:id="@+id/image_service1"
+                app:srcCompat="@drawable/bank_trans"/>
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_service1"
+                android:text="Bank Transfer"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/image_service1"
+                android:textColor="@color/darkGreyText"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_buy1"
+            android:layout_marginTop="66dp"
+            android:layout_marginStart="60dp">
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_buy1"
+                android:text="\u2022 One time ID Verification"
+                android:layout_gravity="center"
+                android:textColor="@color/lightGrey"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_sell1"
+            android:layout_marginTop="96dp"
+            android:layout_marginStart="60dp">
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_sell1"
+                android:text="\u2022 Receive bitcoin in 2-3 bank days"
+                android:layout_gravity="center"
+                android:textColor="@color/lightGrey"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="126dp"
+            android:layout_marginBottom="26dp"
+            android:layout_marginStart="60dp">
+
+            <com.guarda.ethereum.customviews.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_fee_title1"
+                android:text="\u2022 0.25% payment fee"
+                android:layout_gravity="center"
+                android:textColor="@color/lightGrey"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

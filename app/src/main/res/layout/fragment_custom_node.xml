@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/baseWhiteBgColor"
+    android:padding="20dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_server"
+        android:hint="server"
+        android:inputType="textUri"
+        tools:text="https://web3.gastracker.io"/>
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_port"
+        android:layout_below="@+id/et_server"
+        android:hint="port"
+        android:inputType="number"
+        tools:text="123456"/>
+
+    <TextView
+        android:id="@+id/tv_node_expl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/et_port"
+        android:background="@color/baseBgColor"
+        android:gravity="fill_vertical|fill_horizontal"
+        android:lineSpacingExtra="6dp"
+        android:padding="16dp"
+        android:text="@string/custom_node_expl"
+        android:textColor="@color/darkGreyText"
+        android:textSize="12sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_check"
+        android:layout_below="@+id/tv_node_expl"
+        android:layout_marginTop="20dp"
+        style="?android:attr/buttonStyleInset"
+        android:visibility="gone"
+        android:text="Test connect"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_default_node"
+        android:layout_below="@+id/tv_node_expl"
+        android:layout_toEndOf="@+id/btn_check"
+        android:layout_marginTop="20dp"
+        style="?android:attr/buttonBarButtonStyle"
+        android:text="Use default"/>
+
+    <Button
+        android:id="@+id/btn_save_node"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        style="@style/colorButtonStyle"
+        android:drawableEnd="@drawable/ic_arrow_right_wr"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/btn_save" />
+
+</RelativeLayout>

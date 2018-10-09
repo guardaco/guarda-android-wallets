@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name" translatable="false">IOTA Wallet</string>
+    <string name="app_coin_currency" translatable="false">MIOTA</string>
+    <string name="app_fee_kb_currency" translatable="false">MIOTA/kB</string>
+    <string name="freshchat_file_provider_authority" translatable="false">com.guarda.iota.provider</string>
+
+    <string name="restore_backup_passphrase">Enter Mnemonic, WIF or XPRV</string>
+    <string name="app_top_up_width_other_currency">Top Up Your IOTA Wallet With:</string>
+    <string name="top_up_width_other_currency">Purchase IOTA</string>
+    <string name="app_currency_name" translatable="false">MIOTA</string>
+    <string name="et_error_wrong_private_key">Wrong SEED</string>
+    <string name="et_error_private_key_is_empty">Field \'SEED\' can not be empty</string>
+    <string name="title_restore_backup">Restore</string>
+    <string name="start_login_from_backup">Login from SEED</string>
+    <string name="restore_backup_enter_backup_passphrase">Enter your wallet SEED</string>
+
+    <string name="backup_your_back_up_passphrase">Your wallet seed</string>
+    <string name="backup_instruction">Seed contain 81 character, uppercase letters and numbers. Keeping seed secure and private is very important, as it’s the only way that you will be able to login to your account. We don’t store the wallet seed on the server there is no way to recover it if it’s lost!</string>
+
+    <string name="logout_backup">Backup wallet seed</string>
+    <string name="logout_dialog_message">Security Alert! You are going to log out of the app. Please check that you have made your seed backup, otherwise you will lose the access to your wallet. Guarda won’t be able to help you, as we do not have access to your seed and funds. Do you really want to log out and exit?\n\nSEED contains 81 character - UPPERCASE letters A-Z and number 9. (Spaces here are inserted so you could write down your SEED easier) Print this paper and store it on a safe place. If you lose your SEED or it gets stolen, you will lose all your money!!!</string>
+
+    <string name="root_dialog_message">You are using root device! Please, pay attention, that there are notable security risks. The secure SEED storage will work incorrectly. We cannot guarantee the secure app working in this case. If you apply this, you\'ll use the app at your own risk.</string>
+
+</resources>

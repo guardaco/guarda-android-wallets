@@ -1,0 +1,17 @@
+<resources>
+    <string name="restore_backup_passphrase">Enter Mnemonic, WIF or XPRV</string>
+    <string name="app_top_up_width_other_currency">Recharger avec une autre devise</string>
+    <string name="top_up_width_other_currency">Recharger avec une autre devise</string>
+    <string name="start_login_from_backup">Se connecter de SEED</string>
+    <string name="title_restore_backup">Restaurer</string>
+    <string name="restore_backup_enter_backup_passphrase">Entrer la SEED</string>
+    <string name="et_error_wrong_private_key">Clé SEED n’est pas correcte</string>
+    <string name="et_error_private_key_is_empty">\'LA SEED\' de terrain ne peut pas être vide</string>
+
+    <string name="backup_your_back_up_passphrase">Votre SEED de portefeuille</string>
+    <string name="backup_instruction">LA SEED contient 81 caractère - les lettres d\'UPPERCASE A-Z et le numéro 9. (Les espaces sont insérés ici ainsi vous pourriez mettre par écrit votre SEED plus facile) les Caractères ce papier et conservez-le sur un endroit sûr. Si vous perdez votre SEED ou elle est volée, vous perdrez tout votre argent !!!</string>
+
+    <string name="logout_dialog_message">Alerte de sécurité ! Vous allez noter de l\'application. Vérifiez s\'il vous plaît que vous avez fait votre Soutien SEED, autrement vous perdrez l\'accès à votre portefeuille. Guarda ne sera pas capable de vous aider, puisque nous n\'avons pas d\'accès à vos SEED et fonds. Voulez-vous vraiment noter et sortir ?\n\nLA SEED contient 81 caractère - les lettres d'UPPERCASE A-Z et le numéro 9. (Les espaces sont insérés ici ainsi vous pourriez mettre par écrit votre SEED plus facile) les Caractères ce papier et conservez-le sur un endroit sûr. Si vous perdez votre SEED ou elle est volée, vous perdrez tout votre argent !!!</string>
+
+    <string name="root_dialog_message">Vous utilisez l\'appareil de racine ! S\'il vous plaît, faites l\'attention, qu\'il y a des risques de sécurité remarquables. Le stockage clé SEED travaillera incorrectement. Nous ne pouvons pas garantir l\'application sûre travaillant dans ce cas-là. Si vous l'appliquez, vous utiliserez l'application à votre propre risque.</string>
+</resources>

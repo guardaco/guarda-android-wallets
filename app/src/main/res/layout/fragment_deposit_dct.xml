@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_view_margin"
+            app:cardCornerRadius="@dimen/card_view_corner_radius">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/baseWhiteBgColor"
+                android:padding="15dp">
+
+                <ImageView
+                    android:id="@+id/iv_qr_code"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/btn_gradient_background"
+                    android:layout_below="@+id/btn_currency_code"
+                    android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="false" />
+
+                <com.guarda.ethereum.customviews.RobotoTextView
+                    android:id="@+id/tv_address_wallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_qr_code"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="25dp"
+                    android:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
+                    android:textColor="@color/baseBlueTextColor"
+                    android:textSize="20dp" />
+
+                <com.guarda.ethereum.customviews.RobotoLightTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/iv_qr_code"
+                    android:text="@string/app_your_address"
+                    android:id="@+id/tv_your_address"
+                    android:textColor="@color/baseLightGreyTextColor"
+                    android:textSize="14dp" />
+
+                <ImageView
+                    android:id="@+id/imageViewAbout"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="5dp"
+                    android:foregroundGravity="center"
+                    android:layout_alignBottom="@id/tv_your_address"
+                    android:layout_toEndOf="@+id/tv_your_address"
+                    app:srcCompat="@drawable/ic_help_icon_wr" />
+
+                <com.guarda.ethereum.customviews.RobotoLightTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/app_tap_to_copy"
+                    android:id="@+id/tv_tap_to_copy_address"
+                    android:textColor="@color/baseLightGreyTextColor"
+                    android:textSize="14dp" />
+
+                <Button
+                    android:id="@+id/btn_display_encrypted_alt"
+                    android:layout_width="310dp"
+                    android:layout_height="36dp"
+                    android:layout_below="@+id/tv_address_wallet"
+                    android:textColor="@color/baseBlueTextColor"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/btn_light_blue"
+                    android:textAllCaps="false"
+                    android:text="" />
+
+                <Button
+                    android:id="@+id/btn_copy_address"
+                    android:layout_width="150dp"
+                    android:layout_height="36dp"
+                    android:layout_below="@+id/btn_display_encrypted_alt"
+                    android:textColor="@color/baseBlueTextColor"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_light_blue"
+                    android:textAllCaps="false"
+                    android:text="@string/app_copy" />
+
+                <Button
+                    android:id="@+id/btn_share_adr"
+                    android:layout_width="150dp"
+                    android:layout_height="36dp"
+                    android:layout_below="@+id/btn_display_encrypted_alt"
+                    android:textColor="@color/baseBlueTextColor"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="170dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_light_blue"
+                    android:textAllCaps="false"
+                    android:text="@string/deposit_address_share" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/tv_deposit_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/app_top_up_width_other_currency"
+            android:textColor="@color/baseTextColor" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_view_margin"
+            app:cardCornerRadius="@dimen/card_view_corner_radius">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_crypto_purchase"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/baseWhiteBgColor" />
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

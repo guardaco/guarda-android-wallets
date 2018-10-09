@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="input_1" />
+    <item type="id" name="input_2" />
+    <item type="id" name="input_3" />
+    <item type="id" name="input_4" />
+    <item type="id" name="input_5" />
+    <item type="id" name="input_6" />
+    <item type="id" name="input_7" />
+    <item type="id" name="input_8" />
+    <item type="id" name="input_9" />
+    <item type="id" name="input_comma" />
+    <item type="id" name="input_0" />
+    <item type="id" name="input_erase" />
+
+    <item type="id" name="pin_header" />
+    <item type="id" name="pin_input_layout" />
+</resources>

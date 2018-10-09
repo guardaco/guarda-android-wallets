@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/base_gradient_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/token_item_padding">
+
+    <com.guarda.ethereum.customviews.RobotoLightTextView
+        android:id="@+id/tv_token_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:text="NameToken 01"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="18sp" />
+
+    <com.guarda.ethereum.customviews.RobotoTextView
+        android:id="@+id/tv_token_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:text="0.0000012 XXX"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="18sp" />
+
+    <com.guarda.ethereum.customviews.RobotoLightTextView
+        android:id="@+id/tv_token_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tv_token_num"
+        android:layout_marginEnd="10dp"
+        android:text="30000000 USD"
+        android:textColor="@color/whiteTextColor"
+        android:textSize="14sp" />
+    <!--android:textColor="@color/whiteTextColor"-->
+
+</RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/semiTransparent" />
+</RelativeLayout>

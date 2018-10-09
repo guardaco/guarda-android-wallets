@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="FrameView">
+        <attr name="frame_thickness" format="dimension" />
+        <attr name="frame_size" format="fraction" />
+        <attr name="frame_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="GuardaInputLayout">
+        <attr name="textSize" format="integer" />
+        <attr name="isShowComma" format="boolean" />
+        <attr name="maxCount" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="GuardaPinCodeLayout">
+        <attr name="pinShowComma" format="boolean" />
+        <attr name="pinCodeMarginLeftRight" format="dimension"/>
+        <attr name="pinCodeMarginBottom" format="dimension"/>
+        <attr name="pinCodeMaxCount" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomAppCompatButton">
+        <attr name="drawableLeftCompat" format="reference"/>
+        <attr name="drawableRightCompat" format="reference"/>
+        <attr name="drawableTopCompat" format="reference"/>
+        <attr name="drawableBottomCompat" format="reference"/>
+    </declare-styleable>
+</resources>

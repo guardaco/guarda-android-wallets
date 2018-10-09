@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/whiteTextColor">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_you_sell"
+            android:layout_below="@+id/textViewExchange"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_amount_to_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:layout_toStartOf="@+id/eth_hint"
+                android:theme="@style/EditTextHintLightBlue">
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/et_amount_to_send"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:gravity="start"
+                    android:hint="@string/amount_coinify_you_sell"
+                    android:inputType="numberDecimal"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/editTextBlueGreyColor"
+                    android:textSize="20sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <com.guarda.ethereum.customviews.RobotoLightTextView
+                android:id="@+id/eth_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/app_coin_currency"
+                android:textColor="@color/neutralGreyTextColor"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_you_get"
+            android:layout_below="@+id/rl_you_sell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_amount_to_purchase"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_weight="8"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:theme="@style/EditTextHintLightBlue">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/et_amount_to_purchase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="31dp"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:gravity="start"
+                    android:hint="@string/amount_coinify_you_get"
+                    android:inputType="numberDecimal"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/editTextBlueGreyColor"
+                    android:textSize="20sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="59dp"
+                android:layout_gravity="top"
+                android:layout_toEndOf="@+id/til_amount_to_purchase"
+                android:layout_weight="2">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/separator"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_corner_blue" />
+
+                <View
+                    android:id="@+id/separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="7.5dp"
+                    android:background="#818181" />
+
+                <Spinner
+                    android:id="@+id/sp_bank_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/separator"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/transparent"
+                    android:entries="@array/wemovecoins_currencies" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <com.guarda.ethereum.customviews.RobotoLightTextView
+            android:id="@+id/tv_sell_expl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_below="@+id/ll_you_get"
+            android:background="@color/baseBgColor"
+            android:gravity="fill_vertical|fill_horizontal"
+            android:lineSpacingExtra="6dp"
+            android:padding="16dp"
+            android:text="@string/coinify_bank_days"
+            android:textColor="@color/darkGreyText"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_min_sell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:text="@string/coinify_amount_min" />
+
+        <TextView
+            android:id="@+id/tv_max_sell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/coinify_amount_max" />
+
+        <TextView
+            android:id="@+id/tv_exch_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="75dp"
+            android:text="@string/coinify_amount_exchange" />
+
+        <TextView
+            android:id="@+id/tv_exch_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="100dp"
+            android:text="@string/coinify_amount_rate" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="25dp"
+            android:layout_gravity="bottom">
+
+            <Button
+                android:id="@+id/btn_next"
+                style="@style/colorButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:drawableEnd="@drawable/ic_arrow_right_wr"
+                android:elevation="5dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:text="@string/app_next" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

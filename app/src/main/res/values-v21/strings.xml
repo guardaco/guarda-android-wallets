@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="can_t_save_your_private_key">Can\'t save your private key in Secure Storage, your device is incompatible. Don\'t use this wallet to store coins</string>
+</resources>

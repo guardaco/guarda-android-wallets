@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_header_layout"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:layout_marginBottom="15dp"
+    android:background="@drawable/base_gradient_bg"
+    android:elevation="5dp"
+    android:fitsSystemWindows="true"
+    android:gravity="center_vertical"
+    android:paddingTop="25dp">
+
+    <!--<include-->
+        <!--android:id="@+id/logo_clr"-->
+        <!--layout="@layout/logo_txt_color"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="72dp" />-->
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:adjustViewBounds="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_logo_txt_color" />
+
+</RelativeLayout>

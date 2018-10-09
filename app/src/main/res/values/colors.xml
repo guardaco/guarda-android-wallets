@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#8eb9ff</color>
+
+    <color name="transparent">#00ffffff</color>
+
+    <color name="toolbar_text_color">#ffffff</color>
+    <color name="toolbar_end_color">#6698f7</color>
+    <color name="drawer_bg">#fafafa</color>
+    <color name="color_selector_drawer_menu_item">#202020</color>
+
+    <color name="navBarColor">#9ea8db</color>
+
+    <!-- bg colors-->
+    <color name="baseGreyBgColor">#e7e9f5</color>
+    <color name="baseWhiteBgColor">#ffffff</color>
+    <color name="baseBgColor">#F1F2FA</color>
+
+    <!--text colors-->
+    <color name="neutralGreyTextColor">#536d79</color>
+    <color name="drawerMenuTextColor">#202020</color>
+    <color name="blueHintColor">#86b4fe</color>
+    <color name="greyHintTextInput">#bdbdbd</color>
+    <color name="darkGreyText">#4f4f4f</color>
+    <color name="lightGreyText">#828282</color>
+    <color name="lightGrey">#80455A64</color>
+    <color name="greyHintColor">@color/txStatusGrey</color>
+    <color name="lightGreyHintColor">#d8d8d8</color>
+    <color name="errorTextColor">#e63935</color>
+    <color name="editTextBlueGreyColor">#536d79</color>
+
+    <color name="editTextGreyColor">#36464e</color>
+
+    <color name="settingsTextColor">#445963</color>
+    <color name="inputKeyboardTextColor">#445963</color>
+
+    <color name="whiteTextColor">#ffffff</color>
+    <color name="baseLightGreyTextColor">#bcbcbc</color>
+    <color name="baseDarkGreyTextColor">#455A64</color>
+    <color name="baseTextColor">#445963</color>
+    <color name="backupBorderXpl">#E53935</color>
+    <color name="backupBorderXplBack">#1AE53935</color>
+    <color name="txStatusGrey">#94A2A8</color>
+    <color name="txStatusRed">@color/transactionIndicatorRed</color>
+
+    <!--buttons-->
+    <color name="baseBlueTextColor">#448aff</color>
+    <color name="lightBlueButton">#1A6699F8</color>
+    <color name="greyBtnBgColor">#f3f4fa</color>
+    <color name="disabledBtnBgColor">#7d7f89</color>
+    <color name="bntBgColor">#E8EAF6</color>
+
+    <!--other colors-->
+    <color name="blueSeparatorColor">#8eb9ff</color>
+    <color name="separatorLightGreyColor">#e7e9f5</color>
+    <color name="separatorGreyColor">#868686</color>
+    <color name="transactionIndicatorGreen">#429F46</color>
+    <color name="transactionIndicatorRed">#EB5757</color>
+    <color name="base_white_alpha">#464389ff</color>
+    <color name="rippleColor">#64445963</color>
+    <color name="semiTransparent">#3fffffff</color>
+    <color name="toastBase">#9569C0</color>
+
+    <!-- logo colors -->
+    <color name="logo_bw_text_color">#37474F</color>
+    <color name="logo_bw_bg_color">#37474F</color>
+    <color name="logo_bw_currency_color">#FFFFFF</color>
+
+    <color name="logo_clr_text_color">#FFFFFF</color>
+    <color name="logo_clr_bg_color">#FFFFFF</color>
+    <color name="logo_clr_currency_color">#B388FF</color>
+
+    <!--<color name="cardview_shadow_start_color">#ff0000</color>-->
+    <!--<color name="cardview_shadow_end_color">#0004ff</color>-->
+
+</resources>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/root_item"
+    app:cardElevation="3dp"
+    app:cardCornerRadius="4dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@color/whiteTextColor">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_margin="16dp"
+            android:id="@+id/image_service"
+            app:srcCompat="@drawable/ic_coinify"/>
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_service"
+            android:text="Coinify"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/image_service"
+            android:textColor="@color/darkGreyText"/>
+
+        <!--<ImageView-->
+        <!--android:layout_width="14dp"-->
+        <!--android:layout_height="14dp"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--app:srcCompat="@drawable/ic_arrow_right_purch"/>-->
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_buy"
+        android:layout_marginTop="66dp"
+        android:layout_marginStart="66dp">
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_buy"
+            android:text="Buy"
+            android:layout_gravity="center"
+            android:textColor="@color/lightGrey"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_buy"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/image_buy_card"
+                app:srcCompat="@drawable/buy_card"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="22dp"
+                android:id="@+id/image_buy_bank"
+                app:srcCompat="@drawable/bank_trans"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_sell"
+        android:layout_marginTop="66dp"
+        android:layout_marginStart="186dp">
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_sell"
+            android:text="Sell"
+            android:layout_gravity="center"
+            android:textColor="@color/lightGrey"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_sell"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_unavailable"
+                android:text="Unavailable"
+                android:visibility="gone"
+                android:textColor="@color/darkGreyText"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/image_sell_card"
+                app:srcCompat="@drawable/buy_card"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="22dp"
+                android:id="@+id/image_sell_bank"
+                app:srcCompat="@drawable/bank_trans"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="136dp"
+        android:layout_marginStart="66dp">
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_fee_title"
+            android:text="Service fee"
+            android:layout_gravity="center"
+            android:textColor="@color/lightGrey"/>
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_fee"
+            android:layout_below="@id/tv_fee_title"
+            android:text="10/5%"
+            android:textColor="@color/darkGreyText"
+            android:orientation="horizontal"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="136dp"
+        android:layout_marginStart="186dp"
+        android:layout_marginBottom="16dp">
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_cntr_title"
+            android:text="Country support"
+            android:layout_gravity="center"
+            android:textColor="@color/lightGrey"/>
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_cntr"
+            android:layout_below="@id/tv_cntr_title"
+            android:text="Available"
+            android:textColor="@color/darkGreyText"
+            android:orientation="horizontal"/>
+
+    </RelativeLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="196dp">
+
+        <Button
+            android:id="@+id/buttonBuyPurchase"
+            style="@style/baseBtnStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_enable_gray_l"
+            android:text="Buy"
+            android:textColor="@color/baseBlueTextColor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/line_vert"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/line_vert"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/whiteTextColor"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:layout_constraintEnd_toStartOf="@+id/buttonSellPurchase"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonBuyPurchase"
+            app:layout_constraintTop_toTopOf="@+id/buttonBuyPurchase" />
+
+        <Button
+            android:id="@+id/buttonSellPurchase"
+            style="@style/baseBtnStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_toEndOf="@+id/line_vert"
+            android:background="@drawable/btn_enable_gray_r"
+            android:text="Sell"
+            android:textColor="@color/baseBlueTextColor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/line_vert" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
+
+

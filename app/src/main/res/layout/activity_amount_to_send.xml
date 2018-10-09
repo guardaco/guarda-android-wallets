@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseWhiteBgColor"
+    android:fitsSystemWindows="true"
+    android:padding="10dp"
+    tools:layout_marginTop="45dp">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_amount_to_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:clickable="false"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:theme="@style/EditTextHintLightGrey">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.guarda.ethereum.customviews.RobotoEditText
+                    android:id="@+id/et_amount_to_send"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:gravity="start"
+                    android:hint="@string/withdraw_amount_to_send"
+                    android:inputType="numberDecimal"
+                    android:layout_marginEnd="72dp"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/editTextBlueGreyColor"
+                    android:textSize="20sp" />
+
+                <com.guarda.ethereum.customviews.RobotoLightTextView
+                    android:id="@+id/eth_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="78dp"
+                    android:text="@string/app_coin_currency"
+                    android:textColor="@color/neutralGreyTextColor"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/btn_max"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginStart="16dp"
+                    android:paddingTop="9dp"
+                    android:paddingBottom="9dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:background="@drawable/btn_enable_gray"
+                    android:text="@string/max"
+                    android:textAllCaps="true"
+                    android:textColor="@color/baseBlueTextColor"
+                    android:textSize="14sp" />
+
+                <!--<Button-->
+                    <!--android:id="@+id/btn_exclude"-->
+                    <!--style="?android:attr/buttonBarButtonStyle"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="5dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:background="@drawable/btn_enable_gray"-->
+                    <!--android:text="@string/withdraw_exclude"-->
+                    <!--android:textColor="@color/baseBlueTextColor"-->
+                    <!--android:textSize="14sp" />-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/btn_max"-->
+                    <!--style="?android:attr/buttonStyleSmall"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginEnd="5dp"-->
+                    <!--android:background="@drawable/btn_border_grey"-->
+                    <!--android:minHeight="0dp"-->
+                    <!--android:minWidth="0dp"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:text="@string/max"-->
+                    <!--android:textAllCaps="true"-->
+                    <!--android:textColor="@color/neutralGreyTextColor"-->
+                    <!--android:textSize="12sp" />-->
+            </RelativeLayout>
+        </android.support.design.widget.TextInputLayout>
+
+        <com.guarda.ethereum.customviews.RobotoLightTextView
+            android:id="@+id/tv_current_balance_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/til_amount_to_send"
+            android:layout_marginTop="23dp"
+            android:layout_marginStart="5dp"
+            android:text="Your current balance"
+            android:textColor="@color/txStatusGrey"
+            android:textSize="14sp" />
+
+        <com.guarda.ethereum.customviews.RobotoLightTextView
+            android:id="@+id/tv_current_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_current_balance_title"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="5dp"
+            android:text="246.3475 ETH"
+            android:textColor="@color/baseDarkGreyTextColor"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <com.guarda.ethereum.customviews.GuardaInputLayout
+        android:id="@+id/gi_input_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_above="@+id/btn_send"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        app:isShowComma="true"
+        app:layout_constraintBottom_toTopOf="@+id/btn_send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3"
+        app:textSize="24" />
+
+    <Button
+        android:id="@+id/btn_send"
+        style="@style/colorButtonStyle"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="false"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="5dp"
+        android:paddingEnd="15dp"
+        android:text="@string/btn_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

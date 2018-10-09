@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="restore_backup_passphrase">Enter Mnemonic, WIF or XPRV</string>
+    <string name="app_top_up_width_other_currency">Recarga tu monedero IOTA con:</string>
+    <string name="top_up_width_other_currency">Recarga tu monedero IOTA con:</string>
+    <string name="start_login_from_backup">Inicia la sesión con tu SEED</string>
+    <string name="title_restore_backup">Recuperar</string>
+    <string name="restore_backup_enter_backup_passphrase">Introduzca la SEED</string>
+    <string name="et_error_wrong_private_key">La SEED incorrecta</string>
+    <string name="et_error_private_key_is_empty">\'LA SEED\' de campaña no puede ser vacía</string>
+
+    <string name="backup_your_back_up_passphrase">Su SEED de la cartera</string>
+    <string name="backup_instruction">LA SEED contiene 81 carácter - MAYÚSCULAS A-Z y el número 9. (Los espacios aquí se insertan así podría anotar su SEED más fácil) la Letra este artículo y almacénelo en un lugar seguro. ¡Si pierde su SEED o se roba, perderá todo su dinero!!!</string>
+
+    <string name="logout_dialog_message">¡Alarma de seguridad! Va a registrar del app. Por favor compruebe que ha hecho su Copia de seguridad SEED, por otra parte perderá el acceso a su cartera. Guarda no será capaz de ayudarle, ya que no tenemos el acceso a sus SEED y fondos. ¿Realmente quiere salir del sistema y salir?\n\nLA SEED contiene 81 carácter - MAYÚSCULAS A-Z y el número 9. (Los espacios aquí se insertan así podría anotar su SEED más fácil) la Letra este artículo y almacénelo en un lugar seguro. ¡Si pierde su SEED o se roba, perderá todo su dinero!!!</string>
+
+    <string name="root_dialog_message">¡Usa el dispositivo de la raíz! Por favor, preste la atención, que hay riesgos a la seguridad notables. El almacenaje clave SEED trabajará incorrectamente. No podemos garantizar app seguro que trabaja en este caso. Si aplica esto, usará el app en su propio peligro.</string>
+</resources>
