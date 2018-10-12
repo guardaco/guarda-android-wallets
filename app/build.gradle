@@ -142,8 +142,8 @@ android {
 
         iota { // Iota
             dimension "version"
-            versionCode 19
-            versionName "0.19"
+            versionCode 20
+            versionName "0.20"
             applicationId "com.guarda.iota"
             dimension "tier"
 
