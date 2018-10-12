@@ -119,12 +119,6 @@ public class WalletManager {
                 callback.run();
             }
         }.start();
-
-//        try {
-//            Thread.sleep(10000);
-//        } catch (Exception e){}
-
-
     }
 
     public void restoreFromBlock(String mnemonicCode, final WalletCreationCallback callback) {

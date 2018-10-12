@@ -382,7 +382,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 if (!isValueMoreBalance(amount)) {
                     showProgress();
                     long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
-                    Log.d("svcom", "fee = " + currentFeeEth);
+                    Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
                     ZCashWalletManager.getInstance().createTransaction_taddr(walletManager.getWalletFriendlyAddress(),
                             getToAddress(),
                             amountSatoshi,

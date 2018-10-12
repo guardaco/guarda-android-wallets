@@ -28,6 +28,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
+import static com.guarda.ethereum.models.constants.Const.ZEC_MAINNET_ADDR_PREFIX;
+import static com.guarda.ethereum.models.constants.Const.ZEC_TESTNET_ADDR_PREFIX;
+
 
 public class ZCashWalletManager {
 
@@ -104,7 +107,8 @@ public class ZCashWalletManager {
     ripemd160Digest.update(pubKey, 0, pubKey.length);
     ripemd160Digest.doFinal(pubKeyHash, 0);
 
-    pubKey = Bytes.concat(new byte[]{(byte) 0x1c, (byte) 0xb8}, pubKeyHash);
+//    pubKey = Bytes.concat(ZEC_MAINNET_ADDR_PREFIX, pubKeyHash);
+    pubKey = Bytes.concat(ZEC_TESTNET_ADDR_PREFIX, pubKeyHash);
     //                               ^~~~~~~~~~~~~~~~~~~~~~~~ mainnet prefix
 
     byte[] checksum = Sha256Hash.hashTwice(pubKey);

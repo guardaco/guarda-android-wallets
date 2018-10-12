@@ -13,6 +13,8 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_BASE_URL;
+
 public class GetUTXOSRequest extends AbstractZCashRequest implements Runnable {
   private WalletCallback<String, List<ZCashTransactionOutput>> callback;
   private String fromAddr;
@@ -26,7 +28,7 @@ public class GetUTXOSRequest extends AbstractZCashRequest implements Runnable {
 
   @Override
   public void run() {
-    String uri = Uri.parse(BLOCKEXPLORER_API_ADDR).buildUpon()
+    String uri = Uri.parse(ZEC_EXPLORER_BASE_URL).buildUpon()
             .appendEncodedPath("addrs")
             .appendEncodedPath(fromAddr)
             .appendEncodedPath("utxo")
