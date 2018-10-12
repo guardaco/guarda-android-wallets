@@ -5,11 +5,8 @@ public class Common {
     public final static String BLOCK = "passphrase";
     public final static String BTC_NODE_LOGIN = "guarda";
     public final static String BTC_NODE_PASS = "253879262eb0425089f62c4bf2a3d2a5";
-//    public final static String NODE_ADDRESS = "nodes.thetangle.org";
-//    public final static String NODE_ADDRESS = "nodes.iota.fm";
-    public final static String NODE_ADDRESS = "peanut.iotasalad.org";
-    //"node.iotawallet.info";//"5.9.118.112";//"eugene.iota.community";//"iota.bitfinex.com";//"service.iotasupport.com";
-            //"104.238.158.209";////http://iota.bitfinex.com:80;
+    // and other nodes you can fine here https://iota.dance/
+    public final static String NODE_ADDRESS = "tuna.iotasalad.org";
     public final static String MAIN_CURRENCY = "miota";
     public final static String MAIN_CURRENCY_NAME = "Iota";
     public final static String ETH_SHOW_PATTERN = "#,##0.#####";
