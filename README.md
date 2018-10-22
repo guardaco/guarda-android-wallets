@@ -1,5 +1,6 @@
 # Android SPV wallets by [Guarda](https://guarda.co)
-
+## How to install
+Here is detailed instruction [link](https://guarda.freshdesk.com/support/solutions/articles/36000095874-how-to-install-a-guarda-open-source-android-wallet).
 ## About
 Cryptocurrency wallets support:
 - BTC (Bitcoin) - [/APKs/btc-release-v0.32-code-32.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/btc-release-v0.32-code-32.apk)
