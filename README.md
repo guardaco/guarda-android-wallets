@@ -6,7 +6,7 @@ Cryptocurrency wallets support:
 - ETH (Ethereum) - [/APKs/eth-release-v0.62-code-74.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/eth-release-v0.62-code-74.apk)
 - BCH (Bitcoin Cash) - [/APKs/bch-release-v0.19-code-19.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/bch-release-v0.19-code-19.apk)
 - LTC (Litecoin) - [/APKs/ltc-release-v0.17-code-17.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/ltc-release-v0.17-code-17.apk)
-- IOTA (Iota) - [/APKs/iota-release-v0.19-code-19.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/iota-release-v0.19-code-19.apk)
+- IOTA (Iota) - [/APKs/iota-release-v0.20-code-20.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/iota-release-v0.20-code-20.apk)
 - ETC (Ethereum Classic) - [/APKs/etc-release-v0.59-code-46.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/etc-release-v0.59-code-46.apk)
 - ZEC (Zcash) - [/APKs/zec-release-v0.17-code-17.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-release-v0.17-code-17.apk)
 - BTG (Bitcoin Gold) - [/APKs/btg-release-v0.36-code-36.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/btg-release-v0.36-code-36.apk)
