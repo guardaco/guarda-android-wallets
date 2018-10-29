@@ -102,9 +102,11 @@ public class TransactionsManager {
         if (isOutTx) {
             return ownAddress;
         } else {
-            for (BalanceAndTxResponse.Inputs inputs : tx.getInputs())
+            for (BalanceAndTxResponse.Inputs inputs : tx.getInputs()) {
+                if (inputs.getOut() == null) continue;
                 if (!inputs.getOut().getAddress().equals(ownAddress))
                     return inputs.getOut().getAddress();
+            }
         }
         return "";
     }
@@ -139,6 +141,7 @@ public class TransactionsManager {
     private boolean addressContainsInInputs(BalanceAndTxResponse.BtcTransaction item, String ownAddress) {
         boolean res = false;
         for (BalanceAndTxResponse.Inputs input : item.getInputs()) {
+            if (input.getOut() == null) continue;
             if (input.getOut().getAddress().equals(ownAddress)) {
                 res = true;
             }
@@ -170,6 +173,7 @@ public class TransactionsManager {
     private long getOutsSum(BalanceAndTxResponse.BtcTransaction item, String ownAddress) {
         int res = 0;
         for (BalanceAndTxResponse.BtcOutTx out : item.getOuts()) {
+            if (out.getAddress() == null) continue;
             if (out.getAddress().equals(ownAddress)) {
                 res += out.getValue();
             }
