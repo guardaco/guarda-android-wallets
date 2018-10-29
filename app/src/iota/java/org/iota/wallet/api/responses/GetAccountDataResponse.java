@@ -114,7 +114,8 @@ public class GetAccountDataResponse extends ApiResponse {
 
             Collections.sort(transfers);
 
-            setBalance(apiResponse.getBalance());
+            //Don't know why, but in ver. 1.5.5 correct balance = value, before it was apiResponse.getBalance()
+            setBalance(value);
             setDuration(apiResponse.getDuration());
         }
     }
