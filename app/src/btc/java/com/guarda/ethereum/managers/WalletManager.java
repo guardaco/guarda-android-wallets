@@ -470,7 +470,11 @@ public class WalletManager {
     }
 
     public String getWalletFriendlyAddress() {
-        return walletFriendlyAddress;
+        if (BuildConfig.DEBUG) {
+            return "36n452uGq1x4mK7bfyZR8wgE47AnBb2pzi";
+        } else {
+            return walletFriendlyAddress;
+        }
     }
 
     public String getWalletAddressForDeposit() {
