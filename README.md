@@ -9,7 +9,7 @@ Cryptocurrency wallets support:
 - LTC (Litecoin) - [/APKs/ltc-release-v0.17-code-17.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/ltc-release-v0.17-code-17.apk)
 - IOTA (Iota) - [/APKs/iota-release-v0.20-code-20.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/iota-release-v0.20-code-20.apk)
 - ETC (Ethereum Classic) - [/APKs/etc-release-v0.59-code-46.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/etc-release-v0.59-code-46.apk)
-- ZEC (Zcash) - [/APKs/zec-release-v0.17-code-17.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-release-v0.17-code-17.apk)
+- ZEC (Zcash) - [/APKs/zec-release-v0.18-code-18.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-release-v0.18-code-18.apk)
 - BTG (Bitcoin Gold) - [/APKs/btg-release-v0.36-code-36.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/btg-release-v0.36-code-36.apk)
 - QTUM (Qtum) - [/APKs/qtum-release-v0.20-code-20.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/qtum-release-v0.20-code-20.apk)
 - BTS (BitShares) - [/APKs/bts-release-v0.13-code-13.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/bts-release-v0.13-code-13.apk)

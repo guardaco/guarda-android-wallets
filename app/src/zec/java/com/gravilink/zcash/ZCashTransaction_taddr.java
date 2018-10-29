@@ -23,10 +23,13 @@ public class ZCashTransaction_taddr {
   private static final byte[] ZCASH_OUTPUTS_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'O', 'u', 't', 'p', 'u', 't', 's', 'H', 'a', 's', 'h'};  //ZcashOutputsHash
   private static final byte[] ZCASH_SIGNATURE_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'S', 'i', 'g', 'H', 'a', 's', 'h'}; // ZcashSigHash (12 bytes)
   private static final int VERSION_BRANCH_ID_OVERWINTER = 0x03C48270;
+  private static final int VERSION_BRANCH_ID_SAPLING = 0x892F2085;
   private static final int CONSENSUS_BRANCH_ID_OVERWINTER = 0x5ba81b19;
-  private static final int header = 0x80000003; //version=3, fooverwintered=1
-  private static final int versionGroupId = VERSION_BRANCH_ID_OVERWINTER;
-  private static final int consensusBranchId = CONSENSUS_BRANCH_ID_OVERWINTER;
+  private static final int CONSENSUS_BRANCH_ID_SAPLING = 0x76b809bb;
+//  private static final int header = 0x80000003; //version=3, fooverwintered=1
+  private static final int header = 0x80000004; //version=4, fooverwintered=1
+  private static final int versionGroupId = VERSION_BRANCH_ID_SAPLING;
+  private static final int consensusBranchId = CONSENSUS_BRANCH_ID_SAPLING;
   private static final int SIGHASH_ALL = 1;
 
   private byte[] tx_sig_bytes;
@@ -81,10 +84,14 @@ public class ZCashTransaction_taddr {
     }
 
     tx_bytes = Bytes.concat(
-      tx_bytes,
-      Utils.int32BytesLE(locktime),
-      Utils.int32BytesLE(nExpiryHeight),
-      Utils.compactSizeIntLE(0)
+            tx_bytes,
+            new byte[32], //hashJoinSplits, zeros for us
+            new byte[32], //hashShieldedSpends, zeros for us
+            new byte[32], //hashShieldedOutputs, zeros for us
+            Utils.int32BytesLE(locktime),
+            Utils.int32BytesLE(nExpiryHeight),
+            Utils.int64BytesLE(0),
+            Utils.compactSizeIntLE(0)
     );
     return tx_bytes;
   }
@@ -129,16 +136,18 @@ public class ZCashTransaction_taddr {
     outputsDigest.update(outputs_ser, 0, outputs_ser.length);
     outputsDigest.doFinal(hashOutputs, 0);
 
-    tx_sig_bytes = Bytes.concat(
-      Utils.int32BytesLE(header),
-      Utils.int32BytesLE(versionGroupId),
-      hashPrevouts,
-      hashSequence,
-      hashOutputs,
-      new byte[32], //hashJoinSplits, zeros for us
-      Utils.int32BytesLE(locktime),
-      Utils.int32BytesLE(nExpiryHeight),
-      Utils.int32BytesLE(SIGHASH_ALL)
+    tx_sig_bytes = Bytes.concat(Utils.int32BytesLE(header),
+            Utils.int32BytesLE(versionGroupId),
+            hashPrevouts,
+            hashSequence,
+            hashOutputs,
+            new byte[32], //hashJoinSplits, zeros for us
+            new byte[32], //hashShieldedSpends, zeros for us
+            new byte[32], //hashShieldedOutputs, zeros for us
+            Utils.int32BytesLE(locktime),
+            Utils.int32BytesLE(nExpiryHeight),
+            Utils.int64BytesLE(0), //valueBalance, zeros for us
+            Utils.int32BytesLE(SIGHASH_ALL)
     );
   }
 

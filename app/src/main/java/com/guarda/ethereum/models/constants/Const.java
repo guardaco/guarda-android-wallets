@@ -16,6 +16,9 @@ public interface Const {
 
     long CHANGELLY_TIMEOUT = 2 * 60 * 1000;
 
+    byte[] ZEC_MAINNET_ADDR_PREFIX = {(byte) 0x1c, (byte) 0xb8};
+    byte[] ZEC_TESTNET_ADDR_PREFIX = {(byte) 0x1d, (byte) 0x25};
+
     Map<String, String> COIN_TO_RETURN_ADDRESS = new HashMap<String, String>() {{
         put("ZRX", "");
         put("ANT", "");
@@ -67,7 +70,6 @@ public interface Const {
         put("VTC", "Vpg5DLCn19aTcTQJxuErEXfv2aTRxzxeJU");
         put("TRST", "");
         put("USNBT", "B88K3eAoJs4DXHLPM5NjAFVFJiLuyAXT6s");
-        put("WINGS", "");
         put("WINGS", "t1R2sgsitXLpxm59CBqvAn7pxftUCGAKexD");
     }};
 }
