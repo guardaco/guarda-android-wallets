@@ -3,7 +3,7 @@
 Here is detailed instruction [link](https://guarda.freshdesk.com/support/solutions/articles/36000095874-how-to-install-a-guarda-open-source-android-wallet).
 ## About
 Cryptocurrency wallets support:
-- BTC (Bitcoin) - [/APKs/btc-release-v0.32-code-32.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/btc-release-v0.32-code-32.apk)
+- BTC (Bitcoin) - [/APKs/btc-release-v0.32-code-33.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/btc-release-v0.33-code-33.apk)
 - ETH (Ethereum) - [/APKs/eth-release-v0.62-code-74.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/eth-release-v0.62-code-74.apk)
 - BCH (Bitcoin Cash) - [/APKs/bch-release-v0.19-code-19.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/bch-release-v0.19-code-19.apk)
 - LTC (Litecoin) - [/APKs/ltc-release-v0.17-code-17.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/ltc-release-v0.17-code-17.apk)
