@@ -169,6 +169,14 @@ android {
             dimension "tier"
         }
 
+        bchsv { // BitcoinCash SV
+            dimension "version"
+            versionCode 1
+            versionName "0.1"
+            applicationId "com.guarda.bchsv"
+            dimension "tier"
+        }
+
     }
 
     applicationVariants.all { variant ->
@@ -293,9 +301,9 @@ dependencies {
     kmdImplementation 'com.google.guava:guava:23.3-android'
     dgbImplementation files('libs/bitcoinj-core-0.15-SNAPSHOT-bundled.jar')
     dgbImplementation 'com.google.guava:guava:23.3-android'
-
     zecImplementation 'org.bitcoinj:bitcoinj-core:0.14.5'
     zecImplementation 'com.madgag.spongycastle:core:1.58.0.0'
+    bchsvImplementation 'com.github.samosudov.bitcoinj-cash:bitcoinj-core:cash-14.7'
 }
 
 apply plugin: 'com.google.gms.google-services'
