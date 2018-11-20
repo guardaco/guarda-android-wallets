@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.models.constants.BchExplorer;
+import com.guarda.ethereum.models.constants.BchSvExplorer;
 import com.guarda.ethereum.models.constants.BlockChainInfo;
 import com.guarda.ethereum.models.constants.BtgExplorer;
 import com.guarda.ethereum.models.constants.Callistoexplorer;
@@ -235,7 +236,11 @@ public class ApiMethods {
     }
 
     static BchApi createBchApi() {
-        return getBaseApi(BchExplorer.BCHSV_EXPLORER_BASE_URL).create(BchApi.class);
+        return getBaseApi(BchExplorer.BCH_EXPLORER_BASE_URL).create(BchApi.class);
+    }
+
+    static BchApi createBchSvApi() {
+        return getBaseApi(BchSvExplorer.BCHSV_EXPLORER_API).create(BchApi.class);
     }
 
     static QtumApi createQtumApi() {

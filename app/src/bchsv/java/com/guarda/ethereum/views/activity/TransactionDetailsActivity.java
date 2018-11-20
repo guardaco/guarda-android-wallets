@@ -32,6 +32,7 @@ import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.guarda.ethereum.models.constants.BchSvExplorer.BCHSV_EXPLORER_BASE_URL;
 import static com.guarda.ethereum.models.constants.Common.EXTRA_TRANSACTION_POSITION;
 
 @AutoInjector(GuardaApp.class)
@@ -74,7 +75,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
     EthereumNetworkManager networkManager;
 
 //    private static final String BLOCK_EXPLORER_URL = "https://bitcoincash.blockexplorer.com/tx/";
-    private static final String BLOCK_EXPLORER_URL = "https://blockdozer.com/tx/";
+    private static final String BLOCK_EXPLORER_URL = BCHSV_EXPLORER_BASE_URL + "tx/";
     private TransactionItem transaction;
 
     @Override

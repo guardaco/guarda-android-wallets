@@ -165,7 +165,7 @@ public class WalletManager {
         callback.onWalletCreated(wallet);
 
 
-        RequestorBtc.getUTXOListBch(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
+        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 List<UTXOItem> utxos = (List<UTXOItem>)response;
@@ -199,7 +199,7 @@ public class WalletManager {
 
         callback.onWalletCreated(wallet);
 
-        RequestorBtc.getUTXOListBch(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
+        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 List<UTXOItem> utxos = (List<UTXOItem>)response;
@@ -232,7 +232,7 @@ public class WalletManager {
 
         callback.onWalletCreated(wallet);
 
-        RequestorBtc.getUTXOListBch(walletFriendlyAddress, new ApiMethods.RequestListener() {
+        RequestorBtc.getUTXOListBchSv(walletFriendlyAddress, new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 List<UTXOItem> utxos = (List<UTXOItem>)response;
@@ -262,7 +262,7 @@ public class WalletManager {
         callback.run();
 
 
-        RequestorBtc.getUTXOListBch(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
+        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 List<UTXOItem> utxos = (List<UTXOItem>)response;
@@ -299,7 +299,7 @@ public class WalletManager {
         callback.run();
 
 
-        RequestorBtc.getUTXOListBch(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
+        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 List<UTXOItem> utxos = (List<UTXOItem>)response;
@@ -334,7 +334,7 @@ public class WalletManager {
 
         callback.run();
 
-        RequestorBtc.getUTXOListBch(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
+        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 List<UTXOItem> utxos = (List<UTXOItem>)response;
@@ -372,7 +372,7 @@ public class WalletManager {
 
         callback.run();
 
-        RequestorBtc.getUTXOListBch(walletFriendlyAddress, new ApiMethods.RequestListener() {
+        RequestorBtc.getUTXOListBchSv(walletFriendlyAddress, new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 List<UTXOItem> utxos = (List<UTXOItem>)response;

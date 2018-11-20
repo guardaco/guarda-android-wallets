@@ -31,6 +31,12 @@ public class RequestorBtc {
         ApiMethods.makeRequest(call, listener);
     }
 
+    public static void getBalanceAndTxBchSv(String address, ApiMethods.RequestListener listener) {
+        Call call = ApiMethods.createBchSvApi().getBalance(address);
+        Log.d("svcom", "path " + call.request());
+        ApiMethods.makeRequest(call, listener);
+    }
+
     public static void getBalanceAndTxSbtc(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createSbtcApi().getBalance(address);
         Log.d("svcom", "path " + call.request());
@@ -57,6 +63,12 @@ public class RequestorBtc {
 
     public static void getBalanceBchNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createBchApi().getBalance(address);
+        Log.d("svcom", "path " + call.request());
+        ApiMethods.makeRequest(call, listener);
+    }
+
+    public static void getBalanceBchSvNew(String address, ApiMethods.RequestListener listener) {
+        Call call = ApiMethods.createBchSvApi().getBalance(address);
         Log.d("svcom", "path " + call.request());
         ApiMethods.makeRequest(call, listener);
     }
@@ -111,6 +123,12 @@ public class RequestorBtc {
 
     public static void getTransactionsBchNew(String address, ApiMethods.RequestListener listener){
         Call call = ApiMethods.createBchApi().getTransactions(address);
+        Log.d("svcom", "path " + call.request());
+        ApiMethods.makeRequest(call, listener);
+    }
+
+    public static void getTransactionsBchSvNew(String address, ApiMethods.RequestListener listener){
+        Call call = ApiMethods.createBchSvApi().getTransactions(address);
         Log.d("svcom", "path " + call.request());
         ApiMethods.makeRequest(call, listener);
     }
@@ -175,6 +193,12 @@ public class RequestorBtc {
         ApiMethods.makeRequest(call, listener);
     }
 
+    public static void getUTXOListBchSv(String address, ApiMethods.RequestListener listener) {
+        Call call = ApiMethods.createBchSvApi().getUTXOByAddress(address);
+        Log.d("Request", "path " + call.request());
+        ApiMethods.makeRequest(call, listener);
+    }
+
     public static void getUTXOListQtum(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createQtumApi().getUTXOByAddress(address);
         Log.d("Request", "path " + call.request());
@@ -225,6 +249,12 @@ public class RequestorBtc {
 
     public static void getCurrentBlockHeightBch(String timeMillis, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createBchApi().getCurrentBlockHeight();
+        Log.d("Request", "path " + call.request());
+        ApiMethods.makeRequest(call, listener);
+    }
+
+    public static void getCurrentBlockHeightBchSv(String timeMillis, ApiMethods.RequestListener listener) {
+        Call call = ApiMethods.createBchSvApi().getCurrentBlockHeight();
         Log.d("Request", "path " + call.request());
         ApiMethods.makeRequest(call, listener);
     }

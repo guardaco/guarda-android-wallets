@@ -272,7 +272,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void loadTransactions() {
-        RequestorBtc.getTransactionsBchNew(walletManager.getLegacyAddress(), new ApiMethods.RequestListener() {
+        RequestorBtc.getTransactionsBchSvNew(walletManager.getLegacyAddress(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 BtgTxListResponse txListResponse = (BtgTxListResponse) response;
@@ -294,7 +294,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void loadBalance() {
-        RequestorBtc.getBalanceBchNew(walletManager.getLegacyAddress(), new ApiMethods.RequestListener() {
+        RequestorBtc.getBalanceBchSvNew(walletManager.getLegacyAddress(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 loaderAnimation.cancel();

@@ -133,7 +133,7 @@ public class UserWalletFragment extends BaseFragment {
     }
 
     private void showBalance() {
-        RequestorBtc.getBalanceBchNew(walletManager.getWalletFriendlyAddress(), new ApiMethods.RequestListener() {
+        RequestorBtc.getBalanceBchSvNew(walletManager.getWalletFriendlyAddress(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 BtgBalanceResponse balance = (BtgBalanceResponse) response;

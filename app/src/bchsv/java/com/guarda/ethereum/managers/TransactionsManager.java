@@ -142,8 +142,10 @@ public class TransactionsManager {
     private long getInputsSumNew(BtgTxResponse item, String ownAddress) {
         long res = 0;
         for (Vout out : item.getVout()) {
-            if (out.getScriptPubKey().getAddresses().get(0).equals(ownAddress)) {
-                res += convertStrCoinToSatoshi(out.getValue());
+            if (out.getScriptPubKey().getAddresses() != null) {
+                if (out.getScriptPubKey().getAddresses().get(0).equals(ownAddress)) {
+                    res += convertStrCoinToSatoshi(out.getValue());
+                }
             }
         }
         return res;
