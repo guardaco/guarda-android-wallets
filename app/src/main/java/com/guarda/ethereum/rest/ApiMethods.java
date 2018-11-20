@@ -235,7 +235,7 @@ public class ApiMethods {
     }
 
     static BchApi createBchApi() {
-        return getBaseApi(BchExplorer.BCH_EXPLORER_BASE_URL).create(BchApi.class);
+        return getBaseApi(BchExplorer.BCHSV_EXPLORER_BASE_URL).create(BchApi.class);
     }
 
     static QtumApi createQtumApi() {

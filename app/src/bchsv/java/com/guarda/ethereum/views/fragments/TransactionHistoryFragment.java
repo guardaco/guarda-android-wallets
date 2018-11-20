@@ -294,7 +294,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void loadBalance() {
-        RequestorBtc.getBalanceBchNew(walletManager.getWalletFriendlyAddress(), new ApiMethods.RequestListener() {
+        RequestorBtc.getBalanceBchNew(walletManager.getLegacyAddress(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 loaderAnimation.cancel();
