@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name" translatable="false">Bitcoin Cash Wallet</string>
-    <string name="app_coin_currency" translatable="false">BCH</string>
-    <string name="app_fee_kb_currency" translatable="false">BCH/kB</string>
+    <string name="app_name" translatable="false">Bitcoin Cash SV Wallet</string>
+    <string name="app_coin_currency" translatable="false">BCHSV</string>
+    <string name="app_fee_kb_currency" translatable="false">BCHSV/kB</string>
     <string name="freshchat_file_provider_authority" translatable="false">com.guarda.bchsv.provider</string>
 
     <string name="restore_backup_passphrase">Enter Mnemonic, WIF or XPRV</string>
-    <string name="app_top_up_width_other_currency">Top Up Your BCH Wallet With:</string>
-    <string name="top_up_width_other_currency">Purchase BCH</string>
-    <string name="app_currency_name" translatable="false">Bitcoin Cash</string>
+    <string name="app_top_up_width_other_currency">Top Up Your BCHSV Wallet With:</string>
+    <string name="top_up_width_other_currency">Purchase BCHSV</string>
+    <string name="app_currency_name" translatable="false">Bitcoin Cash SV</string>
     <string name="et_error_wrong_private_key">Wrong mnemonic passphrase</string>
     <string name="et_error_private_key_is_empty">Mnemonic passphrase can not be empty</string>
     <string name="title_restore_backup">Restore</string>
