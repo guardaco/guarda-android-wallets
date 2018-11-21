@@ -6,8 +6,8 @@ public class Common {
 
     public final static String BLOCK = "passphrase";
     public final static String BTC_NODE_LOGIN = "guarda";
-    public final static String BTC_NODE_PASS = "253879262eb0425089f62c4bf2a3d2a5";
-    public final static String NODE_ADDRESS = "https://bchsv.guarda.co";
+    public final static String BTC_NODE_PASS = "wejsdm323msdew";
+    public final static String NODE_ADDRESS = "https://node.bchsvexplorer.com";
     public final static String MAIN_CURRENCY = "bchsv";
     public final static String MAIN_CURRENCY_NAME = "bitcoin-cash-sv";
     public final static String ETH_SHOW_PATTERN = "#,##0.#####";
