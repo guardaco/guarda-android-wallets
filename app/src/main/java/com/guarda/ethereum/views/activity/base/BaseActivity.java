@@ -41,6 +41,7 @@ public abstract class BaseActivity extends ABaseActivity {
     WalletManager walletManager;
 
     protected ProgressDialog progressDialog;
+    private Toast toast;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +62,12 @@ public abstract class BaseActivity extends ABaseActivity {
     protected void onResume() {
         super.onResume();
         checkRequiredInstances();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        toast.cancel();
     }
 
     @Override
@@ -152,9 +159,9 @@ public abstract class BaseActivity extends ABaseActivity {
         TextView tv = layout.findViewById(R.id.custom_toast_text);
         tv.setText(text);
 
-        Toast toast = new Toast(this);
+        toast = new Toast(this);
         toast.setGravity(Gravity.BOTTOM|Gravity.FILL_HORIZONTAL, 0, 0);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
     }
