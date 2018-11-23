@@ -3,11 +3,9 @@ package com.guarda.ethereum.views.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,7 +21,6 @@ import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 
-import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,6 +100,7 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        sharedManager.setLastSyncedBlock(Coders.encodeBase64(etBackupPhrase.getText().toString().trim()));
                                         if (!"".equals(Coders.decodeBase64(sharedManager.getLastSyncedBlock()))) {
                                             goToMainActivity(etBackupPhrase.getText().toString());
                                             btnRestore.setEnabled(false);
@@ -131,6 +129,7 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    sharedManager.setLastSyncedBlock(Coders.encodeBase64(etBackupPhrase.getText().toString().trim()));
                                     if (!"".equals(Coders.decodeBase64(sharedManager.getLastSyncedBlock()))) {
                                         goToMainActivity(etBackupPhrase.getText().toString());
                                         btnRestore.setEnabled(false);
@@ -158,6 +157,7 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
+                                            sharedManager.setLastSyncedBlock(Coders.encodeBase64(etBackupPhrase.getText().toString().trim()));
                                             if (!"".equals(Coders.decodeBase64(sharedManager.getLastSyncedBlock()))) {
                                                 goToMainActivity(etBackupPhrase.getText().toString());
                                                 btnRestore.setEnabled(false);

@@ -2,17 +2,14 @@ package com.guarda.ethereum.managers;
 
 import android.content.Context;
 import android.net.Credentials;
-import android.os.Build;
 import android.util.Log;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.firebase.crash.FirebaseCrash;
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.models.items.UTXOItem;
-import com.guarda.ethereum.models.items.UTXOListResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.utils.Coders;
@@ -28,38 +25,32 @@ import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.UTXO;
 import org.bitcoinj.core.UTXOProvider;
 import org.bitcoinj.core.UTXOProviderException;
 import org.bitcoinj.core.WrongNetworkException;
 import org.bitcoinj.crypto.ChildNumber;
+import org.bitcoinj.crypto.DeterministicHierarchy;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.script.ScriptBuilder;
 import org.bitcoinj.wallet.DeterministicSeed;
-import org.bitcoinj.wallet.KeyChain;
-import org.bitcoinj.wallet.KeyChainGroup;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
-import org.json.JSONObject;
 import org.spongycastle.util.encoders.Hex;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import static com.guarda.ethereum.models.constants.Common.BIP_39_WORDLIST_ASSET;
 import static com.guarda.ethereum.models.constants.Common.MNEMONIC_WORDS_COUNT;
+import static com.guarda.ethereum.models.constants.Const.LOG_TAG;
 
 
 /**
@@ -87,6 +78,7 @@ public class WalletManager {
     private String mnemonicKey;
     private String wifKey;
     private String xprvKey;
+    private String privhex;
     private HashSet<String> mBip39Words;
     private boolean restFromWif = false;
     private BigDecimal balance = BigDecimal.ZERO;
@@ -98,10 +90,10 @@ public class WalletManager {
         mBip39Words = FileUtils.readToSet(context, BIP_39_WORDLIST_ASSET);
     }
 
-    public boolean isCorrectMnemonic(String mnemonic){
+    public boolean isCorrectMnemonic(String mnemonic) {
         String[] words = mnemonic.split("\\W+");
         for (String word : words) {
-            if (!mBip39Words.contains(word)){
+            if (!mBip39Words.contains(word)) {
                 return false;
             }
         }
@@ -161,23 +153,24 @@ public class WalletManager {
         xprv = xprv.trim();
         try {
             DeterministicKey dk01 = DeterministicKey.deserializeB58(xprv, params);
-            String privhex = dk01.getPrivateKeyAsHex();
-            ECKey ecKey001 = ECKey.fromPrivate(Hex.decode(privhex));
-            KeyChainGroup kcg = new KeyChainGroup(params, dk01.dropPrivateBytes().dropParent());
-            kcg.importKeys(ecKey001);
-            wallet = new Wallet(params, kcg);
-            walletFriendlyAddress = wallet.currentReceiveAddress().toString();
+            DeterministicHierarchy dh = new DeterministicHierarchy(dk01);
+            List<ChildNumber> chns = ImmutableList.of(new ChildNumber(ChildNumber.HARDENED_BIT), new ChildNumber(0, false));
+            DeterministicKey dk03 = dh.deriveChild(chns, false, true, new ChildNumber(0, false));
             xprvKey = xprv;
+            Log.d(LOG_TAG, "m/0'/0=" + dk03.getPrivateKeyAsWiF(params) + " privkey=" + dk03.getPrivateKeyAsHex());
+            restoreFromBlockByWif(dk03.getPrivateKeyAsWiF(params), callback);
+//            byte[] phx = Utils.HEX.decode(dk03.getPrivateKeyAsHex());
+//            BigInteger bi = new BigInteger(phx);
+//            ECKey preck = ECKey.fromPrivate(phx);
+//            Wallet wallet = new Wallet(params);
+//            wallet.importKey(preck);
+//            String wfa = wallet.getImportedKeys().get(0).toAddress(params).toString();
+//            Log.d(LOG_TAG, "wfa=" + wfa);
         } catch (IllegalArgumentException iae) {
             FirebaseCrash.report(iae);
             Log.e("psd", "restoreFromBlockByXPRV: " + iae.toString());
             callback.onWalletCreated(wallet);
-            return;
         }
-
-        callback.onWalletCreated(wallet);
-
-        requestUnspents();
     }
 
     public void restoreFromBlockByWif(String wif, WalletCreationCallback callback) {
@@ -230,7 +223,7 @@ public class WalletManager {
 
         wallet = Wallet.fromSeed(params, seed);
         mnemonicKey = Joiner.on(" ").join(seed.getMnemonicCode());
-        sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
+//        sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
 
         walletFriendlyAddress = wallet.currentReceiveAddress().toString();
 
@@ -249,24 +242,17 @@ public class WalletManager {
         xprv = xprv.trim();
         try {
             DeterministicKey dk01 = DeterministicKey.deserializeB58(xprv, params);
-            String privhex = dk01.getPrivateKeyAsHex();
-            ECKey ecKey001 = ECKey.fromPrivate(Hex.decode(privhex));
-            KeyChainGroup kcg = new KeyChainGroup(params, dk01.dropPrivateBytes().dropParent());
-            kcg.importKeys(ecKey001);
-            wallet = new Wallet(params, kcg);
-            sharedManager.setLastSyncedBlock(Coders.encodeBase64(xprv));
-            walletFriendlyAddress = wallet.currentReceiveAddress().toString();
+            DeterministicHierarchy dh = new DeterministicHierarchy(dk01);
+            List<ChildNumber> chns = ImmutableList.of(new ChildNumber(ChildNumber.HARDENED_BIT), new ChildNumber(0, false));
+            DeterministicKey dk03 = dh.deriveChild(chns, false, true, new ChildNumber(0, false));
             xprvKey = xprv;
+            Log.d(LOG_TAG, "m/0'/0=" + dk03.getPrivateKeyAsWiF(params) + " privkey=" + dk03.getPrivateKeyAsHex());
+            restoreFromBlockByWif2(dk03.getPrivateKeyAsWiF(params), callback);
         } catch (IllegalArgumentException iae) {
             FirebaseCrash.report(iae);
             Log.e("psd", "restoreFromBlockByXPRV2: " + iae.toString());
             callback.run();
-            return;
         }
-
-        callback.run();
-
-        requestUnspents();
     }
 
     public void restoreFromBlockByWif2(String wif, Runnable callback) {
@@ -277,7 +263,6 @@ public class WalletManager {
             wallet = new Wallet(params);
             wallet.importKey(key);
             restFromWif = true;
-            sharedManager.setLastSyncedBlock(Coders.encodeBase64(wif));
             walletFriendlyAddress = wallet.getImportedKeys().get(0).toAddress(params).toString();
             wifKey = wif;
         } catch (WrongNetworkException wne) {
@@ -380,7 +365,6 @@ public class WalletManager {
     public String getWifKey() {
         if (wallet != null) {
             return wifKey;
-//            return wallet.currentReceiveKey().getPrivateKeyAsWiF(params);
         } else {
             return "";
         }
@@ -439,11 +423,11 @@ public class WalletManager {
     public boolean isValidPrivateKey(String key) {
         String[] words = key.split("\\W+");
 
-        if (words.length != MNEMONIC_WORDS_COUNT){
+        if (words.length != MNEMONIC_WORDS_COUNT) {
             return false;
         }
         for (String word : words) {
-            if (!mBip39Words.contains(word)){
+            if (!mBip39Words.contains(word)) {
                 return false;
             }
         }
@@ -522,11 +506,6 @@ public class WalletManager {
             //trx = wallet.sendCoinsOffline(sendRequest);
             wallet.completeTx(sendRequest);
             trx = sendRequest.tx;
-
-//            Log.d("flint", "getInputSum: " + trx.getInputSum().toFriendlyString());
-//            Log.d("flint", "getOutputSum: " + trx.getOutputSum().toFriendlyString());
-//            Log.d("flint", "getFee: " + trx.getFee().toFriendlyString());
-//            Log.d("flint", "getInput.getHash: " + trx.getInput(0).getOutpoint().getHash().toString());
 
             Log.d("svcom", "size = " + trx.bitcoinSerialize().length);
             hex = Hex.toHexString(trx.bitcoinSerialize());
