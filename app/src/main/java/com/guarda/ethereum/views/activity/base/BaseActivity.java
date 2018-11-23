@@ -67,7 +67,8 @@ public abstract class BaseActivity extends ABaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        toast.cancel();
+        if (toast != null)
+            toast.cancel();
     }
 
     @Override
