@@ -109,17 +109,7 @@ public class WalletManager {
     }
 
     public void createWallet(String passphrase, WalletCreationCallback callback) {
-
-//        wallet = new Wallet(params);
-//        DeterministicSeed seed = wallet.getKeyChainSeed();
-//
-//        mnemonicKey = Joiner.on(" ").join(seed.getMnemonicCode());
-//        //sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
-//
-//        walletFriendlyAddress = wallet.currentReceiveAddress().toString();
-//        callback.onWalletCreated(wallet);
         restoreFromBlock(Coders.decodeBase64(sharedManager.getLastSyncedBlock()), callback);
-
     }
 
     public void createWallet2(String passphrase, Runnable callback) {
@@ -164,19 +154,7 @@ public class WalletManager {
 
         callback.onWalletCreated(wallet);
 
-
-        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                List<UTXOItem> utxos = (List<UTXOItem>)response;
-                setUTXO(utxos);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-
-            }
-        });
+        requestUnspents();
     }
 
     public void restoreFromBlockByXPRV(String xprv, WalletCreationCallback callback) {
@@ -199,18 +177,7 @@ public class WalletManager {
 
         callback.onWalletCreated(wallet);
 
-        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                List<UTXOItem> utxos = (List<UTXOItem>)response;
-                setUTXO(utxos);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-
-            }
-        });
+        requestUnspents();
     }
 
     public void restoreFromBlockByWif(String wif, WalletCreationCallback callback) {
@@ -232,18 +199,7 @@ public class WalletManager {
 
         callback.onWalletCreated(wallet);
 
-        RequestorBtc.getUTXOListBchSv(walletFriendlyAddress, new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                List<UTXOItem> utxos = (List<UTXOItem>)response;
-                setUTXO(utxos);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-
-            }
-        });
+        requestUnspents();
     }
 
     public void restoreFromBlock0(String mnemonicCode, Runnable callback) {
@@ -261,19 +217,7 @@ public class WalletManager {
 
         callback.run();
 
-
-        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                List<UTXOItem> utxos = (List<UTXOItem>)response;
-                setUTXO(utxos);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-
-            }
-        });
+        requestUnspents();
     }
 
 
@@ -298,19 +242,7 @@ public class WalletManager {
 
         callback.run();
 
-
-        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                List<UTXOItem> utxos = (List<UTXOItem>)response;
-                setUTXO(utxos);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-
-            }
-        });
+        requestUnspents();
     }
 
     public void restoreFromBlockByXPRV2(String xprv, Runnable callback) {
@@ -334,18 +266,7 @@ public class WalletManager {
 
         callback.run();
 
-        RequestorBtc.getUTXOListBchSv(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                List<UTXOItem> utxos = (List<UTXOItem>)response;
-                setUTXO(utxos);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-
-            }
-        });
+        requestUnspents();
     }
 
     public void restoreFromBlockByWif2(String wif, Runnable callback) {
@@ -372,7 +293,12 @@ public class WalletManager {
 
         callback.run();
 
-        RequestorBtc.getUTXOListBchSv(walletFriendlyAddress, new ApiMethods.RequestListener() {
+        requestUnspents();
+    }
+
+    public void requestUnspents() {
+        String address = restFromWif ? walletFriendlyAddress : wallet.currentReceiveAddress().toString();
+        RequestorBtc.getUTXOListBchSv(address, new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 List<UTXOItem> utxos = (List<UTXOItem>)response;
