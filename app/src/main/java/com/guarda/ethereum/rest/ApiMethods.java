@@ -271,7 +271,7 @@ public class ApiMethods {
     }
 
     static ZecApiNew createZecApiNew() {
-        return getBaseApi(ZecExplorer.ZEC_EXPLORER_BASE_URL).create(ZecApiNew.class);
+        return getBaseApi(ZecExplorer.ZEC_EXPLORER_API).create(ZecApiNew.class);
     }
 
     static GuardaCoApi createGuardaCoApi() {

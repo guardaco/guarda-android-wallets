@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.guarda.ethereum.models.constants.Common.EXTRA_TRANSACTION_POSITION;
+import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_TX;
 
 @AutoInjector(GuardaApp.class)
 public class TransactionDetailsActivity extends AToolbarMenuActivity {
@@ -73,8 +74,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
     @Inject
     EthereumNetworkManager networkManager;
 
-//    private static final String BLOCK_EXPLORER_URL = "https://zcash.blockexplorer.com/tx/";
-    private static final String BLOCK_EXPLORER_URL = "https://zcashnetwork.info/tx/";
+
     private TransactionItem transaction;
 
     @Override
@@ -186,7 +186,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
 
     @OnClick({R.id.til_trans_details_hash, R.id.et_trans_details_hash})
     public void onTransHashClick() {
-        String hashDetailUrl = BLOCK_EXPLORER_URL + etHash.getText().toString();
+        String hashDetailUrl = ZEC_EXPLORER_TX + etHash.getText().toString();
         openWebURL(hashDetailUrl);
     }
 
