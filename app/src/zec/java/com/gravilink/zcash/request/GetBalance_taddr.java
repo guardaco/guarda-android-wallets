@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
+import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_API;
 import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_BASE_URL;
 
 public class GetBalance_taddr extends AbstractZCashRequest implements Runnable {
@@ -59,7 +60,7 @@ public class GetBalance_taddr extends AbstractZCashRequest implements Runnable {
   }
 
   private long getBalance() throws ZCashException {
-    String uri = Uri.parse(ZEC_EXPLORER_BASE_URL).buildUpon()
+    String uri = Uri.parse(ZEC_EXPLORER_API).buildUpon()
             .appendEncodedPath("addr")
             .appendEncodedPath(pubKey)
             .appendEncodedPath("balance")
