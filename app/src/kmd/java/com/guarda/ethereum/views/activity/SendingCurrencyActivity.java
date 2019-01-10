@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.gravilink.zcash.WalletCallback;
+import com.gravilink.zcash.ZCashException;
+import com.gravilink.zcash.ZCashTransaction_taddr;
+import com.gravilink.zcash.ZCashWalletManager;
+import com.gravilink.zcash.crypto.Utils;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.BitcoinNodeManager;
@@ -39,6 +44,8 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.guarda.ethereum.models.constants.Common.KMD_MIN_CONFIRM;
 
 @AutoInjector(GuardaApp.class)
 public class SendingCurrencyActivity extends AToolbarMenuActivity {
@@ -340,47 +347,58 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         try {
             String amount = etSumSend.getText().toString();
             if (!amount.isEmpty()) {
-                if (!isAmountMoreBalance(amount)) {
+//                    showProgress();
                     long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
-
-                    Log.d("svcom", "fee = " + currentFeeEth);
-                    String hex = walletManager.generateHexTx(getToAddress(), amountSatoshi, currentFeeEth);
-                    if (hex.equals(WalletManager.SMALL_SENDING)) {
-                        showError(etSumSend, getString(R.string.small_sum_of_tx));
-                    } else if (hex.equals(WalletManager.NOT_ENOUGH_MONEY)) {
-                        showError(etSumSend, getString(R.string.not_enough_money_to_send));
-                    } else {
-                        showProgress(getString(R.string.progress_bar_sending_transaction));
-                        BitcoinNodeManager.sendTransaction(hex, new ApiMethods.RequestListener() {
-                            @Override
-                            public void onSuccess(Object response) {
-                                SendRawTxResponse res = (SendRawTxResponse) response;
-                                Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
-                                closeProgress();
-                                showCongratsActivity();
-                            }
-
-                            @Override
-                            public void onFailure(String msg) {
-                                closeProgress();
-                                Log.d("svcom", "failure - " + msg);
-                                Toast.makeText(SendingCurrencyActivity.this, CurrencyUtils.getBtcLikeError(msg), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                } else {
-                    showError(etSumSend, getString(R.string.withdraw_amount_more_than_balance));
-                }
+                    Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
+                    // Here is call from Zcash library for supporting Sapling update, because Komodo is Zcash's fork
+                    ZCashWalletManager.getInstance().createTransaction_taddr(walletManager.getWalletFriendlyAddress(),
+                            getToAddress(),
+                            amountSatoshi,
+                            currentFeeEth,
+                            walletManager.getPrivateKey(),
+                            KMD_MIN_CONFIRM, new WalletCallback<String, ZCashTransaction_taddr>() {
+                                @Override
+                                public void onResponse(String r1, ZCashTransaction_taddr r2) {
+                                    Log.i("RESPONSE CODE", r1);
+                                    if (r1.equals("ok")) {
+                                        try {
+                                            String lastTxhex = Utils.bytesToHex(r2.getBytes());
+                                            Log.i("lastTxhex", lastTxhex);
+//                                            BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
+//                                                @Override
+//                                                public void onSuccess(Object response) {
+//                                                    SendRawTxResponse res = (SendRawTxResponse) response;
+//                                                    Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
+//                                                    closeProgress();
+//                                                    showCongratsActivity();
+//                                                }
+//                                                @Override
+//                                                public void onFailure(String msg) {
+//                                                    closeProgress();
+//                                                    doToast(CurrencyUtils.getBtcLikeError(msg));
+//                                                    Log.d("svcom", "failure - " + msg);
+//                                                }
+//                                            });
+                                        } catch (ZCashException e) {
+                                            closeProgress();
+                                            doToast("Can not send the transaction to the node");
+                                            Log.i("TX", "Cannot sign transaction");
+                                        }
+                                    } else {
+                                        closeProgress();
+                                        doToast("Can not create the transaction. Check arguments");
+                                        Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
+                                    }
+                                }
+                            });
             } else {
                 showError(etSumSend, getString(R.string.withdraw_amount_can_not_be_empty));
             }
         } catch (WrongNetworkException wne) {
             Log.e("psd", wne.toString());
-            String msg = String.format(getString(R.string.send_wrong_address), Common.MAIN_CURRENCY.toUpperCase());
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.send_wrong_address, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(SendingCurrencyActivity.this, "Can not send the transaction to the node", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SendingCurrencyActivity.this, "Error of sending", Toast.LENGTH_SHORT).show();
             closeProgress();
             e.printStackTrace();
         }
@@ -388,6 +406,15 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
 
     private boolean isAmountMoreBalance(String amount) {
         return false;
+    }
+
+    private void doToast(final String text) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(SendingCurrencyActivity.this, text, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void showCongratsActivity() {

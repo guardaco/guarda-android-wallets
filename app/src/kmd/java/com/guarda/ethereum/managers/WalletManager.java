@@ -9,6 +9,12 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.firebase.crash.FirebaseCrash;
+import com.gravilink.zcash.WalletCallback;
+import com.gravilink.zcash.ZCashException;
+import com.gravilink.zcash.ZCashTransactionOutput;
+import com.gravilink.zcash.ZCashTransaction_taddr;
+import com.gravilink.zcash.ZCashWalletManager;
+import com.gravilink.zcash.crypto.Utils;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.models.items.BtgTxResponse;
 import com.guarda.ethereum.models.items.UTXOItem;
@@ -55,6 +61,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -603,9 +610,9 @@ public class WalletManager {
 
     private void completeClaimTx(SendRequest req, long interest) throws InsufficientMoneyException {
         try {
-            if(req.getUseForkId()) {
+//            if(req.getUseForkId()) {
                 req.tx.setVersion(2);
-            }
+//            }
 
             Coin value = Coin.ZERO;
 
@@ -733,7 +740,8 @@ public class WalletManager {
         SendRequest sendRequest = SendRequest.to(RECEIVER, AMOUNT);
         sendRequest.changeAddress = wallet.getImportedKeys().get(0).toAddress(params);
         sendRequest.ensureMinRequiredFee = true;
-        sendRequest.setUseForkId(true);
+//        sendRequest.setUseForkId(true);
+        sendRequest.tx.setVersion(4);
         sendRequest.feePerKb = FEE;
         long result = FEE.getValue();
         try {
