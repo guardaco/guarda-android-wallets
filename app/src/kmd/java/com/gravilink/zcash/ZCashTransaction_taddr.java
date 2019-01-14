@@ -47,6 +47,7 @@ public class ZCashTransaction_taddr {
 
     this.privKey = privKey;
     this.nExpiryHeight = expiryHeight;
+    this.locktime = System.currentTimeMillis() / 1000;
     byte[] fromKeyHash = Arrays.copyOfRange(Base58.decodeChecked(fromAddr), 1, 21);
     byte[] toKeyHash = Arrays.copyOfRange(Base58.decodeChecked(toAddr), 1, 21);
     long value_pool = 0;
@@ -84,9 +85,6 @@ public class ZCashTransaction_taddr {
   }
 
   public byte[] getBytes() throws ZCashException {
-//    if (tx_bytes != null) {
-//      return tx_bytes;
-//    }
 
     calcSigBytes();
     tx_bytes = Bytes.concat(
@@ -106,13 +104,16 @@ public class ZCashTransaction_taddr {
 
     tx_bytes = Bytes.concat(
             tx_bytes,
-            new byte[32], //hashJoinSplits, zeros for us
-            new byte[32], //hashShieldedSpends, zeros for us
-            new byte[32], //hashShieldedOutputs, zeros for us
             Utils.int32BytesLE(locktime),
             Utils.int32BytesLE(nExpiryHeight),
             Utils.int64BytesLE(0),
-            Utils.compactSizeIntLE(0)
+            Utils.compactSizeIntLE(0), // ShieldedSpends size
+//            new byte[32], //hashShieldedSpends, zeros for us
+            Utils.compactSizeIntLE(0), // ShieldedOutputs size
+//            new byte[32], //hashShieldedOutputs, zeros for us
+            Utils.compactSizeIntLE(0) // JoinSplits size
+//            new byte[32] //hashJoinSplits, zeros for us
+//            Utils.compactSizeIntLE(0) //value balance (maybe not compactsizeiintle)
     );
     return tx_bytes;
   }

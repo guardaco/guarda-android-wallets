@@ -29,8 +29,8 @@ public class GetUTXOSRequest extends AbstractZCashRequest implements Runnable {
 
   @Override
   public void run() {
-//    String uri = Uri.parse(KMD_EXPLORER_API).buildUpon()
-    String uri = Uri.parse(KMD_TEST_EXPLORER_API).buildUpon()
+    String uri = Uri.parse(KMD_EXPLORER_API).buildUpon()
+//    String uri = Uri.parse(KMD_TEST_EXPLORER_API).buildUpon()
             .appendEncodedPath("addrs")
             .appendEncodedPath(fromAddr)
             .appendEncodedPath("utxo")

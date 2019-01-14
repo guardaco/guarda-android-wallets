@@ -347,7 +347,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         try {
             String amount = etSumSend.getText().toString();
             if (!amount.isEmpty()) {
-//                    showProgress();
+                    showProgress();
                     long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
                     Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
                     // Here is call from Zcash library for supporting Sapling update, because Komodo is Zcash's fork
@@ -356,50 +356,48 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                             amountSatoshi,
                             currentFeeEth,
                             walletManager.getPrivateKey(),
-                            KMD_MIN_CONFIRM, new WalletCallback<String, ZCashTransaction_taddr>() {
-                                @Override
-                                public void onResponse(String r1, ZCashTransaction_taddr r2) {
-                                    Log.i("RESPONSE CODE", r1);
-                                    if (r1.equals("ok")) {
-                                        try {
-                                            String lastTxhex = Utils.bytesToHex(r2.getBytes());
-                                            Log.i("lastTxhex", lastTxhex);
-//                                            BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
-//                                                @Override
-//                                                public void onSuccess(Object response) {
-//                                                    SendRawTxResponse res = (SendRawTxResponse) response;
-//                                                    Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
-//                                                    closeProgress();
-//                                                    showCongratsActivity();
-//                                                }
-//                                                @Override
-//                                                public void onFailure(String msg) {
-//                                                    closeProgress();
-//                                                    doToast(CurrencyUtils.getBtcLikeError(msg));
-//                                                    Log.d("svcom", "failure - " + msg);
-//                                                }
-//                                            });
-                                        } catch (ZCashException e) {
-                                            closeProgress();
-                                            doToast("Can not send the transaction to the node");
-                                            Log.i("TX", "Cannot sign transaction");
-                                        }
-                                    } else {
+                            KMD_MIN_CONFIRM, (r1, r2) -> {
+                                Log.i("RESPONSE CODE", r1);
+                                if (r1.equals("ok")) {
+                                    try {
+                                        String lastTxhex = Utils.bytesToHex(r2.getBytes());
+                                        Log.i("lastTxhex", lastTxhex);
+                                        BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
+                                            @Override
+                                            public void onSuccess(Object response) {
+                                                SendRawTxResponse res = (SendRawTxResponse) response;
+                                                Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
+                                                closeProgress();
+                                                showCongratsActivity();
+                                            }
+                                            @Override
+                                            public void onFailure(String msg) {
+                                                closeProgress();
+                                                doToast(CurrencyUtils.getBtcLikeError(msg));
+                                                Log.d("svcom", "failure - " + msg);
+                                            }
+                                        });
+                                    } catch (ZCashException e) {
                                         closeProgress();
-                                        doToast("Can not create the transaction. Check arguments");
-                                        Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
+                                        doToast("Can not send the transaction to the node");
+                                        Log.i("TX", "Cannot sign transaction");
                                     }
+                                } else {
+                                    closeProgress();
+                                    doToast("Can not create the transaction. Check arguments");
+                                    Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
                                 }
                             });
             } else {
                 showError(etSumSend, getString(R.string.withdraw_amount_can_not_be_empty));
             }
         } catch (WrongNetworkException wne) {
+            closeProgress();
             Log.e("psd", wne.toString());
             Toast.makeText(this, R.string.send_wrong_address, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(SendingCurrencyActivity.this, "Error of sending", Toast.LENGTH_SHORT).show();
             closeProgress();
+            Toast.makeText(SendingCurrencyActivity.this, "Error of sending", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

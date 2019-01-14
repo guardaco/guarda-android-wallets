@@ -33,6 +33,7 @@ import com.gravilink.zcash.ZCashException;
 import com.gravilink.zcash.ZCashTransaction_taddr;
 import com.gravilink.zcash.ZCashWalletManager;
 import com.gravilink.zcash.crypto.Utils;
+import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.customviews.RateDialog;
@@ -214,43 +215,6 @@ public class TransactionHistoryFragment extends BaseFragment {
                 } else {
                     btnClaimNow.setEnabled(false);
 
-//                    ZCashWalletManager.getInstance().createTransaction_taddr("RWuBWz76igSFD6SVArhs5u86W54PbRxMkC",
-//                            walletManager.getWalletFriendlyAddress(),
-//                            1562581320L,
-//                            192L,
-//                            walletManager.getPrivateKey(),
-//                            KMD_MIN_CONFIRM,
-////                            curInterest, new WalletCallback<String, ZCashTransaction_taddr>() {
-//                            new WalletCallback<String, ZCashTransaction_taddr>() {
-//                                @Override
-//                                public void onResponse(String r1, ZCashTransaction_taddr r2) {
-//                                    Log.i("RESPONSE CODE", r1);
-//                                    if (r1.equals("ok")) {
-//                                        try {
-//                                            String lastTxhex = Utils.bytesToHex(r2.getBytes());
-//                                            Log.i("lastTxhex", lastTxhex);
-//                                            BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
-//                                                @Override
-//                                                public void onSuccess(Object response) {
-//                                                    SendRawTxResponse res = (SendRawTxResponse) response;
-//                                                    Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
-//                                                }
-//                                                @Override
-//                                                public void onFailure(String msg) {
-//                                                    Log.d("svcom", "failure - " + msg);
-//                                                }
-//                                            });
-//                                        } catch (ZCashException e) {
-////                                            ((MainActivity) getActivity()).showCustomToast("Can not send the transaction to the node", R.drawable.err_network);
-//                                            Log.i("TX", "Cannot sign transaction");
-//                                        }
-//                                    } else {
-////                                        ((MainActivity) getActivity()).showCustomToast("Can not create the transaction. Check arguments", R.drawable.err_network);
-//                                        Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
-//                                    }
-//                                }
-//                            });
-
                     // Here is call from Zcash library for supporting Sapling update, because Komodo is Zcash's fork
                     ZCashWalletManager.getInstance().createClaimTransaction_taddr(walletManager.getWalletFriendlyAddress(),
                             walletManager.getWalletFriendlyAddress(),
@@ -309,39 +273,6 @@ public class TransactionHistoryFragment extends BaseFragment {
                                     }
                                 }
                             });
-
-
-                    String hexTx = walletManager.generateClaimHexTx(curInterest);
-//                    BitcoinNodeManager.sendTransaction(hexTx, new ApiMethods.RequestListener() {
-//                        @Override
-//                        public void onSuccess(Object response) {
-//                            try {
-//                                thisFragment.getActivity().runOnUiThread(() -> {
-//                                    tvInterestClaimed.setVisibility(View.VISIBLE);
-//                                    tvInterestClaimed.setText("Rewards claimed");
-//                                    tvYouHaveToClaim.setVisibility(View.GONE);
-//                                    tvYouHaveToClaimInterest.setVisibility(View.GONE);
-//                                    btnClaimNow.setEnabled(true);
-//                                    btnClaimNow.setAlpha(1.0f);
-//                                    btnClaimNow.setText("OK");
-//                                });
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(String msg) {
-//                            try {
-//                                thisFragment.getActivity().runOnUiThread(() -> {
-//                                    Toast.makeText(thisFragment.getActivity(), CurrencyUtils.getBtcLikeError(msg), Toast.LENGTH_SHORT).show();
-//                                    btnClaimNow.setEnabled(true);
-//                                });
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
                 }
             } catch (Exception e) {
                 ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_claim), R.drawable.err_network);
