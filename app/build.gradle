@@ -155,8 +155,8 @@ android {
 
         kmd { // Komodo
             dimension "version"
-            versionCode 17
-            versionName "0.17"
+            versionCode 18
+            versionName "0.18"
             applicationId "com.guarda.kmd"
             dimension "tier"
         }
@@ -175,13 +175,9 @@ android {
         variant.outputs.all { output ->
             def flavor = variant.productFlavors[0].name
             def buildType = variant.variantData.variantConfiguration.buildType.name
-            def versionName = variant.versionName
-            def versionCode = variant.versionCode
 
+            def newApkName = flavor + "-" + buildType + ".apk"
 
-            def newApkName = flavor + "-" + buildType + "-" + "v" + versionName + "-" + "code-" + versionCode + ".apk"
-
-            //outputFileName = new File(output.outputFile.parent, newApkName)
             outputFileName = newApkName
         }
     }
