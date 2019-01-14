@@ -155,8 +155,8 @@ android {
 
         kmd { // Komodo
             dimension "version"
-            versionCode 17
-            versionName "0.17"
+            versionCode 18
+            versionName "0.18"
             applicationId "com.guarda.kmd"
             dimension "tier"
         }
@@ -175,13 +175,9 @@ android {
         variant.outputs.all { output ->
             def flavor = variant.productFlavors[0].name
             def buildType = variant.variantData.variantConfiguration.buildType.name
-            def versionName = variant.versionName
-            def versionCode = variant.versionCode
 
+            def newApkName = flavor + "-" + buildType + ".apk"
 
-            def newApkName = flavor + "-" + buildType + "-" + "v" + versionName + "-" + "code-" + versionCode + ".apk"
-
-            //outputFileName = new File(output.outputFile.parent, newApkName)
             outputFileName = newApkName
         }
     }
@@ -206,10 +202,10 @@ configurations {
     btgImplementation.exclude group: 'com.google.common.annotations'
     btgImplementation.exclude group: 'com.google.guava'
 
-    kmdImplementation.exclude group: 'com.squareup.okhttp3'
-    kmdImplementation.exclude group: 'org.codehaus.mojo'
-    kmdImplementation.exclude group: 'com.google.common.annotations'
-    kmdImplementation.exclude group: 'com.google.guava'
+//    kmdImplementation.exclude group: 'com.squareup.okhttp3'
+//    kmdImplementation.exclude group: 'org.codehaus.mojo'
+//    kmdImplementation.exclude group: 'com.google.common.annotations'
+//    kmdImplementation.exclude group: 'com.google.guava'
 
     dgbImplementation.exclude group: 'com.squareup.okhttp3'
     dgbImplementation.exclude group: 'org.codehaus.mojo'
@@ -289,8 +285,10 @@ dependencies {
     iotaImplementation 'org.knowm.xchange:xchange-bitstamp:4.3.0'
     iotaImplementation 'org.knowm.xchange:xchange-bitfinex:4.3.0'
     iotaImplementation 'org.knowm.xchange:xchange-okcoin:4.3.0'
-    kmdImplementation files('libs/bitcoinj-core-0.15-SNAPSHOT-bundled.jar')
-    kmdImplementation 'com.google.guava:guava:23.3-android'
+//    kmdImplementation files('libs/bitcoinj-core-0.15-SNAPSHOT-bundled.jar')
+    kmdImplementation 'org.bitcoinj:bitcoinj-core:0.14.7'
+    kmdImplementation 'com.madgag.spongycastle:core:1.58.0.0'
+//    kmdImplementation 'com.google.guava:guava:23.3-android'
     dgbImplementation files('libs/bitcoinj-core-0.15-SNAPSHOT-bundled.jar')
     dgbImplementation 'com.google.guava:guava:23.3-android'
 

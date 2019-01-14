@@ -244,6 +244,7 @@ public class ApiMethods {
 
     static KmdApi createKmdApi() {
         return getBaseApi(KmdExplorer.KMD_EXPLORER_BASE_URL).create(KmdApi.class);
+//        return getBaseApi(KmdExplorer.KMD_TEST_EXPLORER_BASE_URL).create(KmdApi.class);
     }
 
     static SbtcApi createSbtcApi() {

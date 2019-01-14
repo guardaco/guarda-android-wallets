@@ -22,6 +22,7 @@ public class Common {
 
     public final static int DEFAULT_GAS_LIMIT = 21000;
     public final static int DEFAULT_GAS_LIMIT_FOR_CONTRACT = 21000;
+    public final static int KMD_MIN_CONFIRM = 1;
 
     public final static String TOKENS_FILE_NAME = "etc_tokens_request.json";
     public final static String EXTRA_FIELDS = "extra-fields.json";
