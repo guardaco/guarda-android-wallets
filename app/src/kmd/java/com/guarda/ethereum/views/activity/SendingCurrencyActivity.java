@@ -395,6 +395,10 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
             closeProgress();
             Log.e("psd", wne.toString());
             Toast.makeText(this, R.string.send_wrong_address, Toast.LENGTH_SHORT).show();
+        } catch (ZCashException zce) {
+            closeProgress();
+            Toast.makeText(SendingCurrencyActivity.this, "Error: " + zce.getMessage(), Toast.LENGTH_SHORT).show();
+            zce.printStackTrace();
         } catch (Exception e) {
             closeProgress();
             Toast.makeText(SendingCurrencyActivity.this, "Error of sending", Toast.LENGTH_SHORT).show();
