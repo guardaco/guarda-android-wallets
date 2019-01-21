@@ -155,8 +155,8 @@ android {
 
         kmd { // Komodo
             dimension "version"
-            versionCode 18
-            versionName "0.18"
+            versionCode 19
+            versionName "0.19"
             applicationId "com.guarda.kmd"
             dimension "tier"
         }
