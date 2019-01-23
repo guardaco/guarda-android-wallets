@@ -355,7 +355,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                             getToAddress(),
                             amountSatoshi,
                             currentFeeEth,
-                            walletManager.getPrivateKey(),
+                            walletManager.anyToWif(walletManager.getPrivateKey()),
                             KMD_MIN_CONFIRM, (r1, r2) -> {
                                 Log.i("RESPONSE CODE", r1);
                                 if (r1.equals("ok")) {

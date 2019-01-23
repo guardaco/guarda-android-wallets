@@ -201,7 +201,7 @@ public class WalletManager {
         });
     }
 
-    private String anyToWif(String val) {
+    public String anyToWif(String val) {
         if (val == null)
             return null;
         if (val.indexOf(" ") == -1)
