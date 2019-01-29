@@ -220,7 +220,7 @@ public class TransactionHistoryFragment extends BaseFragment {
                             walletManager.getWalletFriendlyAddress(),
                             walletManager.getMyBalance().getValue(),
                             0L,
-                            walletManager.getPrivateKey(),
+                            walletManager.anyToWif(walletManager.getPrivateKey()),
                             KMD_MIN_CONFIRM,
                             curInterest, new WalletCallback<String, ZCashTransaction_taddr>() {
                                 @Override
@@ -264,7 +264,8 @@ public class TransactionHistoryFragment extends BaseFragment {
                                                 }
                                             });
                                         } catch (ZCashException e) {
-                                            ((MainActivity) getActivity()).showCustomToast("Can not send the transaction to the node", R.drawable.err_network);
+                                            ((MainActivity) getActivity()).showCustomToast("Error: " + e.getMessage(), R.drawable.err_network);
+                                            e.printStackTrace();
                                             Log.i("TX", "Cannot sign transaction");
                                         }
                                     } else {

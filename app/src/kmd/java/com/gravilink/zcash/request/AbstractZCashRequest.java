@@ -25,7 +25,6 @@ public abstract class AbstractZCashRequest {
   protected static String nodeAddress;
   protected static String auth;
   protected static String explorerAddress;
-  protected final static String BLOCKEXPLORER_API_ADDR = "https://zcash.blockexplorer.com/api/";
   private static long lastExplorerQuery;
   private static final Object lastExplorerQueryMutex = new Object();
   private static final long explorerTimeout = 100;
@@ -90,7 +89,7 @@ public abstract class AbstractZCashRequest {
     return getResponseArray(queryExplorerForConnection(uri));
   }
 
-  public static HttpURLConnection queryExplorerForConnection(String uri) throws ZCashException {
+  public static HttpsURLConnection queryExplorerForConnection(String uri) throws ZCashException {
     URL url;
     Log.i("URI", uri);
     try {
@@ -110,9 +109,9 @@ public abstract class AbstractZCashRequest {
       }
 
       lastExplorerQuery = currentTime;
-      HttpURLConnection conn;
+      HttpsURLConnection conn;
       try {
-        conn = (HttpURLConnection) url.openConnection();
+        conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setDoInput(true);
         conn.connect();
