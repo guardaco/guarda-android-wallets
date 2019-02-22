@@ -4,6 +4,8 @@ The wallets are designed to store, manage, transfer and receive cryptocurrency. 
 
 Guarda does not store any personal information, wallet data or private keys of our clients. The private key is stored in the mobile device’s secure memory and deletes itself if the user logs out from the wallet. In order to secure the funds, a backup of the private key or the json backup feature are created. A pin code access is also available.
 
+![Guarda Android SPV wallets](guarda_mobile_apps.png?raw=true "Guarda Android SPV wallets")
+
 ## How to install
 Read the detailed instruction [here](https://guarda.freshdesk.com/support/solutions/articles/36000095874-how-to-install-a-guarda-open-source-android-wallet).
 ## About
