@@ -265,7 +265,7 @@ public class TransactionHistoryFragment extends BaseFragment {
                             sharedManager.setTokensInfo(tokensJson);
                             sharedManager.setTokenUpdateDate(System.currentTimeMillis());
                             loadTokens();
-                        } catch (IOException e) {
+                        } catch (IOException | ClassCastException e) {
                             FirebaseCrash.logcat(Log.ERROR, "showTokens", e.toString());
                             FirebaseCrash.report(e);
                             e.printStackTrace();
