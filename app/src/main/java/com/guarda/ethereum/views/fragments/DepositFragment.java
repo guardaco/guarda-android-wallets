@@ -43,6 +43,8 @@ public class DepositFragment extends BaseFragment {
     ImageView ivQrCode;
     @BindView(R.id.tv_address_wallet)
     TextView tvWalletAddress;
+    @BindView(R.id.tv_z_address_wallet)
+    TextView tv_z_address_wallet;
     @BindView(R.id.tv_tap_to_copy_address)
     TextView tvTapToCopyAddress;
     @BindView(R.id.btn_share_adr)
@@ -73,6 +75,7 @@ public class DepositFragment extends BaseFragment {
             ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(walletManager.getWalletAddressForDeposit(), QR_CODE_WIDTH));
             tvWalletAddress.setText(walletManager.getWalletAddressForDeposit());
         }
+        tv_z_address_wallet.setText(walletManager.getPaymentAddressZ());
     }
 
     @OnClick(R.id.btn_share_adr)

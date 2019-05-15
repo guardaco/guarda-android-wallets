@@ -2,7 +2,8 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,17 +43,29 @@
                     android:layout_marginBottom="10dp"
                     android:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
                     android:textColor="@color/baseBlueTextColor"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
+
+                <com.guarda.ethereum.customviews.RobotoTextView
+                    android:id="@+id/tv_z_address_wallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_below="@+id/tv_address_wallet"
+                    android:layout_marginBottom="10dp"
+                    tools:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
+                    android:textColor="@color/baseBlueTextColor"
+                    android:textSize="20sp" />
 
                 <com.guarda.ethereum.customviews.RobotoLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_address_wallet"
+                    android:layout_below="@+id/tv_z_address_wallet"
                     android:layout_centerHorizontal="true"
                     android:text="@string/app_tap_to_copy"
                     android:id="@+id/tv_tap_to_copy_address"
                     android:textColor="@color/baseLightGreyTextColor"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 

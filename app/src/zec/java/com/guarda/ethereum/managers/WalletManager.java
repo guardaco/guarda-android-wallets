@@ -4,33 +4,22 @@ import android.content.Context;
 import android.net.Credentials;
 import android.util.Log;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
-import com.google.common.collect.ImmutableList;
-import com.google.firebase.crash.FirebaseCrash;
+import com.gravilink.zcash.RustAPI;
 import com.gravilink.zcash.WalletCallback;
 import com.gravilink.zcash.ZCashException;
 import com.gravilink.zcash.ZCashWalletManager;
 import com.gravilink.zcash.crypto.BrainKeyDict;
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
-import com.guarda.ethereum.models.constants.Common;
-import com.guarda.ethereum.models.items.UTXOItem;
-import com.guarda.ethereum.models.items.UTXOListResponse;
-import com.guarda.ethereum.rest.ApiMethods;
-import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.utils.DebugHelper;
 import com.guarda.ethereum.utils.FileUtils;
 
 
 import org.bitcoinj.core.Address;
-import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.WrongNetworkException;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
@@ -38,9 +27,7 @@ import org.spongycastle.util.encoders.Hex;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -48,8 +35,6 @@ import autodagger.AutoInjector;
 
 import static com.google.common.base.Preconditions.checkState;
 import static com.guarda.ethereum.models.constants.Common.BIP_39_WORDLIST_ASSET;
-import static com.guarda.ethereum.models.constants.Common.BTC_NODE_PASS;
-import static com.guarda.ethereum.models.constants.Common.MNEMONIC_WORDS_COUNT;
 
 
 /**
@@ -66,20 +51,17 @@ public class WalletManager {
 
     private Wallet wallet;
     private String walletFriendlyAddress;
+    private String paymentAddressZ;
 
     @Inject
     SharedManager sharedManager;
 
-
     private Coin myBalance;
     private Context context;
-//    private static NetworkParameters params = LitecoinNetParameters.get();
-//    private static NetworkParameters params = MainNetParams.get();
     private static NetworkParameters params = new ZecParams();
     private String mnemonicKey;
     private HashSet<String> mBip39Words;
     private BigDecimal balance = BigDecimal.ZERO;
-
 
     public WalletManager(Context context) {
         GuardaApp.getAppComponent().inject(this);
@@ -88,15 +70,6 @@ public class WalletManager {
     }
 
     public void createWallet(String passphrase, WalletCreationCallback callback) {
-
-//        wallet = new Wallet(params);
-//        DeterministicSeed seed = wallet.getKeyChainSeed();
-//
-//        mnemonicKey = Joiner.on(" ").join(seed.getMnemonicCode());
-//        sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
-//
-//        walletFriendlyAddress = wallet.currentReceiveAddress().toString();
-//        callback.onWalletCreated(wallet);
         DebugHelper.checkEmptyLastSyncedBlock(sharedManager.getLastSyncedBlock(), context);
         restoreFromBlock(Coders.decodeBase64(sharedManager.getLastSyncedBlock()), callback);
     }
@@ -109,6 +82,7 @@ public class WalletManager {
                     BrainKeyDict.init(context.getAssets());
                     mnemonicKey = ZCashWalletManager.generateNewPrivateKey_taddr();
                     walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
+                    paymentAddressZ = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 } catch (ZCashException zce) {
@@ -134,6 +108,7 @@ public class WalletManager {
                     });
             mnemonicKey = mnemonicCode;
             walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
+            paymentAddressZ = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
         } catch (IllegalArgumentException iae) {
             callback.onWalletCreated();
             iae.printStackTrace();
@@ -141,44 +116,9 @@ public class WalletManager {
             callback.onWalletCreated();
             zce.printStackTrace();
         }
-//        sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
 
         callback.onWalletCreated();
     }
-
-//    public void restoreFromBlockByXPRV(String xprv, WalletCreationCallback callback) {
-//        xprv = xprv.trim();
-//        try {
-//            DeterministicKey dk01 = DeterministicKey.deserializeB58(xprv, params);
-//            String privhex = dk01.getPrivateKeyAsHex();
-//            ECKey ecKey001 = ECKey.fromPrivate(Hex.decode(privhex));
-//            KeyChainGroup kcg = new KeyChainGroup(params, dk01.dropPrivateBytes().dropParent());
-//            kcg.importKeys(ecKey001);
-//            wallet = new Wallet(params, kcg);
-//            walletFriendlyAddress = wallet.currentReceiveAddress().toString();
-//            xprvKey = xprv;
-//        } catch (IllegalArgumentException iae) {
-//            FirebaseCrash.report(iae);
-//            Log.e("psd", "restoreFromBlockByXPRV: " + iae.toString());
-//            callback.onWalletCreated(wallet);
-//            return;
-//        }
-//
-//        callback.onWalletCreated(wallet);
-//
-//        RequestorBtc.getUTXOListLtcNew(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
-//            @Override
-//            public void onSuccess(Object response) {
-//                List<UTXOItem> utxos = (List<UTXOItem>)response;
-//                setUTXO(utxos);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//
-//            }
-//        });
-//    }
 
     public void restoreFromBlock0(String mnemonicCode, Runnable callback) {
         try {
@@ -205,6 +145,7 @@ public class WalletManager {
                             try {
                                 mnemonicKey = mnemonicCode;
                                 walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
+                                paymentAddressZ = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
                                 sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
                                 callback.run();
                                 Log.i("RESPONSE CODE", r1);
@@ -224,74 +165,7 @@ public class WalletManager {
             zce.printStackTrace();
             callback.run();
         }
-
-//        callback.run();
     }
-
-//    public void restoreFromBlockByXPRV2(String xprv, Runnable callback) {
-//        xprv = xprv.trim();
-//        try {
-//            DeterministicKey dk01 = DeterministicKey.deserializeB58(xprv, params);
-//            String privhex = dk01.getPrivateKeyAsHex();
-//            ECKey ecKey001 = ECKey.fromPrivate(Hex.decode(privhex));
-//            KeyChainGroup kcg = new KeyChainGroup(params, dk01.dropPrivateBytes().dropParent());
-//            kcg.importKeys(ecKey001);
-//            wallet = new Wallet(params, kcg);
-//            sharedManager.setLastSyncedBlock(xprv);
-//            walletFriendlyAddress = wallet.currentReceiveAddress().toString();
-//            xprvKey = xprv;
-//        } catch (IllegalArgumentException iae) {
-//            FirebaseCrash.report(iae);
-//            Log.e("psd", "restoreFromBlockByXPRV2: " + iae.toString());
-//            callback.run();
-//            return;
-//        }
-//
-//        callback.run();
-//
-//        RequestorBtc.getUTXOListLtcNew(wallet.currentReceiveAddress().toString(), new ApiMethods.RequestListener() {
-//            @Override
-//            public void onSuccess(Object response) {
-//                List<UTXOItem> utxos = (List<UTXOItem>)response;
-//                setUTXO(utxos);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//
-//            }
-//        });
-//    }
-
-//    private void setUTXO(List<UTXOItem> utxoList) {
-//
-//        Address a = wallet.currentReceiveAddress();
-//        final List<UTXO> utxos = new ArrayList<>();
-//
-//        for (UTXOItem utxo : utxoList) {
-//            Sha256Hash hash = Sha256Hash.wrap(utxo.getTxHash());
-//            utxos.add(new UTXO(hash, utxo.getTxOutputN(), Coin.valueOf(utxo.getSatoshiValue()),
-//                    0, false, ScriptBuilder.createOutputScript(a)));
-//        }
-//
-//        UTXOProvider utxoProvider = new UTXOProvider() {
-//            @Override
-//            public List<UTXO> getOpenTransactionOutputs(List<Address> addresses) throws UTXOProviderException {
-//                return utxos;
-//            }
-//
-//            @Override
-//            public int getChainHeadHeight() throws UTXOProviderException {
-//                return Integer.MAX_VALUE;
-//            }
-//
-//            @Override
-//            public NetworkParameters getParams() {
-//                return wallet.getParams();
-//            }
-//        };
-//        wallet.setUTXOProvider(utxoProvider);
-//    }
 
     public static String getFriendlyBalance(Coin coin) {
         String[] arr = coin.toFriendlyString().split(" ");
@@ -325,9 +199,6 @@ public class WalletManager {
         } else {
             return "";
         }
-//        ChildNumber childNumber = new ChildNumber(ChildNumber.HARDENED_BIT);
-//        DeterministicKey de = wallet.getKeyByPath(ImmutableList.of(childNumber));
-//        return de.serializePrivB58(params);
     }
 
     public String getWifKey() {
@@ -340,12 +211,14 @@ public class WalletManager {
 
     public String getWalletFriendlyAddress() {
         return walletFriendlyAddress;
-//            return "t1VpYecBW4UudbGcy4ufh61eWxQCoFaUrPs"; //to z-address
-//            return "t1fDUDwxfte5M4CYCFUzejVAXr2Pc31vLq8"; //from z-address
     }
 
     public String getWalletAddressForDeposit() {
         return walletFriendlyAddress;
+    }
+
+    public String getPaymentAddressZ() {
+        return paymentAddressZ;
     }
 
     public void setWallet(Wallet wallet) {
@@ -371,16 +244,6 @@ public class WalletManager {
     }
 
     public boolean isValidPrivateKey(String key) {
-//        String[] words = key.split("\\W+");
-//
-//        if (words.length != MNEMONIC_WORDS_COUNT){
-//            return false;
-//        }
-//        for (String word : words) {
-//            if (!mBip39Words.contains(word)){
-//                return false;
-//            }
-//        }
         return true;
     }
 
@@ -394,20 +257,6 @@ public class WalletManager {
         } else {
             callback.onResponse(false);
         }
-
-//        try {
-//            Address.fromBase58(params, address);
-//            callback.onResponse(true);
-//        } catch (WrongNetworkException wne) {
-//            Log.e("psd", "isAddressValid: " + wne.toString());
-//            callback.onResponse(false);
-//        } catch (AddressFormatException afe) {
-//            Log.e("psd", "isAddressValid: " + afe.toString());
-//            callback.onResponse(false);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            callback.onResponse(false);
-//        }
     }
 
     public boolean isAddressValid(String address) {

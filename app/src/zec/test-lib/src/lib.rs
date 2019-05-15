@@ -1125,20 +1125,13 @@ pub extern "system" fn librustzcash_sapling_verification_ctx_free(
 //
 
 #[no_mangle]
-pub unsafe extern "C" fn Java_co_guarda_ndkrusttest_RustAPI_testRust(
+pub unsafe extern "C" fn Java_com_gravilink_zcash_RustAPI_zAddrFromWif(
     env: JNIEnv<'_>,
     _: JClass<'_>,
-    db_data: JString,
     seed: jbyteArray,
 ) -> jstring {
-    let db_data: String = env
-                .get_string(db_data)
-                .expect("Couldn't get Java string!")
-                .into();
 
     let seed = env.convert_byte_array(seed).unwrap();
-
-    //let seed = unsafe { std::slice::from_raw_parts(&seed, 52) };
 
     let xsk = ExtendedSpendingKey::master(&seed);
 
@@ -1146,7 +1139,6 @@ pub unsafe extern "C" fn Java_co_guarda_ndkrusttest_RustAPI_testRust(
 
     let mut res = vec![];
     let mut buf = [0; 32];
-    //xsk.expsk.ask.into_repr().write_le(&mut buf[..]).unwrap();
     let ask = expsk.ask;//32
     let nsk = expsk.nsk;//32
     let ovk = expsk.ovk;
@@ -1158,15 +1150,6 @@ pub unsafe extern "C" fn Java_co_guarda_ndkrusttest_RustAPI_testRust(
     let ak = &fvk.vk.ak;//32
     let nk = &fvk.vk.nk;//32
     let ivk = &fvk.vk.ivk();
-
-    //xfvk.fvk
-      //              .vk
-        //            .ivk()
-          //          .into_repr()
-            //        .write_le(&mut buf[..])
-              //      .unwrap();
-
-
 
     let extfvk = ExtendedFullViewingKey::from(&xsk);
 

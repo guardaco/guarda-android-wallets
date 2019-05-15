@@ -3,8 +3,6 @@ package com.gravilink.zcash;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import timber.log.Timber;
-
 public class RustAPI {
 
     //April 12 2019
@@ -106,8 +104,7 @@ public class RustAPI {
 
     public static native byte[] testToArr(final String str);
 
-    public static native String testRust(final String str,
-                                         final byte[] data);
+    public static native String zAddrFromWif(final byte[] data);
 
     //endregion
 
@@ -183,19 +180,19 @@ public class RustAPI {
 //                return checkHexD();
 //            case -22:
 //                return checkConvertNdkArr();
-            case -23:
-                return checkGenKeys();
+//            case -23:
+//                return checkGenKeys();
             default:
                 return "default returned";
         }
     }
 
-    String checkGenKeys() {
-        String s = testRust("test rust str", (NEW_TESTNET_KEY).getBytes());
-        Timber.d("checkGenKeys s=%s", s);//ztestsapling1eeeqpt0vs457nf4u5e82jslk9cfsve58vv3vmjl5zp0katmcm4qkf222ajdlkl85k7efudmpjhj
-
-        return "checkGenKeys";
-    }
+//    String zAddr(String wif) {
+//        String s = zAddrFromWif(wif.getBytes());
+//        Timber.d("checkGenKeys s=%s", s);//ztestsapling1eeeqpt0vs457nf4u5e82jslk9cfsve58vv3vmjl5zp0katmcm4qkf222ajdlkl85k7efudmpjhj
+//
+//        return "checkGenKeys";
+//    }
 
 //    String checkConvertNdkArr() {
 //        Timber.d("checkConvertNdkArr started");
