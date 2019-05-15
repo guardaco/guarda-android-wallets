@@ -229,6 +229,7 @@ dependencies {
     implementation 'com.android.support:gridlayout-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:support-annotations:27.1.1'
+
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     implementation 'com.github.clans:fab:1.6.4'
@@ -237,9 +238,9 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.0'
     implementation 'com.github.arok:Auto-Dagger2:master-SNAPSHOT'
     annotationProcessor 'com.github.arok:Auto-Dagger2:master-SNAPSHOT'
-
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     implementation files('libs/jsonrpc2-base-1.38.jar')
     implementation 'com.google.firebase:firebase-core:11.8.0'
