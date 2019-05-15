@@ -13,6 +13,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.freshchat.consumer.sdk.Freshchat;
 import com.freshchat.consumer.sdk.FreshchatConfig;
+import com.getkeepsafe.relinker.ReLinker;
 import com.google.firebase.crash.FirebaseCrash;
 import com.guarda.ethereum.dependencies.AppModule;
 import com.guarda.ethereum.managers.ShapeshiftManager;
@@ -33,6 +34,7 @@ import autodagger.AutoComponent;
 import de.adorsys.android.securestoragelibrary.SecurePreferences;
 import de.adorsys.android.securestoragelibrary.SecureStorageException;
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 
 @AutoComponent(
 
@@ -54,6 +56,7 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
     public GuardaApp instance;
 
     private SharedManager sharedManager;
+    private ReLinker.Logger logcatLogger = (message) -> Timber.d("ReLinker %s", message);
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -126,6 +129,10 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
                 "com.guarda.qtum".equals(packageName)) {
             sharedManager.setHasWifXprvKeys(true);
         }
+        //init ndk lib for ZEC
+        if ("com.guarda.zec".equals(packageName)) {
+            ReLinker.log(logcatLogger).loadLibrary(getApplicationContext(), "native-lib");
+        }
 
 
         ShapeshiftManager.getInstance().updateSupportedCoinsList(null);
@@ -184,28 +191,11 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
         if (!activity.getLocalClassName().equalsIgnoreCase("com.guarda.ethereum.views.activity.ConfirmPinCodeActivity")) {
             isShowPin = !(currentActivity.equalsIgnoreCase(activity.getLocalClassName()));
         }
-//        Log.d("psd", "GuardaApp - onActivityResumed: " + activity.getLocalClassName() + " current = " + (currentActivity.equalsIgnoreCase(activity.getLocalClassName())));
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
         currentActivity = activity.getLocalClassName();
-//        Log.d("psd", "GuardaApp - onActivityPaused: " + activity.getLocalClassName());
-    }
-
-    protected boolean isShouldToBlockScreen() {
-//        if (!sharedManager.getLastSyncedBlock().isEmpty()) {
-            if (sharedManager.getIsPinCodeEnable()) {
-                if (GuardaApp.getTimeOfExit() != 0) {
-                    long absentTime = System.currentTimeMillis() - GuardaApp.getTimeOfExit() - GuardaApp.getTimeOfIgnoreExist();
-//                    if (absentTime > ALLOWABLE_ABSENCE_TIME) {
-                    if (absentTime > GuardaApp.getTimeOfIgnoreExist()) {
-                        return true;
-                    }
-                }
-            }
-//        }
-        return false;
     }
 
     @Override
@@ -231,10 +221,6 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
     @Override
     public void onActivityDestroyed(Activity activity) {
 
-    }
-
-    public String getCurrentActivity() {
-        return currentActivity;
     }
 
     public GuardaApp getInstance() {

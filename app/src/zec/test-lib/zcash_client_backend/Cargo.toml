@@ -1,0 +1,32 @@
+[package]
+name = "zcash_client_backend"
+version = "0.0.0"
+authors = [
+    "Jack Grigg <jack@z.cash>",
+]
+edition = "2018"
+
+[dependencies]
+bech32 = "0.6"
+bellman = { path = "../bellman" }
+ff = { path = "../ff" }
+hex = "0.3"
+pairing = { path = "../pairing" }
+protobuf = "2"
+rand = "0.4"
+rusqlite = { version = "0.15", features = ["bundled"], optional = true }
+sapling-crypto = { path = "../sapling-crypto" }
+time = { version = "0.1", optional = true }
+zcash_primitives = { path = "../zcash_primitives" }
+zcash_proofs = { path = "../zcash_proofs" }
+zip32 = { path = "../zip32" }
+
+[build-dependencies]
+protobuf-codegen-pure = "2"
+
+[dev-dependencies]
+dirs = "1"
+tempfile = "3"
+
+[features]
+sqlite = ["rusqlite", "time"]
