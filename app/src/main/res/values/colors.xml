@@ -10,6 +10,9 @@
     <color name="toolbar_end_color">#6698f7</color>
     <color name="drawer_bg">#fafafa</color>
     <color name="color_selector_drawer_menu_item">#202020</color>
+    <color name="bg_from">#B06AB3</color>
+    <color name="bg_to">#6699F8</color>
+    <color name="bg_avg">#7190eb</color>
 
     <color name="navBarColor">#9ea8db</color>
 

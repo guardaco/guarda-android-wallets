@@ -309,6 +309,7 @@ dependencies {
     zecImplementation 'org.bitcoinj:bitcoinj-core:0.14.5'
     zecImplementation 'com.madgag.spongycastle:core:1.58.0.0'
     zecImplementation 'com.getkeepsafe.relinker:relinker:1.3.1'
+    zecImplementation 'com.llollox:androidtoggleswitch:2.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

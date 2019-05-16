@@ -2,31 +2,19 @@ package com.guarda.ethereum.views.fragments;
 
 
 import android.content.Intent;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.managers.ChangellyNetworkManager;
-import com.guarda.ethereum.managers.CurrencyListHolder;
-import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
-import com.guarda.ethereum.models.constants.Common;
-import com.guarda.ethereum.models.constants.Extras;
-import com.guarda.ethereum.models.items.ResponseCurrencyItem;
-import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.utils.QrCodeUtils;
-import com.guarda.ethereum.views.activity.GenerateAddressActivity;
-import com.guarda.ethereum.views.adapters.CryptoAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
+import com.llollox.androidtoggleswitch.widgets.ToggleSwitch;
 
 import javax.inject.Inject;
 
@@ -37,14 +25,12 @@ import butterknife.OnClick;
 @AutoInjector(GuardaApp.class)
 public class DepositFragment extends BaseFragment {
 
-    public String TAG = "DepositFragment";
-
+    @BindView(R.id.toggle_address)
+    ToggleSwitch toggle_address;
     @BindView(R.id.iv_qr_code)
     ImageView ivQrCode;
     @BindView(R.id.tv_address_wallet)
     TextView tvWalletAddress;
-    @BindView(R.id.tv_z_address_wallet)
-    TextView tv_z_address_wallet;
     @BindView(R.id.tv_tap_to_copy_address)
     TextView tvTapToCopyAddress;
     @BindView(R.id.btn_share_adr)
@@ -52,10 +38,8 @@ public class DepositFragment extends BaseFragment {
 
     @Inject
     WalletManager walletManager;
-    @Inject
-    CurrencyListHolder currentCrypto;
 
-    public final static int QR_CODE_WIDTH = 500;
+    public final static int QR_CODE_WIDTH = 600;
 
     @Override
     protected int getLayout() {
@@ -69,13 +53,29 @@ public class DepositFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        Log.d("flint", "DepositFragment.init()...");
         GuardaApp.getAppComponent().inject(this);
+
         if (walletManager.getWalletAddressForDeposit() != null && !walletManager.getWalletAddressForDeposit().isEmpty()) {
             ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(walletManager.getWalletAddressForDeposit(), QR_CODE_WIDTH));
             tvWalletAddress.setText(walletManager.getWalletAddressForDeposit());
         }
-        tv_z_address_wallet.setText(walletManager.getPaymentAddressZ());
+
+        if (BuildConfig.FLAVOR == "zec") {
+            toggle_address.setVisibility(View.VISIBLE);
+            toggle_address.setOnChangeListener((position) -> {
+                switch (position) {
+                    case 0:
+                        ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(walletManager.getWalletAddressForDeposit(), QR_CODE_WIDTH));
+                        tvWalletAddress.setText(walletManager.getWalletAddressForDeposit());
+                        break;
+                    case 1:
+                        ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(walletManager.getPaymentAddressZ(), QR_CODE_WIDTH));
+                        tvWalletAddress.setText(walletManager.getPaymentAddressZ());
+                        break;
+                }
+            });
+            toggle_address.setCheckedPosition(0);
+        }
     }
 
     @OnClick(R.id.btn_share_adr)

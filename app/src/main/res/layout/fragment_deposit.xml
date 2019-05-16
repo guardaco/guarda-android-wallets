@@ -10,6 +10,21 @@
         android:layout_height="0dp"
         android:orientation="vertical">
 
+        <com.llollox.androidtoggleswitch.widgets.ToggleSwitch
+            android:id="@+id/toggle_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            app:textToggleLeft="T-ADDRESS"
+            app:textToggleRight="Z-ADDRESS"
+            app:checkedBackgroundColor="@color/bg_avg"
+            app:checkedTextColor="@android:color/white"
+            app:uncheckedBackgroundColor="@android:color/white"
+            app:uncheckedTextColor="@color/baseDarkGreyTextColor" />
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,9 +39,9 @@
 
                 <ImageView
                     android:id="@+id/iv_qr_code"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:src="@drawable/btn_gradient_background"
                     android:layout_below="@+id/btn_currency_code"
@@ -40,19 +55,6 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_below="@+id/iv_qr_code"
-                    android:layout_marginBottom="10dp"
-                    android:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
-                    android:textColor="@color/baseBlueTextColor"
-                    android:textSize="20sp" />
-
-                <com.guarda.ethereum.customviews.RobotoTextView
-                    android:id="@+id/tv_z_address_wallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_below="@+id/tv_address_wallet"
-                    android:layout_marginBottom="10dp"
                     tools:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
                     android:textColor="@color/baseBlueTextColor"
                     android:textSize="20sp" />
@@ -60,7 +62,7 @@
                 <com.guarda.ethereum.customviews.RobotoLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_z_address_wallet"
+                    android:layout_below="@id/tv_address_wallet"
                     android:layout_centerHorizontal="true"
                     android:text="@string/app_tap_to_copy"
                     android:id="@+id/tv_tap_to_copy_address"
@@ -78,7 +80,10 @@
             android:textSize="14sp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/btn_light_blue"
+            android:elevation="4dp"
+            android:translationZ="4dp"
             android:text="@string/deposit_address_share" />
 
     </LinearLayout>

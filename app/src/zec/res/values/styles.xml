@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Switch between addresses toggle custom style -->
+    <style name="AddressToggle" parent="Widget">
+        <item name="android:background">@drawable/address_toggle_bg</item>
+        <item name="android:textOn">ON</item>
+        <item name="android:textOff">OFF</item>
+        <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
+    </style>
+
+
+
+</resources>
