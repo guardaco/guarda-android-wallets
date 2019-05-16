@@ -1,10 +1,9 @@
-package com.gravilink.zcash;
+package com.guarda.zcash;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
 import java.util.Vector;
 
 public class ZCashTransactionDetails_taddr implements Comparable<ZCashTransactionDetails_taddr> {

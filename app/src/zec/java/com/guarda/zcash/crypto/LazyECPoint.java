@@ -1,4 +1,4 @@
-package com.gravilink.zcash.crypto;
+package com.guarda.zcash.crypto;
 
 import org.spongycastle.math.ec.ECCurve;
 import org.spongycastle.math.ec.ECPoint;

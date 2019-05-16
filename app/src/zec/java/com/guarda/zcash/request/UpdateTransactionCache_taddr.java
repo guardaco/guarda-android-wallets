@@ -1,13 +1,12 @@
-package com.gravilink.zcash.request;
+package com.guarda.zcash.request;
 
 import android.net.Uri;
 import android.util.Log;
 
-import com.gravilink.zcash.JSONParser;
-import com.gravilink.zcash.WalletCallback;
-import com.gravilink.zcash.ZCashException;
-import com.gravilink.zcash.ZCashTransactionDetails_taddr;
-import com.gravilink.zcash.crypto.Base58;
+import com.guarda.zcash.JSONParser;
+import com.guarda.zcash.WalletCallback;
+import com.guarda.zcash.ZCashException;
+import com.guarda.zcash.ZCashTransactionDetails_taddr;
 
 import java.io.IOException;
 import java.util.LinkedList;

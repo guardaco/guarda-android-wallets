@@ -1,10 +1,10 @@
-package com.gravilink.zcash.request;
+package com.guarda.zcash.request;
 
 import android.net.Uri;
 
-import com.gravilink.zcash.WalletCallback;
-import com.gravilink.zcash.ZCashException;
-import com.gravilink.zcash.ZCashTransactionOutput;
+import com.guarda.zcash.WalletCallback;
+import com.guarda.zcash.ZCashException;
+import com.guarda.zcash.ZCashTransactionOutput;
 
 import org.json.JSONArray;
 import org.json.JSONException;

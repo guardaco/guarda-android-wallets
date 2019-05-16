@@ -1,9 +1,9 @@
-package com.gravilink.zcash.request;
+package com.guarda.zcash.request;
 
 import android.util.Base64;
 import android.util.Log;
 
-import com.gravilink.zcash.ZCashException;
+import com.guarda.zcash.ZCashException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;

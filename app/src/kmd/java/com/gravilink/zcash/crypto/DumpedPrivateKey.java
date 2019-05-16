@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.gravilink.zcash.crypto;
+package com.guarda.zcash.crypto;
 
 import java.util.Arrays;
 

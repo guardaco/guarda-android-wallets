@@ -1,4 +1,4 @@
-package com.gravilink.zcash;
+package com.guarda.zcash;
 
 import org.json.JSONArray;
 import org.json.JSONException;

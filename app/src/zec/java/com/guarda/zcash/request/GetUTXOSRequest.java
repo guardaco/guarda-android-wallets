@@ -1,10 +1,10 @@
-package com.gravilink.zcash.request;
+package com.guarda.zcash.request;
 
 import android.net.Uri;
 
-import com.gravilink.zcash.WalletCallback;
-import com.gravilink.zcash.ZCashException;
-import com.gravilink.zcash.ZCashTransactionOutput;
+import com.guarda.zcash.WalletCallback;
+import com.guarda.zcash.ZCashException;
+import com.guarda.zcash.ZCashTransactionOutput;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_API;
-import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_BASE_URL;
 
 public class GetUTXOSRequest extends AbstractZCashRequest implements Runnable {
   private WalletCallback<String, List<ZCashTransactionOutput>> callback;

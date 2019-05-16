@@ -1,4 +1,4 @@
-package com.gravilink.zcash;
+package com.guarda.zcash;
 
 import android.content.Context;
 import android.content.res.AssetManager;

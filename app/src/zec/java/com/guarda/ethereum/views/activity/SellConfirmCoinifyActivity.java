@@ -15,12 +15,11 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.gravilink.zcash.WalletCallback;
-import com.gravilink.zcash.ZCashException;
-import com.gravilink.zcash.ZCashTransaction_taddr;
-import com.gravilink.zcash.ZCashWalletManager;
-import com.gravilink.zcash.crypto.Utils;
-import com.guarda.ethereum.BuildConfig;
+import com.guarda.zcash.WalletCallback;
+import com.guarda.zcash.ZCashException;
+import com.guarda.zcash.ZCashTransaction_taddr;
+import com.guarda.zcash.ZCashWalletManager;
+import com.guarda.zcash.crypto.Utils;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.BitcoinNodeManager;

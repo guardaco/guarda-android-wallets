@@ -1,4 +1,4 @@
-package com.gravilink.zcash.crypto;
+package com.guarda.zcash.crypto;
 
 import org.spongycastle.crypto.DataLengthException;
 import org.spongycastle.crypto.InvalidCipherTextException;

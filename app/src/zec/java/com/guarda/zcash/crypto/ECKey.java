@@ -1,6 +1,6 @@
-package com.gravilink.zcash.crypto;
+package com.guarda.zcash.crypto;
 
-import com.gravilink.zcash.ZCashException;
+import com.guarda.zcash.ZCashException;
 
 import org.spongycastle.asn1.x9.X9ECParameters;
 import org.spongycastle.asn1.x9.X9IntegerConverter;

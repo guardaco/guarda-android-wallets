@@ -1125,7 +1125,7 @@ pub extern "system" fn librustzcash_sapling_verification_ctx_free(
 //
 
 #[no_mangle]
-pub unsafe extern "C" fn Java_com_gravilink_zcash_RustAPI_zAddrFromWif(
+pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_zAddrFromWif(
     env: JNIEnv<'_>,
     _: JClass<'_>,
     seed: jbyteArray,

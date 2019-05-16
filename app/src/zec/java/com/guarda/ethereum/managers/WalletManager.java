@@ -4,11 +4,11 @@ import android.content.Context;
 import android.net.Credentials;
 import android.util.Log;
 
-import com.gravilink.zcash.RustAPI;
-import com.gravilink.zcash.WalletCallback;
-import com.gravilink.zcash.ZCashException;
-import com.gravilink.zcash.ZCashWalletManager;
-import com.gravilink.zcash.crypto.BrainKeyDict;
+import com.guarda.zcash.RustAPI;
+import com.guarda.zcash.WalletCallback;
+import com.guarda.zcash.ZCashException;
+import com.guarda.zcash.ZCashWalletManager;
+import com.guarda.zcash.crypto.BrainKeyDict;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.utils.DebugHelper;

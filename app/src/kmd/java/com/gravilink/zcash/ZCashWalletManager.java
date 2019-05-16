@@ -1,20 +1,20 @@
-package com.gravilink.zcash;
+package com.guarda.zcash;
 
 import android.util.Log;
 
 import com.google.common.primitives.Bytes;
-import com.gravilink.zcash.crypto.Base58;
-import com.gravilink.zcash.crypto.BrainKeyDict;
-import com.gravilink.zcash.crypto.DumpedPrivateKey;
-import com.gravilink.zcash.crypto.ECKey;
-import com.gravilink.zcash.crypto.Sha256Hash;
-import com.gravilink.zcash.request.AbstractZCashRequest;
-import com.gravilink.zcash.request.CreateClaimTransaction_taddr;
-import com.gravilink.zcash.request.CreateTransaction_taddr;
-import com.gravilink.zcash.request.GetBalance_taddr;
-import com.gravilink.zcash.request.GetUTXOSRequest;
-import com.gravilink.zcash.request.PushTransaction_taddr;
-import com.gravilink.zcash.request.UpdateTransactionCache_taddr;
+import com.guarda.zcash.crypto.Base58;
+import com.guarda.zcash.crypto.BrainKeyDict;
+import com.guarda.zcash.crypto.DumpedPrivateKey;
+import com.guarda.zcash.crypto.ECKey;
+import com.guarda.zcash.crypto.Sha256Hash;
+import com.guarda.zcash.request.AbstractZCashRequest;
+import com.guarda.zcash.request.CreateClaimTransaction_taddr;
+import com.guarda.zcash.request.CreateTransaction_taddr;
+import com.guarda.zcash.request.GetBalance_taddr;
+import com.guarda.zcash.request.GetUTXOSRequest;
+import com.guarda.zcash.request.PushTransaction_taddr;
+import com.guarda.zcash.request.UpdateTransactionCache_taddr;
 import com.guarda.ethereum.models.constants.Common;
 
 import org.spongycastle.crypto.digests.RIPEMD160Digest;

@@ -1,4 +1,4 @@
-package com.gravilink.zcash.crypto;
+package com.guarda.zcash.crypto;
 
 import android.content.res.AssetManager;
 import android.support.annotation.NonNull;

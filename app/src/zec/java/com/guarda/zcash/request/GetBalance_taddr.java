@@ -1,19 +1,18 @@
-package com.gravilink.zcash.request;
+package com.guarda.zcash.request;
 
 import android.net.Uri;
 
-import com.gravilink.zcash.WalletCallback;
-import com.gravilink.zcash.ZCashException;
-import com.gravilink.zcash.ZCashTransactionDetails_taddr;
-import com.gravilink.zcash.ZCashTransactionInput;
-import com.gravilink.zcash.ZCashTransactionOutput;
+import com.guarda.zcash.WalletCallback;
+import com.guarda.zcash.ZCashException;
+import com.guarda.zcash.ZCashTransactionDetails_taddr;
+import com.guarda.zcash.ZCashTransactionInput;
+import com.guarda.zcash.ZCashTransactionOutput;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
 import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_API;
-import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_BASE_URL;
 
 public class GetBalance_taddr extends AbstractZCashRequest implements Runnable {
 

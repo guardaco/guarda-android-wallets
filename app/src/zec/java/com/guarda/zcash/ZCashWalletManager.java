@@ -1,19 +1,17 @@
-package com.gravilink.zcash;
-
-import android.util.Log;
+package com.guarda.zcash;
 
 import com.google.common.primitives.Bytes;
-import com.gravilink.zcash.crypto.Base58;
-import com.gravilink.zcash.crypto.BrainKeyDict;
-import com.gravilink.zcash.crypto.DumpedPrivateKey;
-import com.gravilink.zcash.crypto.ECKey;
-import com.gravilink.zcash.crypto.Sha256Hash;
-import com.gravilink.zcash.request.AbstractZCashRequest;
-import com.gravilink.zcash.request.CreateTransaction_taddr;
-import com.gravilink.zcash.request.GetBalance_taddr;
-import com.gravilink.zcash.request.GetUTXOSRequest;
-import com.gravilink.zcash.request.PushTransaction_taddr;
-import com.gravilink.zcash.request.UpdateTransactionCache_taddr;
+import com.guarda.zcash.crypto.Base58;
+import com.guarda.zcash.crypto.BrainKeyDict;
+import com.guarda.zcash.crypto.DumpedPrivateKey;
+import com.guarda.zcash.crypto.ECKey;
+import com.guarda.zcash.crypto.Sha256Hash;
+import com.guarda.zcash.request.AbstractZCashRequest;
+import com.guarda.zcash.request.CreateTransaction_taddr;
+import com.guarda.zcash.request.GetBalance_taddr;
+import com.guarda.zcash.request.GetUTXOSRequest;
+import com.guarda.zcash.request.PushTransaction_taddr;
+import com.guarda.zcash.request.UpdateTransactionCache_taddr;
 import com.guarda.ethereum.models.constants.Common;
 
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
@@ -29,7 +27,6 @@ import java.util.List;
 import java.util.Vector;
 
 import static com.guarda.ethereum.models.constants.Const.ZEC_MAINNET_ADDR_PREFIX;
-import static com.guarda.ethereum.models.constants.Const.ZEC_TESTNET_ADDR_PREFIX;
 
 
 public class ZCashWalletManager {

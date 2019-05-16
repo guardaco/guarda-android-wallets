@@ -1,4 +1,4 @@
-package com.gravilink.zcash;
+package com.guarda.zcash;
 
 public class ZCashException extends Exception {
   public Exception previous;

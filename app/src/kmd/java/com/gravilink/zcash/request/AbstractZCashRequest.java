@@ -1,9 +1,9 @@
-package com.gravilink.zcash.request;
+package com.guarda.zcash.request;
 
 import android.util.Base64;
 import android.util.Log;
 
-import com.gravilink.zcash.ZCashException;
+import com.guarda.zcash.ZCashException;
 
 import org.json.JSONArray;
 import org.json.JSONException;

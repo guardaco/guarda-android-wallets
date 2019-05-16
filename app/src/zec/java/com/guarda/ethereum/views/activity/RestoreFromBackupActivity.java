@@ -3,18 +3,15 @@ package com.guarda.ethereum.views.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.gravilink.zcash.crypto.BrainKeyDict;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.SharedManager;
@@ -24,8 +21,6 @@ import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 
-import java.io.IOException;
-import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

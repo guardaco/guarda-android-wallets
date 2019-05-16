@@ -1,4 +1,4 @@
-package com.gravilink.zcash;
+package com.guarda.zcash;
 
 class ZCashTransactionDetails_zaddr {
 }

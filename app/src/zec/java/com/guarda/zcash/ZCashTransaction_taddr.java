@@ -1,10 +1,10 @@
-package com.gravilink.zcash;
+package com.guarda.zcash;
 
 import com.google.common.primitives.Bytes;
-import com.gravilink.zcash.crypto.Base58;
-import com.gravilink.zcash.crypto.ECKey;
-import com.gravilink.zcash.crypto.Sha256Hash;
-import com.gravilink.zcash.crypto.Utils;
+import com.guarda.zcash.crypto.Base58;
+import com.guarda.zcash.crypto.ECKey;
+import com.guarda.zcash.crypto.Sha256Hash;
+import com.guarda.zcash.crypto.Utils;
 
 import org.spongycastle.asn1.ASN1Integer;
 import org.spongycastle.asn1.DERSequenceGenerator;
