@@ -36,7 +36,8 @@ public class ProtoApi {
 
     public ProtoApi() {
 //        String host = "lightwalletd.z.cash";
-        String host = "10.88.66.3";
+//        String host = "10.88.66.3";
+        String host = "46.4.115.12";
 //        int port = 9067;
         int port = 7878;
         channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
