@@ -51,13 +51,7 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
     @Override
     protected void onResume() {
         isRootDevice();
-//        if (!sharedManager.getLastSyncedBlock().isEmpty() && sharedManager.getIsPinCodeEnable() && !isUnblocked) {
-//            startPinCodeActivity();
-//        } else {
-//            if (!sharedManager.getLastSyncedBlock().isEmpty()) {
-//                goToMainActivity(Coders.decodeBase64(sharedManager.getLastSyncedBlock()));
-//            }
-//        }
+
         Log.d("psd", "AuthorizationTypeActivity onResume");
         String block = sharedManager.getLastSyncedBlock();
         if (!block.isEmpty()) {

@@ -11,6 +11,8 @@ import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.utils.KeyStoreUtils;
+import com.guarda.zcash.sapling.SyncManager;
+import com.guarda.zcash.sapling.db.DbManager;
 
 import javax.inject.Singleton;
 
@@ -62,20 +64,32 @@ public class AppModule {
 
     @Provides
     @Singleton
-    SharedManager provideSharedManager(){
+    SharedManager provideSharedManager() {
         return new SharedManager();
     }
 
     @Provides
     @Singleton
     @RequiresApi(api = Build.VERSION_CODES.M)
-    KeyStoreUtils provideKeyStoreUtils(){
+    KeyStoreUtils provideKeyStoreUtils() {
         return new KeyStoreUtils();
     }
 
     @Provides
     @Singleton
-    RawNodeManager provideNodeManager(){
+    RawNodeManager provideNodeManager() {
         return new RawNodeManager();
+    }
+
+    @Provides
+    @Singleton
+    SyncManager provideSyncManager() {
+        return new SyncManager();
+    }
+
+    @Provides
+    @Singleton
+    DbManager provideDbManager(Context context) {
+        return new DbManager(context);
     }
 }

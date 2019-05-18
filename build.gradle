@@ -7,12 +7,14 @@ buildscript {
         mavenCentral()
         maven { url 'https://maven.google.com' }
         maven { url 'https://maven.fabric.io/public' }
+        maven { url  "https://dl.bintray.com/terl/lazysodium-maven" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.0'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath 'com.google.gms:google-services:3.1.2'
         classpath 'io.fabric.tools:gradle:1.27.1'
+        classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.8"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -23,6 +25,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://dl.bintray.com/terl/lazysodium-maven" }
         maven { url 'https://jitpack.io' }
         maven { url "https://maven.google.com" }
         mavenCentral()

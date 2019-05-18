@@ -20,24 +20,19 @@ import com.guarda.ethereum.managers.ShapeshiftManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.constants.Const;
 import com.guarda.ethereum.models.constants.Extras;
-import com.guarda.ethereum.models.constants.RequestCode;
-import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.views.activity.ConfirmPinCodeActivity;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import autodagger.AutoComponent;
 import de.adorsys.android.securestoragelibrary.SecurePreferences;
-import de.adorsys.android.securestoragelibrary.SecureStorageException;
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 @AutoComponent(
-
         modules = {AppModule.class}
 )
 
@@ -154,6 +149,8 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
                 .build();
         // Initialize Fabric with the debug-disabled crashlytics.
         Fabric.with(this, crashlyticsKit);
+
+        Timber.plant(new Timber.DebugTree());
     }
 
     private GuardaAppComponent buildAppComponent() {

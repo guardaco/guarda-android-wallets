@@ -52,6 +52,7 @@ import com.guarda.ethereum.views.activity.MainActivity;
 import com.guarda.ethereum.views.activity.TransactionDetailsActivity;
 import com.guarda.ethereum.views.adapters.TransHistoryAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
+import com.guarda.zcash.sapling.SyncManager;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -108,18 +109,16 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     @Inject
     WalletManager walletManager;
-
     @Inject
     EthereumNetworkManager networkManager;
-
     @Inject
     TransactionsManager transactionsManager;
-
     @Inject
     SharedManager sharedManager;
-
     @Inject
     RawNodeManager mNodeManager;
+    @Inject
+    SyncManager syncManager;
 
     public TransactionHistoryFragment() {
         GuardaApp.getAppComponent().inject(this);
@@ -149,12 +148,9 @@ public class TransactionHistoryFragment extends BaseFragment {
         initMenuButton();
 
         swipeRefreshLayout.setProgressViewEndTarget(false, -2000);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(false);
-                showBalance(false);
-            }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            swipeRefreshLayout.setRefreshing(false);
+            showBalance(false);
         });
 
         String firstAction = null;
@@ -194,6 +190,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         super.onResume();
         if (isWalletExist()) {
             showBalance(true);
+            syncManager.startSync();
         }
     }
 

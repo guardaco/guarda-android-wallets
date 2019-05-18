@@ -1,10 +1,14 @@
 package com.guarda.zcash.crypto;
 
+import com.guarda.zcash.ZCashException;
+
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Utils {
   public static byte[] bigIntegerToBytes(BigInteger b, int numBytes) {
@@ -114,6 +118,39 @@ public class Utils {
     buf[6] = (byte) (0xff & (val >> 48));
     buf[7] = (byte) (0xff & (val >> 56));
     return buf;
+  }
+
+  public static byte[] reverseByteArray(byte[] validData) {
+    for(int i = 0; i < validData.length / 2; i++) {
+      byte temp = validData[i];
+      validData[i] = validData[validData.length - i - 1];
+      validData[validData.length - i - 1] = temp;
+    }
+    return validData;
+  }
+
+  // reverse byte array
+  // convert to hex
+  public static String revHex(byte[] bytes) {
+    return bytesToHex(reverseByteArray(bytes));
+  }
+  // hex to byte array
+  // reverse byte array
+  // byte array to hex
+  public static String revHex(String hex) {
+    return bytesToHex(reverseByteArray(hexToBytes(hex)));
+  }
+
+  public static List<Boolean> byteArray2BitArray(byte[] bytes) {
+    List<Boolean> bits = new ArrayList<>();
+    for (int i = 0; i < bytes.length * 8; i++) {
+      if ((bytes[i / 8] & (1 << (7 - (i % 8)))) > 0) {
+        bits.add(true);
+      } else {
+        bits.add(false);
+      }
+    }
+    return bits;
   }
 
 }
