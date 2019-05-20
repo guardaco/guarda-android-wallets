@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.zcash.crypto.Utils;
-//import cash.z.wallet.sdk.rpc.CompactFormats;
 import com.guarda.zcash.sapling.db.model.BlockRoom;
 import com.guarda.zcash.sapling.db.model.TxInRoom;
 import com.guarda.zcash.sapling.db.model.TxOutRoom;
@@ -13,24 +12,30 @@ import com.guarda.zcash.sapling.db.model.TxRoom;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import autodagger.AutoInjector;
 import cash.z.wallet.sdk.rpc.CompactFormats;
 import timber.log.Timber;
 
-@AutoInjector(GuardaApp.class)
+//@AutoInjector(GuardaApp.class)
 public class DbManager {
 
     private AppDb appDb;
     private final String DB_NAME = "lightwalletd";
 
+//    @Inject
+    Context context;
+
     public DbManager(Context context) {
+        GuardaApp.getAppComponent().inject(this);
         appDb = Room.databaseBuilder(context, AppDb.class, DB_NAME)
                 .build();
     }
 
     public void addBlockWithTxs(CompactFormats.CompactBlock cb) {
         Timber.d("addBlockWithTxs vb=%s", Utils.revHex(cb.getHash().toByteArray()));
-        appDb.getBlockDao().insertAll(new BlockRoom(Utils.revHex(cb.getHash().toByteArray()), cb.getHeight()));
+        appDb.getBlockDao().insertAll(new BlockRoom(Utils.revHex(cb.getHash().toByteArray()), cb.getHeight(), ""));
         for (CompactFormats.CompactTx ctx : cb.getVtxList()) {
             appDb.getTxDao().insertAll(new TxRoom(Utils.revHex(ctx.getHash().toByteArray()),
                     Utils.revHex(cb.getHash().toByteArray())));

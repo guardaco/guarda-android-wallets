@@ -12,7 +12,11 @@ import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.utils.KeyStoreUtils;
 import com.guarda.zcash.sapling.SyncManager;
+import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.rxcall.CallBlockRange;
+import com.guarda.zcash.sapling.rxcall.CallFindWitnesses;
+import com.guarda.zcash.sapling.rxcall.CallLastBlock;
 
 import javax.inject.Singleton;
 
@@ -81,15 +85,39 @@ public class AppModule {
         return new RawNodeManager();
     }
 
-    @Provides
-    @Singleton
-    SyncManager provideSyncManager() {
-        return new SyncManager();
-    }
+//    @Provides
+//    @Singleton
+//    SyncManager provideSyncManager() {
+//        return new SyncManager();
+//    }
 
-    @Provides
-    @Singleton
-    DbManager provideDbManager(Context context) {
-        return new DbManager(context);
-    }
+//    @Provides
+//    @Singleton
+//    ProtoApi provideProtoApi() {
+//        return new ProtoApi();
+//    }
+//
+//    @Provides
+//    @Singleton
+//    DbManager provideDbManager() {
+//        return new DbManager();
+//    }
+//
+//    @Provides
+//    @Singleton
+//    CallLastBlock provideCallLastBlock() {
+//        return new CallLastBlock();
+//    }
+//
+//    @Provides
+//    @Singleton
+//    CallBlockRange provideCallBlockRange() {
+//        return new CallBlockRange(0);
+//    }
+//
+//    @Provides
+//    @Singleton
+//    CallFindWitnesses provideCallFindWitnesses() {
+//        return new CallFindWitnesses();
+//    }
 }

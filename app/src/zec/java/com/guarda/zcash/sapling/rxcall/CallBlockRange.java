@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 
 public class CallBlockRange implements Callable<Boolean> {
 
-    private ProtoApi protoApi;
+    ProtoApi protoApi;
     private long end;
 
     private static final long BLOCK_RANGE_STEP = 1000;

@@ -1,7 +1,10 @@
 package com.guarda.zcash.sapling.tree;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.guarda.zcash.ZCashException;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +26,17 @@ public class IncrementalWitness {
         filled = new ArrayList<>();
         cursor_depth = 0;
         cursor = null;
+    }
+
+    public static IncrementalWitness fromJson(String json) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<IncrementalWitness>(){}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public static String toJson(IncrementalWitness iw) {
+        Gson gson = new Gson();
+        return gson.toJson(iw);
     }
 
     public MerklePath path() {

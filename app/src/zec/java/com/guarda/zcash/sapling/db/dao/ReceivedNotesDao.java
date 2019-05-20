@@ -25,4 +25,10 @@ public interface ReceivedNotesDao {
     @Query("SELECT * FROM received_notes WHERE cm LIKE :cm")
     ReceivedNotesRoom getNote(String cm);
 
+    @Query("SELECT nf FROM received_notes")
+    List<String> getAllNf();
+
+    @Query("UPDATE received_notes SET spent = 1 WHERE nf LIKE :nf")
+    void spentNoteByNf(String nf);
+
 }

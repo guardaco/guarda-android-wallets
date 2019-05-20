@@ -1,10 +1,7 @@
 package com.guarda.zcash.sapling.api;
 
-import android.util.Log;
-
-import com.guarda.zcash.sapling.db.AppDb;
+import com.guarda.ethereum.GuardaApp;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.tree.SaplingMerkleTree;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -12,6 +9,7 @@ import java.util.Iterator;
 
 import javax.inject.Inject;
 
+import autodagger.AutoInjector;
 import cash.z.wallet.sdk.rpc.CompactFormats;
 import cash.z.wallet.sdk.rpc.CompactTxStreamerGrpc;
 import cash.z.wallet.sdk.rpc.Service;
@@ -19,6 +17,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import timber.log.Timber;
 
+//@AutoInjector(GuardaApp.class)
 public class ProtoApi {
 
 //    public long pageNum = 252500;
@@ -31,10 +30,13 @@ public class ProtoApi {
     public long pageNum = 437489;
     private ManagedChannel channel = null;
 
-    @Inject
+//    @Inject
     DbManager dbManager;
 
+//    public ProtoApi(DbManager dbManager) {
     public ProtoApi() {
+//        GuardaApp.getAppComponent().inject(this);
+//        this.dbManager = new DbManager();
 //        String host = "lightwalletd.z.cash";
 //        String host = "10.88.66.3";
         String host = "46.4.115.12";
