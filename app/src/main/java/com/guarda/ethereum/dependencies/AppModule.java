@@ -85,11 +85,11 @@ public class AppModule {
         return new RawNodeManager();
     }
 
-//    @Provides
-//    @Singleton
-//    SyncManager provideSyncManager() {
-//        return new SyncManager();
-//    }
+    @Provides
+    @Singleton
+    SyncManager provideSyncManager() {
+        return new SyncManager();
+    }
 
 //    @Provides
 //    @Singleton
@@ -97,11 +97,11 @@ public class AppModule {
 //        return new ProtoApi();
 //    }
 //
-//    @Provides
-//    @Singleton
-//    DbManager provideDbManager() {
-//        return new DbManager();
-//    }
+    @Provides
+    @Singleton
+    DbManager provideDbManager() {
+        return new DbManager();
+    }
 //
 //    @Provides
 //    @Singleton

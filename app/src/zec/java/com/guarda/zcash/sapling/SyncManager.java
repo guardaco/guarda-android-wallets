@@ -29,7 +29,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-//@AutoInjector(GuardaApp.class)
+@AutoInjector(GuardaApp.class)
 public class SyncManager {
 
     private boolean inProgress;
@@ -41,15 +41,15 @@ public class SyncManager {
     private MerklePath mp;
     private String exRoot;
 
-//    @Inject
+    @Inject
     DbManager dbManager;
 
 //    @Inject
     ProtoApi protoApi;
 
-    public SyncManager(Context context) {
-//        GuardaApp.getAppComponent().inject(this);
-        this.dbManager = new DbManager(context);
+    public SyncManager() {
+        GuardaApp.getAppComponent().inject(this);
+//        this.dbManager = new DbManager(context);
         protoApi = new ProtoApi();
 //        protoApi = new ProtoApi();
     }

@@ -30,7 +30,7 @@ public class ProtoApi {
     public long pageNum = 437489;
     private ManagedChannel channel = null;
 
-//    @Inject
+    @Inject
     DbManager dbManager;
 
 //    public ProtoApi(DbManager dbManager) {

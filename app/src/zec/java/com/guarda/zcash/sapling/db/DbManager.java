@@ -24,11 +24,10 @@ public class DbManager {
     private AppDb appDb;
     private final String DB_NAME = "lightwalletd";
 
-//    @Inject
+    @Inject
     Context context;
 
-    public DbManager(Context context) {
-        GuardaApp.getAppComponent().inject(this);
+    public DbManager() {
         appDb = Room.databaseBuilder(context, AppDb.class, DB_NAME)
                 .build();
     }

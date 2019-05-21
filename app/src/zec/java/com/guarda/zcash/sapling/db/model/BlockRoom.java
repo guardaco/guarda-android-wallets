@@ -26,6 +26,10 @@ public class BlockRoom {
         return height;
     }
 
+    public String getTree() {
+        return tree;
+    }
+
     public void setTree(String tree) {
         this.tree = tree;
     }
