@@ -350,6 +350,7 @@ dependencies {
     androidTestZecImplementation "android.arch.persistence.room:testing:1.1.1"
     zecImplementation "com.goterl.lazycode:lazysodium-android:3.3.0@aar"
     zecImplementation "net.java.dev.jna:jna:4.5.1@aar"
+    zecImplementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'io.grpc:grpc-okhttp:1.19.0'
     implementation 'io.grpc:grpc-protobuf-lite:1.19.0'
     implementation 'io.grpc:grpc-stub:1.19.0'

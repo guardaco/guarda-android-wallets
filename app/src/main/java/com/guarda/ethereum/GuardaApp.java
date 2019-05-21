@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.facebook.stetho.Stetho;
 import com.freshchat.consumer.sdk.Freshchat;
 import com.freshchat.consumer.sdk.FreshchatConfig;
 import com.getkeepsafe.relinker.ReLinker;
@@ -127,6 +128,8 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
         //init ndk lib for ZEC
         if ("com.guarda.zec".equals(packageName)) {
             ReLinker.log(logcatLogger).loadLibrary(getApplicationContext(), "native-lib");
+            if (BuildConfig.DEBUG)
+                Stetho.initializeWithDefaults(this);
         }
 
 
