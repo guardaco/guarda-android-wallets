@@ -122,7 +122,6 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     public TransactionHistoryFragment() {
         GuardaApp.getAppComponent().inject(this);
-//        syncManager = new SyncManager(getContext());
     }
 
     @Override

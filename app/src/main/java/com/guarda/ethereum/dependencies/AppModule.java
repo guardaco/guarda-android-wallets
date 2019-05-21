@@ -91,12 +91,12 @@ public class AppModule {
         return new SyncManager();
     }
 
-//    @Provides
-//    @Singleton
-//    ProtoApi provideProtoApi() {
-//        return new ProtoApi();
-//    }
-//
+    @Provides
+    @Singleton
+    ProtoApi provideProtoApi() {
+        return new ProtoApi();
+    }
+
     @Provides
     @Singleton
     DbManager provideDbManager() {

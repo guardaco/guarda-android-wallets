@@ -17,7 +17,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import timber.log.Timber;
 
-//@AutoInjector(GuardaApp.class)
+@AutoInjector(GuardaApp.class)
 public class ProtoApi {
 
 //    public long pageNum = 252500;
@@ -35,7 +35,7 @@ public class ProtoApi {
 
 //    public ProtoApi(DbManager dbManager) {
     public ProtoApi() {
-//        GuardaApp.getAppComponent().inject(this);
+        GuardaApp.getAppComponent().inject(this);
 //        this.dbManager = new DbManager();
 //        String host = "lightwalletd.z.cash";
 //        String host = "10.88.66.3";

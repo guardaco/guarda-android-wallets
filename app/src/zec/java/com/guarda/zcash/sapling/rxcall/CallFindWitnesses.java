@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
 import static com.guarda.zcash.RustAPI.newAk;
@@ -32,15 +34,14 @@ import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 
 public class CallFindWitnesses implements Callable<Boolean> {
 
-    DbManager dbManager;
     private byte[] revNewIvk;
     private byte[] revNewAk;
     private byte[] revNewNk;
     private byte[] revNewOvk;
 
+    DbManager dbManager;
+
     public CallFindWitnesses(DbManager dbManager) {
-//    public CallFindWitnesses() {
-//        GuardaApp.getAppComponent().inject(this);
         this.dbManager = dbManager;
         revNewIvk = reverseByteArray(newIvk);
         revNewAk = reverseByteArray(newAk);

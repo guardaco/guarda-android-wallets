@@ -18,7 +18,7 @@ import autodagger.AutoInjector;
 import cash.z.wallet.sdk.rpc.CompactFormats;
 import timber.log.Timber;
 
-//@AutoInjector(GuardaApp.class)
+@AutoInjector(GuardaApp.class)
 public class DbManager {
 
     private AppDb appDb;
@@ -28,6 +28,7 @@ public class DbManager {
     Context context;
 
     public DbManager() {
+        GuardaApp.getAppComponent().inject(this);
         appDb = Room.databaseBuilder(context, AppDb.class, DB_NAME)
                 .build();
     }

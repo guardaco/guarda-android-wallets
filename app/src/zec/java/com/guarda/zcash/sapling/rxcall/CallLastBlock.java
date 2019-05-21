@@ -8,18 +8,22 @@ import java.util.concurrent.Callable;
 
 import timber.log.Timber;
 
+
 public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
 
-    DbManager dbManager;
     public final static long FIRST_BLOCK_TO_SYNC = 422044; //block for current wallet, all users create their new wallets after the height
 
-    public CallLastBlock(DbManager dbManager) {
+    private DbManager dbManager;
+    private ProtoApi protoApi;
+
+    public CallLastBlock(DbManager dbManager, ProtoApi protoApi) {
         this.dbManager = dbManager;
+        this.protoApi = protoApi;
     }
 
     @Override
     public BlockSyncRange call() throws Exception {
-        long latest = new ProtoApi().getLastBlock();
+        long latest = protoApi.getLastBlock();
         Timber.d("latest = %d", latest);
         BlockRoom blockRoom = dbManager.getAppDb().getBlockDao().getLatestBlock();
         long lastFromDb = blockRoom != null ? blockRoom.getHeight() : FIRST_BLOCK_TO_SYNC;

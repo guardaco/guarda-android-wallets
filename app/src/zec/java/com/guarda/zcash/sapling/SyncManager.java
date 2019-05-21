@@ -43,15 +43,11 @@ public class SyncManager {
 
     @Inject
     DbManager dbManager;
-
-//    @Inject
+    @Inject
     ProtoApi protoApi;
 
     public SyncManager() {
         GuardaApp.getAppComponent().inject(this);
-//        this.dbManager = new DbManager(context);
-        protoApi = new ProtoApi();
-//        protoApi = new ProtoApi();
     }
 
     public void startSync() {
@@ -70,7 +66,7 @@ public class SyncManager {
 
     private void getBlocks() {
         compositeDisposable.add(Observable
-                .fromCallable(new CallLastBlock(dbManager))
+                .fromCallable(new CallLastBlock(dbManager, protoApi))
                 .subscribeOn(Schedulers.io())
                 .subscribe((latest) -> {
                     Timber.d("getBlocks latest=%s", latest);
