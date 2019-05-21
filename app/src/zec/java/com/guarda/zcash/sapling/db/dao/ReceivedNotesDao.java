@@ -31,4 +31,7 @@ public interface ReceivedNotesDao {
     @Query("UPDATE received_notes SET spent = 1 WHERE nf LIKE :nf")
     void spentNoteByNf(String nf);
 
+    @Query("SELECT SUM(value) FROM received_notes WHERE spent IS NULL")
+    Long getBalance();
+
 }

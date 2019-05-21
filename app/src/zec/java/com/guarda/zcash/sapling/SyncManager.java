@@ -1,7 +1,5 @@
 package com.guarda.zcash.sapling;
 
-import android.content.Context;
-
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -34,7 +32,6 @@ public class SyncManager {
 
     private boolean inProgress;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-//    private ProtoApi protoApi;
     private long endB = 437489;
 
     Map<String, WalletTx> mapWallet = new HashMap<>();

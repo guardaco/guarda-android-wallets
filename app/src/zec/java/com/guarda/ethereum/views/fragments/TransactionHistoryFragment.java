@@ -24,9 +24,6 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.guarda.zcash.WalletCallback;
-import com.guarda.zcash.ZCashException;
-import com.guarda.zcash.ZCashWalletManager;
 import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
@@ -53,6 +50,10 @@ import com.guarda.ethereum.views.activity.TransactionDetailsActivity;
 import com.guarda.ethereum.views.adapters.TransHistoryAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.zcash.sapling.SyncManager;
+import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.rxcall.CallSaplingBalance;
+
+import org.bitcoinj.core.Coin;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -68,6 +69,11 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.BLOCK;
 import static com.guarda.ethereum.models.constants.Common.EXTRA_TRANSACTION_POSITION;
@@ -105,6 +111,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     private boolean isVisible = true;
     private boolean stronglyHistory = false;
     private ObjectAnimator loaderAnimation;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
     WalletManager walletManager;
@@ -118,6 +125,8 @@ public class TransactionHistoryFragment extends BaseFragment {
     RawNodeManager mNodeManager;
     @Inject
     SyncManager syncManager;
+    @Inject
+    DbManager dbManager;
 
     public TransactionHistoryFragment() {
         GuardaApp.getAppComponent().inject(this);
@@ -287,7 +296,8 @@ public class TransactionHistoryFragment extends BaseFragment {
                 walletManager.setBalance(balance.getBalanceSat());
                 String curBalance = WalletManager.getFriendlyBalance(walletManager.getMyBalance());
                 setCryptoBalance(curBalance);
-                getLocalBalance(curBalance);
+                //FIXME: get usd balance
+//                getLocalBalance(curBalance);
             }
 
             @Override
@@ -298,6 +308,16 @@ public class TransactionHistoryFragment extends BaseFragment {
             }
         });
 
+        compositeDisposable.add(Observable
+                .fromCallable(new CallSaplingBalance(dbManager))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((balance) -> {
+                    Timber.d("CallSaplingBalance balance=%d", balance);
+
+                    if (balance == null) return;
+                    setUSDBalance(Coin.valueOf(balance).toPlainString());
+                }));
     }
 
     private void getLocalBalance(final String balance) {
@@ -445,6 +465,12 @@ public class TransactionHistoryFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
         isVisible = false;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        compositeDisposable.dispose();
     }
 
     private void updateTxsCache() {
