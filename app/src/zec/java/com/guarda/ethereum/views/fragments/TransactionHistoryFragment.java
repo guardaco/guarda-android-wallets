@@ -104,7 +104,6 @@ public class TransactionHistoryFragment extends BaseFragment {
     private static final String BLANK_BALANCE = "...";
     private boolean isVisible = true;
     private boolean stronglyHistory = false;
-    private Handler handler = new Handler();
     private ObjectAnimator loaderAnimation;
 
     @Inject
@@ -194,13 +193,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onPause() {
-        handler.removeCallbacksAndMessages(null);
-
-        super.onPause();
-    }
-
     private void createWallet(String passphrase) {
         showProgress(getStringIfAdded(R.string.generating_wallet));
         walletManager.createWallet(passphrase, new WalletCreationCallback() {
@@ -214,7 +206,6 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     private void showTransactions() {
         initTransactionHistoryRecycler();
-        loaderAnimation.cancel();
         if (transactionsManager.getTransactionsList().size() == 0) {
             GuardaApp.isTransactionsEmpty = true;
             openUserWalletFragment();
@@ -274,6 +265,7 @@ public class TransactionHistoryFragment extends BaseFragment {
                 List<TransactionItem> txItems = transactionsManager.transformTxToFriendlyNew(txList, walletManager.getWalletFriendlyAddress());
                 transactionsManager.setTransactionsList(txItems);
                 showTransactions();
+                loaderAnimation.cancel();
             }
 
             @Override
@@ -290,7 +282,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         RequestorBtc.getBalanceZecNew(walletManager.getWalletFriendlyAddress(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
-                loaderAnimation.cancel();
                 BtgBalanceResponse balance = (BtgBalanceResponse) response;
                 walletManager.setMyBalance(balance.getBalanceSat());
                 walletManager.setBalance(balance.getBalanceSat());
@@ -301,54 +292,11 @@ public class TransactionHistoryFragment extends BaseFragment {
 
             @Override
             public void onFailure(String msg) {
-                loaderAnimation.cancel();
                 if (getActivity() != null) {
                     ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_get_balance), R.drawable.err_balance);
                 }
             }
         });
-
-//        try {
-//            zcash.importWallet_taddr(walletManager.getPrivateKey(),
-//                    ZCashWalletManager.UpdateRequirement.NO_UPDATE,
-//                    new WalletCallback<String, Void>() {
-//                        @Override
-//                        public void onResponse(String r1, Void r2) {
-//                            try {
-//                                zcash.getBalance_taddr(walletManager.getWalletFriendlyAddress(),
-//                                        ZCashWalletManager.UpdateRequirement.NO_UPDATE,
-//                                        new WalletCallback<String, Long>() {
-//                                            @Override
-//                                            public void onResponse(final String r1, Long r2) {
-//
-//                                                Log.i("RESPONSE CODE", r1);
-//                                                if (r1.equals("ok")) {
-//                                                    Log.i("RESPONSE VALUE", r2.toString());
-//                                                }
-//
-//                                                try {
-//                                                    getActivity().runOnUiThread(new Runnable() {
-//                                                        @Override
-//                                                        public void run() {
-//                                                            loaderAnimation.cancel();
-//                                                        }
-//                                                    });
-//                                                } catch (Exception e) {
-//                                                    e.printStackTrace();
-//                                                }
-//                                            }
-//                                        });
-//                            } catch (ZCashException zce) {
-//                                zce.printStackTrace();
-//                            }
-//
-//                            Log.i("RESPONSE CODE", r1);
-//                        }
-//                    });
-//
-//        } catch (ZCashException e) {
-//            e.printStackTrace();
-//        }
 
     }
 
@@ -372,7 +320,6 @@ public class TransactionHistoryFragment extends BaseFragment {
 
                     @Override
                     public void onFailure(String msg) {
-                        loaderAnimation.cancel();
                     }
                 });
     }

@@ -156,6 +156,8 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
         Timber.plant(new Timber.DebugTree());
     }
 
+
+
     private GuardaAppComponent buildAppComponent() {
         return DaggerGuardaAppComponent.builder()
                 .appModule(new AppModule(this))
