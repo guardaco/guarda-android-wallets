@@ -167,7 +167,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
 //            e.printStackTrace();
 //            Timber.e("check roots e=%s", e.getMessage());
 //        }
-//        Timber.d("scan ended");
+        Timber.d("blocks scanning completed");
 
         return true;
     }

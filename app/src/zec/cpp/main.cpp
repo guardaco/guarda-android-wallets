@@ -34,7 +34,7 @@ extern "C" {
 auto ctx = librustzcash_sapling_proving_ctx_init();
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_initModel(
+Java_com_guarda_zcash_RustAPI_initModel(
         JNIEnv *env,
         jobject /* this */,
         jobject _assetManager,
@@ -89,7 +89,7 @@ Java_co_guarda_ndkrusttest_RustAPI_initModel(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_genr(
+Java_com_guarda_zcash_RustAPI_genr(
         JNIEnv *env,
         jobject /* this */) {
     uint256 r;
@@ -100,7 +100,7 @@ Java_co_guarda_ndkrusttest_RustAPI_genr(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_epk(
+Java_com_guarda_zcash_RustAPI_epk(
         JNIEnv *env,
         jobject,
         jstring d,
@@ -142,7 +142,7 @@ Java_co_guarda_ndkrusttest_RustAPI_epk(
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_test(
+Java_com_guarda_zcash_RustAPI_test(
         JNIEnv *env,
         jobject,
         jbyteArray d) {
@@ -181,7 +181,7 @@ Java_co_guarda_ndkrusttest_RustAPI_test(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_cm(
+Java_com_guarda_zcash_RustAPI_cm(
         JNIEnv *env,
         jobject,
         jstring d,
@@ -223,7 +223,7 @@ Java_co_guarda_ndkrusttest_RustAPI_cm(
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_greeting(
+Java_com_guarda_zcash_RustAPI_greeting(
         JNIEnv *env,
         jobject,
         jstring esk,
@@ -309,7 +309,7 @@ Java_co_guarda_ndkrusttest_RustAPI_greeting(
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_bsig(
+Java_com_guarda_zcash_RustAPI_bsig(
         JNIEnv *env,
         jobject,
         jstring v,
@@ -357,7 +357,7 @@ Java_co_guarda_ndkrusttest_RustAPI_bsig(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_kagree(
+Java_com_guarda_zcash_RustAPI_kagree(
         JNIEnv *env,
         jobject,
         jstring epk,
@@ -383,7 +383,7 @@ Java_co_guarda_ndkrusttest_RustAPI_kagree(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_ivkToPdk(
+Java_com_guarda_zcash_RustAPI_ivkToPdk(
         JNIEnv *env,
         jobject,
         jstring ivk,
@@ -417,7 +417,7 @@ Java_co_guarda_ndkrusttest_RustAPI_ivkToPdk(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_checkout(
+Java_com_guarda_zcash_RustAPI_checkout(
         JNIEnv *env,
         jobject,
         jstring cv,
@@ -493,7 +493,7 @@ Java_co_guarda_ndkrusttest_RustAPI_checkout(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_merkelHash(
+Java_com_guarda_zcash_RustAPI_merkelHash(
         JNIEnv *env,
         jobject,
         jint depth,
@@ -521,7 +521,7 @@ Java_co_guarda_ndkrusttest_RustAPI_merkelHash(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_uncommitted(
+Java_com_guarda_zcash_RustAPI_uncommitted(
         JNIEnv *env,
         jobject) {
 
@@ -534,7 +534,7 @@ Java_co_guarda_ndkrusttest_RustAPI_uncommitted(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_computeNf(
+Java_com_guarda_zcash_RustAPI_computeNf(
         JNIEnv *env,
         jobject,
         jstring d,
@@ -610,7 +610,7 @@ Java_co_guarda_ndkrusttest_RustAPI_computeNf(
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_compactDecrypt(
+Java_com_guarda_zcash_RustAPI_compactDecrypt(
         JNIEnv *env,
         jobject,
         jstring key,
@@ -654,7 +654,7 @@ Java_co_guarda_ndkrusttest_RustAPI_compactDecrypt(
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_encryptNp(
+Java_com_guarda_zcash_RustAPI_encryptNp(
         JNIEnv *env,
         jobject,
         jstring key,
@@ -690,7 +690,7 @@ Java_co_guarda_ndkrusttest_RustAPI_encryptNp(
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_spendProof(
+Java_com_guarda_zcash_RustAPI_spendProof(
         JNIEnv *env,
         jobject,
         jstring ak,
@@ -815,7 +815,7 @@ Java_co_guarda_ndkrusttest_RustAPI_spendProof(
 }
 
 JNIEXPORT jbyte JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_toByteMerklePath(
+Java_com_guarda_zcash_RustAPI_toByteMerklePath(
         JNIEnv *env,
         jobject,
         jbyte pathByte,
@@ -832,7 +832,7 @@ Java_co_guarda_ndkrusttest_RustAPI_toByteMerklePath(
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_vectorToInt(
+Java_com_guarda_zcash_RustAPI_vectorToInt(
         JNIEnv *env,
         jobject,
         jobjectArray authPathsArr,
@@ -918,7 +918,7 @@ Java_co_guarda_ndkrusttest_RustAPI_vectorToInt(
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_spendSig(
+Java_com_guarda_zcash_RustAPI_spendSig(
         JNIEnv *env,
         jobject,
         jstring ask,
@@ -974,7 +974,7 @@ Java_co_guarda_ndkrusttest_RustAPI_spendSig(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_testVerify(
+Java_com_guarda_zcash_RustAPI_testVerify(
         JNIEnv *env,
         jobject,
         jstring sp,
@@ -1051,7 +1051,7 @@ Java_co_guarda_ndkrusttest_RustAPI_testVerify(
 }
 
 JNIEXPORT jstring JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_testUint256(
+Java_com_guarda_zcash_RustAPI_testUint256(
         JNIEnv *env,
         jobject,
         jstring str) {
@@ -1066,7 +1066,7 @@ Java_co_guarda_ndkrusttest_RustAPI_testUint256(
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_co_guarda_ndkrusttest_RustAPI_testToArr(
+Java_com_guarda_zcash_RustAPI_testToArr(
         JNIEnv *env,
         jobject,
         jstring str) {
