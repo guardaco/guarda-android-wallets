@@ -51,7 +51,7 @@ public class WalletManager {
 
     private Wallet wallet;
     private String walletFriendlyAddress;
-    private String paymentAddressZ;
+    private String saplingAddress;
 
     @Inject
     SharedManager sharedManager;
@@ -82,7 +82,7 @@ public class WalletManager {
                     BrainKeyDict.init(context.getAssets());
                     mnemonicKey = ZCashWalletManager.generateNewPrivateKey_taddr();
                     walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
-                    paymentAddressZ = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
+                    saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 } catch (ZCashException zce) {
@@ -108,7 +108,7 @@ public class WalletManager {
                     });
             mnemonicKey = mnemonicCode;
             walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
-            paymentAddressZ = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
+            saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
         } catch (IllegalArgumentException iae) {
             callback.onWalletCreated();
             iae.printStackTrace();
@@ -145,7 +145,7 @@ public class WalletManager {
                             try {
                                 mnemonicKey = mnemonicCode;
                                 walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
-                                paymentAddressZ = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
+                                saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
                                 sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
                                 callback.run();
                                 Log.i("RESPONSE CODE", r1);
@@ -217,8 +217,8 @@ public class WalletManager {
         return walletFriendlyAddress;
     }
 
-    public String getPaymentAddressZ() {
-        return paymentAddressZ;
+    public String getSaplingAddress() {
+        return saplingAddress;
     }
 
     public void setWallet(Wallet wallet) {

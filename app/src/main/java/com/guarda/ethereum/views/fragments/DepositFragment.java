@@ -69,8 +69,8 @@ public class DepositFragment extends BaseFragment {
                         tvWalletAddress.setText(walletManager.getWalletAddressForDeposit());
                         break;
                     case 1:
-                        ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(walletManager.getPaymentAddressZ(), QR_CODE_WIDTH));
-                        tvWalletAddress.setText(walletManager.getPaymentAddressZ());
+                        ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(walletManager.getSaplingAddress(), QR_CODE_WIDTH));
+                        tvWalletAddress.setText(walletManager.getSaplingAddress());
                         break;
                 }
             });
