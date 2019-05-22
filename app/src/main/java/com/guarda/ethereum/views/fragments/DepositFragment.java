@@ -40,6 +40,7 @@ public class DepositFragment extends BaseFragment {
     WalletManager walletManager;
 
     public final static int QR_CODE_WIDTH = 600;
+    private String showedAddress = "";
 
     @Override
     protected int getLayout() {
@@ -48,7 +49,7 @@ public class DepositFragment extends BaseFragment {
 
     @OnClick({R.id.tv_tap_to_copy_address, R.id.iv_qr_code, R.id.tv_address_wallet})
     public void onClick(View view) {
-        ClipboardUtils.copyToClipBoard(getContext(),  walletManager.getWalletAddressForDeposit());
+        ClipboardUtils.copyToClipBoard(getContext(),  showedAddress);
     }
 
     @Override
@@ -56,8 +57,7 @@ public class DepositFragment extends BaseFragment {
         GuardaApp.getAppComponent().inject(this);
 
         if (walletManager.getWalletAddressForDeposit() != null && !walletManager.getWalletAddressForDeposit().isEmpty()) {
-            ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(walletManager.getWalletAddressForDeposit(), QR_CODE_WIDTH));
-            tvWalletAddress.setText(walletManager.getWalletAddressForDeposit());
+            transparent();
         }
 
         if (BuildConfig.FLAVOR == "zec") {
@@ -65,12 +65,10 @@ public class DepositFragment extends BaseFragment {
             toggle_address.setOnChangeListener((position) -> {
                 switch (position) {
                     case 0:
-                        ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(walletManager.getWalletAddressForDeposit(), QR_CODE_WIDTH));
-                        tvWalletAddress.setText(walletManager.getWalletAddressForDeposit());
+                        transparent();
                         break;
                     case 1:
-                        ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(walletManager.getSaplingAddress(), QR_CODE_WIDTH));
-                        tvWalletAddress.setText(walletManager.getSaplingAddress());
+                        sapling();
                         break;
                 }
             });
@@ -78,11 +76,23 @@ public class DepositFragment extends BaseFragment {
         }
     }
 
+    private void transparent() {
+        showedAddress = walletManager.getWalletAddressForDeposit();
+        ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(showedAddress, QR_CODE_WIDTH));
+        tvWalletAddress.setText(showedAddress);
+    }
+
+    private void sapling() {
+        showedAddress = walletManager.getSaplingAddress();
+        ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(showedAddress, QR_CODE_WIDTH));
+        tvWalletAddress.setText(showedAddress);
+    }
+
     @OnClick(R.id.btn_share_adr)
     public void bntShareClick(View view) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, tvWalletAddress.getText().toString());
+        sendIntent.putExtra(Intent.EXTRA_TEXT, showedAddress);
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
