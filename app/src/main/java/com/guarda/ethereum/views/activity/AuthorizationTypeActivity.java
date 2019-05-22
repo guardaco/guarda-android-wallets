@@ -17,12 +17,16 @@ import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.views.activity.base.SimpleTrackOnStopActivity;
+import com.guarda.zcash.RustAPI;
 import com.scottyab.rootbeer.RootBeer;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
 import static com.guarda.ethereum.models.constants.Extras.DISABLE_CHECK;
@@ -46,6 +50,8 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
 
         walletManager.clearWallet();
         sharedManager.setIsShowBackupAlert(true);
+
+        RustAPI.checkConvertAddr();
     }
 
     @Override
