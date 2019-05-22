@@ -104,6 +104,9 @@ public class RustAPI {
 
     public static native byte[] testToArr(final String str);
 
+    //WALLET
+    public static native void initWallet(final byte[] data);
+    public static native byte[] dPart(final byte[] data);
     public static native String zAddrFromWif(final byte[] data);
 
     //endregion
