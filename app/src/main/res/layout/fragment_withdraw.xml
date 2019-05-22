@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/baseWhiteBgColor"
     android:padding="10dp">
 
@@ -23,6 +24,7 @@
                 android:padding="8dp"
                 android:layout_marginTop="40dp"
                 android:visibility="visible"
+                tools:visibility="gone"
                 android:gravity="center">
 
                 <Spinner
@@ -66,10 +68,52 @@
                     app:layout_constraintHorizontal_bias="0.0" />
             </android.support.constraint.ConstraintLayout>
 
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cl_address_toggle"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:padding="8dp"
+                android:layout_marginTop="40dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:gravity="center"
+                android:layout_below="@+id/cl_coins_selector_root">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_send_from"
+                    android:text="@string/send_from"
+                    android:textColor="@color/txStatusGrey"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <com.llollox.androidtoggleswitch.widgets.ToggleSwitch
+                    android:id="@+id/toggle_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    app:textToggleLeft="T-ADDRESS"
+                    app:textToggleRight="Z-ADDRESS"
+                    app:checkedBackgroundColor="@color/bg_avg"
+                    app:checkedTextColor="@android:color/white"
+                    app:uncheckedBackgroundColor="@android:color/white"
+                    app:uncheckedTextColor="@color/baseDarkGreyTextColor"
+                    app:layout_constraintTop_toBottomOf="@id/tv_send_from"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </android.support.constraint.ConstraintLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/cl_coins_selector_root"
+                android:layout_below="@+id/cl_address_toggle"
                 android:orientation="horizontal"
                 android:layout_marginTop="40dp">
 

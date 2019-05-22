@@ -78,6 +78,9 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
 
     private String walletNumber;
     private String amountToSend;
+    private boolean isSaplingAddress;
+    private String saplingBalance;
+
     private boolean isInclude = false;
     private long currentFeeEth;
     private String arrivalAmountToSend;
@@ -92,6 +95,8 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         etFeeAmount.setFilters(new InputFilter[]{new DigitsInputFilter(8, 8, Float.POSITIVE_INFINITY)});
         walletNumber = getIntent().getStringExtra(Extras.WALLET_NUMBER);
         amountToSend = getIntent().getStringExtra(Extras.AMOUNT_TO_SEND);
+        isSaplingAddress = getIntent().getBooleanExtra(Extras.IS_SAPLING_ADDRESS, false);
+        saplingBalance = getIntent().getStringExtra(Extras.SAPLING_BALANCE_STRING);
         checkBtnIncludeStatus(isInclude);
         setDataToView();
         initSendSumField();
@@ -381,48 +386,11 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
             if (!amount.isEmpty()) {
                 if (!isValueMoreBalance(amount)) {
                     showProgress();
-                    long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
-                    Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
-                    ZCashWalletManager.getInstance().createTransaction_taddr(walletManager.getWalletFriendlyAddress(),
-                            getToAddress(),
-                            amountSatoshi,
-                            currentFeeEth,
-                            walletManager.getPrivateKey(),
-                            Common.ZCASH_MIN_CONFIRM, new WalletCallback<String, ZCashTransaction_taddr>() {
-                                @Override
-                                public void onResponse(String r1, ZCashTransaction_taddr r2) {
-                                    Log.i("RESPONSE CODE", r1);
-                                    if (r1.equals("ok")) {
-                                        try {
-                                            String lastTxhex = Utils.bytesToHex(r2.getBytes());
-                                            Log.i("lastTxhex", lastTxhex);
-                                            BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
-                                                @Override
-                                                public void onSuccess(Object response) {
-                                                    SendRawTxResponse res = (SendRawTxResponse) response;
-                                                    Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
-                                                    closeProgress();
-                                                    showCongratsActivity();
-                                                }
-                                                @Override
-                                                public void onFailure(String msg) {
-                                                    closeProgress();
-                                                    doToast(CurrencyUtils.getBtcLikeError(msg));
-                                                    Log.d("svcom", "failure - " + msg);
-                                                }
-                                            });
-                                        } catch (ZCashException e) {
-                                            closeProgress();
-                                            doToast("Can not send the transaction to the node");
-                                            Log.i("TX", "Cannot sign transaction");
-                                        }
-                                    } else {
-                                        closeProgress();
-                                        doToast("Can not create the transaction. Check arguments");
-                                        Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
-                                    }
-                                }
-                            });
+                    if (isSaplingAddress) {
+                        sendSapling();
+                    } else {
+                        sendTransparent();
+                    }
                 } else {
                     showError(etSumSend, getString(R.string.withdraw_amount_more_than_balance));
                 }
@@ -439,6 +407,96 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         }
     }
 
+    private void sendTransparent() throws ZCashException {
+        long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
+        Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
+        ZCashWalletManager.getInstance().createTransaction_taddr(walletManager.getWalletFriendlyAddress(),
+                getToAddress(),
+                amountSatoshi,
+                currentFeeEth,
+                walletManager.getPrivateKey(),
+                Common.ZCASH_MIN_CONFIRM, new WalletCallback<String, ZCashTransaction_taddr>() {
+                    @Override
+                    public void onResponse(String r1, ZCashTransaction_taddr r2) {
+                        Log.i("RESPONSE CODE", r1);
+                        if (r1.equals("ok")) {
+                            try {
+                                String lastTxhex = Utils.bytesToHex(r2.getBytes());
+                                Log.i("lastTxhex", lastTxhex);
+                                BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
+                                    @Override
+                                    public void onSuccess(Object response) {
+                                        SendRawTxResponse res = (SendRawTxResponse) response;
+                                        Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
+                                        closeProgress();
+                                        showCongratsActivity();
+                                    }
+                                    @Override
+                                    public void onFailure(String msg) {
+                                        closeProgress();
+                                        doToast(CurrencyUtils.getBtcLikeError(msg));
+                                        Log.d("svcom", "failure - " + msg);
+                                    }
+                                });
+                            } catch (ZCashException e) {
+                                closeProgress();
+                                doToast("Can not send the transaction to the node");
+                                Log.i("TX", "Cannot sign transaction");
+                            }
+                        } else {
+                            closeProgress();
+                            doToast("Can not create the transaction. Check arguments");
+                            Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
+                        }
+                    }
+                });
+    }
+
+    private void sendSapling() throws ZCashException {
+        long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
+        Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
+        ZCashWalletManager.getInstance().createTransaction_taddr(walletManager.getWalletFriendlyAddress(),
+                getToAddress(),
+                amountSatoshi,
+                currentFeeEth,
+                walletManager.getPrivateKey(),
+                Common.ZCASH_MIN_CONFIRM, new WalletCallback<String, ZCashTransaction_taddr>() {
+                    @Override
+                    public void onResponse(String r1, ZCashTransaction_taddr r2) {
+                        Log.i("RESPONSE CODE", r1);
+                        if (r1.equals("ok")) {
+                            try {
+                                String lastTxhex = Utils.bytesToHex(r2.getBytes());
+                                Log.i("lastTxhex", lastTxhex);
+                                BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
+                                    @Override
+                                    public void onSuccess(Object response) {
+                                        SendRawTxResponse res = (SendRawTxResponse) response;
+                                        Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
+                                        closeProgress();
+                                        showCongratsActivity();
+                                    }
+                                    @Override
+                                    public void onFailure(String msg) {
+                                        closeProgress();
+                                        doToast(CurrencyUtils.getBtcLikeError(msg));
+                                        Log.d("svcom", "failure - " + msg);
+                                    }
+                                });
+                            } catch (ZCashException e) {
+                                closeProgress();
+                                doToast("Can not send the transaction to the node");
+                                Log.i("TX", "Cannot sign transaction");
+                            }
+                        } else {
+                            closeProgress();
+                            doToast("Can not create the transaction. Check arguments");
+                            Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
+                        }
+                    }
+                });
+    }
+
     private void doToast(final String text) {
         runOnUiThread(new Runnable() {
             @Override
@@ -449,7 +507,11 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private boolean isValueMoreBalance(String amount) {
-        return Coin.parseCoin(amount).compareTo(walletManager.getMyBalance()) > 0;
+        if (isSaplingAddress) {
+            return Coin.parseCoin(amount).compareTo(Coin.parseCoin(saplingBalance)) > 0;
+        } else {
+            return Coin.parseCoin(amount).compareTo(walletManager.getMyBalance()) > 0;
+        }
     }
 
     private void showCongratsActivity() {

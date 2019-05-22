@@ -204,5 +204,6 @@
     <string name="rate_support">Unterstützung</string>
     <string name="rate_xpl">Das wird nicht viel Zeit in Anspruch nehmen</string>
     <string name="restore_backup_email">E-Mail der Geldbörse</string>
+    <string name="send_from">Send from</string>
 
 </resources>

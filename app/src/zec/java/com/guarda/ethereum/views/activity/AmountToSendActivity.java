@@ -20,6 +20,10 @@ import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.utils.DigitsInputFilter;
 import com.guarda.ethereum.utils.KeyboardManager;
 import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
+import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.rxcall.CallSaplingBalance;
+
+import org.bitcoinj.core.Coin;
 
 import java.math.BigDecimal;
 
@@ -28,6 +32,11 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 @AutoInjector(GuardaApp.class)
 public class AmountToSendActivity extends AToolbarMenuActivity {
@@ -48,12 +57,16 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
     private String walletNumber;
     private BigDecimal balance;
     private BigDecimal minAmount;
+    private boolean isSaplingAddress;
+    private String saplingBalance = "";
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
     WalletManager walletManager;
-
     @Inject
     SharedManager sharedManager;
+    @Inject
+    DbManager dbManager;
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -62,6 +75,7 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
         etAmountToSend.setFilters(new InputFilter[]{new DigitsInputFilter(8, 8, Float.POSITIVE_INFINITY)});
         KeyboardManager.disableKeyboardByClickView(etAmountToSend);
         walletNumber = getIntent().getStringExtra(Extras.WALLET_NUMBER);
+        isSaplingAddress = getIntent().getBooleanExtra(Extras.IS_SAPLING_ADDRESS, false);
         minAmount = (BigDecimal) getIntent().getSerializableExtra(Extras.EXCHANGE_MINAMOUNT);
 
         inputLayout.setInputListener(new GuardaInputLayout.onGuardaInputLayoutListener() {
@@ -72,7 +86,12 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
             }
         });
         setCurrentBalance("00.00", sharedManager.getCurrentCurrency());
-        setCurrentBalance(WalletManager.getFriendlyBalance(walletManager.getMyBalance()), sharedManager.getCurrentCurrency().toUpperCase());
+        if (isSaplingAddress) {
+            getSaplingBalance();
+            btnMax.setEnabled(false);
+        } else {
+            setCurrentBalance(WalletManager.getFriendlyBalance(walletManager.getMyBalance()), sharedManager.getCurrentCurrency().toUpperCase());
+        }
 
         etAmountToSend.addTextChangedListener(new TextWatcher() {
             @Override
@@ -104,6 +123,20 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
     @Override
     protected int getLayout() {
         return R.layout.activity_amount_to_send;
+    }
+
+    private void getSaplingBalance() {
+        compositeDisposable.add(Observable
+                .fromCallable(new CallSaplingBalance(dbManager))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((balance) -> {
+                    Timber.d("getSaplingBalance balance=%d", balance);
+
+                    if (balance == null) return;
+                    saplingBalance = Coin.valueOf(balance).toPlainString();
+                    setCurrentBalance(saplingBalance, sharedManager.getCurrentCurrency().toUpperCase());
+                }));
     }
 
     private void setCurrentBalance(String balance, String currency) {
@@ -141,8 +174,13 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
     }
 
     private boolean isAmountMoreBalance(String amount) {
-        return Float.valueOf(amount) >
-                Float.valueOf(WalletManager.getFriendlyBalance(walletManager.getMyBalance()));
+        if (isSaplingAddress) {
+            return Float.valueOf(amount) >
+                    Float.valueOf(saplingBalance);
+        } else {
+            return Float.valueOf(amount) >
+                    Float.valueOf(WalletManager.getFriendlyBalance(walletManager.getMyBalance()));
+        }
     }
 
     private boolean isAmountMoreMin(String amount) {
@@ -156,6 +194,8 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
         Intent intent = new Intent(this, SendingCurrencyActivity.class);
         intent.putExtra(Extras.WALLET_NUMBER, walletNumber);
         intent.putExtra(Extras.AMOUNT_TO_SEND, etAmountToSend.getText().toString());
+        intent.putExtra(Extras.IS_SAPLING_ADDRESS, isSaplingAddress);
+        intent.putExtra(Extras.SAPLING_BALANCE_STRING, saplingBalance);
         startActivity(intent);
     }
 

@@ -206,4 +206,5 @@
     <string name="rate_support">Soporte</string>
     <string name="rate_xpl">No llevará mucho tiempo</string>
     <string name="restore_backup_email">E-mail de la cartera</string>
+    <string name="send_from">Send from</string>
 </resources>

@@ -28,6 +28,8 @@ public interface Extras {
     String KEY = "key";
     String SELECTED_CURRENCY = "selectedCurrency";
     String WALLET_NUMBER = "walletNumber";
+    String IS_SAPLING_ADDRESS = "IS_SAPLING_ADDRESS";
+    String SAPLING_BALANCE_STRING = "SAPLING_BALANCE_STRING";
     String EXCHANGE_MINAMOUNT = "EXCHANGE_MINAMOUNT";
     String AMOUNT_TO_SEND = "amountToSend";
     String PIN_LOCKED_SCREEN = "lockedScreen";

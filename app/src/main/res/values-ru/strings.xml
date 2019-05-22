@@ -252,4 +252,5 @@
     <string name="pass_is_not_valid">Пароль не действителен</string>
     <string name="toolbar_title_confirm_coinify">Подтверждение</string>
     <string name="deposit_address_share">Поделиться</string>
+    <string name="send_from">Send from</string>
 </resources>

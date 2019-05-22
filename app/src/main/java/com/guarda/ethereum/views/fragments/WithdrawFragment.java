@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.customviews.RobotoLightEditText;
@@ -26,6 +27,7 @@ import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.views.activity.AmountToSendActivity;
 import com.guarda.ethereum.views.activity.ScanQrCodeActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
+import com.llollox.androidtoggleswitch.widgets.ToggleSwitch;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,12 +56,18 @@ public class WithdrawFragment extends BaseFragment{
     Spinner spCurrencies;
     @BindView(R.id.cl_coins_selector_root)
     ConstraintLayout clTokensSelectorRoot;
+    @BindView(R.id.cl_address_toggle)
+    ConstraintLayout cl_address_toggle;
+    @BindView(R.id.toggle_address)
+    ToggleSwitch toggle_address;
 
     @Inject
     WalletManager walletManager;
 
     @Inject
     RawNodeManager tokenManager;
+
+    private boolean isSaplingAddress = false;
 
     @Override
     protected int getLayout() {
@@ -81,6 +89,7 @@ public class WithdrawFragment extends BaseFragment{
                     .toArray(new String[tokenManager.getWalletTokensCodes().size()]);
             initDropDownSpinner(tokensArray);
             updateSelectedCurrency(tokensArray[0]);
+            initAddressToggle();
         } else {
             clTokensSelectorRoot.setVisibility(View.GONE);
         }
@@ -148,32 +157,32 @@ public class WithdrawFragment extends BaseFragment{
     private void goNext(final String address) {
         final WithdrawFragment thisFragment = this;
         if (!address.isEmpty()) {
-            if (!address.toLowerCase().equals(walletManager.getWalletFriendlyAddress().toLowerCase())) {
-                walletManager.isAddressValid(address, new Callback<Boolean>() {
-                    @Override
-                    public void onResponse(final Boolean response) {
-                        try {
-                            thisFragment.getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        if (response)
-                                            openAmountToSendActivity(address);
-                                        else
-                                            showError(etSendCoinsAddress, getString(R.string.withdraw_the_withdrawal_address_is_incorrect));
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+//            if (!address.toLowerCase().equals(walletManager.getWalletFriendlyAddress().toLowerCase())) {
+                    walletManager.isAddressValid(address, new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(final Boolean response) {
+                            try {
+                                thisFragment.getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            if (response)
+                                                openAmountToSendActivity(address);
+                                            else
+                                                showError(etSendCoinsAddress, getString(R.string.withdraw_the_withdrawal_address_is_incorrect));
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                     }
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
-            } else {
-                showError(etSendCoinsAddress, getString(R.string.sanding_address_can_not_be_same));
-            }
+                    });
+//            } else {
+//                showError(etSendCoinsAddress, getString(R.string.sanding_address_can_not_be_same));
+//            }
         } else {
             showError(etSendCoinsAddress, getString(R.string.withdraw_address_not_valid));
         }
@@ -194,6 +203,7 @@ public class WithdrawFragment extends BaseFragment{
     private void openAmountToSendActivity(String address) {
         Intent startActivityIntent = new Intent(getActivity(), AmountToSendActivity.class);
         startActivityIntent.putExtra(Extras.WALLET_NUMBER, address);
+        startActivityIntent.putExtra(Extras.IS_SAPLING_ADDRESS, isSaplingAddress);
         if (isTokensAvailable() && spCurrencies.getSelectedItemPosition() > 0) {
             startActivityIntent.putExtra(TOKEN_CODE_EXTRA,
                     tokenManager.getWalletTokensCodes().get(spCurrencies.getSelectedItemPosition()));
@@ -214,6 +224,24 @@ public class WithdrawFragment extends BaseFragment{
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void initAddressToggle() {
+        if (BuildConfig.FLAVOR != "zec") return;
+
+        cl_address_toggle.setVisibility(View.VISIBLE);
+        toggle_address.setVisibility(View.VISIBLE);
+        toggle_address.setOnChangeListener((position) -> {
+            switch (position) {
+                case 0:
+                    isSaplingAddress = false;
+                    break;
+                case 1:
+                    isSaplingAddress = true;
+                    break;
+            }
+        });
+        toggle_address.setCheckedPosition(0);
     }
 
     @OnClick(R.id.btn_currency_code)

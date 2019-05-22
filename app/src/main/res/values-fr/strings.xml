@@ -205,5 +205,6 @@
     <string name="rate_support">Support</string>
     <string name="rate_xpl">Cela ne prendra beaucoup de temps</string>
     <string name="restore_backup_email">E-mail de la porte-monnaie</string>
+    <string name="send_from">Send from</string>
 
 </resources>

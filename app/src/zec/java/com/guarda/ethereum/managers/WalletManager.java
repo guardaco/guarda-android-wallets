@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Credentials;
 import android.util.Log;
 
+import com.guarda.ethereum.BuildConfig;
 import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.WalletCallback;
 import com.guarda.zcash.ZCashException;
@@ -262,6 +263,9 @@ public class WalletManager {
     }
 
     public void isAddressValid(String address, final Callback<Boolean> callback) {
+        if (address.contains("ztestsapling1") || address.contains("zs1")) {
+            callback.onResponse(true);
+        }
         if (address.length() == 35) {
             callback.onResponse(address.substring(0, 1).equalsIgnoreCase("t"));
         } else {
