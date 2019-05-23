@@ -74,7 +74,7 @@ public class IncrementalWitness {
     public void append_inner(String hash, int depth) throws ZCashException {
 //        hash = Utils.revHex(hash);
         if (cursor != null) {
-            Timber.d("append_inner cursor != null");
+//            Timber.d("append_inner cursor != null");
             cursor.append(hash);
 
             if (cursor.isComplete(cursor_depth)) {

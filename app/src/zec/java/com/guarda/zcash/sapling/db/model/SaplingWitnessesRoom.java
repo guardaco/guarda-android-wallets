@@ -34,4 +34,8 @@ public class SaplingWitnessesRoom {
     public Long getWitnessHeight() {
         return witnessHeight;
     }
+
+    public void setWitnessHeight(Long witnessHeight) {
+        this.witnessHeight = witnessHeight;
+    }
 }

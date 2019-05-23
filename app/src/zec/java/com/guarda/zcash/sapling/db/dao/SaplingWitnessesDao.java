@@ -16,6 +16,12 @@ public interface SaplingWitnessesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(SaplingWitnessesRoom... notes);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(SaplingWitnessesRoom swr);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertList(List<SaplingWitnessesRoom> list);
+
     @Delete
     void delete(SaplingWitnessesRoom note);
 

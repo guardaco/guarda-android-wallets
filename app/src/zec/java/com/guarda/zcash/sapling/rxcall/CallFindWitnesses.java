@@ -103,6 +103,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                             Timber.e("getWintesses existingWitnesses.entrySet e=%s", e.getMessage());
                         }
                         ew.setWitness(IncrementalWitness.toJson(iw));
+                        ew.setWitnessHeight(br.getHeight());
                     }
                     //append every previous wintess
                     //like blockWitnesses in original rust code
@@ -149,10 +150,11 @@ public class CallFindWitnesses implements Callable<Boolean> {
             //save updated witnesses to DB
             for(Map.Entry<String, IncrementalWitness> wx : wtxs.entrySet()) {
                 SaplingWitnessesRoom sw = new SaplingWitnessesRoom(wx.getKey(), IncrementalWitness.toJson(wx.getValue()), br.getHeight());
-                dbManager.getAppDb().getSaplingWitnessesDao().insertAll(sw);
+                dbManager.getAppDb().getSaplingWitnessesDao().insert(sw);
             }
-        }
 
+            dbManager.getAppDb().getSaplingWitnessesDao().insertList(existingWitnesses);
+        }
 
 //        try {
 //            //append every previous wintess

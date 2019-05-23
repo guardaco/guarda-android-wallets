@@ -13,12 +13,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.guarda.zcash.WalletCallback;
-import com.guarda.zcash.ZCashException;
-import com.guarda.zcash.ZCashTransaction_taddr;
-import com.guarda.zcash.ZCashTransaction_zaddr;
-import com.guarda.zcash.ZCashWalletManager;
-import com.guarda.zcash.crypto.Utils;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.BitcoinNodeManager;
@@ -34,6 +28,11 @@ import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.utils.CurrencyUtils;
 import com.guarda.ethereum.utils.DigitsInputFilter;
 import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
+import com.guarda.zcash.WalletCallback;
+import com.guarda.zcash.ZCashException;
+import com.guarda.zcash.ZCashTransaction_taddr;
+import com.guarda.zcash.ZCashWalletManager;
+import com.guarda.zcash.crypto.Utils;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.WrongNetworkException;
