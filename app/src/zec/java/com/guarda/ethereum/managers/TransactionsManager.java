@@ -99,6 +99,7 @@ public class TransactionsManager {
 
     private boolean getIsOut(ZecTxResponse item, String ownAddress) {
         if (item.getVjoinsplit() == null || item.getVjoinsplit().size() == 0) {
+            if (item.getVin().size() == 0) return false;
             if (item.getVin().get(0).getAddr() != null) {
                 return item.getVin().get(0).getAddr().equals(ownAddress);
             }
@@ -153,6 +154,7 @@ public class TransactionsManager {
         long txSum;
 
         if (item.getVjoinsplit() == null || item.getVjoinsplit().size() == 0) {
+            if (item.getVin().size() == 0) return 0;
             if (item.getVin().get(0).getAddr() != null && item.getVin().get(0).getAddr().equals(ownAddress)) {
                 txSum = getOutsSumNew(item, ownAddress);
 //            txSum *= -1;
