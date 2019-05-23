@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.guarda.zcash.WalletCallback;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.ZCashTransaction_taddr;
+import com.guarda.zcash.ZCashTransaction_zaddr;
 import com.guarda.zcash.ZCashWalletManager;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.ethereum.GuardaApp;
@@ -46,6 +47,7 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 @AutoInjector(GuardaApp.class)
 public class SendingCurrencyActivity extends AToolbarMenuActivity {
@@ -452,49 +454,34 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 });
     }
 
-    private void sendSapling() throws ZCashException {
+    private void sendSapling() {
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
-        Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
-        ZCashWalletManager.getInstance().createTransaction_taddr(walletManager.getWalletFriendlyAddress(),
-                getToAddress(),
-                amountSatoshi,
-                currentFeeEth,
-                walletManager.getPrivateKey(),
-                Common.ZCASH_MIN_CONFIRM, new WalletCallback<String, ZCashTransaction_taddr>() {
-                    @Override
-                    public void onResponse(String r1, ZCashTransaction_taddr r2) {
-                        Log.i("RESPONSE CODE", r1);
-                        if (r1.equals("ok")) {
-                            try {
-                                String lastTxhex = Utils.bytesToHex(r2.getBytes());
-                                Log.i("lastTxhex", lastTxhex);
-                                BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
-                                    @Override
-                                    public void onSuccess(Object response) {
-                                        SendRawTxResponse res = (SendRawTxResponse) response;
-                                        Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
-                                        closeProgress();
-                                        showCongratsActivity();
-                                    }
-                                    @Override
-                                    public void onFailure(String msg) {
-                                        closeProgress();
-                                        doToast(CurrencyUtils.getBtcLikeError(msg));
-                                        Log.d("svcom", "failure - " + msg);
-                                    }
-                                });
-                            } catch (ZCashException e) {
-                                closeProgress();
-                                doToast("Can not send the transaction to the node");
-                                Log.i("TX", "Cannot sign transaction");
+        Timber.d("amount=" + amountSatoshi + " fee=" + currentFeeEth);
+
+        try {
+            ZCashWalletManager.getInstance().createTransaction_zaddr(walletManager.getSaplingAddress(),
+                    getToAddress(),
+                    amountSatoshi,
+                    currentFeeEth,
+                    "",
+                    1,
+                    (r1, r2) -> {
+                            Timber.i("onResponse " + r1);
+                            if (r1.equals("ok")) {
+                                try {
+                                    String lastTxhex = Utils.bytesToHex(r2.getBytes());
+                                    Timber.i("lastTxhex=%s", lastTxhex);
+
+                                } catch (ZCashException e) {
+                                    Timber.e("Cannot sign transaction");
+                                }
+                            } else {
+                                Timber.d("createTransaction_taddr: RESPONSE CODE is not ok");
                             }
-                        } else {
-                            closeProgress();
-                            doToast("Can not create the transaction. Check arguments");
-                            Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
-                        }
-                    }
-                });
+                        });
+        } catch (ZCashException e) {
+            Timber.e("createTx ZCashException=" + e.getMessage());
+        }
     }
 
     private void doToast(final String text) {

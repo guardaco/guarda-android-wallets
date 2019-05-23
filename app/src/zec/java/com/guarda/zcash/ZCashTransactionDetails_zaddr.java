@@ -1,4 +1,4 @@
 package com.guarda.zcash;
 
-class ZCashTransactionDetails_zaddr {
+public class ZCashTransactionDetails_zaddr {
 }

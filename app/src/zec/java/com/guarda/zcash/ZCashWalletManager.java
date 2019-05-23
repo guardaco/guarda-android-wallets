@@ -1,6 +1,7 @@
 package com.guarda.zcash;
 
 import com.google.common.primitives.Bytes;
+import com.guarda.ethereum.models.constants.Common;
 import com.guarda.zcash.crypto.Base58;
 import com.guarda.zcash.crypto.BrainKeyDict;
 import com.guarda.zcash.crypto.DumpedPrivateKey;
@@ -8,17 +9,15 @@ import com.guarda.zcash.crypto.ECKey;
 import com.guarda.zcash.crypto.Sha256Hash;
 import com.guarda.zcash.request.AbstractZCashRequest;
 import com.guarda.zcash.request.CreateTransaction_taddr;
+import com.guarda.zcash.request.CreateTransaction_zaddr;
 import com.guarda.zcash.request.GetBalance_taddr;
 import com.guarda.zcash.request.GetUTXOSRequest;
 import com.guarda.zcash.request.PushTransaction_taddr;
 import com.guarda.zcash.request.UpdateTransactionCache_taddr;
-import com.guarda.ethereum.models.constants.Common;
 
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
@@ -26,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
-import static com.guarda.ethereum.models.constants.Const.ZEC_MAINNET_ADDR_PREFIX;
+import static com.guarda.ethereum.models.constants.Const.ZEC_TESTNET_ADDR_PREFIX;
 
 
 public class ZCashWalletManager {
@@ -104,9 +103,10 @@ public class ZCashWalletManager {
     ripemd160Digest.update(pubKey, 0, pubKey.length);
     ripemd160Digest.doFinal(pubKeyHash, 0);
 
-    pubKey = Bytes.concat(ZEC_MAINNET_ADDR_PREFIX, pubKeyHash);
-//    pubKey = Bytes.concat(ZEC_TESTNET_ADDR_PREFIX, pubKeyHash);
+//    pubKey = Bytes.concat(ZEC_MAINNET_ADDR_PREFIX, pubKeyHash);
     //                               ^~~~~~~~~~~~~~~~~~~~~~~~ mainnet prefix
+    pubKey = Bytes.concat(ZEC_TESTNET_ADDR_PREFIX, pubKeyHash);
+    //                               ^~~~~~~~~~~~~~~~~~~~~~~~ testnet prefix
 
     byte[] checksum = Sha256Hash.hashTwice(pubKey);
     byte[] summed = Bytes.concat(pubKey, new byte[]{checksum[0], checksum[1], checksum[2], checksum[3]});
@@ -196,6 +196,38 @@ public class ZCashWalletManager {
       public void onResponse(String r1, List<ZCashTransactionOutput> r2) {
         if (r1.equals("ok")) {
           new CreateTransaction_taddr(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, onComplete, r2).run();
+        } else {
+          onComplete.onResponse(r1, null);
+        }
+      }
+    })).start();
+  }
+
+  public void createTransaction_zaddr(final String fromAddr,
+                                      final String toAddr,
+                                      final Long amount,
+                                      final Long fee,
+                                      final String privateKey,
+                                      final long minconf,
+                                      final WalletCallback<String, ZCashTransaction_zaddr> onComplete) throws ZCashException {
+    createTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, minconf, EXPIRY_HEIGHT_NO_LIMIT, onComplete);
+  }
+
+  public void createTransaction_zaddr(final String fromAddr,
+                                      final String toAddr,
+                                      final Long amount,
+                                      final Long fee,
+                                      final String privateKey,
+                                      final long minconf,
+                                      final int expiryHeight,
+                                      final WalletCallback<String, ZCashTransaction_zaddr> onComplete) throws ZCashException {
+
+    new Thread(new GetUTXOSRequest(fromAddr, minconf, new WalletCallback<String, List<ZCashTransactionOutput>>() {
+
+      @Override
+      public void onResponse(String r1, List<ZCashTransactionOutput> r2) {
+        if (r1.equals("ok")) {
+          new CreateTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, onComplete, r2).run();
         } else {
           onComplete.onResponse(r1, null);
         }
@@ -382,9 +414,9 @@ public class ZCashWalletManager {
     throw new ZCashException("Unimplemented");
   }
 
-  public ZCashTransaction_zaddr createTransaction_zaddr(String fromAddr, String toAddr, BigInteger amount, BigDecimal fee, String memo, String privateKey) throws ZCashException {
-    throw new ZCashException("Unimplemented");
-  }
+//  public ZCashTransaction_zaddr createTransaction_zaddr(String fromAddr, String toAddr, BigInteger amount, BigDecimal fee, String memo, String privateKey) throws ZCashException {
+//    throw new ZCashException("Unimplemented");
+//  }
 
   public void pushTransaction_zaddr(ZCashTransaction_zaddr tx, WalletCallback<String, Void> onComplete) throws ZCashException {
     throw new ZCashException("Unimplemented");

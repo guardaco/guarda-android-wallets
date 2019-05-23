@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 
 import com.guarda.zcash.crypto.Bech32;
 import com.guarda.zcash.crypto.BitcoinCashBitArrayConverter;
+import com.guarda.zcash.crypto.Utils;
 
 import java.util.Arrays;
 
@@ -852,12 +853,11 @@ public class RustAPI {
 //        return new ProofAndCv(proof, cv, new byte[1]);
 //    }
 //
-//    public static byte[] getBsig(String value, byte[] data) {
-//        byte[] bsigStr = bsig(value, Utils.bytesToHex(data));
-//        print("bsigStr =" + Arrays.toString(bsigStr));
-//        Log.d(LOGTAG, "RustAPI getBsig=" + Arrays.toString(bsigStr) + " s=" + bsigStr.length);
-//        return bsigStr;
-//    }
+    public static byte[] getBsig(String value, byte[] data) {
+        byte[] bsigStr = bsig(value, Utils.bytesToHex(data));
+        Timber.d("getBsig=" + Arrays.toString(bsigStr) + " s=" + bsigStr.length);
+        return bsigStr;
+    }
     //private byte[] d={-50, 114, 0, -83, -20, -123, 105, -23, -90, -68, -90}, pkd=[78, -87, 67, -10, 46, 19, 6, 102, -121, 99, 34, -51, -53, -12, 16, 95, 110, -81, 120, -35, 65, 100, -87, 74, -20, -101, -5, 124, -12, -73, -78, -98]}
     public static void checkConvertAddr() {
         Bech32.Bech32Data ddd = Bech32.decodeWithoutVeryfy("ztestsapling1eeeqpt0vs457nf4u5e82jslk9cfsve58vv3vmjl5zp0katmcm4qkf222ajdlkl85k7efudmpjhj");
