@@ -9,6 +9,7 @@ import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;
 import com.guarda.zcash.sapling.LsaSingle;
+import com.guarda.zcash.sapling.db.model.TxOutRoom;
 
 import java.util.Arrays;
 
@@ -170,6 +171,18 @@ public class SaplingNotePlaintext {
         Timber.d("decryptCompactCipher compactDecrypt result=" + Arrays.toString(result));
 
         return result;
+    }
+
+    public static SaplingNotePlaintext tryNoteDecrypt(TxOutRoom output, byte[] ivk) {
+        try {
+            return decrypt(
+                    output.getCiphertext(),
+                    bytesToHex(ivk),
+                    output.getEpk(),
+                    output.getCmu());
+        } catch (ZCashException e) {
+            return null;
+        }
     }
 
     public SaplingNote getSaplingNote() {

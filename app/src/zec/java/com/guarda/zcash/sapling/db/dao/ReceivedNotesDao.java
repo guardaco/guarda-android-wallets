@@ -22,6 +22,9 @@ public interface ReceivedNotesDao {
     @Query("SELECT * FROM received_notes")
     List<ReceivedNotesRoom> getAllNotes();
 
+    @Query("SELECT * FROM received_notes WHERE spent is NULL")
+    List<ReceivedNotesRoom> getUnspents();
+
     @Query("SELECT * FROM received_notes WHERE cm LIKE :cm")
     ReceivedNotesRoom getNote(String cm);
 

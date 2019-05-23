@@ -35,4 +35,10 @@ public interface BlockDao {
     @Query("SELECT * FROM blocks order by height DESC LIMIT 1")
     BlockRoom getLatestBlock();
 
+    @Query("DELETE FROM blocks WHERE height LIKE :height")
+    void deleteHeight(Long height);
+
+    @Query("DELETE FROM blocks")
+    void dropAll();
+
 }

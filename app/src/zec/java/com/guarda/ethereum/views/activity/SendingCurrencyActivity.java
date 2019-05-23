@@ -33,6 +33,7 @@ import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.ZCashTransaction_taddr;
 import com.guarda.zcash.ZCashWalletManager;
 import com.guarda.zcash.crypto.Utils;
+import com.guarda.zcash.sapling.db.DbManager;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.WrongNetworkException;
@@ -47,6 +48,8 @@ import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import timber.log.Timber;
+
+import static com.guarda.zcash.ZCashWalletManager.EXPIRY_HEIGHT_NO_LIMIT;
 
 @AutoInjector(GuardaApp.class)
 public class SendingCurrencyActivity extends AToolbarMenuActivity {
@@ -70,12 +73,12 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
 
     @Inject
     WalletManager walletManager;
-
     @Inject
     EthereumNetworkManager networkManager;
-
     @Inject
     TransactionsManager transactionsManager;
+    @Inject
+    DbManager dbManager;
 
     private String walletNumber;
     private String amountToSend;
@@ -462,34 +465,32 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                     getToAddress(),
                     amountSatoshi,
                     currentFeeEth,
-                    "",
+                    walletManager.getSaplingCustomFullKey(),
                     1,
+                    dbManager,
                     (r1, r2) -> {
-                            Timber.i("onResponse " + r1);
+                            Timber.d("sendSapling onResponse " + r1);
                             if (r1.equals("ok")) {
                                 try {
                                     String lastTxhex = Utils.bytesToHex(r2.getBytes());
-                                    Timber.i("lastTxhex=%s", lastTxhex);
+                                    Timber.d("sendSapling lastTxhex=%s", lastTxhex);
 
                                 } catch (ZCashException e) {
-                                    Timber.e("Cannot sign transaction");
+                                    Timber.e("sendSapling Cannot sign transaction");
                                 }
                             } else {
-                                Timber.d("createTransaction_taddr: RESPONSE CODE is not ok");
+                                closeProgress();
+                                doToast("Can not create the transaction. Check arguments");
+                                Timber.d("sendSapling: RESPONSE CODE is not ok");
                             }
                         });
         } catch (ZCashException e) {
-            Timber.e("createTx ZCashException=" + e.getMessage());
+            Timber.e("sendSapling createTx ZCashException=" + e.getMessage());
         }
     }
 
     private void doToast(final String text) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(SendingCurrencyActivity.this, text, Toast.LENGTH_SHORT).show();
-            }
-        });
+        runOnUiThread(() -> Toast.makeText(SendingCurrencyActivity.this, text, Toast.LENGTH_SHORT).show());
     }
 
     private boolean isValueMoreBalance(String amount) {

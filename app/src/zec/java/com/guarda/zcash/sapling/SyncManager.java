@@ -1,6 +1,7 @@
 package com.guarda.zcash.sapling;
 
 import com.guarda.ethereum.GuardaApp;
+import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.db.model.TxOutRoom;
@@ -42,6 +43,8 @@ public class SyncManager {
     DbManager dbManager;
     @Inject
     ProtoApi protoApi;
+    @Inject
+    WalletManager walletManager;
 
     public SyncManager() {
         GuardaApp.getAppComponent().inject(this);
@@ -96,7 +99,7 @@ public class SyncManager {
 
     private void getWintesses() {
         compositeDisposable.add(Observable
-                .fromCallable(new CallFindWitnesses(dbManager))
+                .fromCallable(new CallFindWitnesses(dbManager, walletManager.getSaplingCustomFullKey()))
                 .subscribeOn(Schedulers.io())
                 .subscribe((res) -> {
                     Timber.d("getWintesses latest=%s", res);

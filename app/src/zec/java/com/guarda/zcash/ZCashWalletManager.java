@@ -1,6 +1,7 @@
 package com.guarda.zcash;
 
 import com.google.common.primitives.Bytes;
+import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.zcash.crypto.Base58;
 import com.guarda.zcash.crypto.BrainKeyDict;
@@ -14,6 +15,8 @@ import com.guarda.zcash.request.GetBalance_taddr;
 import com.guarda.zcash.request.GetUTXOSRequest;
 import com.guarda.zcash.request.PushTransaction_taddr;
 import com.guarda.zcash.request.UpdateTransactionCache_taddr;
+import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
 
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 
@@ -207,32 +210,24 @@ public class ZCashWalletManager {
                                       final String toAddr,
                                       final Long amount,
                                       final Long fee,
-                                      final String privateKey,
+                                      final SaplingCustomFullKey privateKey,
                                       final long minconf,
+                                      final DbManager dbManager,
                                       final WalletCallback<String, ZCashTransaction_zaddr> onComplete) throws ZCashException {
-    createTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, minconf, EXPIRY_HEIGHT_NO_LIMIT, onComplete);
+    createTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, minconf, EXPIRY_HEIGHT_NO_LIMIT, dbManager, onComplete);
   }
 
   public void createTransaction_zaddr(final String fromAddr,
                                       final String toAddr,
                                       final Long amount,
                                       final Long fee,
-                                      final String privateKey,
+                                      final SaplingCustomFullKey privateKey,
                                       final long minconf,
                                       final int expiryHeight,
+                                      final DbManager dbManager,
                                       final WalletCallback<String, ZCashTransaction_zaddr> onComplete) throws ZCashException {
 
-    new Thread(new GetUTXOSRequest(fromAddr, minconf, new WalletCallback<String, List<ZCashTransactionOutput>>() {
-
-      @Override
-      public void onResponse(String r1, List<ZCashTransactionOutput> r2) {
-        if (r1.equals("ok")) {
-          new CreateTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, onComplete, r2).run();
-        } else {
-          onComplete.onResponse(r1, null);
-        }
-      }
-    })).start();
+    new CreateTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, dbManager, onComplete).run();
   }
 
   public void pushTransaction_taddr(ZCashTransaction_taddr tx,

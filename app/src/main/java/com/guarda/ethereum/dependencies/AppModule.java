@@ -11,6 +11,7 @@ import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.utils.KeyStoreUtils;
+import com.guarda.zcash.request.CreateTransaction_zaddr;
 import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -115,9 +116,4 @@ public class AppModule {
 //        return new CallBlockRange(0);
 //    }
 //
-//    @Provides
-//    @Singleton
-//    CallFindWitnesses provideCallFindWitnesses() {
-//        return new CallFindWitnesses();
-//    }
 }

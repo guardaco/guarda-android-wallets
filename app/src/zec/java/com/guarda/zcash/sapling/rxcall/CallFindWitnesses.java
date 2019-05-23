@@ -10,6 +10,7 @@ import com.guarda.zcash.sapling.db.model.SaplingWitnessesRoom;
 import com.guarda.zcash.sapling.db.model.TxInRoom;
 import com.guarda.zcash.sapling.db.model.TxOutRoom;
 import com.guarda.zcash.sapling.db.model.TxRoom;
+import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
 import com.guarda.zcash.sapling.key.SaplingFullViewingKey;
 import com.guarda.zcash.sapling.note.SaplingNote;
 import com.guarda.zcash.sapling.note.SaplingNotePlaintext;
@@ -21,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import javax.inject.Inject;
-
 import timber.log.Timber;
 
 import static com.guarda.zcash.RustAPI.newAk;
@@ -31,6 +30,7 @@ import static com.guarda.zcash.RustAPI.newNk;
 import static com.guarda.zcash.RustAPI.newOvk;
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.reverseByteArray;
+import static com.guarda.zcash.sapling.note.SaplingNotePlaintext.tryNoteDecrypt;
 
 public class CallFindWitnesses implements Callable<Boolean> {
 
@@ -39,28 +39,35 @@ public class CallFindWitnesses implements Callable<Boolean> {
     private byte[] revNewNk;
     private byte[] revNewOvk;
 
-    DbManager dbManager;
+    private DbManager dbManager;
+    private SaplingCustomFullKey saplingKey;
 
-    public CallFindWitnesses(DbManager dbManager) {
+    public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey) {
         this.dbManager = dbManager;
-        revNewIvk = reverseByteArray(newIvk);
-        revNewAk = reverseByteArray(newAk);
-        revNewNk = reverseByteArray(newNk);
-        revNewOvk = reverseByteArray(newOvk);
+        this.saplingKey = saplingKey;
+//        revNewIvk = reverseByteArray(newIvk);
+//        revNewAk = reverseByteArray(newAk);
+//        revNewNk = reverseByteArray(newNk);
+//        revNewOvk = reverseByteArray(newOvk);
     }
 
     @Override
     public Boolean call() throws Exception {
         SaplingMerkleTree saplingTree = new SaplingMerkleTree();
-//        Map<String, IncrementalWitness> existingWitnesses = new HashMap<>();
         List<SaplingWitnessesRoom> existingWitnesses = dbManager.getAppDb().getSaplingWitnessesDao().getAllWitnesses();
+        Long lastHeight = dbManager.getAppDb().getSaplingWitnessesDao().getLastHeight();
+        Timber.d("last witness height lastHeight=%d", lastHeight);
 
         List<BlockRoom> blocks = dbManager.getAppDb().getBlockDao().getAllBlocksOrdered();
 
         for (BlockRoom br : blocks) {
+
+            //skip blocks because don't need rescan
+            if (lastHeight != null && br.getHeight() < lastHeight) continue;
+
             if (br.getHeight() % 1000 == 0) Timber.d("height=%d", br.getHeight());
 
-            if (br.getHeight() < 422044) continue;
+            if (!br.getTree().isEmpty()) saplingTree = new SaplingMerkleTree(br.getTree());
 
             if (br.getHeight() == 422044) {
                 saplingTree = new SaplingMerkleTree(treeOnHeight421720);
@@ -125,7 +132,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
 
                     //FIXME: delete after tests
                     if (br.getHeight() != 476226) continue;
-                    SaplingNotePlaintext snp = tryNoteDecrypt(out);
+                    SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey.getIvk());
 
                     //skip if it's not our note
                     if (snp == null) continue;
@@ -135,9 +142,9 @@ public class CallFindWitnesses implements Callable<Boolean> {
                     SaplingNote sNote = snp.getSaplingNote();
                     String nf = sNote.nullifier(
                             new SaplingFullViewingKey(
-                                    bytesToHex(revNewAk),
-                                    bytesToHex(revNewNk),
-                                    bytesToHex(revNewOvk)),
+                                    bytesToHex(saplingKey.getAk()),
+                                    bytesToHex(saplingKey.getNk()),
+                                    bytesToHex(saplingKey.getOvk())),
                             position);
                     dbManager.getAppDb().getReceivedNotesDao().insertAll(new ReceivedNotesRoom(out.getCmu(), null, TypeConvert.bytesToLong(snp.vbytes), nf));
                     wtxs.put(out.getCmu(), iw);
@@ -174,17 +181,17 @@ public class CallFindWitnesses implements Callable<Boolean> {
         return true;
     }
 
-    private SaplingNotePlaintext tryNoteDecrypt(TxOutRoom output) {
-        try {
-            return SaplingNotePlaintext.decrypt(
-                    output.getCiphertext(),
-                    bytesToHex(revNewIvk),
-                    output.getEpk(),
-                    output.getCmu());
-        } catch (ZCashException e) {
-            return null;
-        }
-    }
+//    private SaplingNotePlaintext tryNoteDecrypt(TxOutRoom output) {
+//        try {
+//            return SaplingNotePlaintext.decrypt(
+//                    output.getCiphertext(),
+//                    bytesToHex(saplingKey.getIvk()),
+//                    output.getEpk(),
+//                    output.getCmu());
+//        } catch (ZCashException e) {
+//            return null;
+//        }
+//    }
 
     private static final String treeOnHeight421720 = "01" + //left
             "5495a30aef9e18b9c774df6a9fcd583748c8bba1a6348e70f59bc9f0c2bc673b" +
