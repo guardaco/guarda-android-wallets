@@ -89,9 +89,9 @@ public class WithdrawFragment extends BaseFragment{
                     .toArray(new String[tokenManager.getWalletTokensCodes().size()]);
             initDropDownSpinner(tokensArray);
             updateSelectedCurrency(tokensArray[0]);
-            initAddressToggle();
         } else {
             clTokensSelectorRoot.setVisibility(View.GONE);
+            initAddressToggle();
         }
     }
 
