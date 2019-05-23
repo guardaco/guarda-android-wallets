@@ -33,7 +33,7 @@ public class RustAPI {
                                            String outputPath,
                                            String spendPath);
 
-    private static native byte[] greeting(final String esk,
+    public static native byte[] greeting(final String esk,
                                           final String d,
                                           final String pkd,
                                           final String rcm,
@@ -746,16 +746,16 @@ public class RustAPI {
 //        return checkout;
 //    }
 //
-//    public static String checkInit(Context context) {
-//        Timber.i("checkInit started");
-//        String oPath = "sapling-output.params";
-//        String sPath = "sapling-spend.params";
-//        String instr = initModel(context.getAssets(), oPath, sPath);
-//        print("greeting=" + instr);
-//        Timber.i("checkInit done");
-//
-//        return instr;
-//    }
+    public static String checkInit(Context context) {
+        Timber.d("checkInit started");
+        String oPath = "sapling-output.params";
+        String sPath = "sapling-spend.params";
+        String instr = initModel(context.getAssets(), oPath, sPath);
+        Timber.d("greeting=" + instr);
+        Timber.d("checkInit done");
+
+        return instr;
+    }
 //
 //    String checkEPK() {
 //
@@ -829,7 +829,8 @@ public class RustAPI {
 //
 //    public static ProofAndCv getProof(byte[] d, byte[] pkd, byte[] esk, String eskhex, String rStr) throws ZCashException {
 //        // TODO:
-//        //        checkInit();
+//        //
+//        ();
 //
 //        /**
 //         * expected 256 bytes (proof + cv + rcv)
@@ -859,10 +860,12 @@ public class RustAPI {
         return bsigStr;
     }
     //private byte[] d={-50, 114, 0, -83, -20, -123, 105, -23, -90, -68, -90}, pkd=[78, -87, 67, -10, 46, 19, 6, 102, -121, 99, 34, -51, -53, -12, 16, 95, 110, -81, 120, -35, 65, 100, -87, 74, -20, -101, -5, 124, -12, -73, -78, -98]}
-    public static void checkConvertAddr() {
-        Bech32.Bech32Data ddd = Bech32.decodeWithoutVeryfy("ztestsapling1eeeqpt0vs457nf4u5e82jslk9cfsve58vv3vmjl5zp0katmcm4qkf222ajdlkl85k7efudmpjhj");
+    public static byte[] checkConvertAddr(String address) {
+        Bech32.Bech32Data ddd = Bech32.decodeWithoutVeryfy(address);
         Timber.d("checkConvertAddr ddd=%s", Arrays.toString(ddd.data));
-        Timber.d("checkConvertAddr ddd=%s", Arrays.toString(BitcoinCashBitArrayConverter.convertBits(ddd.data, 5, 8, true)));
+        byte[] bytesConverted = BitcoinCashBitArrayConverter.convertBits(ddd.data, 5, 8, true);
+        Timber.d("checkConvertAddr ddd=%s", Arrays.toString(bytesConverted));
+        return bytesConverted;
     }
 //
 //    public static byte[] getUotputs() {
