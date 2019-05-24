@@ -123,7 +123,7 @@ public class SaplingNotePlaintext {
         String pkdHex = RustAPI.ivkToPdk(ivkHex, ddd);
         snp.setPkdbytes(reverseByteArray(Utils.hexToBytes(pkdHex)));
         Timber.d("snp.decrypt() pkdHex=%s", pkdHex);
-        String cmhexExpected = RustAPI.cm(ddd, pkdHex, "54321", bytesToHex(snp.rcmbytes));
+        String cmhexExpected = RustAPI.cm(ddd, pkdHex, String.valueOf(TypeConvert.bytesToLong(snp.vbytes)), bytesToHex(snp.rcmbytes));
         Timber.d("snp.decrypt() cmuHex=%s", cmuHex);
         Timber.d("snp.decrypt() cmhexExpected=%s", cmhexExpected);
         return cmuHex.equals(cmhexExpected) ? snp : null;

@@ -356,7 +356,7 @@ public class ZCashTransaction_zaddr {
         return hash;
     }
 
-    public SpendProof addSpendS(ReceivedNotesRoom in) {
+    private SpendProof addSpendS(ReceivedNotesRoom in) {
         SaplingWitnessesRoom witness = dbManager.getAppDb().getSaplingWitnessesDao().getWitness(in.getCm());
         IncrementalWitness iw = IncrementalWitness.fromJson(witness.getWitness());
         String anchor = iw.root();
@@ -452,7 +452,7 @@ public class ZCashTransaction_zaddr {
          * cv - 32 bytes
          * rcv - 32 bytes
          */
-        ProofAndCv pacv = getProof(dTo, pkdTo, snper.sne.eskbS, eskhex, snp.getRcmStr());
+        ProofAndCv pacv = getProof(dTo, pkdTo, snper.sne.eskbS, eskhex, snp.getRcmStr(), value);
 
 
         byte[] zkproof = pacv.proof;
@@ -476,7 +476,7 @@ public class ZCashTransaction_zaddr {
         return outBytes;
     }
 
-    private ProofAndCv getProof(byte[] d, byte[] pkd, byte[] esk, String eskhex, String rStr) {
+    private ProofAndCv getProof(byte[] d, byte[] pkd, byte[] esk, String eskhex, String rStr, Long value) {
         // TODO:
         //        checkInit();
 
@@ -491,7 +491,7 @@ public class ZCashTransaction_zaddr {
                 Utils.bytesToHex(d),
                 Utils.bytesToHex(pkd),
                 rStr,
-                "54321");
+                value.toString());
         Timber.d("greeting =" + Arrays.toString(gstr) + " s=" + gstr.length);
 
         byte[] proof = new byte[192];

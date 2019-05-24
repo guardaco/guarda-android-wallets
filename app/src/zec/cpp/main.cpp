@@ -284,10 +284,11 @@ Java_com_guarda_zcash_RustAPI_greeting(
     std::copy(bytesR.begin(), bytesR.end(), resR);
     uint256 runt;
     runt.SetHex(cpstrR);
-    //value
-    uint64_t value = 54321;
-//    std::istringstream iss(env->GetStringUTFChars(v, NULL));
-//    iss >> value;
+    // VALUE to uint64_t
+    uint64_t value;
+    std::string cpstrV = env->GetStringUTFChars(v, NULL);
+    std::istringstream issV(cpstrV);
+    issV >> value;
 
     if (!librustzcash_sapling_output_proof(ctx, eskunt.begin(), resD, pkdunt.begin(), runt.begin(), value, cv.begin(), zkproof.begin())) {
         std::string hello = "llibrustzcash_sapling_output_proof=false";
@@ -577,7 +578,7 @@ Java_com_guarda_zcash_RustAPI_computeNf(
     uint256 akunt;
     akunt.SetHex(cpstrAk);
 
-    // AK to uint256
+    // NK to uint256
     std::string cpstrNk = env->GetStringUTFChars(nk, NULL);
     uint256 nkunt;
     nkunt.SetHex(cpstrNk);
