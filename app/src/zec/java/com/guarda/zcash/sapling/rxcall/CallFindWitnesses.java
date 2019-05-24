@@ -29,6 +29,7 @@ import static com.guarda.zcash.RustAPI.newIvk;
 import static com.guarda.zcash.RustAPI.newNk;
 import static com.guarda.zcash.RustAPI.newOvk;
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
+import static com.guarda.zcash.crypto.Utils.revHex;
 import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 import static com.guarda.zcash.sapling.note.SaplingNotePlaintext.tryNoteDecrypt;
 
@@ -131,7 +132,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                     }
 
                     //FIXME: delete after tests
-                    if (br.getHeight() != 476226) continue;
+                    if (br.getHeight() < 499524) continue;
                     SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey.getIvk());
 
                     //skip if it's not our note
@@ -142,9 +143,9 @@ public class CallFindWitnesses implements Callable<Boolean> {
                     SaplingNote sNote = snp.getSaplingNote();
                     String nf = sNote.nullifier(
                             new SaplingFullViewingKey(
-                                    bytesToHex(saplingKey.getAk()),
-                                    bytesToHex(saplingKey.getNk()),
-                                    bytesToHex(saplingKey.getOvk())),
+                                    revHex(bytesToHex(saplingKey.getAk())),
+                                    revHex(bytesToHex(saplingKey.getNk())),
+                                    revHex(bytesToHex(saplingKey.getOvk()))),
                             position);
                     dbManager.getAppDb().getReceivedNotesDao().insertAll(new ReceivedNotesRoom(out.getCmu(), null, TypeConvert.bytesToLong(snp.vbytes), nf));
                     wtxs.put(out.getCmu(), iw);

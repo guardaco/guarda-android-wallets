@@ -102,7 +102,7 @@ public class SyncManager {
                 .fromCallable(new CallFindWitnesses(dbManager, walletManager.getSaplingCustomFullKey()))
                 .subscribeOn(Schedulers.io())
                 .subscribe((res) -> {
-                    Timber.d("getWintesses latest=%s", res);
+                    Timber.d("getWintesses finished=%s", res);
                     stopSync();
                 }));
     }

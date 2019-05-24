@@ -18,6 +18,6 @@ public class CallSaplingBalance implements Callable<Long> {
     public Long call() throws Exception {
         Long saplingBalance = dbManager.getAppDb().getReceivedNotesDao().getBalance();
         Timber.d("saplingBalance = %d", saplingBalance);
-        return saplingBalance;
+        return saplingBalance != null ? saplingBalance : 0;
     }
 }

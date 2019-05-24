@@ -374,8 +374,8 @@ public class ZCashTransaction_zaddr {
 //        rapi.checkInit();
 
         byte[] spProof = RustAPI.spendProof(
-                bytesToHex(privKey.getAk()),//+ //TODO: check reverse bytes
-                bytesToHex(privKey.getNsk()),//+ //TODO: check reverse bytes
+                revHex(bytesToHex(privKey.getAk())),//+ //TODO: check reverse bytes
+                revHex(bytesToHex(privKey.getNsk())),//+ //TODO: check reverse bytes
                 bytesToHex(privKey.getD()),//+
                 bytesToHex(r),//+
                 alpha,//+
