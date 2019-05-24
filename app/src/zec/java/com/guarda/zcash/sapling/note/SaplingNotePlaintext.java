@@ -118,12 +118,12 @@ public class SaplingNotePlaintext {
 
         String dtest = bytesToHex(snp.d);
         Timber.d("snp.decrypt() dtest=%s", dtest);
-        String ddd = bytesToHex(newD);
-        Timber.d("snp.decrypt() ddd=%s", ddd);
-        String pkdHex = RustAPI.ivkToPdk(ivkHex, ddd);
+//        String ddd = bytesToHex(newD);
+//        Timber.d("snp.decrypt() ddd=%s", ddd);
+        String pkdHex = RustAPI.ivkToPdk(ivkHex, dtest);
         snp.setPkdbytes(reverseByteArray(Utils.hexToBytes(pkdHex)));
         Timber.d("snp.decrypt() pkdHex=%s", pkdHex);
-        String cmhexExpected = RustAPI.cm(ddd, pkdHex, String.valueOf(TypeConvert.bytesToLong(snp.vbytes)), bytesToHex(snp.rcmbytes));
+        String cmhexExpected = RustAPI.cm(dtest, pkdHex, String.valueOf(TypeConvert.bytesToLong(snp.vbytes)), bytesToHex(snp.rcmbytes));
         Timber.d("snp.decrypt() cmuHex=%s", cmuHex);
         Timber.d("snp.decrypt() cmhexExpected=%s", cmhexExpected);
         return cmuHex.equals(cmhexExpected) ? snp : null;
@@ -177,10 +177,11 @@ public class SaplingNotePlaintext {
         try {
             return decrypt(
                     output.getCiphertext(),
-                    bytesToHex(ivk),
+                    revHex(bytesToHex(ivk)),
                     output.getEpk(),
                     output.getCmu());
         } catch (ZCashException e) {
+            Timber.d("tryNoteDecrypt=%s", e.getMessage());
             return null;
         }
     }
