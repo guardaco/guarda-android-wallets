@@ -2,6 +2,7 @@ package com.guarda.zcash.sapling.rxcall;
 
 import android.content.Context;
 
+import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.ZCashTransaction_zaddr;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -18,15 +19,18 @@ import timber.log.Timber;
 public class CallSaplingParamsInit implements Callable<Boolean> {
 
     private Context context;
+    private WalletManager walletManager;
 
-    public CallSaplingParamsInit(Context context) {
+    public CallSaplingParamsInit(Context context, WalletManager walletManager) {
         this.context = context;
+        this.walletManager = walletManager;
     }
 
     @Override
     public Boolean call() throws Exception {
         Timber.d("started");
         RustAPI.checkInit(context);
+        walletManager.setSaplingCustomFullKey(new SaplingCustomFullKey(RustAPI.dPart(walletManager.getPrivateKey().getBytes())));
         return true;
     }
 

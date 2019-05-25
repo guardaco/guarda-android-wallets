@@ -119,15 +119,6 @@ public class RustAPI {
 
     //endregion
 
-    private Context context;
-
-    public RustAPI() {
-    }
-
-    public RustAPI(Context context) {
-        this.context = context;
-    }
-
     public String sayHello(String to) {
 
         int a=8;
@@ -751,7 +742,8 @@ public class RustAPI {
         String oPath = "sapling-output.params";
         String sPath = "sapling-spend.params";
         String instr = initModel(context.getAssets(), oPath, sPath);
-        Timber.d("greeting=" + instr);
+        if (instr.contains("nullptr")) Timber.e("checkInit=initialization error");
+        Timber.d("checkInit=" + instr);
         Timber.d("checkInit done");
 
         return instr;

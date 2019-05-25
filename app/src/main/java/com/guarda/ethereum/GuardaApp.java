@@ -128,8 +128,8 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
         //init ndk lib for ZEC
         if ("com.guarda.zec".equals(packageName)) {
             ReLinker.log(logcatLogger).loadLibrary(getApplicationContext(), "native-lib");
-            if (BuildConfig.DEBUG)
-                Stetho.initializeWithDefaults(this);
+//            if (BuildConfig.DEBUG)
+//                Stetho.initializeWithDefaults(this);
         }
 
 

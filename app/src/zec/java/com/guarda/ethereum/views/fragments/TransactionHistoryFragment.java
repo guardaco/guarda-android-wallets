@@ -198,7 +198,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         super.onResume();
         if (isWalletExist()) {
             showBalance(true);
-            syncManager.startSync();
+//            syncManager.startSync();
         }
     }
 

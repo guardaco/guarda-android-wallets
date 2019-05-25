@@ -1,5 +1,6 @@
 package com.guarda.zcash.sapling.rxcall;
 
+import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;

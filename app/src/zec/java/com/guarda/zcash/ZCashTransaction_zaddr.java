@@ -36,7 +36,10 @@ import java.util.Vector;
 
 import timber.log.Timber;
 
+import static com.guarda.zcash.RustAPI.newAk;
 import static com.guarda.zcash.RustAPI.newAsk;
+import static com.guarda.zcash.RustAPI.newD;
+import static com.guarda.zcash.RustAPI.newNsk;
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.hexToBytes;
 import static com.guarda.zcash.crypto.Utils.revHex;
@@ -373,11 +376,23 @@ public class ZCashTransaction_zaddr {
 //        RustAPI rapi = new RustAPI(context);
 //        rapi.checkInit();
 
+//        byte[] spProof = RustAPI.spendProof(
+//                revHex(bytesToHex(privKey.getAk())),//+ //TODO: check reverse bytes
+//                revHex(bytesToHex(privKey.getNsk())),//+ //TODO: check reverse bytes
+//                bytesToHex(privKey.getD()),//+
+//                revHex(bytesToHex(r)),//+ //TODO: check reverse bytes
+//                alpha,//+
+//                v,//+
+//                revHex(anchor),//+
+//                mp.getAuthPathPrimitive(),//+
+//                mp.getIndexPrimitive()//+
+//        );
+        //TODO; check init before spendProof
         byte[] spProof = RustAPI.spendProof(
-                revHex(bytesToHex(privKey.getAk())),//+ //TODO: check reverse bytes
-                revHex(bytesToHex(privKey.getNsk())),//+ //TODO: check reverse bytes
-                bytesToHex(privKey.getD()),//+
-                bytesToHex(r),//+
+                revHex(bytesToHex(newAk)),//+ //TODO: check reverse bytes
+                revHex(bytesToHex(newNsk)),//+ //TODO: check reverse bytes
+                bytesToHex(newD),//+
+                revHex(bytesToHex(r)),//+ //TODO: check reverse bytes
                 alpha,//+
                 v,//+
                 revHex(anchor),//+

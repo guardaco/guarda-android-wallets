@@ -11,6 +11,7 @@ import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.utils.KeyStoreUtils;
+import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.request.CreateTransaction_zaddr;
 import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.api.ProtoApi;
@@ -103,17 +104,5 @@ public class AppModule {
     DbManager provideDbManager() {
         return new DbManager();
     }
-//
-//    @Provides
-//    @Singleton
-//    CallLastBlock provideCallLastBlock() {
-//        return new CallLastBlock();
-//    }
-//
-//    @Provides
-//    @Singleton
-//    CallBlockRange provideCallBlockRange() {
-//        return new CallBlockRange(0);
-//    }
-//
+
 }

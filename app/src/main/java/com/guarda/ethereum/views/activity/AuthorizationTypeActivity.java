@@ -18,6 +18,7 @@ import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.views.activity.base.SimpleTrackOnStopActivity;
 import com.guarda.zcash.RustAPI;
+import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.rxcall.CallLastBlock;
 import com.guarda.zcash.sapling.rxcall.CallSaplingParamsInit;
 import com.scottyab.rootbeer.RootBeer;
@@ -46,6 +47,8 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
     WalletManager walletManager;
     @Inject
     SharedManager sharedManager;
+    @Inject
+    SyncManager syncManager;
 
     DialogFragment rootDialog;
 
@@ -149,9 +152,12 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
 
     private void saplingParamsInit() {
         compositeDisposable.add(Observable
-                .fromCallable(new CallSaplingParamsInit(this))
+                .fromCallable(new CallSaplingParamsInit(this, walletManager))
                 .subscribeOn(Schedulers.io())
-                .subscribe((latest) -> Timber.d("CallSaplingParamsInit latest=%s", latest)));
+                .subscribe((latest) -> {
+                    Timber.d("CallSaplingParamsInit done=%s", latest);
+                    syncManager.startSync();
+                }));
     }
 
     private void isRootDevice() {

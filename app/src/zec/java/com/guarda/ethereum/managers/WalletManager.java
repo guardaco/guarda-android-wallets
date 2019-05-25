@@ -88,7 +88,7 @@ public class WalletManager {
                     mnemonicKey = ZCashWalletManager.generateNewPrivateKey_taddr();
                     walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
                     saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
-                    saplingCustomFullKey = new SaplingCustomFullKey(RustAPI.dPart(mnemonicKey.getBytes()));
+//                    saplingCustomFullKey = new SaplingCustomFullKey(RustAPI.dPart(mnemonicKey.getBytes()));
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 } catch (ZCashException zce) {
@@ -115,8 +115,8 @@ public class WalletManager {
             mnemonicKey = mnemonicCode;
             walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
             saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
-            saplingCustomFullKey = new SaplingCustomFullKey(RustAPI.dPart(mnemonicKey.getBytes()));
-            Timber.d("restoreFromBlock saplingCustomFullKey=%s", saplingCustomFullKey);
+//            saplingCustomFullKey = new SaplingCustomFullKey(RustAPI.dPart(mnemonicKey.getBytes()));
+//            Timber.d("restoreFromBlock saplingCustomFullKey=%s", saplingCustomFullKey);
         } catch (IllegalArgumentException iae) {
             callback.onWalletCreated();
             iae.printStackTrace();
@@ -154,8 +154,8 @@ public class WalletManager {
                                 mnemonicKey = mnemonicCode;
                                 walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
                                 saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
-                                saplingCustomFullKey = new SaplingCustomFullKey(RustAPI.dPart(mnemonicKey.getBytes()));
-                                Timber.d("restoreFromBlock2 saplingCustomFullKey=%s", saplingCustomFullKey);
+//                                saplingCustomFullKey = new SaplingCustomFullKey(RustAPI.dPart(mnemonicKey.getBytes()));
+//                                Timber.d("restoreFromBlock2 saplingCustomFullKey=%s", saplingCustomFullKey);
                                 sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
                                 callback.run();
                                 Log.i("RESPONSE CODE", r1);
@@ -221,6 +221,10 @@ public class WalletManager {
 
     public SaplingCustomFullKey getSaplingCustomFullKey() {
         return saplingCustomFullKey;
+    }
+
+    public void setSaplingCustomFullKey(SaplingCustomFullKey saplingCustomFullKey) {
+        this.saplingCustomFullKey = saplingCustomFullKey;
     }
 
     public String getWalletFriendlyAddress() {
