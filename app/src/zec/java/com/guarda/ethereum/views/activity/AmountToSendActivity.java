@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.customviews.GuardaInputLayout;
@@ -92,6 +93,8 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
         } else {
             setCurrentBalance(WalletManager.getFriendlyBalance(walletManager.getMyBalance()), sharedManager.getCurrentCurrency().toUpperCase());
         }
+
+        if (BuildConfig.DEBUG) etAmountToSend.setText("0.00001");
 
         etAmountToSend.addTextChangedListener(new TextWatcher() {
             @Override

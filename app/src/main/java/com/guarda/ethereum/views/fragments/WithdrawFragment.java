@@ -238,6 +238,7 @@ public class WithdrawFragment extends BaseFragment{
                     break;
                 case 1:
                     isSaplingAddress = true;
+                    if (BuildConfig.DEBUG) etSendCoinsAddress.setText("ztestsapling1wrjqt8et9elq7p0ejlgfpt4j9m7r7d4qlt7cke7ppp7dwrpev3yln30c37mrnzzekceajk66h0n");
                     break;
             }
         });
