@@ -11,6 +11,9 @@ import java.util.Arrays;
 
 import timber.log.Timber;
 
+import static com.guarda.zcash.crypto.Utils.bytesToHex;
+import static com.guarda.zcash.crypto.Utils.revHex;
+
 public class RustAPI {
 
     //April 12 2019
@@ -26,6 +29,9 @@ public class RustAPI {
     public static byte[] newNk = {(byte)0x18, (byte)0x95, (byte)0xa7, (byte)0x79, (byte)0xaa, (byte)0x54, (byte)0x46, (byte)0x0b, (byte)0x73, (byte)0x01, (byte)0x76, (byte)0x94, (byte)0xe6, (byte)0xf7, (byte)0xa5, (byte)0xc5, (byte)0xdd, (byte)0x02, (byte)0x4a, (byte)0xee, (byte)0x0a, (byte)0x8d, (byte)0xcb, (byte)0x79, (byte)0xb0, (byte)0xf8, (byte)0xc5, (byte)0x60, (byte)0xca, (byte)0xfa, (byte)0x9e, (byte)0xbc};
     public static byte[] newNsk = {(byte)0x72, (byte)0x8b, (byte)0xb5, (byte)0x6d, (byte)0x90, (byte)0x84, (byte)0x87, (byte)0x6d, (byte)0xfb, (byte)0xcd, (byte)0x0d, (byte)0x98, (byte)0x46, (byte)0xf8, (byte)0xdb, (byte)0xc7, (byte)0x6f, (byte)0x16, (byte)0x52, (byte)0x7c, (byte)0x3a, (byte)0x01, (byte)0x78, (byte)0xc3, (byte)0x8f, (byte)0x6e, (byte)0xbf, (byte)0xe1, (byte)0xfb, (byte)0x4f, (byte)0x76, (byte)0x0d};
     public static byte[] newAsk = {(byte)0xcf, (byte)0x5a, (byte)0xc1, (byte)0xc1, (byte)0x11, (byte)0xf9, (byte)0xe5, (byte)0x9f, (byte)0x0c, (byte)0x45, (byte)0x32, (byte)0x33, (byte)0x77, (byte)0x5c, (byte)0xc0, (byte)0x8c, (byte)0xaa, (byte)0x4b, (byte)0xf8, (byte)0x86, (byte)0xf5, (byte)0xd3, (byte)0x0f, (byte)0x00, (byte)0xa1, (byte)0x53, (byte)0x04, (byte)0xc7, (byte)0xb8, (byte)0x9f, (byte)0x04, (byte)0x0e};
+
+    public static final String iwSer = "{\"cursor\":{\"deserIndex\":0,\"left\":\"299166965aad1d2ec4aaee5a9af1d145c4296f95bc9b4eb77d115e260f65a964\",\"parents\":[\"a90fc24705376927a91b74cc5b29ee14384c29dc514514a5c407011a092bc43d\",\"b58131e2218c168f249dda440bd0054a2c14bec3ae48d6072fc9704c1da01818\",\"cb688334edee6131310a52c1a29d7d0934e22e980fa184006109fd351acd4f5f\",\"a4c333730595ab5756ae2f788c02f9252468e686a118d8abba4d80d91e8efe5e\"],\"right\":\"65db9fc6a86cc91e812bb0c334010909e408ae7cbc419cd4e9784f380463aa55\"},\"cursor_depth\":7,\"filled\":[\"5674827a3244a4ef98ca255682f333bb8392c3047fc1aea272f00e1aac425020\",\"deb919870348525f35fe52f0fa02bc986a1b37e41bcc3ff20fdc1247aa3c8a22\",\"687266111cd9d76bc291010e642151e5350ddf76f3734d690d543602dd2a5f60\"],\"tree\":{\"deserIndex\":0,\"left\":\"7fc8e26c3c4711edf8590f9460dede975dfbe378795f05d459482037edb7bc0b\",\"parents\":[\"4d1667793fdd5baf0921a9f5b8126bd2950054b0ba84abb88848a3b19b72d41c\",\"\",\"\",\"abe2c95064f844c3205f837feda9db62b5f3ac2004f80d6378288b2065671459\",\"45acf64822a1af93fdcd2333997d2871b91673eb3f4c67e7bcd921600b3a5335\",\"\",\"\",\"\",\"\",\"f8116f03abcd02bec0862b99c84c572b0cf4b1bc4d0f4d4b7ff9179a2f900101\",\"\",\"\",\"\",\"\",\"\",\"383f5abdcb2ab13d05228205d736ec6d7b92a428fc45e7ada62328e803ad8523\"],\"right\":\"b733e839b5f844287a6a491409a991ec70277f39a50c99163ed378d23a829a07\"}}";
+
 
     //region NATIVE METHODS
 
@@ -82,6 +88,8 @@ public class RustAPI {
 
     public static native byte[] encryptNp(final String key,
                                           final String cipher);
+
+    public static native String proveContextInit();
 
     public static native byte[] spendProof(final String ak,
                                            final String nsk,
@@ -847,7 +855,7 @@ public class RustAPI {
 //    }
 //
     public static byte[] getBsig(String value, byte[] data) {
-        byte[] bsigStr = bsig(value, Utils.bytesToHex(data));
+        byte[] bsigStr = bsig(value, bytesToHex(data));
         Timber.d("getBsig=" + Arrays.toString(bsigStr) + " s=" + bsigStr.length);
         return bsigStr;
     }

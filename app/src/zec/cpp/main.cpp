@@ -234,7 +234,7 @@ Java_com_guarda_zcash_RustAPI_greeting(
 
 //    librustzcash_sapling_proving_ctx_free(ctx);
 
-    ctx = librustzcash_sapling_proving_ctx_init();
+    //ctx = librustzcash_sapling_proving_ctx_init();
     std::array<unsigned char, 192> zkproof;
     uint256 cv;
 
@@ -335,11 +335,10 @@ Java_com_guarda_zcash_RustAPI_bsig(
     std::copy(bytesData.begin(), bytesData.end(), resData);
 
     if (!librustzcash_sapling_binding_sig(ctx, value, resData, bindingSig.begin())) {
+        librustzcash_sapling_proving_ctx_free(ctx);
         std::string hello = "librustzcash_sapling_binding_sig=false";
         env->NewByteArray(2);
     };
-
-    librustzcash_sapling_proving_ctx_free(ctx);
 
     // bindingSig to hex (code from uint256.cpp method GetHex())
     char psz[sizeof(bindingSig) * 2 + 1];
@@ -690,6 +689,17 @@ Java_com_guarda_zcash_RustAPI_encryptNp(
     return array;
 }
 
+JNIEXPORT jstring JNICALL
+Java_com_guarda_zcash_RustAPI_proveContextInit(
+        JNIEnv *env,
+        jobject) {
+
+    ctx = librustzcash_sapling_proving_ctx_init();
+
+    std::string res = "librustzcash_sapling_proving_ctx_init";
+    return env->NewStringUTF(res.c_str());
+}
+
 JNIEXPORT jbyteArray JNICALL
 Java_com_guarda_zcash_RustAPI_spendProof(
         JNIEnv *env,
@@ -704,7 +714,8 @@ Java_com_guarda_zcash_RustAPI_spendProof(
         jobjectArray authPathsArr,
         jbooleanArray indexesArr) {
 
-    ctx = librustzcash_sapling_proving_ctx_init();
+    //don't need after call Java_com_guarda_zcash_RustAPI_proveContextInit()
+    // ctx = librustzcash_sapling_proving_ctx_init();
     uint256 cv;
     uint256 rk;
     std::array<unsigned char, 192> zkproof;
