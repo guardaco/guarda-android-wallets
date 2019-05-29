@@ -10,6 +10,7 @@ import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;
 import com.guarda.zcash.sapling.LsaSingle;
 import com.guarda.zcash.sapling.db.model.TxOutRoom;
+import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
 
 import java.util.Arrays;
 
@@ -107,7 +108,8 @@ public class SaplingNotePlaintext {
         return new SaplingNotePlaintextEncryptionResult(encciphertext, sne);
     }
 
-    public static SaplingNotePlaintext decrypt(String ciphertextHex, String ivkHex, String epkHex, String cmuHex) throws ZCashException {
+    public static SaplingNotePlaintext decrypt(String ciphertextHex, String epkHex, String cmuHex, SaplingCustomFullKey saplingKey) throws ZCashException {
+        String ivkHex = revHex(bytesToHex(saplingKey.getIvk()));
         Timber.d("decrypt: ciphertextHex=%s ivkHex=%s epkHex=%s cmuHex=%s", ciphertextHex, ivkHex, epkHex, cmuHex);
         byte[] pt = attemptSaplingEncDecryption(ciphertextHex, ivkHex, epkHex);
         Timber.d("decrypt pt=%s, %s", Arrays.toString(pt), pt.length);
@@ -116,14 +118,12 @@ public class SaplingNotePlaintext {
         SaplingNotePlaintext snp = fromBytes(pt);
         Timber.d("SaplingNotePlaintext decrypt snp= " + snp);
 
-        String dtest = bytesToHex(snp.d);
-        Timber.d("snp.decrypt() dtest=%s", dtest);
-//        String ddd = bytesToHex(newD);
-//        Timber.d("snp.decrypt() ddd=%s", ddd);
-        String pkdHex = RustAPI.ivkToPdk(ivkHex, dtest);
+        String dHex = bytesToHex(saplingKey.getD());
+        Timber.d("snp.decrypt() dHex=%s", dHex);
+        String pkdHex = RustAPI.ivkToPdk(ivkHex, dHex);
         snp.setPkdbytes(reverseByteArray(Utils.hexToBytes(pkdHex)));
         Timber.d("snp.decrypt() pkdHex=%s", pkdHex);
-        String cmhexExpected = RustAPI.cm(dtest, pkdHex, String.valueOf(TypeConvert.bytesToLong(snp.vbytes)), bytesToHex(snp.rcmbytes));
+        String cmhexExpected = RustAPI.cm(dHex, pkdHex, String.valueOf(TypeConvert.bytesToLong(snp.vbytes)), bytesToHex(snp.rcmbytes));
         Timber.d("snp.decrypt() cmuHex=%s", cmuHex);
         Timber.d("snp.decrypt() cmhexExpected=%s", cmhexExpected);
         return cmuHex.equals(cmhexExpected) ? snp : null;
@@ -173,15 +173,16 @@ public class SaplingNotePlaintext {
         return result;
     }
 
-    public static SaplingNotePlaintext tryNoteDecrypt(TxOutRoom output, byte[] ivk) {
+    public static SaplingNotePlaintext tryNoteDecrypt(TxOutRoom output, SaplingCustomFullKey saplingKey) {
         try {
             return decrypt(
                     output.getCiphertext(),
-                    revHex(bytesToHex(ivk)),
+//                    revHex(bytesToHex(ivk)),
                     output.getEpk(),
-                    output.getCmu());
+                    output.getCmu(),
+                    saplingKey);
         } catch (ZCashException e) {
-            Timber.d("tryNoteDecrypt=%s", e.getMessage());
+            Timber.e("tryNoteDecrypt=%s", e.getMessage());
             return null;
         }
     }

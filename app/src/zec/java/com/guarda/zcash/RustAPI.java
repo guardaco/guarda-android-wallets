@@ -245,32 +245,32 @@ public class RustAPI {
 //        return "checkBsig";
 //    }
 //
-//    String checkVerify() {
-//
+    String checkVerify() {
+
 //        checkInit(context);
-//
-//        String cvHex = "d5653fd23e74204f10a9bbdad301d995a5edf3756410e1b910dea274f98d3249";
-//        String anchorHex = "22931f7a1ae2bcb40551f93f6ba575830be30dcb21b048ae3a3ef7a1054bc52c";
-//        String nfHex = "70ca62af9862c20cf8fe307ecccea26633850ed0ea59700f517a0e4d6bbe2ca6";
-//        String rkHex = "846309c9983a203e629b051b1e5b5ea3279fc2cddf16cfe79895c7dbaab9a9e5";
-//        String spProofHex = "978c53f0b5f0c9fe2d0059f0af400e1b7aef18d21832e7752a7c47285a78b68838233817497d63383a1c53f86b68721eacf01c2bd20eaa6946237e3c4aa2a1b95121f67db12635736c96aa04b9a2901a764ce95901bf78a9630148c197120a3300b5696918993675523f0a32685ff5391c4b3da8ab20de8f9ed0d96e51196e91e11b9f05e1dde84d6310a964000442a5a661873ba93c7d63589784d1aa7a1e6c25df1cbbf883b5814dba83d6f0eeb5a390c564bd33a67edfc1675fbe33d4b1b3";
-//
-//        String spAuSigHex = "b0ebb9f5f065d4a460a94cea47c4e14ee61ceac1283c8d96df489f9f325cb6e3ce985ae582308320f5985adf4b94997c1f28481b08ebad570bf88dda69edf50d";
-//
-//        String spendHash = cvHex + anchorHex + nfHex + rkHex + spProofHex + spAuSigHex;
-//        Timber.d("checkVerify spendHash=%s", spendHash);
-//        byte[] sig = {115, 36, -6, 56, 19, -86, 88, 76, -106, -30, 30, -98, 44, -28, 26, 114, -47, -18, -10, -40, -63, -96, -107, 23, 122, -65, -3, 4, 57, -26, -96, -55};
-//        String sigHash = bytesToHex(sig);
-//        byte[] bsig = {120, 118, -14, 113, -18, 72, -50, -121, -23, 18, 3, 119, -113, -116, 97, 21, -95, 116, -86, 57, 33, -25, 92, -59, -27, 117, -113, -77, -12, 87, 84, 39, 46, -92, -65, 93, -32, 21, -61, 115, -74, 42, -98, 91, 10, 51, 45, 64, 12, -18, -38, -75, 55, -16, 76, 84, -123, -119, -112, 124, -113, 28, 41, 11};
-//        String bsigStr = bytesToHex(bsig);
-//
-//        // revhex for sigHash only here; check spend is successful with revHex
-//        String vrf = testVerify(spendHash, revHex(sigHash), bsigStr);
-//
-//        Timber.d("checkVerify vrf=%s", vrf);
-//
-//        return "checkVerify";
-//    }
+
+        String cvHex = "e3294b079dee91a39be32c6e6c00e1b50498ba302db9b5cca8c1741f08a2be24";
+        String anchorHex = "26ce082966b0d7458cfa2583f1175d980fed738329a44997b56d4d19cba0162e";
+        String nfHex = "acb8f1c9af761c9e38ee4c11a617da7b35970df477dd08722d8c3101c7237f55";
+        String rkHex = "4471fbb3c1041246b504e2a0b15995e7487973fcdf6474c51256844afd85f23e";
+        String spProofHex = "848e3095e25f5b79cf4caad42699b69aa9c6ad5690da10f0191ee1c27f8d7165640108c57dddb6b4897be9514beac9be8e419233371159a5c7ac530074f2905c5c14dbb8112f3d5c02609fb51248a76dff29373d9b94865b95de32b0d54fb5ae16d8b86e1101e3d06c560c5b2d6056857f039c72f36ecb8e5c2adb83342403026197315214b87e02c2e5777470741dccb4bd7b5abe31809d4eba68ffb9452be852f907b7f4aed5d36812111c55275445ef6650c123b92a82bdfce0d437c92bcc";
+
+        String spAuSigHex = "9c21a2d47f000000a021a2d47f000000942a60f36f0000001024a2d47f000000a0d8f36f00000000000000000000000000000000000000000000000000000000";
+
+        String spendHash = cvHex + anchorHex + nfHex + rkHex + spProofHex + spAuSigHex;
+        Timber.d("checkVerify spendHash=%s", spendHash);
+        byte[] sig = {115, 36, -6, 56, 19, -86, 88, 76, -106, -30, 30, -98, 44, -28, 26, 114, -47, -18, -10, -40, -63, -96, -107, 23, 122, -65, -3, 4, 57, -26, -96, -55};
+        String sigHash = bytesToHex(sig);
+        byte[] bsig = {120, 118, -14, 113, -18, 72, -50, -121, -23, 18, 3, 119, -113, -116, 97, 21, -95, 116, -86, 57, 33, -25, 92, -59, -27, 117, -113, -77, -12, 87, 84, 39, 46, -92, -65, 93, -32, 21, -61, 115, -74, 42, -98, 91, 10, 51, 45, 64, 12, -18, -38, -75, 55, -16, 76, 84, -123, -119, -112, 124, -113, 28, 41, 11};
+        String bsigStr = bytesToHex(bsig);
+
+        // revhex for sigHash only here; check spend is successful with revHex
+        String vrf = testVerify(spendHash, revHex(sigHash), bsigStr);
+
+        Timber.d("checkVerify vrf=%s", vrf);
+
+        return "checkVerify";
+    }
 //
 //    String checkSpendSig() {
 //        String alpha = genr();

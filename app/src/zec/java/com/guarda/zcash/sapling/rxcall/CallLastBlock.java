@@ -4,7 +4,11 @@ import com.guarda.ethereum.BuildConfig;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.db.model.BlockRoom;
+import com.guarda.zcash.sapling.db.model.SaplingWitnessesRoom;
+import com.guarda.zcash.sapling.tree.IncrementalWitness;
+import com.guarda.zcash.sapling.tree.SaplingMerkleTree;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import timber.log.Timber;
@@ -24,12 +28,13 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
 
     @Override
     public BlockSyncRange call() throws Exception {
-//        if (BuildConfig.DEBUG) {
-//            dbManager.getAppDb().getBlockDao().dropAll();
-//            Timber.d("dbManager.getAppDb().getBlockDao().deleteHeight();");
-//            dbManager.getAppDb().getSaplingWitnessesDao().deleteHeight(498876L);
-//        }
-
+        if (BuildConfig.DEBUG) {
+            SaplingWitnessesRoom sr = dbManager.getAppDb().getSaplingWitnessesDao().getWitness("079a823ad278d33e16990ca5397f2770ec91a90914496a7a2844f8b539e833b7");
+            if (sr != null) {
+                IncrementalWitness iw = IncrementalWitness.fromJson(sr.getWitness());
+                Timber.d("root=%s", iw.root());
+            }
+        }
         long latestFromServer = protoApi.getLastBlock();
         Timber.d("latestFromServer = %d", latestFromServer);
         BlockRoom blockRoom = dbManager.getAppDb().getBlockDao().getLatestBlock();

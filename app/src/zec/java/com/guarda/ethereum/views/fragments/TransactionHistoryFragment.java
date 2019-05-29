@@ -198,7 +198,8 @@ public class TransactionHistoryFragment extends BaseFragment {
         super.onResume();
         if (isWalletExist()) {
             showBalance(true);
-//            syncManager.startSync();
+
+            if (isSaplingWalletExist()) syncManager.startSync();
         }
     }
 
@@ -232,6 +233,10 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     private boolean isWalletExist() {
         return !TextUtils.isEmpty(walletManager.getWalletFriendlyAddress());
+    }
+
+    private boolean isSaplingWalletExist() {
+        return walletManager.getSaplingCustomFullKey() != null;
     }
 
     private void showBalance(boolean withCache) {
@@ -420,7 +425,8 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void setUSDBalance(String balance) {
-        tvUSDCount.setText(String.format("%s %s", balance, sharedManager.getLocalCurrency().toUpperCase()));
+//        tvUSDCount.setText(String.format("%s %s", balance, sharedManager.getLocalCurrency().toUpperCase()));
+        tvUSDCount.setText(String.format("%s %s", balance, sharedManager.getCurrentCurrency().toUpperCase()));
     }
 
     @OnClick({R.id.fab_buy, R.id.fab_purchase, R.id.fab_withdraw, R.id.fab_deposit})

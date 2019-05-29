@@ -78,7 +78,7 @@ public class ProtoApi {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Timber.d("protoApi.checkBlocks(items); from=" + fBlock + " to=" + tBlock + " e=" + e.getMessage());
+            Timber.e("protoApi.checkBlocks(items); from=" + fBlock + " to=" + tBlock + " e=" + e.getMessage());
             // sometimes we get UNKNOWN: context deadline exceeded from server
             // https://github.com/zcash-hackworks/lightwalletd/blob/51614ecd2bff7595114c30a70eaf3c7488af12dd/frontend/service.go#L107
             // workaround: recall previous block, so we set last block number

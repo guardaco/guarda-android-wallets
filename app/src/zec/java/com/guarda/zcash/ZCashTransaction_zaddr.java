@@ -36,6 +36,7 @@ import java.util.Vector;
 
 import timber.log.Timber;
 
+import static com.guarda.zcash.RustAPI.iwSer;
 import static com.guarda.zcash.RustAPI.newAk;
 import static com.guarda.zcash.RustAPI.newAsk;
 import static com.guarda.zcash.RustAPI.newD;
@@ -73,7 +74,7 @@ public class ZCashTransaction_zaddr {
     private int nExpiryHeight;
     private SaplingCustomFullKey privKey;
     private String zAddr;
-    private byte[] bytesShieldedOutputs;
+    private byte[] bytesShieldedOutputs = new byte[0];
     private byte[] shieldedOutputsBlake;
     private int outputsSize = 0;
     private byte[] bytesShieldedSpends = new byte[0];
@@ -99,6 +100,10 @@ public class ZCashTransaction_zaddr {
         this.fee = fee;
 
         long valuePool = 0;
+
+        //Initialization sapling proving context (it's free after )
+        String res = RustAPI.proveContextInit();
+        Timber.d("proveContextInit res=%s", res);
 
         /**
          * Shielded spends
@@ -138,7 +143,7 @@ public class ZCashTransaction_zaddr {
         bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, getUotput(dTo, pkdTo, value));
         outputsSize++;
         if (valuePool - value - fee > 0) {
-            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, getUotput(dTo, pkdTo, valuePool - value - fee));
+            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, getUotput(privKey.getD(), privKey.getPkd(), valuePool - value - fee));
             outputsSize++;
         } else if (valuePool - value - fee < 0) {
             throw new IllegalArgumentException("Found sapling unspents cannot fund this transaction.");
@@ -187,7 +192,7 @@ public class ZCashTransaction_zaddr {
 //        for (int i = 0; i < outputs.size(); i++) {
 //            tx_bytes = Bytes.concat(tx_bytes, outputs.get(i).getBytes());
 //        }
-        byte[] bindingSig = RustAPI.getBsig(value.toString(), getSignatureHash());
+        byte[] bindingSig = RustAPI.getBsig(fee.toString(), getSignatureHash());
         Timber.d("tx geBytes() bindingSig=" + Arrays.toString(bindingSig) + " s=" + bindingSig.length);
 
         byte[] bytesShieldedSpendsAndAuthSig = new byte[0];
@@ -296,7 +301,7 @@ public class ZCashTransaction_zaddr {
 
         //TODO: check revNewAsk
 //        bytesSpendAuthSig = RustAPI.spendSig(bytesToHex(revNewAsk), bytesToHex(alpha), bytesToHex(getSignatureHash()));
-        return RustAPI.spendSig(bytesToHex(privKey.getAsk()), bytesToHex(alpha), bytesToHex(getSignatureHash()));
+        return RustAPI.spendSig(revHex(bytesToHex(privKey.getAsk())), bytesToHex(alpha), bytesToHex(getSignatureHash()));
     }
 
 //    private byte[] getSignedInputBytes(int index) throws ZCashException {
@@ -362,11 +367,12 @@ public class ZCashTransaction_zaddr {
     private SpendProof addSpendS(ReceivedNotesRoom in) {
         SaplingWitnessesRoom witness = dbManager.getAppDb().getSaplingWitnessesDao().getWitness(in.getCm());
         IncrementalWitness iw = IncrementalWitness.fromJson(witness.getWitness());
+//        IncrementalWitness iw = IncrementalWitness.fromJson(iwSer);
         String anchor = iw.root();
         MerklePath mp = iw.path();
         Timber.d("addSpendS anchor=%s", anchor);
         TxOutRoom out = dbManager.getAppDb().getTxOutputDao().getOut(in.getCm());
-        SaplingNotePlaintext snp = SaplingNotePlaintext.tryNoteDecrypt(out, privKey.getIvk());
+        SaplingNotePlaintext snp = SaplingNotePlaintext.tryNoteDecrypt(out, privKey);
         byte[] r = snp.getRcmbytes();
         String alpha = RustAPI.genr();
         Timber.d("addSpendS alpha=%s", alpha);
@@ -376,29 +382,29 @@ public class ZCashTransaction_zaddr {
 //        RustAPI rapi = new RustAPI(context);
 //        rapi.checkInit();
 
-//        byte[] spProof = RustAPI.spendProof(
-//                revHex(bytesToHex(privKey.getAk())),//+ //TODO: check reverse bytes
-//                revHex(bytesToHex(privKey.getNsk())),//+ //TODO: check reverse bytes
-//                bytesToHex(privKey.getD()),//+
-//                revHex(bytesToHex(r)),//+ //TODO: check reverse bytes
-//                alpha,//+
-//                v,//+
-//                revHex(anchor),//+
-//                mp.getAuthPathPrimitive(),//+
-//                mp.getIndexPrimitive()//+
-//        );
-        //TODO; check init before spendProof
         byte[] spProof = RustAPI.spendProof(
-                revHex(bytesToHex(newAk)),//+ //TODO: check reverse bytes
-                revHex(bytesToHex(newNsk)),//+ //TODO: check reverse bytes
-                bytesToHex(newD),//+
-                revHex(bytesToHex(r)),//+ //TODO: check reverse bytes
+                revHex(bytesToHex(privKey.getAk())),//+ //TODO: check reverse bytes
+                revHex(bytesToHex(privKey.getNsk())),//+ //TODO: check reverse bytes
+                bytesToHex(privKey.getD()),//+
+                (bytesToHex(r)),//+ //TODO: check reverse bytes
                 alpha,//+
                 v,//+
                 revHex(anchor),//+
                 mp.getAuthPathPrimitive(),//+
                 mp.getIndexPrimitive()//+
         );
+//        //TODO; check init before spendProof
+//        byte[] spProof = RustAPI.spendProof(
+//                revHex(bytesToHex(newAk)),//+ //TODO: check reverse bytes
+//                revHex(bytesToHex(newNsk)),//+ //TODO: check reverse bytes
+//                bytesToHex(newD),//+
+//                (bytesToHex(r)),//+ //TODO: check reverse bytes
+//                alpha,//+
+//                v,//+
+//                revHex(anchor),//+
+//                mp.getAuthPathPrimitive(),//+
+//                mp.getIndexPrimitive()//+
+//        );
         // cv, rk, zproof, nf
         Timber.d("addSpendS spProof=%s %d", Arrays.toString(spProof), spProof.length);
 
@@ -413,6 +419,7 @@ public class ZCashTransaction_zaddr {
         System.arraycopy(spProof, 64, zkproof, 0, 192);
         System.arraycopy(spProof, 64 + 192, nullifier, 0, 32);
 
+        Timber.d("addSpendS nf=%s, %s", in.getNf(), bytesToHex(nullifier));
         //cv + anchor + nullifier + rk + zkproof
 
 //        String nf = "8719a09298fffc28f042b81fd65faa04c179d85675217f16bd056643f4af794a"; //uint256

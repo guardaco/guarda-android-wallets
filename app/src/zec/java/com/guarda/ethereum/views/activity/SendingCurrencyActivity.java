@@ -39,6 +39,7 @@ import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.WrongNetworkException;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.IllegalFormatConversionException;
 
@@ -472,10 +473,14 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                             Timber.d("sendSapling onResponse " + r1);
                             if (r1.equals("ok")) {
                                 try {
-                                    String lastTxhex = Utils.bytesToHex(r2.getBytes());
+                                    byte[] bytes = r2.getBytes();
+                                    Timber.d("sendSapling bytes=%s %d", Arrays.toString(bytes), bytes.length);
+                                    String lastTxhex = Utils.bytesToHex(bytes);
                                     Timber.d("sendSapling lastTxhex=%s", lastTxhex);
 
                                 } catch (ZCashException e) {
+                                    closeProgress();
+                                    doToast(e.getMessage());
                                     Timber.e("sendSapling Cannot sign transaction");
                                 }
                             } else {
