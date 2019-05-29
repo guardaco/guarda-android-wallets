@@ -61,7 +61,7 @@ public final class CurrencyUtils {
             Log.d("psd", "CurrencyUtils.getBtcLikeError() - " + e.getMessage());
             return "Sending error.";
         }
-        if (!je.isJsonObject()) return "Sending error";
+        if (!je.isJsonObject()) return msg;
         String explain = je.getAsJsonObject().get("error").getAsJsonObject().get("message").getAsString();
         switch (explain) {
             case "66: insufficient priority":

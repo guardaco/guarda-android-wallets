@@ -478,6 +478,21 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                     String lastTxhex = Utils.bytesToHex(bytes);
                                     Timber.d("sendSapling lastTxhex=%s", lastTxhex);
 
+                                    BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
+                                        @Override
+                                        public void onSuccess(Object response) {
+                                            SendRawTxResponse res = (SendRawTxResponse) response;
+                                            Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
+                                            closeProgress();
+                                            showCongratsActivity();
+                                        }
+                                        @Override
+                                        public void onFailure(String msg) {
+                                            closeProgress();
+                                            doToast(CurrencyUtils.getBtcLikeError(msg));
+                                            Log.d("svcom", "failure - " + msg);
+                                        }
+                                    });
                                 } catch (ZCashException e) {
                                     closeProgress();
                                     doToast(e.getMessage());
