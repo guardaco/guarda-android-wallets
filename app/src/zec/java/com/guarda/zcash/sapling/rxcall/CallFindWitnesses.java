@@ -151,7 +151,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                                     revHex(bytesToHex(saplingKey.getNk())),
                                     revHex(bytesToHex(saplingKey.getOvk()))),
                             position);
-                    dbManager.getAppDb().getReceivedNotesDao().insertAll(new ReceivedNotesRoom(out.getCmu(), null, TypeConvert.bytesToLong(snp.vbytes), revHex(nf)));
+                    dbManager.getAppDb().getReceivedNotesDao().insertAll(new ReceivedNotesRoom(out.getCmu(), null, TypeConvert.bytesToLong(snp.vbytes), nf));
                     wtxs.put(out.getCmu(), iw);
 //                        FIXME: revhex or not?
                     wtxs.put(out.getCmu(), saplingTree.witness());
