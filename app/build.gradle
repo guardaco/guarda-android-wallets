@@ -54,6 +54,10 @@ android {
         }
     }
 
+    dexOptions {
+        javaMaxHeapSize "4G"
+    }
+
     flavorDimensions "tier"
 
     productFlavors {
@@ -248,7 +252,8 @@ protobuf {
     protoc { artifact = 'com.google.protobuf:protoc:3.6.1' }
     plugins {
         javalite { artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0" }
-        grpc { artifact = 'io.grpc:protoc-gen-grpc-java:1.18.0'
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.18.0'
         }
     }
     generateProtoTasks {
@@ -256,7 +261,8 @@ protobuf {
             task.plugins {
                 javalite {}
                 grpc { // Options added to --grpc_out
-                    option 'lite' }
+                    option 'lite'
+                }
             }
         }
     }
@@ -338,7 +344,7 @@ dependencies {
     dgbImplementation files('libs/bitcoinj-core-0.15-SNAPSHOT-bundled.jar')
     dgbImplementation 'com.google.guava:guava:23.3-android'
     //zec
-    zecImplementation ('org.bitcoinj:bitcoinj-core:0.14.5') {
+    zecImplementation('org.bitcoinj:bitcoinj-core:0.14.5') {
         exclude group: 'com.google.protobuf', module: 'protobuf-java'
     }
     zecImplementation 'com.madgag.spongycastle:core:1.58.0.0'
