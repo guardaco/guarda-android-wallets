@@ -12,6 +12,8 @@ import org.bitcoinj.core.Coin;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * Hold transactions received from etherscan.io and raw transactions
  * from {@link com.guarda.ethereum.views.activity.SendingCurrencyActivity}
@@ -192,12 +194,17 @@ public class TransactionsManager {
 
     private long getOutsSumNew(ZecTxResponse item, String ownAddress) {
         long res = 0;
-        for (Vout out : item.getVout()) {
-            // miner's tx has out without scriptPubKey.address
-            if (out.getScriptPubKey().getAddresses() == null) continue;
-            if (!out.getScriptPubKey().getAddresses().get(0).equals(ownAddress)) {
-                res += convertStrCoinToSatoshi(out.getValue());
+        try {
+            for (Vout out : item.getVout()) {
+                // miner's tx has out without scriptPubKey.address
+                if (out.getScriptPubKey().getAddresses() == null) continue;
+                if (!out.getScriptPubKey().getAddresses().get(0).equals(ownAddress)) {
+                    res += convertStrCoinToSatoshi(out.getValue());
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Timber.d("getOutsSumNew e=%s", e.getMessage());
         }
         return res;
     }

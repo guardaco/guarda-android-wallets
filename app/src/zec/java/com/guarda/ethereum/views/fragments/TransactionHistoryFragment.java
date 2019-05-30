@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -247,7 +248,6 @@ public class TransactionHistoryFragment extends BaseFragment {
             startClockwiseRotation();
             loadBalance();
             loadTransactions();
-            askRating();
         } else {
             if (getActivity() != null) {
                 ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_network), R.drawable.err_network);
@@ -276,7 +276,13 @@ public class TransactionHistoryFragment extends BaseFragment {
                 ZecTxListResponse txListResponse = (ZecTxListResponse) response;
                 List<ZecTxResponse> txList = txListResponse.getTxs();
                 if (txList == null) return;
-                List<TransactionItem> txItems = transactionsManager.transformTxToFriendlyNew(txList, walletManager.getWalletFriendlyAddress());
+                List<TransactionItem> txItems = new ArrayList<>();
+                try {
+                    txItems = transactionsManager.transformTxToFriendlyNew(txList, walletManager.getWalletFriendlyAddress());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Timber.d("loas txs e=%s", e.getMessage());
+                }
                 transactionsManager.setTransactionsList(txItems);
                 showTransactions();
                 loaderAnimation.cancel();
