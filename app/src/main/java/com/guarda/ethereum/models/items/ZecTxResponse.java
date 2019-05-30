@@ -18,13 +18,13 @@ public class ZecTxResponse {
     private Integer locktime;
     @SerializedName("vin")
     @Expose
-    private List<Vin> vin = null;
+    private List<Vin> vin;
     @SerializedName("vout")
     @Expose
-    private List<Vout> vout = null;
+    private List<Vout> vout;
     @SerializedName("vjoinsplit")
     @Expose
-    private List<Vjoinsplit> vjoinsplit = null;
+    private List<Vjoinsplit> vjoinsplit;
     @SerializedName("blockhash")
     @Expose
     private String blockhash;

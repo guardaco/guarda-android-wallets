@@ -15,7 +15,7 @@ public class ScriptPubKey {
     private String asm;
     @SerializedName("addresses")
     @Expose
-    private List<String> addresses = null;
+    private List<String> addresses;
     @SerializedName("type")
     @Expose
     private String type;

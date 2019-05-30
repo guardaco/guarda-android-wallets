@@ -263,6 +263,10 @@ public class ApiMethods {
         return getBaseApi(DgbExplorer.DGB_EXPLORER_BASE_URL).create(DgbApiNew.class);
     }
 
+    static DgbApiNew createZecInsightApiNew() {
+        return getBaseApi(ZecExplorer.ZEC_EXPLORER_API).create(DgbApiNew.class);
+    }
+
     static SbtcApiNew createSbtcApiNew() {
         return getBaseApi(SbtcExplorer.SBTC_EXPLORER_BASE_URL).create(SbtcApiNew.class);
     }

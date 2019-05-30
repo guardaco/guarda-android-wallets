@@ -199,6 +199,12 @@ public class RequestorBtc {
         ApiMethods.makeRequest(call, listener);
     }
 
+    public static void broadcastRawTxZexNew(String hexTx, ApiMethods.RequestListener listener) {
+        Call call = ApiMethods.createZecInsightApiNew().broadcastRawTx(hexTx);
+        Log.d("Request", "path " + call.request());
+        ApiMethods.makeRequest(call, listener);
+    }
+
     public static void getUTXOListKmdNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createKmdApi().getUTXOByAddress(address);
         Log.d("Request", "path " + call.request());

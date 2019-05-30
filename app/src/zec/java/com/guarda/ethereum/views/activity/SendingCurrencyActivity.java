@@ -25,6 +25,7 @@ import com.guarda.ethereum.models.items.SendRawTxResponse;
 import com.guarda.ethereum.models.items.TxFeeResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
+import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.utils.CurrencyUtils;
 import com.guarda.ethereum.utils.DigitsInputFilter;
 import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
@@ -478,7 +479,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                     String lastTxhex = Utils.bytesToHex(bytes);
                                     Timber.d("sendSapling lastTxhex=%s", lastTxhex);
 
-                                    BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
+                                    RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
                                         @Override
                                         public void onSuccess(Object response) {
                                             SendRawTxResponse res = (SendRawTxResponse) response;
@@ -486,6 +487,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                             closeProgress();
                                             showCongratsActivity();
                                         }
+
                                         @Override
                                         public void onFailure(String msg) {
                                             closeProgress();
@@ -493,6 +495,22 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                             Log.d("svcom", "failure - " + msg);
                                         }
                                     });
+
+//                                    BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
+//                                        @Override
+//                                        public void onSuccess(Object response) {
+//                                            SendRawTxResponse res = (SendRawTxResponse) response;
+//                                            Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
+//                                            closeProgress();
+//                                            showCongratsActivity();
+//                                        }
+//                                        @Override
+//                                        public void onFailure(String msg) {
+//                                            closeProgress();
+//                                            doToast(CurrencyUtils.getBtcLikeError(msg));
+//                                            Log.d("svcom", "failure - " + msg);
+//                                        }
+//                                    });
                                 } catch (ZCashException e) {
                                     closeProgress();
                                     doToast(e.getMessage());
@@ -505,6 +523,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                             }
                         });
         } catch (ZCashException e) {
+            doToast("Can not send the transaction: " + e.getMessage());
             Timber.e("sendSapling createTx ZCashException=" + e.getMessage());
         }
     }
