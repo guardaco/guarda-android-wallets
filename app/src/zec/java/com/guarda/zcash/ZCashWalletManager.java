@@ -227,6 +227,18 @@ public class ZCashWalletManager {
                                       final DbManager dbManager,
                                       final WalletCallback<String, ZCashTransaction_zaddr> onComplete) throws ZCashException {
 
+    if (amount < 0) {
+      throw new ZCashException("Cannot send negative amount of coins.");
+    }
+
+    if (fee < 0) {
+      throw new ZCashException("Cannot create transaction with negative fee.");
+    }
+
+    if (amount + fee == 0) {
+      throw new ZCashException("Transaction with amount + fee = 0 would not do anything.");
+    }
+
     new CreateTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, dbManager, onComplete).run();
   }
 
