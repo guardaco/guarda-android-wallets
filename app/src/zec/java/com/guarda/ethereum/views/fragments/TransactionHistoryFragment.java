@@ -107,6 +107,10 @@ public class TransactionHistoryFragment extends BaseFragment {
     NestedScrollView nsvMainScrollLayout;
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.rl_sync_status)
+    RelativeLayout rl_sync_status;
+    @BindView(R.id.tv_syncing_status)
+    TextView tv_syncing_status;
 
     private static final String BLANK_BALANCE = "...";
     private boolean isVisible = true;
@@ -148,6 +152,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         setUSDBalance("...");
 
         fabMenu.setClosedOnTouchOutside(true);
+        rl_sync_status.setVisibility(View.VISIBLE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             initFabHider();
@@ -160,6 +165,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             swipeRefreshLayout.setRefreshing(false);
             showBalance(false);
+            setSyncStatus();
         });
 
         String firstAction = null;
@@ -199,7 +205,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         super.onResume();
         if (isWalletExist()) {
             showBalance(true);
-
+            setSyncStatus();
             if (isSaplingWalletExist()) syncManager.startSync();
         }
     }
@@ -238,6 +244,10 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     private boolean isSaplingWalletExist() {
         return walletManager.getSaplingCustomFullKey() != null;
+    }
+
+    private void setSyncStatus() {
+        tv_syncing_status.setText(syncManager.isSyncInProgress() ? "Syncing..." : "Synced");
     }
 
     private void showBalance(boolean withCache) {

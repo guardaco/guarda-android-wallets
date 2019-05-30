@@ -35,10 +35,6 @@ public class SyncManager {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private long endB = 437489;
 
-    Map<String, WalletTx> mapWallet = new HashMap<>();
-    private MerklePath mp;
-    private String exRoot;
-
     @Inject
     DbManager dbManager;
     @Inject
@@ -62,6 +58,10 @@ public class SyncManager {
         inProgress = false;
 
         compositeDisposable.dispose();
+    }
+
+    public boolean isSyncInProgress() {
+        return inProgress;
     }
 
     private void getBlocks() {
@@ -107,18 +107,4 @@ public class SyncManager {
                 }));
     }
 
-    private WalletTx getFilledWalletTx(SaplingOutPoint op) {
-        WalletTx w = new WalletTx(op, new SaplingNoteData());
-        List<TxOutRoom> outs = dbManager.getAppDb().getTxDao().getAllTxOutputs(op.hashIn);
-        w.setOutputDescs(getListOutDescs(outs));
-        return w;
-    }
-
-    private List<OutputDescResp> getListOutDescs(List<TxOutRoom> outs) {
-        List<OutputDescResp> list = new ArrayList<>();
-        for (TxOutRoom o : outs) {
-            list.add(new OutputDescResp(o.getCmu(), o.getEpk(), o.getCiphertext()));
-        }
-        return list;
-    }
 }
