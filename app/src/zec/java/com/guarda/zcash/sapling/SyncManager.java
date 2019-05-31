@@ -1,5 +1,7 @@
 package com.guarda.zcash.sapling;
 
+import android.content.Context;
+
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.zcash.sapling.api.ProtoApi;
@@ -7,6 +9,7 @@ import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.rxcall.CallBlockRange;
 import com.guarda.zcash.sapling.rxcall.CallFindWitnesses;
 import com.guarda.zcash.sapling.rxcall.CallLastBlock;
+import com.guarda.zcash.sapling.rxcall.CallSaplingParamsInit;
 
 import javax.inject.Inject;
 
@@ -21,6 +24,7 @@ import timber.log.Timber;
 public class SyncManager {
 
     private boolean inProgress;
+    private boolean paramsInited;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private long endB = 437489;
 
@@ -30,17 +34,24 @@ public class SyncManager {
     ProtoApi protoApi;
     @Inject
     WalletManager walletManager;
+    @Inject
+    Context context;
 
     public SyncManager() {
         GuardaApp.getAppComponent().inject(this);
     }
 
     public void startSync() {
+        Timber.d("startSync inProgress=%b", inProgress);
         if (inProgress) return;
 
         inProgress = true;
 
-        getBlocks();
+        if (paramsInited) {
+            getBlocks();
+        } else {
+            saplingParamsInit();
+        }
     }
 
     public void stopSync() {
@@ -53,6 +64,17 @@ public class SyncManager {
         return inProgress;
     }
 
+    private void saplingParamsInit() {
+        compositeDisposable.add(Observable
+                .fromCallable(new CallSaplingParamsInit(context, walletManager))
+                .subscribeOn(Schedulers.io())
+                .subscribe((latest) -> {
+                    Timber.d("saplingParamsInit done=%s", latest);
+                    paramsInited = true;
+                    getBlocks();
+                }, (e) -> stopAndLogError("saplingParamsInit", e)));
+    }
+
     private void getBlocks() {
         compositeDisposable.add(Observable
                 .fromCallable(new CallLastBlock(dbManager, protoApi))
@@ -62,10 +84,7 @@ public class SyncManager {
                     protoApi.pageNum = latest.getLastFromDb();
                     endB = latest.getLatest();
                     blockRangeToDb();
-                }, (e) -> {
-                    stopSync();
-                    Timber.d("getBlocks e=%s", e.getMessage());
-                }));
+                }, (e) -> stopAndLogError("getBlocks", e)));
     }
 
     private void blockRangeToDb() {
@@ -86,10 +105,7 @@ public class SyncManager {
                         //find wintesses
                         getWintesses();
                     }
-                }, (e) -> {
-                    stopSync();
-                    Timber.d("blockRangeToDb e=%s", e.getMessage());
-                }));
+                }, (e) -> stopAndLogError("blockRangeToDb", e)));
     }
 
     private void getWintesses() {
@@ -99,10 +115,12 @@ public class SyncManager {
                 .subscribe((res) -> {
                     Timber.d("getWintesses finished=%s", res);
                     stopSync();
-                }, (e) -> {
-                    stopSync();
-                    Timber.d("getWintesses e=%s", e.getMessage());
-                }));
+                }, (e) -> stopAndLogError("getWintesses", e)));
+    }
+
+    private void stopAndLogError(String method, Throwable t) {
+        stopSync();
+        Timber.d("%s e=%s", method, t.getMessage());
     }
 
 }

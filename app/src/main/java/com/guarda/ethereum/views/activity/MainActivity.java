@@ -1,14 +1,11 @@
 package com.guarda.ethereum.views.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -32,7 +29,6 @@ import android.widget.TextView;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.customviews.RateDialog;
 import com.guarda.ethereum.customviews.RobotoLightTypefaceSpan;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.CurrencyListHolder;
@@ -48,24 +44,20 @@ import com.guarda.ethereum.views.fragments.DepositFragment;
 import com.guarda.ethereum.views.fragments.DepositFragment_decent;
 import com.guarda.ethereum.views.fragments.DisabledFragment;
 import com.guarda.ethereum.views.fragments.ExchangeFragment;
-import com.guarda.ethereum.views.fragments.PurchaseCoinsFragment;
-import com.guarda.ethereum.views.fragments.PurchaseFragment;
 import com.guarda.ethereum.views.fragments.PurchaseServiceFragment;
 import com.guarda.ethereum.views.fragments.SettingsFragment;
 import com.guarda.ethereum.views.fragments.TransactionHistoryFragment;
 import com.guarda.ethereum.views.fragments.UserWalletFragment;
 import com.guarda.ethereum.views.fragments.WithdrawFragment;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
+import com.guarda.zcash.sapling.SyncManager;
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
-import butterknife.OnClick;
-import de.adorsys.android.securestoragelibrary.SecureStorageException;
 
 import static com.guarda.ethereum.models.constants.Const.CHANGELLY_TIMEOUT;
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
@@ -93,6 +85,8 @@ public class MainActivity extends TrackOnStopActivity {
     SharedManager sharedManager;
     @Inject
     CurrencyListHolder currentCrypto;
+    @Inject
+    SyncManager syncManager;
 
     String firstAction = CREATE_WALLET;
     String key;
@@ -378,6 +372,7 @@ public class MainActivity extends TrackOnStopActivity {
                 sharedManager.setLastSyncedBlock("");
                 sharedManager.setIsShowBackupAlert(true);
                 sharedManager.setIsPinCodeEnable(false);
+                syncManager.stopSync();
                 finish();
             }
         });

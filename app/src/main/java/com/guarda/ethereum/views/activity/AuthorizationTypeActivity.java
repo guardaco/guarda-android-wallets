@@ -61,7 +61,7 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
         walletManager.clearWallet();
         sharedManager.setIsShowBackupAlert(true);
 
-        saplingParamsInit();
+        syncManager.startSync();
     }
 
     @Override
@@ -148,16 +148,6 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
                 }
             });
         }
-    }
-
-    private void saplingParamsInit() {
-        compositeDisposable.add(Observable
-                .fromCallable(new CallSaplingParamsInit(this, walletManager))
-                .subscribeOn(Schedulers.io())
-                .subscribe((latest) -> {
-                    Timber.d("CallSaplingParamsInit done=%s", latest);
-                    syncManager.startSync();
-                }));
     }
 
     private void isRootDevice() {

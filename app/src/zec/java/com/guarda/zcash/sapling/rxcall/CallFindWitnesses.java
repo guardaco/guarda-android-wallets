@@ -153,7 +153,6 @@ public class CallFindWitnesses implements Callable<Boolean> {
                             position);
                     dbManager.getAppDb().getReceivedNotesDao().insertAll(new ReceivedNotesRoom(out.getCmu(), null, TypeConvert.bytesToLong(snp.vbytes), nf));
                     wtxs.put(out.getCmu(), iw);
-//                        FIXME: revhex or not?
                     wtxs.put(out.getCmu(), saplingTree.witness());
                 }
             }

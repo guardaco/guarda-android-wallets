@@ -16,7 +16,7 @@ import timber.log.Timber;
 
 public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
 
-    public final static long FIRST_BLOCK_TO_SYNC = 422044; //block for current wallet, all users create their new wallets after the height
+    public final static long FIRST_BLOCK_TO_SYNC = 490131; //block for current wallet, all users create their new wallets after the height
 
     private DbManager dbManager;
     private ProtoApi protoApi;
@@ -28,13 +28,6 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
 
     @Override
     public BlockSyncRange call() throws Exception {
-        if (BuildConfig.DEBUG) {
-            SaplingWitnessesRoom sr = dbManager.getAppDb().getSaplingWitnessesDao().getWitness("079a823ad278d33e16990ca5397f2770ec91a90914496a7a2844f8b539e833b7");
-            if (sr != null) {
-                IncrementalWitness iw = IncrementalWitness.fromJson(sr.getWitness());
-                Timber.d("root=%s", iw.root());
-            }
-        }
         long latestFromServer = protoApi.getLastBlock();
         Timber.d("latestFromServer = %d", latestFromServer);
         BlockRoom blockRoom = dbManager.getAppDb().getBlockDao().getLatestBlock();
