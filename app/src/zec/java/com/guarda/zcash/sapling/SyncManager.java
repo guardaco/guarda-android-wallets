@@ -4,20 +4,9 @@ import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.db.model.TxOutRoom;
-import com.guarda.zcash.sapling.model.OutputDescResp;
-import com.guarda.zcash.sapling.model.WalletTx;
-import com.guarda.zcash.sapling.note.SaplingNoteData;
-import com.guarda.zcash.sapling.note.SaplingOutPoint;
 import com.guarda.zcash.sapling.rxcall.CallBlockRange;
 import com.guarda.zcash.sapling.rxcall.CallFindWitnesses;
 import com.guarda.zcash.sapling.rxcall.CallLastBlock;
-import com.guarda.zcash.sapling.tree.MerklePath;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -73,6 +62,9 @@ public class SyncManager {
                     protoApi.pageNum = latest.getLastFromDb();
                     endB = latest.getLatest();
                     blockRangeToDb();
+                }, (e) -> {
+                    stopSync();
+                    Timber.d("getBlocks e=%s", e.getMessage());
                 }));
     }
 
@@ -94,6 +86,9 @@ public class SyncManager {
                         //find wintesses
                         getWintesses();
                     }
+                }, (e) -> {
+                    stopSync();
+                    Timber.d("blockRangeToDb e=%s", e.getMessage());
                 }));
     }
 
@@ -104,6 +99,9 @@ public class SyncManager {
                 .subscribe((res) -> {
                     Timber.d("getWintesses finished=%s", res);
                     stopSync();
+                }, (e) -> {
+                    stopSync();
+                    Timber.d("getWintesses e=%s", e.getMessage());
                 }));
     }
 
