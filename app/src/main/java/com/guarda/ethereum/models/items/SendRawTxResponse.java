@@ -14,6 +14,10 @@ public class SendRawTxResponse {
     @Expose
     private String error;
 
+    @SerializedName("txid")
+    @Expose
+    private String txid;
+
 
     public String getHashResult() {
         return hashResult;
@@ -21,5 +25,9 @@ public class SendRawTxResponse {
 
     public String getError() {
         return error;
+    }
+
+    public String getTxid() {
+        return txid;
     }
 }

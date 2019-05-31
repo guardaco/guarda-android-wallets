@@ -23,7 +23,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-interface DgbApiNew {
+interface InsightApiNew {
     @GET("addr/{address}?noTxList=1")
     Call<BtgBalanceResponse> getBalance(@Path("address") String address);
 

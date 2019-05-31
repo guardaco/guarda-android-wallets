@@ -259,12 +259,12 @@ public class ApiMethods {
         return getBaseApi(BtgExplorer.BTG_EXPLORER_BASE_URL).create(BtgApiNew.class);
     }
 
-    static DgbApiNew createDgbApiNew() {
-        return getBaseApi(DgbExplorer.DGB_EXPLORER_BASE_URL).create(DgbApiNew.class);
+    static InsightApiNew createDgbApiNew() {
+        return getBaseApi(DgbExplorer.DGB_EXPLORER_BASE_URL).create(InsightApiNew.class);
     }
 
-    static DgbApiNew createZecInsightApiNew() {
-        return getBaseApi(ZecExplorer.ZEC_EXPLORER_API).create(DgbApiNew.class);
+    static InsightApiNew createZecInsightApiNew() {
+        return getBaseApi(ZecExplorer.ZEC_EXPLORER_API).create(InsightApiNew.class);
     }
 
     static SbtcApiNew createSbtcApiNew() {
