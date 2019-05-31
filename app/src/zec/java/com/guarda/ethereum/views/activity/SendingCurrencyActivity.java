@@ -483,7 +483,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                         @Override
                                         public void onSuccess(Object response) {
                                             SendRawTxResponse res = (SendRawTxResponse) response;
-                                            Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
+                                            Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
                                             closeProgress();
                                             showCongratsActivity();
                                         }
@@ -492,7 +492,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                         public void onFailure(String msg) {
                                             closeProgress();
                                             doToast(CurrencyUtils.getBtcLikeError(msg));
-                                            Log.d("svcom", "failure - " + msg);
+                                            Timber.d("broadcastRawTxZexNew e=%s", msg);
                                         }
                                     });
 
