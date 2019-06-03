@@ -1,14 +1,9 @@
 package com.guarda.zcash.sapling.rxcall;
 
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.db.model.BlockRoom;
-import com.guarda.zcash.sapling.db.model.SaplingWitnessesRoom;
-import com.guarda.zcash.sapling.tree.IncrementalWitness;
-import com.guarda.zcash.sapling.tree.SaplingMerkleTree;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 import timber.log.Timber;

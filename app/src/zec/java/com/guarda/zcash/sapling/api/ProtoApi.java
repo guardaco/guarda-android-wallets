@@ -73,7 +73,7 @@ public class ProtoApi {
             while (l.hasNext()) {
                 cb = l.next();
                 if (cb.getVtxCount() == 0) continue;
-                Timber.d("checkBlocks block height=" + cb.getHeight());
+                Timber.d("checkBlocks block height=%d", cb.getHeight());
                 dbManager.addBlockWithTxs(cb);
             }
         } catch (Exception e) {

@@ -81,13 +81,10 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
     public void onBindViewHolder(TransHistoryItemHolder holder, final int position) {
         final TransactionItem item = getTxByPosition(position);
         Long txSum = item.getValue();
-        holder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.rootView.setOnClickListener((v) -> {
                 if (listener != null) {
                     listener.OnItemClick(position);
                 }
-            }
         });
 
         if (item.getConfirmations() < MIN_CONFIRMATIONS) {
@@ -122,38 +119,8 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         }
     }
 
-
-//    private void enableLoader(TransHistoryItemHolder holder) {
-//        holder.ivLoader.setVisibility(View.VISIBLE);
-//        holder.ivLoaderOuter.setVisibility(View.VISIBLE);
-//        holder.tvDate.setVisibility(View.INVISIBLE);
-//        holder.ivRetry.setVisibility(View.INVISIBLE);
-//        startClockwiseRotation(holder.ivLoader);
-//        startCounterclockwiseRotation(holder.ivLoaderOuter);
-//    }
-//
-//    private void disableLoader(TransHistoryItemHolder holder) {
-//        holder.ivLoader.setVisibility(View.INVISIBLE);
-//        holder.ivLoaderOuter.setVisibility(View.INVISIBLE);
-//        holder.tvDate.setVisibility(View.VISIBLE);
-//        holder.ivRetry.setVisibility(View.INVISIBLE);
-//    }
-
-
-    private void startClockwiseRotation(ImageView ivLoader) {
-        loaderAnimation = ObjectAnimator.ofFloat(ivLoader, "rotation", 0.0f, 360f);
-        loaderAnimation.setDuration(1500);
-        loaderAnimation.setRepeatCount(ObjectAnimator.INFINITE);
-        loaderAnimation.setInterpolator(new LinearInterpolator());
-        loaderAnimation.start();
-    }
-
-    private void startCounterclockwiseRotation(ImageView ivLoader) {
-        loaderAnimation = ObjectAnimator.ofFloat(ivLoader, "rotation", 360f, 0.0f);
-        loaderAnimation.setDuration(1500);
-        loaderAnimation.setRepeatCount(ObjectAnimator.INFINITE);
-        loaderAnimation.setInterpolator(new LinearInterpolator());
-        loaderAnimation.start();
+    public void updateList() {
+        this.transList = transactionsManager.getTransactionsList();
     }
 
     private boolean isDebit(String ourAddress, String toAddress) {
@@ -185,13 +152,6 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         TextView tvTransactionSum;
         @BindView(R.id.tv_tx_status)
         TextView tvTxStatus;
-//        @BindView(R.id.iv_loader)
-//        ImageView ivLoader;
-//        @BindView(R.id.ic_outer_loader)
-//        ImageView ivLoaderOuter;
-//        @BindView(R.id.iv_retry)
-//        ImageView ivRetry;
-
 
         TransHistoryItemHolder(View itemView) {
             super(itemView);

@@ -5,11 +5,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.customviews.RateDialog;
+import com.guarda.ethereum.lifecycle.HistoryViewModel;
 import com.guarda.ethereum.managers.CoinmarketcapHelper;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.NetworkManager;
@@ -117,6 +119,8 @@ public class TransactionHistoryFragment extends BaseFragment {
     private boolean stronglyHistory = false;
     private ObjectAnimator loaderAnimation;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private HistoryViewModel historyViewModel;
+    private TransHistoryAdapter adapter;
 
     @Inject
     WalletManager walletManager;
@@ -144,7 +148,13 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager);
+        historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
+        subscribeUi();
+
         stronglyHistory = true;
+
+        initTransactionHistoryRecycler();
 
         nsvMainScrollLayout.smoothScrollTo(0, 0);
         setCryptoBalance(BLANK_BALANCE);
@@ -212,17 +222,16 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     private void createWallet(String passphrase) {
         showProgress(getStringIfAdded(R.string.generating_wallet));
-        walletManager.createWallet(passphrase, new WalletCreationCallback() {
-            @Override
-            public void onWalletCreated() {
+        walletManager.createWallet(passphrase, () -> {
                 closeProgress();
                 openUserWalletFragment();
-            }
         });
     }
 
     private void showTransactions() {
-        initTransactionHistoryRecycler();
+        adapter.updateList();
+        adapter.notifyDataSetChanged();
+
         if (transactionsManager.getTransactionsList().size() == 0) {
             GuardaApp.isTransactionsEmpty = true;
             openUserWalletFragment();
@@ -257,7 +266,7 @@ public class TransactionHistoryFragment extends BaseFragment {
 
             startClockwiseRotation();
             loadBalance();
-            loadTransactions();
+            historyViewModel.loadTransactions();
         } else {
             if (getActivity() != null) {
                 ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_network), R.drawable.err_network);
@@ -274,38 +283,9 @@ public class TransactionHistoryFragment extends BaseFragment {
             ArrayList<TransactionItem> txList = addrTxsMap.get(walletManager.getWalletFriendlyAddress());
             if (txList != null) {
                 transactionsManager.setTransactionsList(txList);
-                initTransactionHistoryRecycler();
+                adapter.notifyDataSetChanged();
             }
         }
-    }
-
-    private void loadTransactions() {
-        RequestorBtc.getTransactionsZecNew(walletManager.getWalletFriendlyAddress(), new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                ZecTxListResponse txListResponse = (ZecTxListResponse) response;
-                List<ZecTxResponse> txList = txListResponse.getTxs();
-                if (txList == null) return;
-                List<TransactionItem> txItems = new ArrayList<>();
-                try {
-                    txItems = transactionsManager.transformTxToFriendlyNew(txList, walletManager.getWalletFriendlyAddress());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Timber.d("loas txs e=%s", e.getMessage());
-                }
-                transactionsManager.setTransactionsList(txItems);
-                showTransactions();
-                loaderAnimation.cancel();
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                loaderAnimation.cancel();
-                if (getActivity() != null) {
-                    ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_get_history), R.drawable.err_history);
-                }
-            }
-        });
     }
 
     private void loadBalance() {
@@ -414,25 +394,20 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void initTransactionHistoryRecycler() {
-        TransHistoryAdapter adapter = new TransHistoryAdapter();
-        new Handler();
-        adapter.setItemClickListener(new TransHistoryAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvTransactionsList.setLayoutManager(layoutManager);
+
+        adapter = new TransHistoryAdapter();
+        adapter.setItemClickListener((position) -> {
                 Intent detailsIntent = new Intent(getActivity(), TransactionDetailsActivity.class);
                 detailsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 detailsIntent.putExtra(EXTRA_TRANSACTION_POSITION, position);
                 startActivity(detailsIntent);
                 getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.no_slide);
-            }
         });
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        rvTransactionsList.setLayoutManager(layoutManager);
         rvTransactionsList.setAdapter(adapter);
-
     }
 
     private void setCryptoBalance(String balance) {
@@ -477,6 +452,22 @@ public class TransactionHistoryFragment extends BaseFragment {
         showBalance(false);
     }
 
+    private void subscribeUi() {
+        historyViewModel.getShowHistory().observe(this, (v) -> {
+            if (v) {
+                showTransactions();
+                loaderAnimation.cancel();
+            }
+        });
+
+        historyViewModel.getShowTxError().observe(this, (v) -> {
+            if (v) {
+                loaderAnimation.cancel();
+                ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_get_history), R.drawable.err_history);
+            }
+        });
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -510,42 +501,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         addrTxsMap.put(walletManager.getWalletFriendlyAddress(), (ArrayList<TransactionItem>) transactionsManager.getTransactionsList());
         String jsonToPref = gson.toJson(addrTxsMap);
         sharedManager.setTxsCache(jsonToPref);
-    }
-
-    private void askRating() {
-        if (!BuildConfig.DEBUG) {
-            if (!sharedManager.getIsAskRate() || transactionsManager.getTransactionsList().size() < 3) {
-                return;
-            }
-        }
-
-        int nextShowRate = sharedManager.getNextShowRate();
-        int nowCount = 0;
-        for (TransactionItem tr : transactionsManager.getTransactionsList()) {
-            if (tr.getConfirmations() >= TransHistoryAdapter.MIN_CONFIRMATIONS) {
-                nowCount++;
-            }
-        }
-
-        if (nextShowRate == 0) {
-            sharedManager.setNextShowRate(nowCount + 3);
-            return;
-        } else if (nowCount >= nextShowRate) {
-            if (sharedManager.getIsWaitFourTr()) {
-                showRateDialog(nowCount + 4);
-                sharedManager.setIsWaitFourTr(false);
-            } else {
-                showRateDialog(nowCount + 7);
-            }
-        }
-    }
-
-    private void showRateDialog(int inc) {
-        if (isAdded()) {
-            RateDialog rateDialog = new RateDialog();
-            rateDialog.show(getActivity().getFragmentManager(), "RateDialog");
-            sharedManager.setNextShowRate(inc);
-        }
     }
 
     private void initRotation(ImageView ivLoader) {
