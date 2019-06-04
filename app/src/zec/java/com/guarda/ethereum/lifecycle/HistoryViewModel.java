@@ -6,11 +6,15 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
+import com.guarda.ethereum.models.items.TransactionItem;
 import com.guarda.ethereum.models.items.ZecTxListResponse;
 import com.guarda.ethereum.models.items.ZecTxResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.rxcall.CallDbFillHistory;
+import com.guarda.ethereum.rxcall.CallNotesFromDb;
+import com.guarda.ethereum.rxcall.CallUpdateFromDbHistory;
+import com.guarda.ethereum.rxcall.CallUpdateTxDetails;
 import com.guarda.zcash.sapling.db.DbManager;
 
 import java.util.List;
@@ -26,10 +30,13 @@ public class HistoryViewModel extends ViewModel {
     private final WalletManager walletManager;
     private final TransactionsManager transactionsManager;
     private final DbManager dbManager;
+    public final static int INPUTS_HASHES = 0;
+    public final static int OUTPUTS_HASHES = 1;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private MutableLiveData<Boolean> showHistory = new MutableLiveData<>();
     private MutableLiveData<Boolean> showTxError = new MutableLiveData<>();
+    private MutableLiveData<List<TransactionItem>> showActualTxs = new MutableLiveData<>();
 
     public HistoryViewModel(WalletManager walletManager, TransactionsManager transactionsManager, DbManager dbManager) {
         this.walletManager = walletManager;
@@ -52,7 +59,10 @@ public class HistoryViewModel extends ViewModel {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe((value) -> {
-                            if (value) showHistory.setValue(true);
+                            if (value) {
+                                showHistory.setValue(true);
+                                getAndUpdateSaplingTx();
+                            }
                             Timber.d("CallDbFillHistory value=%b", value);
                         }));
             }
@@ -62,6 +72,73 @@ public class HistoryViewModel extends ViewModel {
                 showTxError.setValue(true);
             }
         });
+    }
+
+    public void getAndUpdateSaplingTx() {
+        //hashes from shielded inputs
+        compositeDisposable.add(Observable
+                .fromCallable(new CallNotesFromDb(dbManager, INPUTS_HASHES))
+                .subscribeOn(Schedulers.io())
+                .subscribe((value) -> {
+                    Timber.d("CallDbFillHistory value size=%d", value.size());
+                    if (value.isEmpty()) return;
+
+                    for (String hash : value) {
+                        updateFromInsight(hash);
+                    }
+                }));
+        //hashes from shielded outputs
+        compositeDisposable.add(Observable
+                .fromCallable(new CallNotesFromDb(dbManager, OUTPUTS_HASHES))
+                .subscribeOn(Schedulers.io())
+                .subscribe((value) -> {
+                    Timber.d("CallDbFillHistory value size=%d", value.size());
+                    if (value.isEmpty()) return;
+
+                    for (String hash : value) {
+                        updateFromInsight(hash);
+                    }
+                }));
+    }
+
+    private void updateFromInsight(String hash) {
+        RequestorBtc.getOneTx(hash, new ApiMethods.RequestListener() {
+            @Override
+            public void onSuccess(Object response) {
+                ZecTxResponse txResponse = (ZecTxResponse) response;
+                if (txResponse == null) {
+                    Timber.e("getOneTx tx == null");
+                    return;
+                }
+                compositeDisposable.add(Observable
+                        .fromCallable(new CallUpdateTxDetails(dbManager, txResponse))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe((value) -> {
+                            if (value) getTxsFromDb();
+                            Timber.d("CallDbFillHistory value=%b", value);
+                        }));
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                Timber.e("getOneTx e=%s", msg);
+            }
+        });
+    }
+
+    public void getTxsFromDb() {
+        compositeDisposable.add(Observable
+                .fromCallable(new CallUpdateFromDbHistory(dbManager))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((list) -> {
+                    Timber.d("CallUpdateFromDbHistory list size=%d", list.size());
+
+                    if (list.isEmpty()) return;
+                    transactionsManager.setTransactionsList(list);
+                    showActualTxs.setValue(list);
+                }));
     }
 
     @Override
@@ -94,5 +171,9 @@ public class HistoryViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getShowTxError() {
         return showTxError;
+    }
+
+    public MutableLiveData<List<TransactionItem>> getShowActualTxs() {
+        return showActualTxs;
     }
 }

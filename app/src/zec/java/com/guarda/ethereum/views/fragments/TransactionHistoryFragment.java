@@ -5,7 +5,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -26,10 +25,8 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.customviews.RateDialog;
 import com.guarda.ethereum.lifecycle.HistoryViewModel;
 import com.guarda.ethereum.managers.CoinmarketcapHelper;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
@@ -44,11 +41,8 @@ import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.BtgBalanceResponse;
 import com.guarda.ethereum.models.items.RespExch;
 import com.guarda.ethereum.models.items.TransactionItem;
-import com.guarda.ethereum.models.items.ZecTxListResponse;
-import com.guarda.ethereum.models.items.ZecTxResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
-import com.guarda.ethereum.rxcall.CallUpdateFromDbHistory;
 import com.guarda.ethereum.views.activity.MainActivity;
 import com.guarda.ethereum.views.activity.TransactionDetailsActivity;
 import com.guarda.ethereum.views.adapters.TransHistoryAdapter;
@@ -175,8 +169,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         swipeRefreshLayout.setProgressViewEndTarget(false, -2000);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             swipeRefreshLayout.setRefreshing(false);
-            showBalance(false);
-            setSyncStatus();
+            updBalanceHistSync();
         });
 
         String firstAction = null;
@@ -210,12 +203,9 @@ public class TransactionHistoryFragment extends BaseFragment {
         });
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
+    private void updBalanceHistSync() {
         if (isWalletExist()) {
-            showBalance(true);
+            showBalance();
             setSyncStatus();
             if (isSaplingWalletExist()) syncManager.startSync();
         }
@@ -229,31 +219,14 @@ public class TransactionHistoryFragment extends BaseFragment {
         });
     }
 
-    private void showTransactions() {
-        updateTxsFromDb();
-
+    private void updateFromDbOrEmpty() {
         if (transactionsManager.getTransactionsList().size() == 0) {
             GuardaApp.isTransactionsEmpty = true;
             openUserWalletFragment();
         } else {
             GuardaApp.isTransactionsEmpty = false;
-//            updateTxsCache();
+            historyViewModel.getTxsFromDb();
         }
-    }
-
-    private void updateTxsFromDb() {
-        compositeDisposable.add(Observable
-                .fromCallable(new CallUpdateFromDbHistory(dbManager))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((list) -> {
-                    Timber.d("CallUpdateFromDbHistory list size=%d", list.size());
-
-                    if (list.isEmpty()) return;
-                    transactionsManager.setTransactionsList(list);
-                    adapter.updateList(list);
-                    adapter.notifyDataSetChanged();
-                }));
     }
 
     private void openUserWalletFragment() {
@@ -274,11 +247,8 @@ public class TransactionHistoryFragment extends BaseFragment {
         tv_syncing_status.setText(syncManager.isSyncInProgress() ? "Syncing..." : "Synced");
     }
 
-    private void showBalance(boolean withCache) {
+    private void showBalance() {
         if (isAdded() && !isDetached() && isVisible && NetworkManager.isOnline(getActivity())) {
-            if (withCache)
-//                loadFromCache();
-
             startClockwiseRotation();
             loadBalance();
             historyViewModel.loadTransactions();
@@ -394,7 +364,7 @@ public class TransactionHistoryFragment extends BaseFragment {
                                     public void run() {
                                         if (isVisible) {
                                             closeProgress();
-                                            showBalance(true);
+                                            updBalanceHistSync();
                                         }
                                     }
                                 });
@@ -464,13 +434,13 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     @OnClick(R.id.iv_update_transactions)
     public void onUpdateClick() {
-        showBalance(false);
+        updBalanceHistSync();
     }
 
     private void subscribeUi() {
         historyViewModel.getShowHistory().observe(this, (v) -> {
             if (v) {
-                showTransactions();
+                updateFromDbOrEmpty();
                 loaderAnimation.cancel();
             }
         });
@@ -480,6 +450,11 @@ public class TransactionHistoryFragment extends BaseFragment {
                 loaderAnimation.cancel();
                 ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_get_history), R.drawable.err_history);
             }
+        });
+
+        historyViewModel.getShowActualTxs().observe(this, (list) -> {
+            adapter.updateList(list);
+            adapter.notifyDataSetChanged();
         });
     }
 

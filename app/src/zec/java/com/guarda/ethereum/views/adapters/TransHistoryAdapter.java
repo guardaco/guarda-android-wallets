@@ -48,13 +48,11 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
     Context context;
 
     public static final int MIN_CONFIRMATIONS = 1;
-    private ObjectAnimator loaderAnimation;
     private OnItemClickListener listener;
 
     private List<TransactionItem> transList;
     private List<TransactionItem> pendingList;
     private View view;
-    private RepeatHandler repeatHandler;
 
     public TransHistoryAdapter() {
         GuardaApp.getAppComponent().inject(this);
@@ -120,14 +118,6 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
     @Override
     public int getItemCount() {
         return transList.size() + pendingList.size();
-    }
-
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-        if (repeatHandler != null) {
-            repeatHandler.interrupt();
-        }
     }
 
     class TransHistoryItemHolder extends RecyclerView.ViewHolder {

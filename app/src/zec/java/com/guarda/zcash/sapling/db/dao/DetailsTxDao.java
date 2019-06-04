@@ -6,6 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+import com.guarda.zcash.sapling.db.model.BlockRoom;
 import com.guarda.zcash.sapling.db.model.DetailsTxRoom;
 import com.guarda.zcash.sapling.db.model.TxRoom;
 
@@ -13,6 +14,9 @@ import java.util.List;
 
 @Dao
 public interface DetailsTxDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(DetailsTxRoom... detailsTxRooms);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertList(List<DetailsTxRoom> detailsTxRooms);

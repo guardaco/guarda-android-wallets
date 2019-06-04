@@ -42,22 +42,25 @@ public class CallDbFillHistory implements Callable<Boolean> {
         List<TransactionItem> txItems;
         try {
             txItems = transactionsManager.transformTxToFriendlyNew(txList, transparentAddr);
+            //update list in manager
+            transactionsManager.setTransactionsList(txItems);
 
             List<DetailsTxRoom> details = new ArrayList<>();
             //fill transpatent transactions
             for (TransactionItem tx : txItems) {
                 details.add(new DetailsTxRoom(tx.getHash(), tx.getTime(), tx.getSum(), tx.isReceived(), tx.getConfirmations(), tx.getFrom(), tx.getTo(), tx.isOut()));
             }
-            //fill sapling transactions
-            List<String> inputTxIds = dbManager.getAppDb().getTxInputDao().getInputTxIds();
-            for (String txHash : inputTxIds) {
-                callTxInsight(txHash, false);
-                details.add(new DetailsTxRoom(txHash, 0L, 0L, true, 0L, "", "", false));
-            }
-            List<String> outputTxIds = dbManager.getAppDb().getTxOutputDao().getOutputTxIds();
-            for (String txHash : outputTxIds) {
-                details.add(new DetailsTxRoom(txHash, 0L, 0L, false, 0L, "", "", true));
-            }
+//            //fill sapling transactions
+//            List<String> inputTxIds = dbManager.getAppDb().getTxInputDao().getInputTxIds();
+//            for (String txHash : inputTxIds) {
+//                callTxInsight(txHash, false);
+//                details.add(new DetailsTxRoom(txHash, 0L, 0L, true, 0L, "", "", false));
+//            }
+//            List<String> outputTxIds = dbManager.getAppDb().getTxOutputDao().getOutputTxIds();
+//            for (String txHash : outputTxIds) {
+//                details.add(new DetailsTxRoom(txHash, 0L, 0L, false, 0L, "", "", true));
+//            }
+            //update list in DB
             dbManager.getAppDb().getDetailsTxDao().insertList(details);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,32 +68,6 @@ public class CallDbFillHistory implements Callable<Boolean> {
             return false;
         }
         return true;
-    }
-
-    private void callTxInsight(String hash, boolean isOut) {
-//        RequestorBtc.getOneTx(hash, new ApiMethods.RequestListener() {
-//            @Override
-//            public void onSuccess(Object response) {
-//                ZecTxResponse txResponse = (ZecTxResponse) response;
-//                if (txList == null) {
-//                    Timber.e("getOneTx tx == null");
-//                    return;
-//                }
-//                Observable
-//                        .fromCallable(new CallUpdateTxDetails(dbManager, txResponse))
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe((value) -> {
-//                            if (value) showHistory.setValue(true);
-//                            Timber.d("CallDbFillHistory value=%b", value);
-//                        });
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                showTxError.setValue(true);
-//            }
-//        });
     }
 
 }

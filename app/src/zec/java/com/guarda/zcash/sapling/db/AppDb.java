@@ -26,7 +26,7 @@ import com.guarda.zcash.sapling.db.model.TxRoom;
         ReceivedNotesRoom.class,
         SaplingWitnessesRoom.class,
         DetailsTxRoom.class
-}, version = 2)
+}, version = 1)
 public abstract class AppDb extends RoomDatabase {
     public abstract BlockDao getBlockDao();
     public abstract TxDao getTxDao();
