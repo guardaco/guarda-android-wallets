@@ -48,6 +48,7 @@ import com.guarda.ethereum.models.items.ZecTxListResponse;
 import com.guarda.ethereum.models.items.ZecTxResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
+import com.guarda.ethereum.rxcall.CallUpdateFromDbHistory;
 import com.guarda.ethereum.views.activity.MainActivity;
 import com.guarda.ethereum.views.activity.TransactionDetailsActivity;
 import com.guarda.ethereum.views.adapters.TransHistoryAdapter;
@@ -229,16 +230,30 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void showTransactions() {
-        adapter.updateList();
-        adapter.notifyDataSetChanged();
+        updateTxsFromDb();
 
         if (transactionsManager.getTransactionsList().size() == 0) {
             GuardaApp.isTransactionsEmpty = true;
             openUserWalletFragment();
         } else {
             GuardaApp.isTransactionsEmpty = false;
-            updateTxsCache();
+//            updateTxsCache();
         }
+    }
+
+    private void updateTxsFromDb() {
+        compositeDisposable.add(Observable
+                .fromCallable(new CallUpdateFromDbHistory(dbManager))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((list) -> {
+                    Timber.d("CallUpdateFromDbHistory list size=%d", list.size());
+
+                    if (list.isEmpty()) return;
+                    transactionsManager.setTransactionsList(list);
+                    adapter.updateList(list);
+                    adapter.notifyDataSetChanged();
+                }));
     }
 
     private void openUserWalletFragment() {
@@ -262,7 +277,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     private void showBalance(boolean withCache) {
         if (isAdded() && !isDetached() && isVisible && NetworkManager.isOnline(getActivity())) {
             if (withCache)
-                loadFromCache();
+//                loadFromCache();
 
             startClockwiseRotation();
             loadBalance();

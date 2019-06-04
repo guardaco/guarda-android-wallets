@@ -1,26 +1,18 @@
 package com.guarda.ethereum.lifecycle;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
-import com.guarda.ethereum.models.items.TransactionItem;
 import com.guarda.ethereum.models.items.ZecTxListResponse;
 import com.guarda.ethereum.models.items.ZecTxResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
-import com.guarda.ethereum.rxcall.CallFillHistory;
-import com.guarda.ethereum.views.activity.MainActivity;
+import com.guarda.ethereum.rxcall.CallDbFillHistory;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.rxcall.CallSaplingBalance;
 
-import org.bitcoinj.core.Coin;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -56,12 +48,12 @@ public class HistoryViewModel extends ViewModel {
                     return;
                 }
                 compositeDisposable.add(Observable
-                        .fromCallable(new CallFillHistory(transactionsManager, txList, walletManager.getWalletFriendlyAddress(), dbManager))
+                        .fromCallable(new CallDbFillHistory(transactionsManager, txList, walletManager.getWalletFriendlyAddress(), dbManager))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe((value) -> {
                             if (value) showHistory.setValue(true);
-                            Timber.d("CallFillHistory value=%b", value);
+                            Timber.d("CallDbFillHistory value=%b", value);
                         }));
             }
 

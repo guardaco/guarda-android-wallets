@@ -109,8 +109,8 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         }
     }
 
-    public void updateList() {
-        this.transList = transactionsManager.getTransactionsList();
+    public void updateList(List<TransactionItem> list) {
+        this.transList = list;
     }
 
     private boolean isDebit(String ourAddress, String toAddress) {

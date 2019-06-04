@@ -12,6 +12,19 @@ public class TransactionItem {
     private String to;
     private boolean isOut;
 
+    public TransactionItem() {
+    }
+
+    public TransactionItem(String hash, long time, long sum, boolean isReceived, long confirmations, String from, String to, boolean isOut) {
+        this.hash = hash;
+        this.time = time;
+        this.sum = sum;
+        this.isReceived = isReceived;
+        this.confirmations = confirmations;
+        this.from = from;
+        this.to = to;
+        this.isOut = isOut;
+    }
 
     public String getFrom() {
         return from;

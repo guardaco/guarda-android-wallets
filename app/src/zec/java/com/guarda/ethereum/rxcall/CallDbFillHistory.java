@@ -14,17 +14,17 @@ import java.util.concurrent.Callable;
 import timber.log.Timber;
 
 
-public class CallFillHistory implements Callable<Boolean> {
+public class CallDbFillHistory implements Callable<Boolean> {
 
     private TransactionsManager transactionsManager;
     private List<ZecTxResponse> txList;
     private String transparentAddr;
     private DbManager dbManager;
 
-    public CallFillHistory(TransactionsManager transactionsManager,
-                           List<ZecTxResponse> txList,
-                           String transparentAddr,
-                           DbManager dbManager) {
+    public CallDbFillHistory(TransactionsManager transactionsManager,
+                             List<ZecTxResponse> txList,
+                             String transparentAddr,
+                             DbManager dbManager) {
         this.transactionsManager = transactionsManager;
         this.txList = txList;
         this.transparentAddr = transparentAddr;
@@ -36,7 +36,6 @@ public class CallFillHistory implements Callable<Boolean> {
         List<TransactionItem> txItems;
         try {
             txItems = transactionsManager.transformTxToFriendlyNew(txList, transparentAddr);
-            transactionsManager.setTransactionsList(txItems);
 
             List<DetailsTxRoom> details = new ArrayList<>();
             //fill transpatent transactions
