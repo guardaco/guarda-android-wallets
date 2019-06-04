@@ -39,6 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.NODE_ADDRESS;
 import static com.guarda.ethereum.models.constants.Guarda.GUARDA_CO_URL;
@@ -341,6 +342,7 @@ public class ApiMethods {
     }
 
     static void makeRequest(Call call, @Nullable final RequestListener listener) {
+        Timber.d("Request path=%s", call.request());
         call.enqueue(new Callback<Object>() {
                          @Override
                          public void onResponse(Call<Object> call, Response<Object> response) {

@@ -20,7 +20,7 @@ public class CallUpdateFromDbHistory implements Callable<List<TransactionItem>> 
     @Override
     public List<TransactionItem> call() throws Exception {
         List<TransactionItem> txList = new ArrayList<>();
-        List<DetailsTxRoom> dbDetailsList = dbManager.getAppDb().getDetailsTxDao().getTxDetailsList();
+        List<DetailsTxRoom> dbDetailsList = dbManager.getAppDb().getDetailsTxDao().getTxDetailsListOrdered();
         for (DetailsTxRoom dtx : dbDetailsList) {
             txList.add(new TransactionItem(dtx.getHash(), dtx.getTime(), dtx.getSum(), dtx.getReceived(), dtx.getConfirmations(), dtx.getFrom(), dtx.getTo(), dtx.getOut()));
         }
