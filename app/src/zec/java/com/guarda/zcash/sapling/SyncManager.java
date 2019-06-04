@@ -58,6 +58,7 @@ public class SyncManager {
         inProgress = false;
 
         compositeDisposable.dispose();
+        Timber.d("stopSync inProgress=%b", inProgress);
     }
 
     public boolean isSyncInProgress() {

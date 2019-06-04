@@ -99,7 +99,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
 
     private void updateViews() {
         if (transaction != null) {
-            setValue(transaction.isOut() ? -transaction.getValue() : transaction.getValue());
+            setValue(transaction.isOut() ? -transaction.getSum() : transaction.getSum());
             setDateAndTime();
             setHash(transaction.getHash());
             setConfirmations(String.valueOf(transaction.getConfirmations()));
@@ -122,7 +122,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
         long balanceBefore = transactionsManager.getBalanceByTime(true, walletManager.getMyBalance().getValue(), transaction.getTime());
         long balanceAfter;
         if (balanceBefore == 0) {
-            balanceAfter = getStartBalanceAfter(balanceBefore, transaction.getValue());
+            balanceAfter = getStartBalanceAfter(balanceBefore, transaction.getSum());
         } else {
             balanceAfter = transactionsManager.getBalanceByTime(false, walletManager.getMyBalance().getValue(), transaction.getTime());
         }
@@ -179,7 +179,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
 
         Intent intent = new Intent(this, SendingCurrencyActivity.class);
         intent.putExtra(Extras.WALLET_NUMBER, transaction.getTo());
-        intent.putExtra(Extras.AMOUNT_TO_SEND, WalletManager.getFriendlyBalance(Coin.valueOf(transaction.getValue())));
+        intent.putExtra(Extras.AMOUNT_TO_SEND, WalletManager.getFriendlyBalance(Coin.valueOf(transaction.getSum())));
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left, R.anim.no_slide);
     }

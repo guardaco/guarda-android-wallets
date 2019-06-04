@@ -148,7 +148,7 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager);
+        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager);
         historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
         subscribeUi();
 

@@ -7,8 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guarda.ethereum.GuardaApp;
@@ -80,7 +78,7 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
     @Override
     public void onBindViewHolder(TransHistoryItemHolder holder, final int position) {
         final TransactionItem item = getTxByPosition(position);
-        Long txSum = item.getValue();
+        Long txSum = item.getSum();
         holder.rootView.setOnClickListener((v) -> {
                 if (listener != null) {
                     listener.OnItemClick(position);
@@ -88,10 +86,8 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         });
 
         if (item.getConfirmations() < MIN_CONFIRMATIONS) {
-//            enableLoader(holder);
             holder.tvTxStatus.setText(R.string.tx_status_wait);
         } else {
-//            disableLoader(holder);
             holder.tvTxStatus.setVisibility(View.GONE);
             holder.viewIndicator.setBackground(view.getContext().getResources().getDrawable(R.drawable.transaction_indicator_green));
             holder.viewIndicator.setVisibility(View.VISIBLE);
@@ -101,12 +97,6 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         String sumStr = coin.toPlainString() + " " + sharedManager.getCurrentCurrency().toUpperCase();
         holder.tvTransactionSum.setText(item.isOut() ? "-" + sumStr : sumStr);
         holder.tvDate.setText(CalendarHelper.parseDateToddMMyyyy(item.getTime() * 1000));
-
-//        if (!item.isOut()) {
-//            holder.viewIndicator.setBackground(view.getContext().getResources().getDrawable(R.drawable.transaction_indicator_green));
-//        } else {
-//            holder.viewIndicator.setBackground(view.getContext().getResources().getDrawable(R.drawable.transaction_indicator_red));
-//        }
 
     }
 

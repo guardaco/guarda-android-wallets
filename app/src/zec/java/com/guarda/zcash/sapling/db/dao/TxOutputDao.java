@@ -6,8 +6,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.guarda.zcash.sapling.db.model.BlockRoom;
 import com.guarda.zcash.sapling.db.model.TxOutRoom;
+
+import java.util.List;
 
 @Dao
 public interface TxOutputDao {
@@ -20,4 +21,7 @@ public interface TxOutputDao {
 
     @Query("SELECT * FROM txouts WHERE cmu LIKE :cmu")
     TxOutRoom getOut(String cmu);
+
+    @Query("SELECT txHash FROM txouts ots inner join received_notes nts on ots.cmu = nts.cm")
+    List<String> getOutputTxIds();
 }

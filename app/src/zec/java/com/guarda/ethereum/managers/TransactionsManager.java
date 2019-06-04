@@ -219,17 +219,17 @@ public class TransactionsManager {
             if (balanceBefore) {
                 if (item.getTime() >= time) {
                     if (item.isOut()) {
-                        res += item.getValue();
+                        res += item.getSum();
                     } else {
-                        res -= item.getValue();
+                        res -= item.getSum();
                     }
                 }
             } else {
                 if (item.getTime() > time) {
                     if (item.isOut()) {
-                        res += item.getValue();
+                        res += item.getSum();
                     } else {
-                        res -= item.getValue();
+                        res -= item.getSum();
                     }
                 }
             }

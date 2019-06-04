@@ -53,7 +53,7 @@ public class TransactionItem {
         this.time = time;
     }
 
-    public long getValue() {
+    public long getSum() {
         return sum;
     }
 

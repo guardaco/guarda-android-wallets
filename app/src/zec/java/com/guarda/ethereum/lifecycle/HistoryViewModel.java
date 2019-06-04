@@ -15,6 +15,7 @@ import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.rxcall.CallFillHistory;
 import com.guarda.ethereum.views.activity.MainActivity;
+import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.rxcall.CallSaplingBalance;
 
 import org.bitcoinj.core.Coin;
@@ -32,14 +33,16 @@ public class HistoryViewModel extends ViewModel {
 
     private final WalletManager walletManager;
     private final TransactionsManager transactionsManager;
+    private final DbManager dbManager;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private MutableLiveData<Boolean> showHistory = new MutableLiveData<>();
     private MutableLiveData<Boolean> showTxError = new MutableLiveData<>();
 
-    public HistoryViewModel(WalletManager walletManager, TransactionsManager transactionsManager) {
+    public HistoryViewModel(WalletManager walletManager, TransactionsManager transactionsManager, DbManager dbManager) {
         this.walletManager = walletManager;
         this.transactionsManager = transactionsManager;
+        this.dbManager = dbManager;
     }
 
     public void loadTransactions() {
@@ -48,17 +51,18 @@ public class HistoryViewModel extends ViewModel {
             public void onSuccess(Object response) {
                 ZecTxListResponse txListResponse = (ZecTxListResponse) response;
                 List<ZecTxResponse> txList = txListResponse.getTxs();
-                if (txList == null) return;
+                if (txList == null) {
+                    Timber.e("loadTransactions txList == null");
+                    return;
+                }
                 compositeDisposable.add(Observable
-                        .fromCallable(new CallFillHistory(transactionsManager, txList, walletManager.getWalletFriendlyAddress()))
+                        .fromCallable(new CallFillHistory(transactionsManager, txList, walletManager.getWalletFriendlyAddress(), dbManager))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe((value) -> {
+                            if (value) showHistory.setValue(true);
                             Timber.d("CallFillHistory value=%b", value);
-                            showHistory.setValue(true);
                         }));
-
-//                loaderAnimation.cancel();
             }
 
             @Override
@@ -78,15 +82,17 @@ public class HistoryViewModel extends ViewModel {
 
         private final WalletManager walletManager;
         private final TransactionsManager transactionsManager;
+        private final DbManager dbManager;
 
-        public Factory(WalletManager walletManager, TransactionsManager transactionsManager) {
+        public Factory(WalletManager walletManager, TransactionsManager transactionsManager, DbManager dbManager) {
             this.walletManager = walletManager;
             this.transactionsManager = transactionsManager;
+            this.dbManager = dbManager;
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
-            return (T) new HistoryViewModel(this.walletManager, this.transactionsManager);
+            return (T) new HistoryViewModel(this.walletManager, this.transactionsManager, this.dbManager);
         }
     }
 

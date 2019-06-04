@@ -29,7 +29,7 @@ public class DbManager {
 
     public DbManager() {
         GuardaApp.getAppComponent().inject(this);
-        appDb = Room.databaseBuilder(context, AppDb.class, DB_NAME)
+        appDb = Room.databaseBuilder(context, AppDb.class, DB_NAME).fallbackToDestructiveMigration()
                 .build();
     }
 
