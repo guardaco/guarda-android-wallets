@@ -42,7 +42,7 @@ public class SyncManager {
     }
 
     public void startSync() {
-        Timber.d("startSync inProgress=%b", inProgress);
+        Timber.d("startSync inProgress=%b paramsInited=%b", inProgress, paramsInited);
         if (inProgress) return;
 
         inProgress = true;
@@ -58,7 +58,7 @@ public class SyncManager {
         inProgress = false;
 
         compositeDisposable.dispose();
-        Timber.d("stopSync inProgress=%b", inProgress);
+        Timber.d("stopSync inProgress=%b paramsInited=%b", inProgress, paramsInited);
     }
 
     public boolean isSyncInProgress() {

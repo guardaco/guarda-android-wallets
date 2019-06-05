@@ -23,6 +23,7 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
 
     @Override
     public BlockSyncRange call() throws Exception {
+        Timber.d("started");
         long latestFromServer = protoApi.getLastBlock();
         Timber.d("latestFromServer = %d", latestFromServer);
         BlockRoom blockRoom = dbManager.getAppDb().getBlockDao().getLatestBlock();
