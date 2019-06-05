@@ -148,6 +148,11 @@ public class WithdrawFragment extends BaseFragment{
                 String address = etSendCoinsAddress.getText().toString();
                 address = filterAddress(address);
                 etSendCoinsAddress.setText(address);
+                //show error for z-to-t transactions
+                if (isSaplingAddress && (address.length() == 35 && address.substring(0, 1).equalsIgnoreCase("t"))) {
+                    showError(etSendCoinsAddress, getString(R.string.withdraw_sending_from_z_to_t_not_supported));
+                    break;
+                }
 
                 goNext(address);
                 break;

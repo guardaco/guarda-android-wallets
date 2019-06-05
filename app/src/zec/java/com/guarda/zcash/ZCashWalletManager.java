@@ -10,6 +10,7 @@ import com.guarda.zcash.crypto.ECKey;
 import com.guarda.zcash.crypto.Sha256Hash;
 import com.guarda.zcash.request.AbstractZCashRequest;
 import com.guarda.zcash.request.CreateTransaction_taddr;
+import com.guarda.zcash.request.CreateTransaction_ttoz;
 import com.guarda.zcash.request.CreateTransaction_zaddr;
 import com.guarda.zcash.request.GetBalance_taddr;
 import com.guarda.zcash.request.GetUTXOSRequest;
@@ -130,6 +131,7 @@ public class ZCashWalletManager {
     new Thread(new GetBalance_taddr(pubKey, cachedTansactionDetails_taddr, onComplete)).start();
   }
 
+  //only for t-to-t transparent transactions
   public void createTransaction_taddr(final String fromAddr,
                                       final String toAddr,
                                       final Long amount,
@@ -193,19 +195,85 @@ public class ZCashWalletManager {
       throw new ZCashException("Expiry height must be in [0, 499999999].");
     }
 
-    new Thread(new GetUTXOSRequest(fromAddr, minconf, new WalletCallback<String, List<ZCashTransactionOutput>>() {
-
-      @Override
-      public void onResponse(String r1, List<ZCashTransactionOutput> r2) {
+    new Thread(new GetUTXOSRequest(fromAddr, minconf, (r1, r2) -> {
         if (r1.equals("ok")) {
           new CreateTransaction_taddr(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, onComplete, r2).run();
         } else {
           onComplete.onResponse(r1, null);
         }
-      }
     })).start();
   }
 
+  //only for t-to-z transactions
+  public void createTransaction_ttoz(final String fromAddr,
+                                      final String toAddr,
+                                      final Long amount,
+                                      final Long fee,
+                                      final String privateKey,
+                                      final SaplingCustomFullKey saplingCustomFullKey,
+                                      final long minconf,
+                                      final WalletCallback<String, ZCashTransaction_ttoz> onComplete) throws ZCashException {
+    createTransaction_ttoz(fromAddr, toAddr, amount, fee, privateKey, saplingCustomFullKey, minconf, EXPIRY_HEIGHT_NO_LIMIT, onComplete);
+  }
+
+  public void createTransaction_ttoz(final String fromAddr,
+                                      final String toAddr,
+                                      final Long amount,
+                                      final Long fee,
+                                      final String privateKey,
+                                      final SaplingCustomFullKey saplingCustomFullKey,
+                                      final long minconf,
+                                      final int expiryHeight,
+                                      final WalletCallback<String, ZCashTransaction_ttoz> onComplete) throws ZCashException {
+    String methodName = "createTransaction_taddr";
+    checkArgumentNonNull(fromAddr, "fromAddr", methodName);
+    checkArgumentNonNull(toAddr, "toAddr", methodName);
+    checkArgumentNonNull(amount, "amount", methodName);
+    checkArgumentNonNull(fee, "fee", methodName);
+    checkArgumentNonNull(privateKey, "privateKey", methodName);
+    checkArgumentNonNull(onComplete, "onComplete", methodName);
+    try {
+      Base58.decodeChecked(fromAddr);
+    } catch (IllegalArgumentException e) {
+      throw new ZCashException("Invalid fromAddr.");
+    }
+
+    try {
+      Base58.decodeChecked(privateKey);
+    } catch (IllegalArgumentException e) {
+      throw new ZCashException("Invalid private key.");
+    }
+
+    if (!fromAddr.equals(publicKeyFromPrivateKey_taddr(privateKey))) {
+      throw new ZCashException("fromAddr does not correspond to privateKey in createTransaction_taddr");
+    }
+
+    if (amount < 0) {
+      throw new ZCashException("Cannot send negative amount of coins.");
+    }
+
+    if (fee < 0) {
+      throw new ZCashException("Cannot create transaction with negative fee.");
+    }
+
+    if (amount + fee == 0) {
+      throw new ZCashException("Transaction with amount + fee = 0 would not do anything.");
+    }
+
+    if(expiryHeight < 0 || expiryHeight > 499999999) {
+      throw new ZCashException("Expiry height must be in [0, 499999999].");
+    }
+
+    new Thread(new GetUTXOSRequest(fromAddr, minconf, (r1, r2) -> {
+        if (r1.equals("ok")) {
+          new CreateTransaction_ttoz(fromAddr, toAddr, amount, fee, privateKey, saplingCustomFullKey, expiryHeight, onComplete, r2).run();
+        } else {
+          onComplete.onResponse(r1, null);
+        }
+    })).start();
+  }
+
+  //only for sapling z to z transactions
   public void createTransaction_zaddr(final String fromAddr,
                                       final String toAddr,
                                       final Long amount,
@@ -240,86 +308,6 @@ public class ZCashWalletManager {
     }
 
     new CreateTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, dbManager, onComplete).run();
-  }
-
-  public void pushTransaction_taddr(ZCashTransaction_taddr tx,
-                                    WalletCallback<String, Void> onComplete) throws ZCashException {
-    String methodName = "pushTransaction_taddr";
-    checkArgumentNonNull(tx, "tx", methodName);
-    checkArgumentNonNull(onComplete, "onComplete", methodName);
-
-    Thread net = new Thread(new PushTransaction_taddr(tx, onComplete));
-    net.start();
-  }
-
-  public void getTransactionHistory_taddr(String pubKey,
-                                          final int limit,
-                                          final int offset,
-                                          final UpdateRequirement requirement,
-                                          final WalletCallback<String, List<ZCashTransactionDetails_taddr>> onComplete) throws ZCashException {
-    String methodName = "getTransactionHistory_taddr";
-    checkArgumentNonNull(pubKey, "pubKey", methodName);
-    checkArgumentNonNull(onComplete, "onComplete", methodName);
-
-    try {
-      Base58.decodeChecked(pubKey);
-    } catch (IllegalArgumentException e) {
-      throw new ZCashException("Invalid address.");
-    }
-
-    if (limit < 0) {
-      throw new ZCashException("Negative limit is not allowed in getTransactionHistory_taddr");
-    }
-
-    if (offset < 0) {
-      throw new ZCashException("Negative offset is not allowed in getTransactionHistory_taddr");
-    }
-
-    if (requirement == UpdateRequirement.NO_UPDATE) {
-      new Thread(new Runnable() {
-        @Override
-        public void run() {
-          if (cachedTansactionDetails_taddr == null) {
-            onComplete.onResponse("Wallet is not imported.", null);
-            return;
-          }
-
-          int start, end;
-          int size = cachedTansactionDetails_taddr.size();
-          end = offset > size ? 0 : size - offset;
-          start = limit > end ? 0 : end - limit;
-          List<ZCashTransactionDetails_taddr> result = new LinkedList<>(cachedTansactionDetails_taddr.subList(start, end));
-          Collections.reverse(result);
-          onComplete.onResponse("ok", result);
-        }
-      }).start();
-      return;
-    }
-
-    Thread net = new Thread(new UpdateTransactionCache_taddr(cachedTansactionDetails_taddr, false, pubKey, new WalletCallback<String, Void>() {
-      @Override
-      public void onResponse(String r1, Void r2) {
-        if (r1.equals("ok") || requirement == UpdateRequirement.TRY_UPDATE) {
-          int start, end;
-          synchronized (cachedTansactionDetails_taddr) {
-            if (cachedTansactionDetails_taddr == null) {
-              onComplete.onResponse("Wallet is not imported.", null);
-              return;
-            }
-
-            int size = cachedTansactionDetails_taddr.size();
-            end = offset > size ? 0 : size - offset;
-            start = limit > end ? 0 : end - limit;
-            List<ZCashTransactionDetails_taddr> result = new LinkedList<>(cachedTansactionDetails_taddr.subList(start, end));
-            Collections.reverse(result);
-            onComplete.onResponse("ok", result);
-          }
-        } else {
-          onComplete.onResponse(r1, null);
-        }
-      }
-    }));
-    net.start();
   }
 
   public void importWallet_taddr(String privateKey,
@@ -357,88 +345,6 @@ public class ZCashWalletManager {
         }
       })).start();
     }
-  }
-
-  public void importWallet_taddr(String privateKey,
-                                 Vector<ZCashTransactionDetails_taddr> cache,
-                                 final UpdateRequirement requirement,
-                                 final WalletCallback<String, Void> onComplete) throws ZCashException {
-    String methodName = "importWallet_taddr";
-    checkArgumentNonNull(privateKey, "privateKey", methodName);
-    checkArgumentNonNull(cache, "cache", methodName);
-    checkArgumentNonNull(onComplete, "onComplete", methodName);
-    try {
-      Base58.decodeChecked(privateKey);
-    } catch (IllegalArgumentException e) {
-      throw new ZCashException("Invalid private key.");
-    }
-
-    if (cache.size() > 1) {
-      ZCashTransactionDetails_taddr first = cache.get(0);
-      for (int i = 1; i < cache.size(); i++) {
-        ZCashTransactionDetails_taddr second = cache.get(i);
-        if (first.blockHeight > second.blockHeight) {
-          throw new ZCashException("Transactions in cache must be sorted in ascending order.");
-        }
-
-        first = second;
-      }
-    }
-
-    cachedTansactionDetails_taddr = cache;
-    String pubKey;
-    if (requirement == UpdateRequirement.NO_UPDATE) {
-      new Thread(new Runnable() {
-        @Override
-        public void run() {
-          onComplete.onResponse("ok", null);
-        }
-      }).start();
-    } else {
-      pubKey = publicKeyFromPrivateKey_taddr(privateKey);
-      new Thread(new UpdateTransactionCache_taddr(cachedTansactionDetails_taddr, false, pubKey, new WalletCallback<String, Void>() {
-        @Override
-        public void onResponse(String r1, Void r2) {
-          if (r1.equals("ok") || requirement == UpdateRequirement.TRY_UPDATE) {
-            onComplete.onResponse("ok", null);
-          } else {
-            onComplete.onResponse(r1, null);
-          }
-        }
-      })).start();
-    }
-  }
-
-  public static String generateNewPrivateKey_zaddr() throws ZCashException {
-    throw new ZCashException("Unimplemented");
-  }
-
-  public static String publicKeyFromPrivateKey_zaddr(String privKey) throws ZCashException {
-    throw new ZCashException("Unimplemented");
-  }
-
-  public void getBalance_zaddr(String pubKey, WalletCallback<String, Long> onComplete) throws ZCashException {
-    throw new ZCashException("Unimplemented");
-  }
-
-//  public ZCashTransaction_zaddr createTransaction_zaddr(String fromAddr, String toAddr, BigInteger amount, BigDecimal fee, String memo, String privateKey) throws ZCashException {
-//    throw new ZCashException("Unimplemented");
-//  }
-
-  public void pushTransaction_zaddr(ZCashTransaction_zaddr tx, WalletCallback<String, Void> onComplete) throws ZCashException {
-    throw new ZCashException("Unimplemented");
-  }
-
-  public void getTransactionHistory_zaddr(String pubKey, int limit, int offset, WalletCallback<String, List<ZCashTransactionDetails_zaddr>> onComplete) throws ZCashException {
-    throw new ZCashException("Unimplemented");
-  }
-
-  public void importWallet_zaddr(String privateKey, WalletCallback<String, Void> onComplete) throws ZCashException {
-    throw new ZCashException("Unimplemented");
-  }
-
-  public Vector<ZCashTransactionDetails_taddr> getTransactionCache() {
-    return cachedTansactionDetails_taddr;
   }
 
   private static void checkArgumentNonNull(Object o, String name, String methodName) throws ZCashException {

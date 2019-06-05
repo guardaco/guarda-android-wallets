@@ -155,23 +155,7 @@ public class ZCashTransaction_zaddr {
         prevoutsDigest.update(bytesShieldedOutputs, 0, bytesShieldedOutputs.length);
         prevoutsDigest.doFinal(shieldedOutputsBlake, 0);
         Timber.d("shieldedOutputsBlake=%s %d", Arrays.toString(shieldedOutputsBlake), shieldedOutputsBlake.length);
-//        /**
-//         * Shielded spend
-//         */
-//        byte[] cv = sprf.getCv();
-//        byte[] anchor = sprf.getAnchor();
-//        byte[] nf = sprf.getNullifier();
-//        byte[] rk = sprf.getRk();
-//        byte[] spProof = sprf.getZkproof();
-//
-//        bytesShieldedSpends = Bytes.concat(cv, anchor, nf, rk, spProof); // cv + anchor + nullifier + rk + zkproof;
-//
-//        // in Blake2 add all parameters but without spendAuthSig
-//        shieldedSpendsBlake = new byte[32];
-//        Blake2bDigest spendsDigest = new Blake2bDigest(null, 32, null, ZCASH_SHIELDED_SPENDS_HASH_PERSONALIZATION);
-//        spendsDigest.update(bytesShieldedSpends, 0, bytesShieldedSpends.length);
-//        spendsDigest.doFinal(shieldedSpendsBlake, 0);
-//        Timber.d("shieldedSpendsBlake=%s %d", Arrays.toString(shieldedSpendsBlake), shieldedSpendsBlake.length);
+
     }
 
     public byte[] getBytes() throws ZCashException {

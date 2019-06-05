@@ -32,6 +32,7 @@ import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
 import com.guarda.zcash.WalletCallback;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.ZCashTransaction_taddr;
+import com.guarda.zcash.ZCashTransaction_ttoz;
 import com.guarda.zcash.ZCashWalletManager;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -50,8 +51,6 @@ import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import timber.log.Timber;
-
-import static com.guarda.zcash.ZCashWalletManager.EXPIRY_HEIGHT_NO_LIMIT;
 
 @AutoInjector(GuardaApp.class)
 public class SendingCurrencyActivity extends AToolbarMenuActivity {
@@ -393,9 +392,9 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 if (!isValueMoreBalance(amount)) {
                     showProgress();
                     if (isSaplingAddress) {
-                        sendSapling();
+                        sendSaplingToSapling();
                     } else {
-                        sendTransparent();
+                        sendToTransparentOrSapling();
                     }
                 } else {
                     showError(etSumSend, getString(R.string.withdraw_amount_more_than_balance));
@@ -413,7 +412,16 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         }
     }
 
-    private void sendTransparent() throws ZCashException {
+    private void sendToTransparentOrSapling() throws ZCashException {
+        String addr = getToAddress();
+        if (addr.substring(0, 1).equalsIgnoreCase("t")) {
+            sendToTransparent();
+        } else if (addr.substring(0, 1).equalsIgnoreCase("z")) {
+            sendToSapling();
+        }
+    }
+
+    private void sendToTransparent() throws ZCashException {
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
         Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
         ZCashWalletManager.getInstance().createTransaction_taddr(walletManager.getWalletFriendlyAddress(),
@@ -429,19 +437,20 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                             try {
                                 String lastTxhex = Utils.bytesToHex(r2.getBytes());
                                 Log.i("lastTxhex", lastTxhex);
-                                BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
+                                RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
                                     @Override
                                     public void onSuccess(Object response) {
                                         SendRawTxResponse res = (SendRawTxResponse) response;
-                                        Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
+                                        Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
                                         closeProgress();
                                         showCongratsActivity();
                                     }
+
                                     @Override
                                     public void onFailure(String msg) {
                                         closeProgress();
                                         doToast(CurrencyUtils.getBtcLikeError(msg));
-                                        Log.d("svcom", "failure - " + msg);
+                                        Timber.d("broadcastRawTxZexNew e=%s", msg);
                                     }
                                 });
                             } catch (ZCashException e) {
@@ -458,7 +467,51 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 });
     }
 
-    private void sendSapling() {
+    private void sendToSapling() throws ZCashException {
+        long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
+        Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
+        ZCashWalletManager.getInstance().createTransaction_ttoz(walletManager.getWalletFriendlyAddress(),
+                getToAddress(),
+                amountSatoshi,
+                currentFeeEth,
+                walletManager.getPrivateKey(),
+                walletManager.getSaplingCustomFullKey(),
+                Common.ZCASH_MIN_CONFIRM, (r1, r2) -> {
+                        Log.i("RESPONSE CODE", r1);
+                        if (r1.equals("ok")) {
+                            try {
+                                String lastTxhex = Utils.bytesToHex(r2.getBytes());
+                                Log.i("lastTxhex", lastTxhex);
+                                RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
+                                    @Override
+                                    public void onSuccess(Object response) {
+                                        SendRawTxResponse res = (SendRawTxResponse) response;
+                                        Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
+                                        closeProgress();
+                                        showCongratsActivity();
+                                    }
+
+                                    @Override
+                                    public void onFailure(String msg) {
+                                        closeProgress();
+                                        doToast(CurrencyUtils.getBtcLikeError(msg));
+                                        Timber.d("broadcastRawTxZexNew e=%s", msg);
+                                    }
+                                });
+                            } catch (ZCashException e) {
+                                closeProgress();
+                                doToast("Can not send the transaction to the node");
+                                Log.i("TX", "Cannot sign transaction");
+                            }
+                        } else {
+                            closeProgress();
+                            doToast("Can not create the transaction. Check arguments");
+                            Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
+                        }
+                });
+    }
+
+    private void sendSaplingToSapling() {
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
         Timber.d("amount=" + amountSatoshi + " fee=" + currentFeeEth);
 
@@ -471,13 +524,13 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                     1,
                     dbManager,
                     (r1, r2) -> {
-                            Timber.d("sendSapling onResponse " + r1);
+                            Timber.d("sendSaplingToSapling onResponse " + r1);
                             if (r1.equals("ok")) {
                                 try {
                                     byte[] bytes = r2.getBytes();
-                                    Timber.d("sendSapling bytes=%s %d", Arrays.toString(bytes), bytes.length);
+                                    Timber.d("sendSaplingToSapling bytes=%s %d", Arrays.toString(bytes), bytes.length);
                                     String lastTxhex = Utils.bytesToHex(bytes);
-                                    Timber.d("sendSapling lastTxhex=%s", lastTxhex);
+                                    Timber.d("sendSaplingToSapling lastTxhex=%s", lastTxhex);
 
                                     RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
                                         @Override
@@ -514,17 +567,17 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                 } catch (ZCashException e) {
                                     closeProgress();
                                     doToast(e.getMessage());
-                                    Timber.e("sendSapling Cannot sign transaction");
+                                    Timber.e("sendSaplingToSapling Cannot sign transaction");
                                 }
                             } else {
                                 closeProgress();
                                 doToast("Can not create the transaction. Check arguments");
-                                Timber.d("sendSapling: RESPONSE CODE is not ok");
+                                Timber.d("sendSaplingToSapling: RESPONSE CODE is not ok");
                             }
                         });
         } catch (ZCashException e) {
             doToast("Can not send the transaction: " + e.getMessage());
-            Timber.e("sendSapling createTx ZCashException=" + e.getMessage());
+            Timber.e("sendSaplingToSapling createTx ZCashException=" + e.getMessage());
         }
     }
 

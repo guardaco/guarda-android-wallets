@@ -36,6 +36,7 @@
     <string name="withdraw_withdraw_coins">Send coins</string>
     <string name="app_scan_qr">Scan QR</string>
     <string name="withdraw_the_withdrawal_address_is_incorrect">The sending address format is incorrect</string>
+    <string name="withdraw_sending_from_z_to_t_not_supported">Sending from Z to T not supported yet</string>
     <string name="app_next">Next</string>
     <string name="withdraw_amount_to_send">Amount to send</string>
     <string name="withdraw_sending">Sending</string>
