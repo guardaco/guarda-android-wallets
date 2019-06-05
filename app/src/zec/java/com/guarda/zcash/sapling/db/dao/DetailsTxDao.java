@@ -21,7 +21,7 @@ public interface DetailsTxDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertList(List<DetailsTxRoom> detailsTxRooms);
 
-    @Query("SELECT * FROM details_tx order by time")
+    @Query("SELECT * FROM details_tx order by time desc")
     List<DetailsTxRoom> getTxDetailsListOrdered();
 
     @Query("SELECT * FROM details_tx where hash is :hash")
