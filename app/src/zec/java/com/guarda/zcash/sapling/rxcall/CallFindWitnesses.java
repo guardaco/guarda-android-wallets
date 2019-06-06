@@ -1,7 +1,5 @@
 package com.guarda.zcash.sapling.rxcall;
 
-import com.guarda.ethereum.BuildConfig;
-import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;
@@ -26,21 +24,11 @@ import java.util.concurrent.Callable;
 
 import timber.log.Timber;
 
-import static com.guarda.zcash.RustAPI.newAk;
-import static com.guarda.zcash.RustAPI.newIvk;
-import static com.guarda.zcash.RustAPI.newNk;
-import static com.guarda.zcash.RustAPI.newOvk;
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.revHex;
-import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 import static com.guarda.zcash.sapling.note.SaplingNotePlaintext.tryNoteDecrypt;
 
 public class CallFindWitnesses implements Callable<Boolean> {
-
-    private byte[] revNewIvk;
-    private byte[] revNewAk;
-    private byte[] revNewNk;
-    private byte[] revNewOvk;
 
     private DbManager dbManager;
     private SaplingCustomFullKey saplingKey;
@@ -49,14 +37,11 @@ public class CallFindWitnesses implements Callable<Boolean> {
     public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey) {
         this.dbManager = dbManager;
         this.saplingKey = saplingKey;
-//        revNewIvk = reverseByteArray(newIvk);
-//        revNewAk = reverseByteArray(newAk);
-//        revNewNk = reverseByteArray(newNk);
-//        revNewOvk = reverseByteArray(newOvk);
     }
 
     @Override
     public Boolean call() throws Exception {
+        Timber.d("started");
         SaplingMerkleTree saplingTree = new SaplingMerkleTree();
         List<SaplingWitnessesRoom> existingWitnesses = dbManager.getAppDb().getSaplingWitnessesDao().getAllWitnesses();
 

@@ -46,7 +46,6 @@
         <item name="colorControlHighlight">@color/blueSeparatorColor</item>
         <item name="errorEnabled">false</item>
         <item name="colorControlActivated">@color/blueSeparatorColor</item>
-        <item name="textColorError">@color/errorTextColor</item>
     </style>
 
     <style name="EditTextHintLightGrey" parent="Widget.Design.TextInputLayout">
@@ -56,7 +55,6 @@
         <item name="colorControlNormal">@color/neutralGreyTextColor</item>
         <item name="colorControlHighlight">@color/neutralGreyTextColor</item>
         <item name="colorControlActivated">@color/neutralGreyTextColor</item>
-        <!--<item name="textColorError">@color/errorTextColor</item>-->
     </style>
 
     <style name="lightWalletSwitch" parent="Theme.AppCompat.Light">
