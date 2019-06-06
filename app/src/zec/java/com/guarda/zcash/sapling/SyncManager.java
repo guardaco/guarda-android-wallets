@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.managers.WalletManager;
+import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
 import com.guarda.zcash.sapling.rxcall.CallBlockRange;
 import com.guarda.zcash.sapling.rxcall.CallFindWitnesses;
 import com.guarda.zcash.sapling.rxcall.CallLastBlock;
@@ -47,11 +49,7 @@ public class SyncManager {
 
         inProgress = true;
 
-        if (paramsInited) {
-            getBlocks();
-        } else {
-            saplingParamsInit();
-        }
+        saplingParamsInit();
     }
 
     public void stopSync() {
@@ -67,11 +65,11 @@ public class SyncManager {
 
     private void saplingParamsInit() {
         compositeDisposable.add(Observable
-                .fromCallable(new CallSaplingParamsInit(context, walletManager))
+                .fromCallable(new CallSaplingParamsInit(context))
                 .subscribeOn(Schedulers.io())
                 .subscribe((latest) -> {
                     Timber.d("saplingParamsInit done=%s", latest);
-                    paramsInited = true;
+                    walletManager.setSaplingCustomFullKey(new SaplingCustomFullKey(RustAPI.dPart(walletManager.getPrivateKey().getBytes())));
                     getBlocks();
                 }, (e) -> stopAndLogError("saplingParamsInit", e)));
     }
