@@ -166,11 +166,12 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void setVersion() {
-        String appVersion = "";
+        String pl = "%s %s";
+        if (BuildConfig.DEBUG) pl = "%s %s-debug";
         try {
             PackageManager manager = getActivity().getPackageManager();
             PackageInfo info = manager.getPackageInfo(getActivity().getPackageName(), 0);
-            verAbout.setText(String.format("%s %s", getString(R.string.about_ver), info.versionName));
+            verAbout.setText(String.format(pl, getString(R.string.about_ver), info.versionName));
         } catch (Exception e) {
             Log.e("psd", "Error getting appVersion - " + e.toString());
         }
