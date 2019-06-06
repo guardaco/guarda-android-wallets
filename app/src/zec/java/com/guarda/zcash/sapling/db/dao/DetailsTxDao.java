@@ -30,4 +30,7 @@ public interface DetailsTxDao {
     @Delete
     void delete(DetailsTxRoom detailsTxRoom);
 
+    @Query("DELETE FROM details_tx")
+    void dropAll();
+
 }

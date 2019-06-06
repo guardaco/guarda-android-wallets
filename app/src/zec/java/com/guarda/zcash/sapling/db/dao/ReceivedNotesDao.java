@@ -37,4 +37,7 @@ public interface ReceivedNotesDao {
     @Query("SELECT SUM(value) FROM received_notes WHERE spent IS NULL")
     Long getBalance();
 
+    @Query("DELETE FROM blocks")
+    void dropAll();
+
 }

@@ -38,6 +38,7 @@ import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.models.items.ResponseCurrencyItem;
 import com.guarda.ethereum.rest.ApiMethods;
+import com.guarda.ethereum.rxcall.CallCleanDbLogOut;
 import com.guarda.ethereum.views.activity.base.TrackOnStopActivity;
 import com.guarda.ethereum.views.fragments.BackupFragment;
 import com.guarda.ethereum.views.fragments.DepositFragment;
@@ -51,6 +52,8 @@ import com.guarda.ethereum.views.fragments.UserWalletFragment;
 import com.guarda.ethereum.views.fragments.WithdrawFragment;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.zcash.sapling.SyncManager;
+import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.rxcall.CallSaplingParamsInit;
 
 import java.util.List;
 
@@ -58,6 +61,10 @@ import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Const.CHANGELLY_TIMEOUT;
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
@@ -87,9 +94,14 @@ public class MainActivity extends TrackOnStopActivity {
     CurrencyListHolder currentCrypto;
     @Inject
     SyncManager syncManager;
+    @Inject
+    DbManager dbManager;
 
     String firstAction = CREATE_WALLET;
     String key;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -365,20 +377,16 @@ public class MainActivity extends TrackOnStopActivity {
         Button logOut = logoutView.findViewById(R.id.btn_confirm_loguot);
         Button openBackup = logoutView.findViewById(R.id.btn_to_backup);
 
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        logOut.setOnClickListener((v) -> {
                 walletManager.clearWallet();
                 sharedManager.setLastSyncedBlock("");
                 sharedManager.setIsShowBackupAlert(true);
                 sharedManager.setIsPinCodeEnable(false);
                 syncManager.stopSync();
+                cleanDbLogOut();
                 finish();
-            }
         });
-        openBackup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        openBackup.setOnClickListener((v) -> {
                 if (sharedManager.getIsPinCodeEnable()) {
                     Intent intent = new Intent(MainActivity.this, ConfirmPinCodeActivity.class);
                     startActivityForResult(intent, RequestCode.CONFIRM_PIN_CODE_REQUEST_MA);
@@ -386,11 +394,19 @@ public class MainActivity extends TrackOnStopActivity {
                     goToBackupFragment();
                 }
                 logoutDialog.cancel();
-            }
         });
 
         logoutDialog.setView(logoutView);
         logoutDialog.show();
+    }
+
+    private void cleanDbLogOut() {
+        compositeDisposable.add(Observable
+                .fromCallable(new CallCleanDbLogOut(dbManager))
+                .subscribeOn(Schedulers.io())
+                .subscribe((latest) -> {
+                    Timber.d("cleanDbLogOut done=%s", latest);
+                }, (e) -> Timber.d("cleanDbLogOut err=%s", e.getMessage())));
     }
 
     private void navigateToFragment(Fragment fragment) {
@@ -499,4 +515,9 @@ public class MainActivity extends TrackOnStopActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
 }

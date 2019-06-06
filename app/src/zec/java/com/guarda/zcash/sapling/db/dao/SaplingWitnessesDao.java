@@ -37,4 +37,7 @@ public interface SaplingWitnessesDao {
     @Query("DELETE FROM sapling_witnesses WHERE witnessHeight LIKE :height")
     void deleteHeight(Long height);
 
+    @Query("DELETE FROM blocks")
+    void dropAll();
+
 }
