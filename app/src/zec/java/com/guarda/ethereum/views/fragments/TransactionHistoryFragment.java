@@ -239,7 +239,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         String h = "";
         if (isAdded()) h = getString(R.string.own_addresses);
         return Arrays.asList(
-                new TokenHeaderItem(h, tokenBodyItems, getTokenHeaderSum(tokenBodyItems))
+                new TokenHeaderItem(h, tokenBodyItems, "2")
         );
     }
 
@@ -396,7 +396,6 @@ public class TransactionHistoryFragment extends BaseFragment {
             sum += res;
             tb.setOtherSum(res);
         }
-        tokenAdapter.setTokensSum(Double.toString(round(sum, 2)));
         tokenAdapter.notifyDataSetChanged();
     }
 
