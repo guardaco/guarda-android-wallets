@@ -285,7 +285,7 @@ public class ZCashWalletManager {
     createTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, minconf, EXPIRY_HEIGHT_NO_LIMIT, dbManager, onComplete);
   }
 
-  public void createTransaction_zaddr(final String fromAddr,
+  private void createTransaction_zaddr(final String fromAddr,
                                       final String toAddr,
                                       final Long amount,
                                       final Long fee,

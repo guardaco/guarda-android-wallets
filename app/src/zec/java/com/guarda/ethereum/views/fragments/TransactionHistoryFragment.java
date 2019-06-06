@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -158,10 +159,6 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager);
-        historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
-        subscribeUi();
-
         stronglyHistory = true;
 
         initTransactionHistoryRecycler();
@@ -207,6 +204,15 @@ public class TransactionHistoryFragment extends BaseFragment {
         updBalanceHistSync();
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager);
+        historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
+        subscribeUi();
+    }
+
     @TargetApi(Build.VERSION_CODES.M)
     private void initFabHider() {
         nsvMainScrollLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -241,18 +247,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         return Arrays.asList(
                 new TokenHeaderItem(h, tokenBodyItems, "2")
         );
-    }
-
-    private String getTokenHeaderSum(List<TokenBodyItem> tokens) {
-        Double res = 0.0;
-        for (int i = 0; i < tokens.size(); i++) {
-            if (tokens.get(i) != null)
-                if (tokens.get(i).getOtherSum() >= 0) {
-                    res = res + tokens.get(i).getOtherSum();
-                }
-        }
-
-        return String.format("%s %s", Double.toString(round(res, 2)), sharedManager.getLocalCurrency().toUpperCase());
     }
 
     private void updBalanceHistSync() {
