@@ -422,6 +422,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void sendToTransparent() throws ZCashException {
+        Timber.d("sendToTransparent");
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
         Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
         ZCashWalletManager.getInstance().createTransaction_taddr(walletManager.getWalletFriendlyAddress(),
@@ -468,6 +469,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void sendToSapling() throws ZCashException {
+        Timber.d("sendToSapling");
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
         Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
         ZCashWalletManager.getInstance().createTransaction_ttoz(walletManager.getWalletFriendlyAddress(),
@@ -512,6 +514,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void sendSaplingToSapling() {
+        Timber.d("sendSaplingToSapling");
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
         Timber.d("amount=" + amountSatoshi + " fee=" + currentFeeEth);
 
