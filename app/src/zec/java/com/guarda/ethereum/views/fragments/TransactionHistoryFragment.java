@@ -511,21 +511,21 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void subscribeUi() {
-        historyViewModel.getShowHistory().observe(this, (v) -> {
+        historyViewModel.getShowHistory().observe(getViewLifecycleOwner(), (v) -> {
             if (v) {
                 updateFromDbOrEmpty();
                 loaderAnimation.cancel();
             }
         });
 
-        historyViewModel.getShowTxError().observe(this, (v) -> {
+        historyViewModel.getShowTxError().observe(getViewLifecycleOwner(), (v) -> {
             if (v) {
                 loaderAnimation.cancel();
                 ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_get_history), R.drawable.err_history);
             }
         });
 
-        historyViewModel.getShowActualTxs().observe(this, (list) -> {
+        historyViewModel.getShowActualTxs().observe(getViewLifecycleOwner(), (list) -> {
             adapter.updateList(list);
             adapter.notifyDataSetChanged();
         });
