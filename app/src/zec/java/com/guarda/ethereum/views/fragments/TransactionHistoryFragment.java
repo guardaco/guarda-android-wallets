@@ -159,6 +159,10 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager);
+        historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
+        subscribeUi();
+
         stronglyHistory = true;
 
         initTransactionHistoryRecycler();
@@ -202,15 +206,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         }
 
         updBalanceHistSync();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager);
-        historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
-        subscribeUi();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
