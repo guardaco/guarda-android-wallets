@@ -264,6 +264,7 @@
     <string name="commission">Commission:</string>
     <string name="result_transaction_successful">Transaction \n Successful</string>
     <string name="tokens">Tokens</string>
+    <string name="own_addresses">Own addresses</string>
     <string name="small_sum_of_tx">Amount of sending is very small</string>
     <string name="not_enough_money_to_send">Not enough money to send</string>
     <string name="sending_coins">Sending coins</string>

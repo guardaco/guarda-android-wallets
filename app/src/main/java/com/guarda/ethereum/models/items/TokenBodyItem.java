@@ -21,6 +21,14 @@ public class TokenBodyItem implements Parcelable {
         this.decimal = decimal;
     }
 
+    public TokenBodyItem(String tokenName, BigDecimal tokenNum, String tokenSum, Double otherSum, int decimal) {
+        this.tokenName = tokenName;
+        this.tokenNum = tokenNum;
+        this.tokenSum = tokenSum;
+        this.otherSum = otherSum;
+        this.decimal = decimal;
+    }
+
     public String getTokenName() {
         return tokenName;
     }

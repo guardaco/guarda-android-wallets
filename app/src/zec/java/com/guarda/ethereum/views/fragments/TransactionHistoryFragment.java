@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -40,16 +41,20 @@ import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.BtgBalanceResponse;
 import com.guarda.ethereum.models.items.RespExch;
+import com.guarda.ethereum.models.items.TokenBodyItem;
+import com.guarda.ethereum.models.items.TokenHeaderItem;
 import com.guarda.ethereum.models.items.TransactionItem;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.views.activity.MainActivity;
 import com.guarda.ethereum.views.activity.TransactionDetailsActivity;
+import com.guarda.ethereum.views.adapters.TokenAdapter;
 import com.guarda.ethereum.views.adapters.TransHistoryAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.rxcall.CallSaplingBalance;
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import org.bitcoinj.core.Coin;
 
@@ -57,6 +62,7 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -108,6 +114,8 @@ public class TransactionHistoryFragment extends BaseFragment {
     RelativeLayout rl_sync_status;
     @BindView(R.id.tv_syncing_status)
     TextView tv_syncing_status;
+    @BindView(R.id.rv_tokens)
+    RecyclerView rvTokens;
 
     private static final String BLANK_BALANCE = "...";
     private boolean isVisible = true;
@@ -116,6 +124,13 @@ public class TransactionHistoryFragment extends BaseFragment {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private HistoryViewModel historyViewModel;
     private TransHistoryAdapter adapter;
+    private TokenAdapter tokenAdapter;
+    private List<TokenBodyItem> tokensList = new ArrayList<>();
+    private String exchangeRate;
+    private final String tAddrTitle = "T-address";
+    private final String zAddrTitle = "Z-address";
+    private Long transparentBalance;
+    private Long saplingBalance;
 
     @Inject
     WalletManager walletManager;
@@ -151,10 +166,12 @@ public class TransactionHistoryFragment extends BaseFragment {
 
         initTransactionHistoryRecycler();
 
-        nsvMainScrollLayout.smoothScrollTo(0, 0);
-        setCryptoBalance(BLANK_BALANCE);
+        tokensList.add(new TokenBodyItem(tAddrTitle, new BigDecimal("0"), "0", 8));
+        tokensList.add(new TokenBodyItem(zAddrTitle, new BigDecimal("0"), "0", 8));
+        initTokens(tokensList);
 
-        setUSDBalance("...");
+        nsvMainScrollLayout.smoothScrollTo(0, 0);
+        setCryptoBalance();
 
         fabMenu.setClosedOnTouchOutside(true);
         rl_sync_status.setVisibility(View.VISIBLE);
@@ -187,6 +204,7 @@ public class TransactionHistoryFragment extends BaseFragment {
             checkFromRestore();
         }
 
+        updBalanceHistSync();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -201,6 +219,40 @@ public class TransactionHistoryFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    private void initTokens(List<TokenBodyItem> tokens) {
+        Timber.d("initTokens start");
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.ItemAnimator animator = rvTokens.getItemAnimator();
+        if (animator instanceof DefaultItemAnimator) {
+            ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
+
+        tokenAdapter = new TokenAdapter(generateTokensGroup(tokens));
+        rvTokens.setLayoutManager(layoutManager);
+        rvTokens.setAdapter(tokenAdapter);
+        Timber.d("initTokens end");
+    }
+
+    private List<? extends ExpandableGroup> generateTokensGroup(List<TokenBodyItem> tokenBodyItems) {
+        String h = "";
+        if (isAdded()) h = getString(R.string.own_addresses);
+        return Arrays.asList(
+                new TokenHeaderItem(h, tokenBodyItems, getTokenHeaderSum(tokenBodyItems))
+        );
+    }
+
+    private String getTokenHeaderSum(List<TokenBodyItem> tokens) {
+        Double res = 0.0;
+        for (int i = 0; i < tokens.size(); i++) {
+            if (tokens.get(i) != null)
+                if (tokens.get(i).getOtherSum() >= 0) {
+                    res = res + tokens.get(i).getOtherSum();
+                }
+        }
+
+        return String.format("%s %s", Double.toString(round(res, 2)), sharedManager.getLocalCurrency().toUpperCase());
     }
 
     private void updBalanceHistSync() {
@@ -278,12 +330,15 @@ public class TransactionHistoryFragment extends BaseFragment {
             @Override
             public void onSuccess(Object response) {
                 BtgBalanceResponse balance = (BtgBalanceResponse) response;
+                transparentBalance = balance.getBalanceSat();
                 walletManager.setMyBalance(balance.getBalanceSat());
                 walletManager.setBalance(balance.getBalanceSat());
                 String curBalance = WalletManager.getFriendlyBalance(walletManager.getMyBalance());
-                setCryptoBalance(curBalance);
+                setCryptoBalance();
+                tokensList.set(0, new TokenBodyItem(tAddrTitle, new BigDecimal(curBalance), curBalance, 8));
+                tokenAdapter.notifyDataSetChanged();
                 //FIXME: get usd balance
-//                getLocalBalance(curBalance);
+                getLocalBalance(curBalance);
             }
 
             @Override
@@ -302,7 +357,10 @@ public class TransactionHistoryFragment extends BaseFragment {
                     Timber.d("CallSaplingBalance balance=%d", balance);
 
                     if (balance == null) return;
-                    setUSDBalance(Coin.valueOf(balance).toPlainString());
+                    saplingBalance = balance;
+                    setCryptoBalance();
+                    tokensList.set(1, new TokenBodyItem(zAddrTitle, new BigDecimal(Coin.valueOf(balance).toPlainString()), Coin.valueOf(balance).toPlainString(), 8));
+                    tokenAdapter.notifyDataSetChanged();
                 }));
     }
 
@@ -316,18 +374,30 @@ public class TransactionHistoryFragment extends BaseFragment {
 
                         String localBalance = balance.replace(",", "");
 
-                        if (exchange.get(0).getPrice(sharedManager.getLocalCurrency().toLowerCase()) != null) {
-                            Double res = Double.valueOf(localBalance) * (Double.valueOf(exchange.get(0).getPrice(sharedManager.getLocalCurrency().toLowerCase())));
-                            setUSDBalance(Double.toString(round(res, 2)));
-                        } else {
-                            setUSDBalance("...");
-                        }
+                        exchangeRate = exchange.get(0).getPrice(sharedManager.getLocalCurrency().toLowerCase());
+                        if (exchangeRate != null) updateUsdBalances();
+                        setUSDBalance();
                     }
 
                     @Override
                     public void onFailure(String msg) {
+                        Timber.d("CoinmarketcapHelper.getExchange onFailure=%s", msg);
                     }
                 });
+    }
+
+    private void updateUsdBalances() {
+        Double sum = 0d;
+        for (TokenBodyItem tb : tokensList) {
+            if (tb.getTokenNum() == null ||
+                    tb.getTokenNum().compareTo(BigDecimal.ZERO) == 0) continue;
+
+            Double res = Double.valueOf(tb.getTokenNum().toString()) * (Double.valueOf(exchangeRate));
+            sum += res;
+            tb.setOtherSum(res);
+        }
+        tokenAdapter.setTokensSum(Double.toString(round(sum, 2)));
+        tokenAdapter.notifyDataSetChanged();
     }
 
     public static double round(double value, int places) {
@@ -395,14 +465,29 @@ public class TransactionHistoryFragment extends BaseFragment {
         rvTransactionsList.setAdapter(adapter);
     }
 
-    private void setCryptoBalance(String balance) {
+    private void setCryptoBalance() {
+        Long tb = 0L;
+        Long zb = 0L;
+        if (transparentBalance != null) tb = transparentBalance;
+        if (saplingBalance != null) zb = saplingBalance;
+
+        long sum = tb + zb;
+
         tvCryptoCount.setText(String.format(Locale.US, "%s " + sharedManager.getCurrentCurrency().toUpperCase(),
-                balance));
+                Coin.valueOf(sum).toPlainString()));
     }
 
-    private void setUSDBalance(String balance) {
-//        tvUSDCount.setText(String.format("%s %s", balance, sharedManager.getLocalCurrency().toUpperCase()));
-        tvUSDCount.setText(String.format("%s %s", balance, sharedManager.getCurrentCurrency().toUpperCase()));
+    private void setUSDBalance() {
+        Long tb = 0L;
+        Long zb = 0L;
+        if (transparentBalance != null) tb = transparentBalance;
+        if (saplingBalance != null) zb = saplingBalance;
+
+        long sum = tb + zb;
+
+        double res = Double.valueOf(Coin.valueOf(sum).toPlainString()) * (Double.valueOf(exchangeRate));
+        tvUSDCount.setText(String.format("%s %s", Double.toString(round(res, 2)), sharedManager.getLocalCurrency().toUpperCase()));
+
     }
 
     @OnClick({R.id.fab_buy, R.id.fab_purchase, R.id.fab_withdraw, R.id.fab_deposit})

@@ -29,6 +29,8 @@ import static com.guarda.ethereum.models.constants.Common.ETH_SHOW_PATTERN;
 
 public class TokenAdapter extends ExpandableRecyclerViewAdapter<TokenAdapter.TokenHeaderViewHolder, TokenAdapter.TokenBodyViewHolder> {
 
+    private String tokensSum;
+
     public TokenAdapter(List<? extends ExpandableGroup> groups) {
         super(groups);
     }
@@ -88,11 +90,16 @@ public class TokenAdapter extends ExpandableRecyclerViewAdapter<TokenAdapter.Tok
 
         holder.setTvTokenHeaderTitle(group);
         holder.setTokensSum(((TokenHeaderItem) group).getAllTokensSum());
-        if(group.getItemCount() > 0){
+        if (tokensSum != null) holder.setTokensSum(tokensSum);
+        if (group.getItemCount() > 0) {
             holder.arrow.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_arrow_down));
         } else {
             holder.arrow.setImageDrawable(holder.context.getResources().getDrawable(R.drawable.ic_arrow_down_grey));
         }
+    }
+
+    public void setTokensSum(String tokensSum) {
+        this.tokensSum = tokensSum;
     }
 
     public class TokenHeaderViewHolder extends GroupViewHolder {
