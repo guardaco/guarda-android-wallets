@@ -169,10 +169,16 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
 
     @OnClick(R.id.btn_max)
     public void maxAmount(View view) {
-        if (!walletManager.getMyBalance().isZero()) {
-            etAmountToSend.setText(WalletManager.getFriendlyBalance(walletManager.getMyBalance()));
-            inputLayout.setCurrentText(WalletManager.getFriendlyBalance(walletManager.getMyBalance()));
+        if (isSaplingAddress && !saplingBalance.isEmpty()) {
+            etAmountToSend.setText(saplingBalance);
+            inputLayout.setCurrentText(saplingBalance);
             etAmountToSend.setSelection(etAmountToSend.getText().length());
+        } else {
+            if (!walletManager.getMyBalance().isZero()) {
+                etAmountToSend.setText(WalletManager.getFriendlyBalance(walletManager.getMyBalance()));
+                inputLayout.setCurrentText(WalletManager.getFriendlyBalance(walletManager.getMyBalance()));
+                etAmountToSend.setSelection(etAmountToSend.getText().length());
+            }
         }
     }
 
