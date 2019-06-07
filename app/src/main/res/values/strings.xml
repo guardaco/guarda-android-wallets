@@ -314,6 +314,7 @@
     <string name="tx_status_node">Sending to the node</string>
     <string name="tx_status_wait">Awaiting confirmation</string>
     <string name="tx_status_fail">Fail</string>
+    <string name="tx_status_syncing">Syncing</string>
 
     <!-- Coinify -->
     <string name="amount_coinify_title">Sell</string>
