@@ -19,11 +19,16 @@ public class CallUpdateTxDetails implements Callable<Boolean> {
 
     @Override
     public Boolean call() throws Exception {
+        boolean isOut = false;
         Long value = dbManager.getAppDb().getReceivedNotesDao().getValueByTxHashOuts(tr.getHash());
         if (value == null) {
             value = dbManager.getAppDb().getReceivedNotesDao().getValueByTxHashInputs(tr.getHash());
         }
-        if (value == null) value = 0L;
+        if (value == null) {
+            value = 0L;
+        } else {
+            isOut = true;
+        }
 
         dbManager
                 .getAppDb()
@@ -36,7 +41,7 @@ public class CallUpdateTxDetails implements Callable<Boolean> {
                         tr.getConfirmations().longValue(),
                         "",
                         "",
-                        false));
+                        isOut));
 
         return true;
     }
