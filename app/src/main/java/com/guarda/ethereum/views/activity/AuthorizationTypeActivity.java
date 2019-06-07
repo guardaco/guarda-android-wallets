@@ -61,7 +61,7 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
         walletManager.clearWallet();
         sharedManager.setIsShowBackupAlert(true);
 
-        syncManager.startSync();
+//        syncManager.startSync();
     }
 
     @Override
