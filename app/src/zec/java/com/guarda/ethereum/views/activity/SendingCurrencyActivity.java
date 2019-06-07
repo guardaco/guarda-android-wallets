@@ -430,9 +430,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 amountSatoshi,
                 currentFeeEth,
                 walletManager.getPrivateKey(),
-                Common.ZCASH_MIN_CONFIRM, new WalletCallback<String, ZCashTransaction_taddr>() {
-                    @Override
-                    public void onResponse(String r1, ZCashTransaction_taddr r2) {
+                Common.ZCASH_MIN_CONFIRM, (r1, r2) -> {
                         Log.i("RESPONSE CODE", r1);
                         if (r1.equals("ok")) {
                             try {
@@ -464,7 +462,6 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                             doToast("Can not create the transaction. Check arguments");
                             Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
                         }
-                    }
                 });
     }
 
@@ -539,6 +536,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                         @Override
                                         public void onSuccess(Object response) {
                                             SendRawTxResponse res = (SendRawTxResponse) response;
+
                                             Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
                                             closeProgress();
                                             showCongratsActivity();
@@ -569,13 +567,13 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
 //                                    });
                                 } catch (ZCashException e) {
                                     closeProgress();
-                                    doToast(e.getMessage());
+                                    doToast("Error: " + e.getMessage());
                                     Timber.e("sendSaplingToSapling Cannot sign transaction");
                                 }
                             } else {
                                 closeProgress();
-                                doToast("Can not create the transaction. Check arguments");
-                                Timber.d("sendSaplingToSapling: RESPONSE CODE is not ok");
+                                doToast("Sending error: " + r1);
+                                Timber.d("sendSaplingToSapling: err=%s", r1);
                             }
                         });
         } catch (ZCashException e) {
