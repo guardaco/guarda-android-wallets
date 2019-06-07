@@ -558,14 +558,14 @@ public class ExchangeFragment extends BaseFragment {
     protected List<ExchangeSpinnerRowModel> createExchangeSpinnerRows() {
         List<ExchangeSpinnerRowModel> res = new ArrayList<>();
         try {
-            if (isShapeshiftEnabled)
-                res.add(new ExchangeSpinnerRowModel(getResources().getDrawable(R.drawable.ic_icon_image_shapeshift), "ShapeShift", "shapeshift"));
+//            if (isShapeshiftEnabled)
+//                res.add(new ExchangeSpinnerRowModel(getResources().getDrawable(R.drawable.ic_icon_image_shapeshift), "ShapeShift", "shapeshift"));
             if (isChangenowEnabled)
                 res.add(new ExchangeSpinnerRowModel(getResources().getDrawable(R.drawable.ic_change_now), "Changenow", "changenow"));
             if (isChangellyEnabled)
                 res.add(new ExchangeSpinnerRowModel(getResources().getDrawable(R.drawable.ic_icon_image_changelly), "Changelly", "changelly"));
-            if (!isShapeshiftEnabled)
-                res.add(new ExchangeSpinnerRowModel(getResources().getDrawable(R.drawable.ic_icon_image_shapeshift), "ShapeShift", "shapeshift"));
+//            if (!isShapeshiftEnabled)
+//                res.add(new ExchangeSpinnerRowModel(getResources().getDrawable(R.drawable.ic_icon_image_shapeshift), "ShapeShift", "shapeshift"));
             if (!isChangellyEnabled)
                 res.add(new ExchangeSpinnerRowModel(getResources().getDrawable(R.drawable.ic_icon_image_changelly), "Changelly", "changelly"));
             if (!isChangenowEnabled)
