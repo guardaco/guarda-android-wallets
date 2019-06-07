@@ -26,7 +26,6 @@ import timber.log.Timber;
 public class SyncManager {
 
     private boolean inProgress;
-    private boolean paramsInited;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private long endB = 437489;
 
@@ -44,7 +43,7 @@ public class SyncManager {
     }
 
     public void startSync() {
-        Timber.d("startSync inProgress=%b paramsInited=%b", inProgress, paramsInited);
+        Timber.d("startSync inProgress=%b", inProgress);
         if (inProgress) return;
 
         inProgress = true;
@@ -55,8 +54,8 @@ public class SyncManager {
     public void stopSync() {
         inProgress = false;
 
-        compositeDisposable.dispose();
-        Timber.d("stopSync inProgress=%b paramsInited=%b", inProgress, paramsInited);
+        compositeDisposable.clear();
+        Timber.d("stopSync inProgress=%b", inProgress);
     }
 
     public boolean isSyncInProgress() {
@@ -69,7 +68,7 @@ public class SyncManager {
                 .subscribeOn(Schedulers.io())
                 .subscribe((latest) -> {
                     Timber.d("saplingParamsInit done=%s", latest);
-                    walletManager.setSaplingCustomFullKey(new SaplingCustomFullKey(RustAPI.dPart(walletManager.getPrivateKey().getBytes())));
+                    saplingKeyInit();
                     getBlocks();
                 }, (e) -> stopAndLogError("saplingParamsInit", e)));
     }
@@ -115,6 +114,15 @@ public class SyncManager {
                     Timber.d("getWintesses finished=%s", res);
                     stopSync();
                 }, (e) -> stopAndLogError("getWintesses", e)));
+    }
+
+    private void saplingKeyInit() {
+        if (walletManager.getSaplingCustomFullKey() == null) {
+            byte[] p = RustAPI.dPart(walletManager.getPrivateKey().getBytes());
+            SaplingCustomFullKey k = new SaplingCustomFullKey(p);
+            walletManager.setSaplingCustomFullKey(k);
+            Timber.d("saplingKeyInit inited");
+        }
     }
 
     private void stopAndLogError(String method, Throwable t) {
