@@ -1,35 +1,23 @@
 package com.guarda.ethereum.views.fragments;
 
 
-import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.managers.CoinmarketcapHelper;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.SharedManager;
-import com.guarda.ethereum.managers.WalletCreationCallback;
 import com.guarda.ethereum.managers.WalletManager;
-import com.guarda.ethereum.models.constants.Common;
-import com.guarda.ethereum.models.items.BalanceAndTxResponse;
-import com.guarda.ethereum.models.items.RespExch;
-import com.guarda.ethereum.rest.ApiMethods;
-import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
-
-import org.bitcoinj.core.Coin;
+import com.guarda.zcash.sapling.SyncManager;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -59,12 +47,12 @@ public class UserWalletFragment extends BaseFragment {
 
     @Inject
     WalletManager walletManager;
-
     @Inject
     EthereumNetworkManager networkManager;
-
     @Inject
     SharedManager sharedManager;
+    @Inject
+    SyncManager syncManager;
 
     public UserWalletFragment() {
         GuardaApp.getAppComponent().inject(this);
@@ -77,95 +65,37 @@ public class UserWalletFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        setCryptoBalance(BLANK_BALANCE);
-        setUSDBalance("0.00");
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (TextUtils.isEmpty(walletManager.getWalletFriendlyAddress())) {
-                    createWallet(BLOCK);
-                } else {
-                    showExistingWallet();
-                }
-            }
-        }, 500);
-
+        setCryptoBalance();
+        setUSDBalance();
+        if (TextUtils.isEmpty(walletManager.getWalletFriendlyAddress())) {
+            createWallet(BLOCK);
+        } else {
+            showExistingWallet();
+        }
     }
 
     private void createWallet(String passphrase) {
-        if (!isAdded()) return;
-
         showProgress(getString(R.string.generating_wallet));
-        walletManager.createWallet(passphrase, new WalletCreationCallback() {
-            @Override
-            public void onWalletCreated() {
-                closeProgress();
-                showExistingWallet();
-            }
+        walletManager.createWallet(passphrase, () -> {
+            closeProgress();
+            showExistingWallet();
         });
-
     }
 
 
     private void showExistingWallet() {
-        showBalance();
         if (isAdded() && !isDetached()) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    tvWalletAddress.setText(walletManager.getWalletFriendlyAddress());
-                }
-            });
+            tvWalletAddress.setText(walletManager.getWalletFriendlyAddress());
         }
+        if (isWalletExist()) syncManager.startSync();
     }
 
-
-    private void setCryptoBalance(String balance) {
-        String displayBalance = balance + " " + sharedManager.getCurrentCurrency().toUpperCase();
-        tvCryptoCount.setText(displayBalance);
+    private boolean isWalletExist() {
+        return !TextUtils.isEmpty(walletManager.getWalletFriendlyAddress());
     }
 
-    private void showBalance() {
-
-        RequestorBtc.getBalanceAndTxLtc(walletManager.getWalletFriendlyAddress(), new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                BalanceAndTxResponse balance = (BalanceAndTxResponse) response;
-                Coin coin = Coin.valueOf(balance.getFinalBalance());
-//                String curBalance = WalletManager.getFriendlyBalance(coin);
-//                setCryptoBalance(curBalance);
-//                getLocalBalance(curBalance);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-
-            }
-        });
-
-    }
-
-    private void getLocalBalance(final String balance) {
-        CoinmarketcapHelper.getExchange(Common.MAIN_CURRENCY_NAME,
-                sharedManager.getLocalCurrency().toLowerCase(),
-                new ApiMethods.RequestListener() {
-                    @Override
-                    public void onSuccess(Object response) {
-                        List<RespExch> exchange = (List<RespExch>) response;
-
-                        String localBalance = balance.replace(",", "");
-                        String exchPrice = exchange.get(0).getPrice(sharedManager.getLocalCurrency().toLowerCase());
-
-                        if (localBalance == null || exchPrice == null) return;
-
-                        Double res = Double.valueOf(localBalance) * (Double.valueOf(exchPrice));
-                        setUSDBalance(Double.toString(round(res, 2)));
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
-                    }
-                });
+    private void setCryptoBalance() {
+        tvCryptoCount.setText(String.format("0.00 %s", sharedManager.getCurrentCurrency().toUpperCase()));
     }
 
     public static double round(double value, int places) {
@@ -176,8 +106,8 @@ public class UserWalletFragment extends BaseFragment {
         return bd.doubleValue();
     }
 
-    private void setUSDBalance(String balance) {
-        tvUSDCount.setText(String.format("%s %s", balance, sharedManager.getLocalCurrency().toUpperCase()));
+    private void setUSDBalance() {
+        tvUSDCount.setText(String.format("0.00 %s", sharedManager.getLocalCurrency().toUpperCase()));
     }
 
     @OnClick({R.id.iv_update_address, R.id.btn_copy_address, R.id.btn_show_address_qr, R.id.btn_top_up_other_currency})
