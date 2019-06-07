@@ -1,7 +1,6 @@
 package com.guarda.ethereum.views.adapters;
 
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.items.TransactionItem;
 import com.guarda.ethereum.utils.CalendarHelper;
-import com.guarda.ethereum.utils.RepeatHandler;
 
 import org.bitcoinj.core.Coin;
 

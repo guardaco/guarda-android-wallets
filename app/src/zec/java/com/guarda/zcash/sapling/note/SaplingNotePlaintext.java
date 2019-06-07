@@ -177,7 +177,6 @@ public class SaplingNotePlaintext {
         try {
             return decrypt(
                     output.getCiphertext(),
-//                    revHex(bytesToHex(ivk)),
                     output.getEpk(),
                     output.getCmu(),
                     saplingKey);

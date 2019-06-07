@@ -64,14 +64,12 @@ public class WalletManager {
     private Context context;
     private static NetworkParameters params = new ZecParams();
     private String mnemonicKey;
-    private HashSet<String> mBip39Words;
     private BigDecimal balance = BigDecimal.ZERO;
     private SaplingCustomFullKey saplingCustomFullKey;
 
     public WalletManager(Context context) {
         GuardaApp.getAppComponent().inject(this);
         this.context = context;
-        mBip39Words = FileUtils.readToSet(context, BIP_39_WORDLIST_ASSET);
     }
 
     public void createWallet(String passphrase, WalletCreationCallback callback) {
@@ -105,12 +103,9 @@ public class WalletManager {
         try {
             ZCashWalletManager.getInstance().importWallet_taddr(mnemonicCode,
                     ZCashWalletManager.UpdateRequirement.NO_UPDATE,
-                    new WalletCallback<String, Void>() {
-                        @Override
-                        public void onResponse(String r1, Void r2) {
+                    (r1, r2) -> {
                             callback.onWalletCreated();
                             Log.i("RESPONSE CODE", r1);
-                        }
                     });
             mnemonicKey = mnemonicCode;
             walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
@@ -147,25 +142,22 @@ public class WalletManager {
         try {
             ZCashWalletManager.getInstance().importWallet_taddr(mnemonicCode,
                     ZCashWalletManager.UpdateRequirement.NO_UPDATE,
-                    new WalletCallback<String, Void>() {
-                        @Override
-                        public void onResponse(String r1, Void r2) {
-                            try {
-                                mnemonicKey = mnemonicCode;
-                                walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
-                                saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
+                    (r1, r2) -> {
+                        try {
+                            mnemonicKey = mnemonicCode;
+                            walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
+                            saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
 //                                saplingCustomFullKey = new SaplingCustomFullKey(RustAPI.dPart(mnemonicKey.getBytes()));
 //                                Timber.d("restoreFromBlock2 saplingCustomFullKey=%s", saplingCustomFullKey);
-                                sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
-                                callback.run();
-                                Log.i("RESPONSE CODE", r1);
-                            } catch (IllegalArgumentException iae) {
-                                iae.printStackTrace();
-                                callback.run();
-                            } catch (ZCashException zce) {
-                                zce.printStackTrace();
-                                callback.run();
-                            }
+                            sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
+                            callback.run();
+                            Timber.d("RESPONSE CODE %s", r1);
+                        } catch (IllegalArgumentException iae) {
+                            iae.printStackTrace();
+                            callback.run();
+                        } catch (ZCashException zce) {
+                            zce.printStackTrace();
+                            callback.run();
                         }
                     });
         } catch (IllegalArgumentException iae) {

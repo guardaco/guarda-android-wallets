@@ -1,7 +1,5 @@
 package com.guarda.zcash.crypto;
 
-import com.guarda.zcash.ZCashException;
-
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 
 import java.math.BigInteger;
