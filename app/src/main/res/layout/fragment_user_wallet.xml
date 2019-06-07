@@ -84,10 +84,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ll_dct_addr_title"
                     android:layout_marginBottom="0dp"
                     android:layout_marginTop="0dp"
-                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <com.guarda.ethereum.customviews.RobotoLightTextView
@@ -95,20 +93,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0dp"
                         android:layout_marginLeft="0dp"
-                        android:text="@string/app_your_address"
-                        android:id="@+id/tv_your_address"
+                        android:text="T-address"
                         android:textColor="@color/baseLightGreyTextColor"
                         android:textSize="14dp" />
-
-                    <ImageView
-                        android:id="@+id/imageViewAbout"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="-5dp"
-                        android:padding="5dp"
-                        android:foregroundGravity="center"
-                        app:srcCompat="@drawable/ic_help_icon_wr" />
 
                 </LinearLayout>
 
@@ -159,6 +146,100 @@
 
                 <Button
                     android:id="@+id/btn_top_up_other_currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:background="@drawable/btn_enable_gray"
+                    android:text="@string/top_up_width_other_currency"
+                    android:textAllCaps="false"
+                    android:textColor="@color/baseBlueTextColor"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:elevation="5dp"
+            app:cardCornerRadius="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/baseWhiteBgColor"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="0dp"
+                    android:orientation="horizontal">
+
+                    <com.guarda.ethereum.customviews.RobotoLightTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:text="Z-address"
+                        android:id="@+id/tv_your_address"
+                        android:textColor="@color/baseLightGreyTextColor"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_wallet_address_z"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_wallet_address"
+                    android:minLines="2"
+                    android:textColor="#445963"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_copy_address_z"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_enable_gray"
+                        android:text="@string/app_copy"
+                        android:textAllCaps="false"
+                        android:textColor="@color/baseBlueTextColor"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="0dp" />
+
+                    <Button
+                        android:id="@+id/btn_show_address_qr_z"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_enable_gray"
+                        android:text="@string/app_show_qr"
+                        android:textAllCaps="false"
+                        android:textColor="@color/baseBlueTextColor"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_top_up_other_currency_z"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonBarButtonStyle"

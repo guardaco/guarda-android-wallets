@@ -38,12 +38,8 @@ public class UserWalletFragment extends BaseFragment {
     ImageView ivUpdateAddress;
     @BindView(R.id.tv_wallet_address)
     TextView tvWalletAddress;
-    @BindView(R.id.btn_copy_address)
-    Button btCopyAddress;
-    @BindView(R.id.btn_show_address_qr)
-    Button btShowQr;
-
-    private static final String BLANK_BALANCE = "0.0";
+    @BindView(R.id.tv_wallet_address_z)
+    TextView tv_wallet_address_z;
 
     @Inject
     WalletManager walletManager;
@@ -86,6 +82,7 @@ public class UserWalletFragment extends BaseFragment {
     private void showExistingWallet() {
         if (isAdded() && !isDetached()) {
             tvWalletAddress.setText(walletManager.getWalletFriendlyAddress());
+            tv_wallet_address_z.setText(walletManager.getSaplingAddress());
         }
         if (isWalletExist()) syncManager.startSync();
     }
@@ -110,7 +107,13 @@ public class UserWalletFragment extends BaseFragment {
         tvUSDCount.setText(String.format("0.00 %s", sharedManager.getLocalCurrency().toUpperCase()));
     }
 
-    @OnClick({R.id.iv_update_address, R.id.btn_copy_address, R.id.btn_show_address_qr, R.id.btn_top_up_other_currency})
+    @OnClick({R.id.iv_update_address,
+            R.id.btn_copy_address,
+            R.id.btn_copy_address_z,
+            R.id.btn_show_address_qr,
+            R.id.btn_show_address_qr_z,
+            R.id.btn_top_up_other_currency,
+            R.id.btn_top_up_other_currency_z})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_update_address:
@@ -119,10 +122,19 @@ public class UserWalletFragment extends BaseFragment {
             case R.id.btn_copy_address:
                 copyAddress();
                 break;
+            case R.id.btn_copy_address_z:
+                copyAddressZ();
+                break;
             case R.id.btn_show_address_qr:
                 navigateToFragment(new DepositFragment());
                 break;
+            case R.id.btn_show_address_qr_z:
+                navigateToFragment(new DepositFragment());
+                break;
             case R.id.btn_top_up_other_currency:
+                navigateToFragment(new PurchaseServiceFragment());
+                break;
+            case R.id.btn_top_up_other_currency_z:
                 navigateToFragment(new PurchaseServiceFragment());
                 break;
         }
@@ -134,6 +146,13 @@ public class UserWalletFragment extends BaseFragment {
 
     private void copyAddress() {
         String address = tvWalletAddress.getText().toString();
+        if (!TextUtils.isEmpty(address)) {
+            ClipboardUtils.copyToClipBoard(getContext(), address);
+        }
+    }
+
+    private void copyAddressZ() {
+        String address = tv_wallet_address_z.getText().toString();
         if (!TextUtils.isEmpty(address)) {
             ClipboardUtils.copyToClipBoard(getContext(), address);
         }
