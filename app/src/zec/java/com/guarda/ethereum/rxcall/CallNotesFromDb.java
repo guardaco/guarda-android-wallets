@@ -1,8 +1,6 @@
 package com.guarda.ethereum.rxcall;
 
-import com.guarda.ethereum.models.items.TransactionItem;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.db.model.DetailsTxRoom;
 
 import java.util.ArrayList;
 import java.util.List;

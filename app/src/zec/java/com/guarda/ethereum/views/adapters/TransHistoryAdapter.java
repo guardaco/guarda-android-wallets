@@ -94,7 +94,7 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         holder.tvTransactionSum.setText(item.isOut() ? "-" + sumStr : sumStr);
         holder.tvDate.setText(CalendarHelper.parseDateToddMMyyyy(item.getTime() * 1000));
 
-        if (item.getFrom().isEmpty() && item.getTo().isEmpty()) {
+        if (item.getFrom().isEmpty() && item.getTo().isEmpty() && item.getSum() == 0L) {
             holder.tvTransactionSum.setText("");
             holder.tvTxStatus.setVisibility(View.VISIBLE);
             holder.tvTxStatus.setText(R.string.tx_status_syncing);
