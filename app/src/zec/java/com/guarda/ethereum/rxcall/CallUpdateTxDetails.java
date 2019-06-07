@@ -19,13 +19,19 @@ public class CallUpdateTxDetails implements Callable<Boolean> {
 
     @Override
     public Boolean call() throws Exception {
+        Long value = dbManager.getAppDb().getReceivedNotesDao().getValueByTxHashOuts(tr.getHash());
+        if (value == null) {
+            value = dbManager.getAppDb().getReceivedNotesDao().getValueByTxHashInputs(tr.getHash());
+        }
+        if (value == null) value = 0L;
+
         dbManager
                 .getAppDb()
                 .getDetailsTxDao()
                 .insertAll(new DetailsTxRoom(
                         tr.getHash(),
                         tr.getTime().longValue(),
-                        0L,
+                        value,
                         true,
                         tr.getConfirmations().longValue(),
                         "",

@@ -37,6 +37,12 @@ public interface ReceivedNotesDao {
     @Query("SELECT SUM(value) FROM received_notes WHERE spent IS NULL")
     Long getBalance();
 
+    @Query("SELECT value FROM received_notes nts inner join txouts outs on nts.cm = outs.cmu where outs.txHash is :txHash")
+    Long getValueByTxHashOuts(String txHash);
+
+    @Query("SELECT value FROM received_notes nts inner join txins ins on nts.nf = ins.nf where ins.txHash is :txHash")
+    Long getValueByTxHashInputs(String txHash);
+
     @Query("DELETE FROM received_notes")
     void dropAll();
 
