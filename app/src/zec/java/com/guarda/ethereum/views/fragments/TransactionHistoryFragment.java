@@ -24,8 +24,6 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.lifecycle.HistoryViewModel;
@@ -41,7 +39,6 @@ import com.guarda.ethereum.models.items.BtgBalanceResponse;
 import com.guarda.ethereum.models.items.RespExch;
 import com.guarda.ethereum.models.items.TokenBodyItem;
 import com.guarda.ethereum.models.items.TokenHeaderItem;
-import com.guarda.ethereum.models.items.TransactionItem;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.views.activity.MainActivity;
@@ -56,15 +53,12 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import org.bitcoinj.core.Coin;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -112,6 +106,8 @@ public class TransactionHistoryFragment extends BaseFragment {
     RelativeLayout rl_sync_status;
     @BindView(R.id.tv_syncing_status)
     TextView tv_syncing_status;
+    @BindView(R.id.rl_testnet_alert)
+    RelativeLayout rl_testnet_alert;
     @BindView(R.id.rv_tokens)
     RecyclerView rvTokens;
 
@@ -168,6 +164,7 @@ public class TransactionHistoryFragment extends BaseFragment {
 
         fabMenu.setClosedOnTouchOutside(true);
         rl_sync_status.setVisibility(View.VISIBLE);
+        rl_testnet_alert.setVisibility(View.VISIBLE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             initFabHider();
