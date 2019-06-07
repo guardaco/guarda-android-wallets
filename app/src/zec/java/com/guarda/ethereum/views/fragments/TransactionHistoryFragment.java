@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,9 +30,7 @@ import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.lifecycle.HistoryViewModel;
 import com.guarda.ethereum.managers.CoinmarketcapHelper;
-import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.NetworkManager;
-import com.guarda.ethereum.managers.RawNodeManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletCreationCallback;
@@ -118,7 +115,6 @@ public class TransactionHistoryFragment extends BaseFragment {
     @BindView(R.id.rv_tokens)
     RecyclerView rvTokens;
 
-    private static final String BLANK_BALANCE = "...";
     private boolean isVisible = true;
     private boolean stronglyHistory = false;
     private ObjectAnimator loaderAnimation;
@@ -136,13 +132,9 @@ public class TransactionHistoryFragment extends BaseFragment {
     @Inject
     WalletManager walletManager;
     @Inject
-    EthereumNetworkManager networkManager;
-    @Inject
     TransactionsManager transactionsManager;
     @Inject
     SharedManager sharedManager;
-    @Inject
-    RawNodeManager mNodeManager;
     @Inject
     SyncManager syncManager;
     @Inject
@@ -248,7 +240,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         if (isWalletExist()) {
             showBalance();
             setSyncStatus();
-            if (isSaplingWalletExist()) syncManager.startSync();
+            syncManager.startSync();
         }
     }
 
@@ -280,10 +272,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         return !TextUtils.isEmpty(walletManager.getWalletFriendlyAddress());
     }
 
-    private boolean isSaplingWalletExist() {
-        return walletManager.getSaplingCustomFullKey() != null;
-    }
-
     private void setSyncStatus() {
         tv_syncing_status.setText(syncManager.isSyncInProgress() ? "Syncing..." : "Synced");
     }
@@ -296,20 +284,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         } else {
             if (getActivity() != null) {
                 ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_network), R.drawable.err_network);
-            }
-        }
-    }
-
-    private void loadFromCache() {
-        String jsonFromPref = sharedManager.getTxsCache();
-        if (!jsonFromPref.equalsIgnoreCase("")) {
-            Gson gson = new Gson();
-            Type listType = new TypeToken<Map<String, ArrayList<TransactionItem>>>(){}.getType();
-            Map<String, ArrayList<TransactionItem>> addrTxsMap = gson.fromJson(jsonFromPref, listType);
-            ArrayList<TransactionItem> txList = addrTxsMap.get(walletManager.getWalletFriendlyAddress());
-            if (txList != null) {
-                transactionsManager.setTransactionsList(txList);
-                adapter.notifyDataSetChanged();
             }
         }
     }
@@ -547,23 +521,6 @@ public class TransactionHistoryFragment extends BaseFragment {
     public void onStop() {
         super.onStop();
         compositeDisposable.dispose();
-    }
-
-    private void updateTxsCache() {
-        if (walletManager.getWalletFriendlyAddress() == null || walletManager.getWalletFriendlyAddress().equalsIgnoreCase(""))
-            return;
-
-        Gson gson = new Gson();
-        Type listType = new TypeToken<Map<String, ArrayList<TransactionItem>>>(){}.getType();
-        String jsonFromPref = sharedManager.getTxsCache();
-        Map<String, ArrayList<TransactionItem>> addrTxsMap = gson.fromJson(jsonFromPref, listType);
-
-        if (addrTxsMap == null)
-            addrTxsMap = new HashMap<>();
-
-        addrTxsMap.put(walletManager.getWalletFriendlyAddress(), (ArrayList<TransactionItem>) transactionsManager.getTransactionsList());
-        String jsonToPref = gson.toJson(addrTxsMap);
-        sharedManager.setTxsCache(jsonToPref);
     }
 
     private void initRotation(ImageView ivLoader) {
