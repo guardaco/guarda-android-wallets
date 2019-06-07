@@ -101,12 +101,12 @@ public class WalletManager {
 
     public void restoreFromBlock(String mnemonicCode, final WalletCreationCallback callback) {
         try {
-            ZCashWalletManager.getInstance().importWallet_taddr(mnemonicCode,
-                    ZCashWalletManager.UpdateRequirement.NO_UPDATE,
-                    (r1, r2) -> {
-                            callback.onWalletCreated();
-                            Log.i("RESPONSE CODE", r1);
-                    });
+//            ZCashWalletManager.getInstance().importWallet_taddr(mnemonicCode,
+//                    ZCashWalletManager.UpdateRequirement.NO_UPDATE,
+//                    (r1, r2) -> {
+//                            callback.onWalletCreated();
+//                            Log.i("RESPONSE CODE", r1);
+//                    });
             mnemonicKey = mnemonicCode;
             walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
             saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
