@@ -33,6 +33,7 @@ import com.guarda.ethereum.customviews.RobotoLightTypefaceSpan;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.CurrencyListHolder;
 import com.guarda.ethereum.managers.SharedManager;
+import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
@@ -55,6 +56,7 @@ import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.rxcall.CallSaplingParamsInit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -96,6 +98,8 @@ public class MainActivity extends TrackOnStopActivity {
     SyncManager syncManager;
     @Inject
     DbManager dbManager;
+    @Inject
+    TransactionsManager transactionsManager;
 
     String firstAction = CREATE_WALLET;
     String key;
@@ -384,6 +388,7 @@ public class MainActivity extends TrackOnStopActivity {
             sharedManager.setIsShowBackupAlert(true);
             sharedManager.setIsPinCodeEnable(false);
             syncManager.stopSync();
+            transactionsManager.clearLists();
             finish();
         });
         openBackup.setOnClickListener((v) -> {

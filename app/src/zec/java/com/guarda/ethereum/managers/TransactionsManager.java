@@ -80,6 +80,11 @@ public class TransactionsManager {
         clearDuplicateTransactions();
     }
 
+    public void clearLists() {
+        transactionsList.clear();
+        pendingTransactions.clear();
+        txFriendlyList.clear();
+    }
 
     public List<TransactionItem> transformTxToFriendlyNew(List<ZecTxResponse> transactions, String ownAddress) {
         txFriendlyList.clear();
