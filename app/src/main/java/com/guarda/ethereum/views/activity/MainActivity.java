@@ -378,22 +378,22 @@ public class MainActivity extends TrackOnStopActivity {
         Button openBackup = logoutView.findViewById(R.id.btn_to_backup);
 
         logOut.setOnClickListener((v) -> {
-                walletManager.clearWallet();
-                sharedManager.setLastSyncedBlock("");
-                sharedManager.setIsShowBackupAlert(true);
-                sharedManager.setIsPinCodeEnable(false);
-                syncManager.stopSync();
-                cleanDbLogOut();
-                finish();
+            cleanDbLogOut();
+            walletManager.clearWallet();
+            sharedManager.setLastSyncedBlock("");
+            sharedManager.setIsShowBackupAlert(true);
+            sharedManager.setIsPinCodeEnable(false);
+            syncManager.stopSync();
+            finish();
         });
         openBackup.setOnClickListener((v) -> {
-                if (sharedManager.getIsPinCodeEnable()) {
-                    Intent intent = new Intent(MainActivity.this, ConfirmPinCodeActivity.class);
-                    startActivityForResult(intent, RequestCode.CONFIRM_PIN_CODE_REQUEST_MA);
-                } else {
-                    goToBackupFragment();
-                }
-                logoutDialog.cancel();
+            if (sharedManager.getIsPinCodeEnable()) {
+                Intent intent = new Intent(MainActivity.this, ConfirmPinCodeActivity.class);
+                startActivityForResult(intent, RequestCode.CONFIRM_PIN_CODE_REQUEST_MA);
+            } else {
+                goToBackupFragment();
+            }
+            logoutDialog.cancel();
         });
 
         logoutDialog.setView(logoutView);
@@ -404,9 +404,11 @@ public class MainActivity extends TrackOnStopActivity {
         compositeDisposable.add(Observable
                 .fromCallable(new CallCleanDbLogOut(dbManager))
                 .subscribeOn(Schedulers.io())
-                .subscribe((latest) -> {
-                    Timber.d("cleanDbLogOut done=%s", latest);
-                }, (e) -> Timber.d("cleanDbLogOut err=%s", e.getMessage())));
+                .subscribe(
+                        (latest) -> Timber.d("cleanDbLogOut done=%s", latest),
+                        (e) -> Timber.d("cleanDbLogOut err=%s", e.getMessage())
+                )
+        );
     }
 
     private void navigateToFragment(Fragment fragment) {
@@ -518,6 +520,6 @@ public class MainActivity extends TrackOnStopActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        compositeDisposable.dispose();
+//        compositeDisposable.clear();
     }
 }
