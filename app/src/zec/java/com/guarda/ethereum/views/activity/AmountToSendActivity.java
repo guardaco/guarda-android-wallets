@@ -89,7 +89,6 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
         setCurrentBalance("00.00", sharedManager.getCurrentCurrency());
         if (isSaplingAddress) {
             getSaplingBalance();
-            btnMax.setEnabled(false);
         } else {
             setCurrentBalance(WalletManager.getFriendlyBalance(walletManager.getMyBalance()), sharedManager.getCurrentCurrency().toUpperCase());
         }
