@@ -17,22 +17,13 @@ import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.views.activity.base.SimpleTrackOnStopActivity;
-import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.sapling.SyncManager;
-import com.guarda.zcash.sapling.rxcall.CallLastBlock;
-import com.guarda.zcash.sapling.rxcall.CallSaplingParamsInit;
 import com.scottyab.rootbeer.RootBeer;
-
-import java.util.Arrays;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
 import static com.guarda.ethereum.models.constants.Extras.DISABLE_CHECK;
@@ -51,8 +42,6 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
     SyncManager syncManager;
 
     DialogFragment rootDialog;
-
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -76,12 +65,6 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
         }
         isUnblocked = false;
         super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        compositeDisposable.dispose();
     }
 
     protected boolean isShouldToBlockScreen() {

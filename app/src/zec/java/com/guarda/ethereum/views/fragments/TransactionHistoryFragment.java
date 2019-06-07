@@ -520,7 +520,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     @Override
     public void onStop() {
         super.onStop();
-        compositeDisposable.dispose();
+        compositeDisposable.clear();
     }
 
     private void initRotation(ImageView ivLoader) {
