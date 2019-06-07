@@ -99,7 +99,7 @@
                                 android:layout_marginBottom="8dp"
                                 android:layout_marginEnd="15dp"
                                 android:minWidth="135dp"
-                                android:text="This is testnet wallet, \nfor beta testing only"
+                                android:text="This is a testnet wallet, \nfor beta-testing only"
                                 android:textAlignment="center"
                                 android:textColor="@color/whiteTextColor"
                                 android:textSize="12sp" />
