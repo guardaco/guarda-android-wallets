@@ -7,7 +7,6 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.guarda.zcash.sapling.db.model.TxInRoom;
-import com.guarda.zcash.sapling.db.model.TxRoom;
 
 import java.util.List;
 
@@ -22,4 +21,7 @@ public interface TxInputDao {
 
     @Query("SELECT txHash FROM txins ins inner join received_notes nts on ins.nf = nts.nf")
     List<String> getInputTxIds();
+
+    @Query("SELECT nf FROM txins WHERE txHash LIKE :hash")
+    String getNfByHash(String hash);
 }

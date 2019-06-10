@@ -3,7 +3,9 @@ package com.guarda.ethereum.rxcall;
 import com.guarda.ethereum.models.items.ZecTxResponse;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.db.model.DetailsTxRoom;
+import com.guarda.zcash.sapling.db.model.ReceivedNotesRoom;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 
@@ -20,14 +22,26 @@ public class CallUpdateTxDetails implements Callable<Boolean> {
     @Override
     public Boolean call() throws Exception {
         boolean isOut = false;
-        Long value = dbManager.getAppDb().getReceivedNotesDao().getValueByTxHashOuts(tr.getHash());
-        if (value == null) {
-            value = dbManager.getAppDb().getReceivedNotesDao().getValueByTxHashInputs(tr.getHash());
+        Long value = 0L;
+
+        List<String> cmuList = dbManager.getAppDb().getTxOutputDao().getCmByHash(tr.getHash());
+        if (cmuList != null) {
+            for (String cmu : cmuList) {
+                ReceivedNotesRoom note = dbManager.getAppDb().getReceivedNotesDao().getNoteByCm(cmu);
+                if (note != null) {
+                    value = note.getValue();
+                    isOut = false;
+                }
+            }
         }
-        if (value == null) {
-            value = 0L;
-        } else {
-            isOut = true;
+
+        String nf = dbManager.getAppDb().getTxInputDao().getNfByHash(tr.getHash());
+        if (nf != null) {
+            ReceivedNotesRoom note = dbManager.getAppDb().getReceivedNotesDao().getNoteByNf(nf);
+            if (note != null) {
+                value = note.getValue();
+                isOut = true;
+            }
         }
 
         dbManager

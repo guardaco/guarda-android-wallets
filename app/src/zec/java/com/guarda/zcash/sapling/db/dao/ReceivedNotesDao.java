@@ -26,7 +26,10 @@ public interface ReceivedNotesDao {
     List<ReceivedNotesRoom> getUnspents();
 
     @Query("SELECT * FROM received_notes WHERE cm LIKE :cm")
-    ReceivedNotesRoom getNote(String cm);
+    ReceivedNotesRoom getNoteByCm(String cm);
+
+    @Query("SELECT * FROM received_notes WHERE nf LIKE :nf")
+    ReceivedNotesRoom getNoteByNf(String nf);
 
     @Query("SELECT nf FROM received_notes")
     List<String> getAllNf();
@@ -36,12 +39,6 @@ public interface ReceivedNotesDao {
 
     @Query("SELECT SUM(value) FROM received_notes WHERE spent IS NULL")
     Long getBalance();
-
-    @Query("SELECT value FROM received_notes nts inner join txouts outs on nts.cm = outs.cmu where outs.txHash is :txHash")
-    Long getValueByTxHashOuts(String txHash);
-
-    @Query("SELECT value FROM received_notes nts inner join txins ins on nts.nf = ins.nf where ins.txHash is :txHash")
-    Long getValueByTxHashInputs(String txHash);
 
     @Query("DELETE FROM received_notes")
     void dropAll();

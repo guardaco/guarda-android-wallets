@@ -19,6 +19,9 @@ public interface TxOutputDao {
     @Delete
     void delete(TxOutRoom person);
 
+    @Query("SELECT cmu FROM txouts WHERE txHash LIKE :hash")
+    List<String> getCmByHash(String hash);
+
     @Query("SELECT * FROM txouts WHERE cmu LIKE :cmu")
     TxOutRoom getOut(String cmu);
 
