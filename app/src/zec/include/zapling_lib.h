@@ -5,8 +5,8 @@
 
 typedef uint64_t u64;
 
-#ifndef TEST_LIB
-#define TEST_LIB
+#ifndef ZAPLING_LIB
+#define ZAPLING_LIB
 
 #ifdef __cplusplus
 extern "C" {
@@ -164,4 +164,4 @@ void librustzcash_sapling_verification_ctx_free(void *);
 }
 #endif
 
-#endif /* TEST_LIB */
+#endif /* ZAPLING_LIB */

@@ -1,18 +1,13 @@
 #ifndef BITCOIN_MAIN_H
 #define BITCOIN_MAIN_H
 
-#include "test_lib.h"
+#include "zapling_lib.h"
 #include "uint256.h"
 #include "serialize.h"
 #include "version.h"
 #include "streams.h"
 #include "zcash/IncrementalMerkleTree.hpp"
 #include "primitives/transaction.h"
-
-//int main(int argc, char* argv[]) {
-//	print_hello();
-//	return 0;
-//}
 
 #include <jni.h>
 #include <string>
@@ -82,9 +77,6 @@ Java_com_guarda_zcash_RustAPI_initModel(
     std::string hello = "Hello from initModel()=";
     hello += o.str();
 
-    // Free the memoery you allocated earlier
-//    delete [] fileContentOut;
-
     return env->NewStringUTF(hello.c_str());
 }
 
@@ -120,15 +112,6 @@ Java_com_guarda_zcash_RustAPI_epk(
     std::copy(bytesD.begin(), bytesD.end(), resD);
     // ESK
     std::string cpstrEsk = env->GetStringUTFChars(esk, NULL);
-//    std::vector<char> bytesEsk;
-//    for (unsigned int i = 0; i < cpstrEsk.length(); i += 2) {
-//        std::string byteString = cpstrEsk.substr(i, 2);
-//        char byte = (char) strtol(byteString.c_str(), NULL, 16);
-//        bytesEsk.push_back(byte);
-//    }
-//
-//    unsigned char* resEsk = new unsigned char[32];
-//    std::copy(bytesEsk.begin(), bytesEsk.end(), resEsk);
     uint256 eskunt;
     eskunt.SetHex(cpstrEsk);
 
@@ -173,11 +156,6 @@ Java_com_guarda_zcash_RustAPI_test(
     env->SetByteArrayRegion (array, 0, lend, reinterpret_cast<jbyte*>(res));
 
     return array;
-//
-//    jbyteArray array = env->NewByteArray (lend);
-//    env->SetByteArrayRegion (array, 0, lend, reinterpret_cast<jbyte*>(dbuf));
-//
-//    return array;
 }
 
 JNIEXPORT jstring JNICALL
@@ -232,9 +210,6 @@ Java_com_guarda_zcash_RustAPI_greeting(
         jstring r,
         jstring v) {
 
-//    librustzcash_sapling_proving_ctx_free(ctx);
-
-    //ctx = librustzcash_sapling_proving_ctx_init();
     std::array<unsigned char, 192> zkproof;
     uint256 cv;
 
@@ -292,10 +267,7 @@ Java_com_guarda_zcash_RustAPI_greeting(
 
     if (!librustzcash_sapling_output_proof(ctx, eskunt.begin(), resD, pkdunt.begin(), runt.begin(), value, cv.begin(), zkproof.begin())) {
         std::string hello = "llibrustzcash_sapling_output_proof=false";
-//        std::uint32_t hello = librustzcash_sapling_output_proof(ctx, resEsk, resD, resPkd, resR, value, cv.begin(), zkproof.begin());
         librustzcash_sapling_proving_ctx_free(ctx);
-//        std::string s = std::to_string(hello);
-//        return env->NewStringUTF(hello.c_str());
         return env->NewByteArray(2);
     };
 
@@ -316,7 +288,6 @@ Java_com_guarda_zcash_RustAPI_bsig(
         jstring v,
         jstring dataToBeSigned) {
 
-//    uint256 bindingSig;
     std::array<unsigned char, 64> bindingSig;
 
     // v string to int64_t
@@ -470,26 +441,13 @@ Java_com_guarda_zcash_RustAPI_checkout(
 
     __android_log_print(ANDROID_LOG_DEBUG, "LOG_TAG", "cpstrZk=[%02x]...[%02x] size=[%lu]", resZk[0], resZk[bytesZk.size()], bytesZk.size());
 
-//    if (!librustzcash_sapling_binding_sig(ctx, value, resData, bindingSig.begin())) {
-//        librustzcash_sapling_proving_ctx_free(ctx);
-
     uint256 cvunt = uint256S(cpstrCv);
 
-        std::uint32_t hello = librustzcash_sapling_check_output(verctx, resCv, resCm, resEk, resZk);
-        librustzcash_sapling_verification_ctx_free(verctx);
-//        std::string hello = "librustzcash_sapling_binding_sig=false";
-        std::string s = std::to_string(hello);
-        return env->NewStringUTF(s.c_str());
-//    };
+    std::uint32_t hello = librustzcash_sapling_check_output(verctx, resCv, resCm, resEk, resZk);
+    librustzcash_sapling_verification_ctx_free(verctx);
+    std::string s = std::to_string(hello);
 
-    // bindingSig to hex (code from uint256.cpp method GetHex())
-//    char psz[sizeof(bindingSig) * 2 + 1];
-//    for (unsigned int i = 0; i < sizeof(bindingSig); i++)
-//        sprintf(psz + i * 2, "%02x", bindingSig[sizeof(bindingSig) - i - 1]);
-//
-//    std::string hello = std::string(psz, psz + sizeof(bindingSig) * 2);
-//
-//    return env->NewStringUTF(hello.c_str());
+    return env->NewStringUTF(s.c_str());
 }
 
 JNIEXPORT jstring JNICALL
@@ -714,8 +672,6 @@ Java_com_guarda_zcash_RustAPI_spendProof(
         jobjectArray authPathsArr,
         jbooleanArray indexesArr) {
 
-    //don't need after call Java_com_guarda_zcash_RustAPI_proveContextInit()
-    // ctx = librustzcash_sapling_proving_ctx_init();
     uint256 cv;
     uint256 rk;
     std::array<unsigned char, 192> zkproof;
@@ -834,8 +790,6 @@ Java_com_guarda_zcash_RustAPI_toByteMerklePath(
         jboolean authPathBool,
         jint p) {
 
-    //pathBytes[i][p / 8] |= authentication_path[i][p] << (7-(p % 8));
-
     unsigned char pb = static_cast<unsigned char>(pathByte);
     pb |= authPathBool << (7-(p % 8));
 
@@ -850,25 +804,19 @@ Java_com_guarda_zcash_RustAPI_vectorToInt(
         jobjectArray authPathsArr,
         jbooleanArray indexesArr) {
 
-
-    // converting authPathsArr to std::vector
     std::vector<std::vector<bool>> authentication_path;
 
     int len1 = env -> GetArrayLength(authPathsArr);
     jbooleanArray dim=  (jbooleanArray)env->GetObjectArrayElement(authPathsArr, 0);
     int len2 = env -> GetArrayLength(dim);
-//    bool **localArray;
-    // allocate localArray using len1
-//    localArray = new bool*[len1];
+
     for(int i=0; i<len1; ++i){
         jbooleanArray oneDim= (jbooleanArray)env->GetObjectArrayElement(authPathsArr, i);
         jboolean *element=env->GetBooleanArrayElements(oneDim, 0);
         //allocate localArray[i] using len2
         std::vector<bool> oneAuthVector;
-//        localArray[i] = new bool[len2];
         for(int j=0; j<len2; ++j) {
             oneAuthVector.push_back(element[j]);
-//            localArray[i][j]= element[j];
         }
         authentication_path.push_back(oneAuthVector);
     }
@@ -882,43 +830,10 @@ Java_com_guarda_zcash_RustAPI_vectorToInt(
         index.push_back(element[i]);
     }
 
-    // fill authentication_path from authPathsArr
-//    std::vector<std::vector<bool>> authentication_path;
-//
-//    int authLength = env->GetArrayLength(authPathsArr);
-//
-//    for (unsigned int i = 0; i < authLength; i++) {
-//        jarray *auArr = (jarray*) env->GetObjectArrayElement(authPathsArr, 0);
-//
-//        bool *oneArr = (bool*) auArr[i];
-//        int oneAuLength = env->GetArrayLength((bool*) auArr[i]);
-//
-//        std::vector<bool> oneAuthVector;
-//        for (unsigned int j = 0; j < oneAuLength; j++) {
-//            oneAuthVector.push_back(oneArr[j]);
-//        }
-//        authentication_path.push_back(oneAuthVector);
-//    }
-
-
-    // fill index from indexesArr
-//    std::vector<bool> index;
-//
-//    int indexLength = env->GetArrayLength(indexesArr);
-//    bool *iArr = (bool*) env->GetBooleanArrayElements(indexesArr, 0);
-//
-//    for (unsigned int i = 0; i < indexLength; i++) {
-//        index.push_back(iArr[i]);
-//    }
-
     MerklePath merklePath = MerklePath(authentication_path, index);
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     ss << merklePath;
     std::vector<unsigned char> witness(ss.begin(), ss.end());
-
-//    for (unsigned int i = 0; i < witness.size(); i++) {
-//        __android_log_print(ANDROID_LOG_DEBUG, "LOG_TAG", "stream=[%02x]", witness.at(i));
-//    }
 
     unsigned char* wtnarr = new unsigned char[141];
     std::copy(witness.begin(), witness.end(), wtnarr);
@@ -993,24 +908,12 @@ Java_com_guarda_zcash_RustAPI_testVerify(
         jstring sigHash,
         jstring bsig) {
 
-//    librustzcash_test_verify();
-
     std::string spStr = env->GetStringUTFChars(sp, NULL);
 
     SpendDescription spend;
-    // from tests zcbenchmarks.cpp
-    // CDataStream ss(ParseHex("8c6cf86bbb83bf0d075e5bd9bb4b5cd56141577be69f032880b11e26aa32aa5ef09fd00899e4b469fb11f38e9d09dc0379f0b11c23b5fe541765f76695120a03f0261d32af5d2a2b1e5c9a04200cd87d574dc42349de9790012ce560406a8a876a1e54cfcdc0eb74998abec2a9778330eeb2a0ac0e41d0c9ed5824fbd0dbf7da930ab299966ce333fd7bc1321dada0817aac5444e02c754069e218746bf879d5f2a20a8b028324fb2c73171e63336686aa5ec2e6e9a08eb18b87c14758c572f4531ccf6b55d09f44beb8b47563be4eff7a52598d80959dd9c9fee5ac4783d8370cb7d55d460053d3e067b5f9fe75ff2722623fb1825fcba5e9593d4205b38d1f502ff03035463043bd393a5ee039ce75a5d54f21b395255df6627ef96751566326f7d4a77d828aa21b1827282829fcbc42aad59cdb521e1a3aaa08b99ea8fe7fff0a04da31a52260fc6daeccd79bb877bdd8506614282258e15b3fe74bf71a93f4be3b770119edf99a317b205eea7d5ab800362b97384273888106c77d633600"), SER_NETWORK, PROTOCOL_VERSION);
-    // original
-//     CDataStream ss(ParseHex("d5653fd23e74204f10a9bbdad301d995a5edf3756410e1b910dea274f98d324922931f7a1ae2bcb40551f93f6ba575830be30dcb21b048ae3a3ef7a1054bc52c70ca62af9862c20cf8fe307ecccea26633850ed0ea59700f517a0e4d6bbe2ca6846309c9983a203e629b051b1e5b5ea3279fc2cddf16cfe79895c7dbaab9a9e5978c53f0b5f0c9fe2d0059f0af400e1b7aef18d21832e7752a7c47285a78b68838233817497d63383a1c53f86b68721eacf01c2bd20eaa6946237e3c4aa2a1b95121f67db12635736c96aa04b9a2901a764ce95901bf78a9630148c197120a3300b5696918993675523f0a32685ff5391c4b3da8ab20de8f9ed0d96e51196e91e11b9f05e1dde84d6310a964000442a5a661873ba93c7d63589784d1aa7a1e6c25df1cbbf883b5814dba83d6f0eeb5a390c564bd33a67edfc1675fbe33d4b1b3d46ae65245d4aad2fbd4fbcf63ec6f70f336c3c7a6cf5d564c2e26463f5718462b423e0c41695c7f6730dfb281bc27df4ae0d874883a244f7c9e2f6ac402200e"), SER_NETWORK, PROTOCOL_VERSION);
     CDataStream ss(ParseHex(spStr), SER_NETWORK, PROTOCOL_VERSION);
-// rk reversed
-// CDataStream ss(ParseHex("d5653fd23e74204f10a9bbdad301d995a5edf3756410e1b910dea274f98d324922931f7a1ae2bcb40551f93f6ba575830be30dcb21b048ae3a3ef7a1054bc52c70ca62af9862c20cf8fe307ecccea26633850ed0ea59700f517a0e4d6bbe2ca6e5a9b9aadbc79598e7cf16dfcdc29f27a35e5b1e1b059b623e203a98c9096384978c53f0b5f0c9fe2d0059f0af400e1b7aef18d21832e7752a7c47285a78b68838233817497d63383a1c53f86b68721eacf01c2bd20eaa6946237e3c4aa2a1b95121f67db12635736c96aa04b9a2901a764ce95901bf78a9630148c197120a3300b5696918993675523f0a32685ff5391c4b3da8ab20de8f9ed0d96e51196e91e11b9f05e1dde84d6310a964000442a5a661873ba93c7d63589784d1aa7a1e6c25df1cbbf883b5814dba83d6f0eeb5a390c564bd33a67edfc1675fbe33d4b1b3d46ae65245d4aad2fbd4fbcf63ec6f70f336c3c7a6cf5d564c2e26463f5718462b423e0c41695c7f6730dfb281bc27df4ae0d874883a244f7c9e2f6ac402200e"), SER_NETWORK, PROTOCOL_VERSION);
     ss >> spend;
-//    uint256 dataToBeSigned = uint256S("0x2dbf83fe7b88a7cbd80fac0c719483906bb9a0c4fc69071e4780d5f2c76e592c");
-    //original
-//    uint256 dataToBeSigned = uint256S("67278ccae57267ed7e9db16c7b915be1e0715a373eedf78c74e33d76f132aa8f");
-    //revhex
-//    uint256 dataToBeSigned = uint256S("8faa32f1763de3748cf7ed3e375a71e0e15b917b6cb19d7eed6772e5ca8c2767");
+
     std::string sigStr = env->GetStringUTFChars(sigHash, NULL);
     uint256 dataToBeSigned = uint256S(sigStr);
 

@@ -6,8 +6,6 @@
 #ifndef BITCOIN_SUPPORT_ALLOCATORS_ZEROAFTERFREE_H
 #define BITCOIN_SUPPORT_ALLOCATORS_ZEROAFTERFREE_H
 
-#include "../cleanse.h"
-
 #include <memory>
 #include <vector>
 
