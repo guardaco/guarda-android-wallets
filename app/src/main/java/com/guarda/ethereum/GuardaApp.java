@@ -126,7 +126,7 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
             sharedManager.setHasWifXprvKeys(true);
         }
         //init ndk lib for ZEC
-        if ("com.guarda.zec".equals(packageName)) {
+        if ("guarda.shielded".equals(packageName)) {
             ReLinker.log(logcatLogger).loadLibrary(getApplicationContext(), "native-lib");
             if (BuildConfig.DEBUG)
                 Stetho.initializeWithDefaults(this);
