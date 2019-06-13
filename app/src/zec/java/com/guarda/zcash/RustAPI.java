@@ -124,6 +124,7 @@ public class RustAPI {
     public static native void initWallet(final byte[] data);
     public static native byte[] dPart(final byte[] data);
     public static native String zAddrFromWif(final byte[] data);
+    public static native String getExtsk(final byte[] data);
 
     //endregion
 

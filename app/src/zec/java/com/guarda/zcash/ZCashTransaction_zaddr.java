@@ -464,7 +464,7 @@ public class ZCashTransaction_zaddr {
         byte[] zkproof = pacv.proof;
         byte[] cv = pacv.cv;
 
-        String cmhex = RustAPI.cm(Utils.bytesToHex(dTo), Utils.bytesToHex(pkdTo), value.toString(), snp.getRcmStr());
+        String cmhex = RustAPI.cm(Utils.bytesToHex(dTo), Utils.bytesToHex(pkdTo), bytesToHex(TypeConvert.longToBytes(value)), revHex(snp.getRcmStr()));
         Timber.d("getUotputs cmhex =" + cmhex);
         byte[] cmrust = reverseByteArray(hexToBytes(cmhex));
 

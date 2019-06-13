@@ -16,7 +16,6 @@ import java.util.Arrays;
 
 import timber.log.Timber;
 
-import static com.guarda.zcash.RustAPI.newD;
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.revHex;
 import static com.guarda.zcash.crypto.Utils.reverseByteArray;
@@ -87,7 +86,7 @@ public class SaplingNotePlaintext {
         if (fromByteArray.length == ZC_SAPLING_ENCPLAINTEXT_SIZE)
             System.arraycopy(fromByteArray, 32 + 8 + 11 + 1, memobytes, 0, 512);
 
-        return new SaplingNotePlaintext(d, vbytes, rcm, memobytes);
+        return new SaplingNotePlaintext(d, reverseByteArray(vbytes), reverseByteArray(rcm), memobytes);
     }
 
     public SaplingNotePlaintextEncryptionResult encrypt(byte[] pkd, SaplingNoteEncryption sne) {
@@ -96,7 +95,6 @@ public class SaplingNotePlaintext {
             return null;
         }
 
-//        byte[] saplingEncPlaintext = this.toByteSn();
         byte[] saplingEncPlaintext = this.toBytes();
         Timber.d("SaplingNotePlaintextEncryptionResult encrypt saplingEncPlaintext=" + Arrays.toString(saplingEncPlaintext) + " s=" + saplingEncPlaintext.length);
         byte[] encciphertext = sne.encryptToRecipient(pkd, saplingEncPlaintext);
