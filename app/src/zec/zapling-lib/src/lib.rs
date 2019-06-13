@@ -71,7 +71,7 @@ use zcash_client_backend::{
     },
 };
 
-use zip32::{ExtendedFullViewingKey, ExtendedSpendingKey};
+use zip32::{ChildIndex, ExtendedFullViewingKey, ExtendedSpendingKey};
 
 static mut SAPLING_OUTPUT_PARAMS: Option<Parameters<Bls12>> = None;
 static mut SAPLING_OUTPUT_VK: Option<PreparedVerifyingKey<Bls12>> = None;
@@ -1118,15 +1118,6 @@ pub extern "system" fn librustzcash_sapling_verification_ctx_free(
     drop(unsafe { Box::from_raw(ctx) });
 }
 
-//
-//
-//          JNI part
-//
-//
-
-//wallet
-//xsk: ExtendedSpendingKey = ExtendedSpendingKey::master(&[]);
-
 #[no_mangle]
 pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_initWallet(
     env: JNIEnv<'_>,
@@ -1148,67 +1139,85 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_dPart(
 
     let seed = env.convert_byte_array(seed).unwrap();
 
-    let xsk = ExtendedSpendingKey::master(&seed);
+    let extsk = spending_key(&seed, 1, 0);
 
-        let expsk = &xsk.expsk;
+    let extfvk = ExtendedFullViewingKey::from(&extsk);
 
-        let ask = expsk.ask;//32 //xsk.expsk.ask.into_repr().write_le(&mut buf[..]).unwrap();
-        let nsk = expsk.nsk;//32
-        let ovk = expsk.ovk;
+    let expsk = &extsk.expsk;
 
-        let fvk = FullViewingKey::from_expanded_spending_key(&expsk, &JUBJUB);
-        let ak = &fvk.vk.ak;//32
-        let nk = &fvk.vk.nk;//32
-        let ivk = &fvk.vk.ivk();
+    let ask = expsk.ask;//32
+    let nsk = expsk.nsk;//32
+    let ovk = extfvk.fvk.ovk;
 
-        let extfvk = ExtendedFullViewingKey::from(&xsk);
+    let fvk = &extfvk.fvk;
+    let ak = &fvk.vk.ak;//32
+    let nk = &fvk.vk.nk;//32
+    let ivk = &fvk.vk.ivk();
 
-        let addr = extfvk.default_address().unwrap().1;
+    let addr = extfvk.default_address().unwrap().1;
 
-        //let d = addr.diversifier.g_d::<Bls12>(&JUBJUB).unwrap();
-        let d = addr.diversifier;
-        let pkd = addr.pk_d.clone();
+    let d = addr.diversifier.0;
+    let pkd = addr.pk_d.clone();
 
-        let a = encode_payment_address(HRP_SAPLING_PAYMENT_ADDRESS_TEST, &addr);
-
-        let mut res = vec![];
-        let mut buf = [0; 32];
-        //ask
-        ask.into_repr().write_le(&mut buf[..]).unwrap();
-        res.extend_from_slice(&buf);
-        //nsk
-        nsk.into_repr().write_le(&mut buf[..]).unwrap();
-        res.extend_from_slice(&buf);
-        //ovk
-        res.extend_from_slice(&ovk.0);
-        //ak
-        ak.write(&mut buf[..]).unwrap();
-        res.extend_from_slice(&buf);
-        //nk
-        nk.write(&mut buf[..]).unwrap();
-        res.extend_from_slice(&buf);
-        //ivk
-        ivk.into_repr().write_le(&mut buf[..]).unwrap();
-        res.extend_from_slice(&buf);
-        //d
-        //let mut dvec = vec![];
-        //d.write(&mut dvec).unwrap();
-        res.extend_from_slice(&d.0);
-        //pkd
-        pkd.write(&mut buf[..]).unwrap();
-        res.extend_from_slice(&buf);
-
-
-    //let extfvk = ExtendedFullViewingKey::from(&xsk);
-
-    //let addr = extfvk.default_address().unwrap().1;
-
-    //let d = addr.diversifier.g_d::<Bls12>(&JUBJUB).unwrap();
-
-    //let mut buf = [0; 32];
-    //d.write(&mut buf[..]).unwrap();
+    let mut res = vec![];
+    let mut buf = [0; 32];
+    //ask
+    ask.into_repr().write_le(&mut buf[..]).unwrap();
+    res.extend_from_slice(&buf);
+    //nsk
+    nsk.into_repr().write_le(&mut buf[..]).unwrap();
+    res.extend_from_slice(&buf);
+    //ovk
+    res.extend_from_slice(&ovk.0);
+    //ak
+    ak.write(&mut buf[..]).unwrap();
+    res.extend_from_slice(&buf);
+    //nk
+    nk.write(&mut buf[..]).unwrap();
+    res.extend_from_slice(&buf);
+    //ivk
+    ivk.into_repr().write_le(&mut buf[..]).unwrap();
+    res.extend_from_slice(&buf);
+    //d
+    res.extend_from_slice(&d);
+    //pkd
+    pkd.write(&mut buf[..]).unwrap();
+    res.extend_from_slice(&buf);
 
     env.byte_array_from_slice(res.as_slice()).expect("Could not convert u8 vec into java byte array!")
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_getExtsk(
+    env: JNIEnv<'_>,
+    _: JClass<'_>,
+    seed: jbyteArray,
+) -> jstring {
+
+    let seed = env.convert_byte_array(seed).unwrap();
+
+    let extsk = spending_key(&seed, 1, 0);
+
+
+    let address = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY_TEST,
+                                                  &extsk,
+                                                  );
+
+    let output = env.new_string(address)
+            .expect("Couldn't create java string!");
+
+    output.into_inner()
+}
+
+pub fn spending_key(seed: &[u8], coin_type: u32, account: u32) -> ExtendedSpendingKey {
+    ExtendedSpendingKey::from_path(
+        &ExtendedSpendingKey::master(&seed),
+        &[
+            ChildIndex::Hardened(32),
+            ChildIndex::Hardened(coin_type),
+            ChildIndex::Hardened(account),
+        ],
+    )
 }
 
 #[no_mangle]
@@ -1220,35 +1229,19 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_zAddrFromWif(
 
     let seed = env.convert_byte_array(seed).unwrap();
 
-    let xsk = ExtendedSpendingKey::master(&seed);
+    let extsk = spending_key(&seed, 1, 0);
 
-    let expsk = &xsk.expsk;
+    let extfvk = ExtendedFullViewingKey::from(&extsk);
 
-    let mut res = vec![];
-    let mut buf = [0; 32];
-    let ask = expsk.ask;//32 //xsk.expsk.ask.into_repr().write_le(&mut buf[..]).unwrap();
-    let nsk = expsk.nsk;//32
-    let ovk = expsk.ovk;
+    let address = address_from_extfvk(&extfvk);
 
-    ask.into_repr().write_le(&mut buf[..]).unwrap();
-    res.extend_from_slice(&buf);
-
-    let fvk = FullViewingKey::from_expanded_spending_key(&expsk, &JUBJUB);
-    let ak = &fvk.vk.ak;//32
-    let nk = &fvk.vk.nk;//32
-    let ivk = &fvk.vk.ivk();
-
-    let extfvk = ExtendedFullViewingKey::from(&xsk);
-
-    let addr = extfvk.default_address().unwrap().1;
-
-    let d = addr.diversifier.g_d::<Bls12>(&JUBJUB).unwrap();
-    let pkd = addr.pk_d.clone();
-
-    let a = encode_payment_address(HRP_SAPLING_PAYMENT_ADDRESS_TEST, &addr);
-
-    let output = env.new_string(a)
+    let output = env.new_string(address)
             .expect("Couldn't create java string!");
 
     output.into_inner()
+}
+
+fn address_from_extfvk(extfvk: &ExtendedFullViewingKey) -> String {
+    let addr = extfvk.default_address().unwrap().1;
+    encode_payment_address(HRP_SAPLING_PAYMENT_ADDRESS_TEST, &addr)
 }
