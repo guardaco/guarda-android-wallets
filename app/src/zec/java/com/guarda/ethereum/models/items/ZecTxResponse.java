@@ -52,6 +52,12 @@ public class ZecTxResponse {
     @SerializedName("fees")
     @Expose
     private Double fees;
+    @SerializedName("outputDescs")
+    @Expose
+    private List<OutputDescs> outputDescs;
+    @SerializedName("spendDescs")
+    @Expose
+    private List<SpendDescs> spendDescs;
 
     public String getHash() {
         return txid;
@@ -173,4 +179,11 @@ public class ZecTxResponse {
         this.fees = fees;
     }
 
+    public List<OutputDescs> getOutputDescs() {
+        return outputDescs;
+    }
+
+    public List<SpendDescs> getSpendDescs() {
+        return spendDescs;
+    }
 }

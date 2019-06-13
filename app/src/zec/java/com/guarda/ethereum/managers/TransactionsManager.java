@@ -14,6 +14,8 @@ import java.util.List;
 
 import timber.log.Timber;
 
+import static com.guarda.zcash.crypto.Utils.roundDouble;
+
 /**
  * Hold transactions received from etherscan.io and raw transactions
  * from {@link com.guarda.ethereum.views.activity.SendingCurrencyActivity}
@@ -199,6 +201,18 @@ public class TransactionsManager {
     private long getOutsSumNew(ZecTxResponse item, String ownAddress) {
         long res = 0;
         try {
+            if (item.getVout() != null && item.getOutputDescs() != null) {
+                if (item.getVout().size() == 1 && item.getOutputDescs().size() == 1) {
+                    if (item.getVout().get(0).getScriptPubKey().getAddresses() != null) {
+                        if (item.getVout().get(0).getScriptPubKey().getAddresses().get(0).equals(ownAddress)) {
+                            double d = item.getValueIn() - item.getValueOut();
+                            res = Coin.parseCoin(String.valueOf(roundDouble(d, 8))).getValue();
+                            return res;
+                        }
+                    }
+                }
+            }
+
             for (Vout out : item.getVout()) {
                 // miner's tx has out without scriptPubKey.address
                 if (out.getScriptPubKey().getAddresses() == null) continue;
