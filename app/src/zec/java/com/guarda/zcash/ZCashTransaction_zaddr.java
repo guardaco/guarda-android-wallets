@@ -1,9 +1,6 @@
 package com.guarda.zcash;
 
 import com.google.common.primitives.Bytes;
-import com.guarda.zcash.crypto.Base58;
-import com.guarda.zcash.crypto.ECKey;
-import com.guarda.zcash.crypto.Sha256Hash;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -21,26 +18,14 @@ import com.guarda.zcash.sapling.note.SpendProof;
 import com.guarda.zcash.sapling.tree.IncrementalWitness;
 import com.guarda.zcash.sapling.tree.MerklePath;
 
-import org.spongycastle.asn1.ASN1Integer;
-import org.spongycastle.asn1.DERSequenceGenerator;
 import org.spongycastle.crypto.digests.Blake2bDigest;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 
 import timber.log.Timber;
 
-import static com.guarda.zcash.RustAPI.iwSer;
-import static com.guarda.zcash.RustAPI.newAk;
-import static com.guarda.zcash.RustAPI.newAsk;
-import static com.guarda.zcash.RustAPI.newD;
-import static com.guarda.zcash.RustAPI.newNsk;
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.hexToBytes;
 import static com.guarda.zcash.crypto.Utils.revHex;
@@ -59,7 +44,6 @@ public class ZCashTransaction_zaddr {
     private static final int VERSION_BRANCH_ID_SAPLING = 0x892F2085;
     private static final int CONSENSUS_BRANCH_ID_OVERWINTER = 0x5ba81b19;
     private static final int CONSENSUS_BRANCH_ID_SAPLING = 0x76b809bb;
-    //  private static final int header = 0x80000003; //version=3, fooverwintered=1
     private static final int header = 0x80000004; //version=4, fooverwintered=1
     private static final int versionGroupId = VERSION_BRANCH_ID_SAPLING;
     private static final int consensusBranchId = CONSENSUS_BRANCH_ID_SAPLING;
@@ -67,8 +51,6 @@ public class ZCashTransaction_zaddr {
 
     private byte[] tx_sig_bytes;
     private byte[] tx_bytes;
-//    private Vector<Tx_in> inputs = new Vector<>();
-//    private Vector<Tx_out> outputs = new Vector<>();
     private List<SpendProof>  spendProofList = new ArrayList<>();
     private long locktime = 0;
     private int nExpiryHeight;
@@ -78,16 +60,9 @@ public class ZCashTransaction_zaddr {
     private byte[] shieldedOutputsBlake;
     private int outputsSize = 0;
     private byte[] bytesShieldedSpends = new byte[0];
-    private byte[] bytesSpendAuthSig;
     private byte[] shieldedSpendsBlake;
-    private RustAPI rustAPI;
-    private SpendProof sprf;
-    private byte[] revNewAsk;
     private DbManager dbManager;
-    private String toAddress;
-    private Long value;
     private Long fee;
-    private Long valueBalance;
 
     public ZCashTransaction_zaddr(SaplingCustomFullKey privKey, String toAddress, Long value, Long fee, int expiryHeight,
                                   List<ReceivedNotesRoom> unspents, DbManager dbManager) throws IllegalArgumentException {
@@ -95,8 +70,6 @@ public class ZCashTransaction_zaddr {
         this.privKey = privKey;
         this.nExpiryHeight = expiryHeight;
         this.dbManager = dbManager;
-        this.toAddress = toAddress;
-        this.value = value;
         this.fee = fee;
 
         long valuePool = 0;
@@ -158,24 +131,17 @@ public class ZCashTransaction_zaddr {
 
     }
 
-    public byte[] getBytes() throws ZCashException {
+    public byte[] getBytes() {
 
         calcSigBytes();
-//        calcSpendAuthSig();
         tx_bytes = Bytes.concat(
                 Utils.int32BytesLE(header),
                 Utils.int32BytesLE(versionGroupId),
                 Utils.compactSizeIntLE(0) //transparent inputs size
         );
 
-//        for (int i = 0; i < inputs.size(); i++) {
-//            tx_bytes = Bytes.concat(tx_bytes, getSignedInputBytes(i));
-//        }
-
         tx_bytes = Bytes.concat(tx_bytes, Utils.compactSizeIntLE(0)); //transparent outputs size
-//        for (int i = 0; i < outputs.size(); i++) {
-//            tx_bytes = Bytes.concat(tx_bytes, outputs.get(i).getBytes());
-//        }
+
         byte[] bindingSig = RustAPI.getBsig(fee.toString(), getSignatureHash());
         Timber.d("tx geBytes() bindingSig=" + Arrays.toString(bindingSig) + " s=" + bindingSig.length);
 
@@ -191,18 +157,6 @@ public class ZCashTransaction_zaddr {
         }
 
         tx_bytes = Bytes.concat(
-//                tx_bytes,
-//                Utils.int32BytesLE(locktime),
-//                Utils.int32BytesLE(nExpiryHeight),
-//                Utils.int64BytesLE(- 54321), // valueBalance
-////                Utils.compactSizeIntLE(0), //nShieldedSpend (size)
-//                new byte[32], //hashShieldedSpends, zeros for us (384 bytes * nShieldedSpend)
-////                Utils.compactSizeIntLE(1), //nShieldedOutput (size) TODO: change size of shielded outputs
-//                shieldedOutputsBlake, //hashShieldedOutputs (948 bytes * nShieldedOutput)
-////                Utils.compactSizeIntLE(0), //nJoinSplit (size)
-//                new byte[32], //nJoinSplits, zero
-//                bindingSig
-                //////////// TODO: check the order of parameters
                 tx_bytes,
                 Utils.int32BytesLE(locktime),
                 Utils.int32BytesLE(nExpiryHeight),
@@ -226,10 +180,6 @@ public class ZCashTransaction_zaddr {
 
         Blake2bDigest prevoutsDigest = new Blake2bDigest(null, 32, null, ZCASH_PREVOUTS_HASH_PERSONALIZATION);
         byte[] prevouts_ser = new byte[0];
-//        for (int i = 0; i < inputs.size(); i++) {
-//            ZCashTransaction_zaddr.Tx_in input = inputs.get(i);
-//            prevouts_ser = Bytes.concat(prevouts_ser, input.txid, Utils.int32BytesLE(input.index));
-//        }
 
         prevoutsDigest.update(prevouts_ser, 0, prevouts_ser.length);
         prevoutsDigest.doFinal(hashPrevouts, 0);
@@ -237,24 +187,12 @@ public class ZCashTransaction_zaddr {
         Blake2bDigest sequenceDigest = new Blake2bDigest(null, 32, null, ZCASH_SEQUENCE_HASH_PERSONALIZATION);
 
         byte[] sequence_ser = new byte[0];
-//        for (int i = 0; i < inputs.size(); i++) {
-//            sequence_ser = Bytes.concat(sequence_ser, Utils.int32BytesLE(inputs.get(i).sequence));
-//        }
 
         sequenceDigest.update(sequence_ser, 0, sequence_ser.length);
         sequenceDigest.doFinal(hashSequence, 0);
 
         Blake2bDigest outputsDigest = new Blake2bDigest(null, 32, null, ZCASH_OUTPUTS_HASH_PERSONALIZATION);
         byte[] outputs_ser = new byte[0];
-//        for (int i = 0; i < outputs.size(); i++) {
-//            ZCashTransaction_zaddr.Tx_out out = outputs.get(i);
-//            outputs_ser = Bytes.concat(
-//                    outputs_ser,
-//                    Utils.int64BytesLE(out.value),
-//                    Utils.compactSizeIntLE(out.script.length),
-//                    out.script
-//            );
-//        }
 
         outputsDigest.update(outputs_ser, 0, outputs_ser.length);
         outputsDigest.doFinal(hashOutputs, 0);
@@ -280,61 +218,8 @@ public class ZCashTransaction_zaddr {
     }
 
     private byte[] calcSpendAuthSig(byte[] alpha) {
-//        String alpha = "09a344a7d78aa4e7c6f985b85e9eb94dcc0f1db17dbc7e54ab987a7f836789af"; // uint256
-//        byte[] alpha = sprf.getAlpha();
-
-        //TODO: check revNewAsk
-//        bytesSpendAuthSig = RustAPI.spendSig(bytesToHex(revNewAsk), bytesToHex(alpha), bytesToHex(getSignatureHash()));
         return RustAPI.spendSig(revHex(bytesToHex(privKey.getAsk())), bytesToHex(alpha), bytesToHex(getSignatureHash()));
     }
-
-//    private byte[] getSignedInputBytes(int index) throws ZCashException {
-//        ZCashTransaction_zaddr.Tx_in input = inputs.get(index);
-//        byte[] sign = Bytes.concat(getInputSignature(input), new byte[]{1});
-//        byte[] pubKey = privKey.getPubKeyPoint().getEncoded(true);
-//        return Bytes.concat(
-//                input.txid,
-//                Utils.int32BytesLE(input.index),
-//                Utils.compactSizeIntLE(sign.length + pubKey.length + Utils.compactSizeIntLE(sign.length).length + Utils.compactSizeIntLE(pubKey.length).length),
-//                Utils.compactSizeIntLE(sign.length),
-//                sign,
-//                Utils.compactSizeIntLE(pubKey.length),
-//                pubKey,
-//                Utils.int32BytesLE(input.sequence)
-//        );
-//    }
-
-//    private byte[] getInputSignature(ZCashTransaction_zaddr.Tx_in input) throws ZCashException {
-//        byte[] personalization = Bytes.concat(ZCASH_SIGNATURE_HASH_PERSONALIZATION, Utils.int32BytesLE(consensusBranchId));
-//        Blake2bDigest tx_digest = new Blake2bDigest(null, 32, null, personalization);
-//        byte[] preimage = Bytes.concat(
-//                tx_sig_bytes,
-//                input.txid,
-//                Utils.int32BytesLE(input.index),
-//                Utils.compactSizeIntLE(input.script.length),
-//                input.script,
-//                Utils.int64BytesLE(input.value),
-//                Utils.int32BytesLE(input.sequence)
-//        );
-//
-//        byte[] hash = new byte[32];
-//        tx_digest.update(preimage, 0, preimage.length);
-//        tx_digest.doFinal(hash, 0);
-//        Sha256Hash sha256Hash = new Sha256Hash(hash);
-//        ECKey.ECDSASignature sig = privKey.sign(sha256Hash);
-//        sig = sig.toCanonicalised();
-//        ByteArrayOutputStream bos = new ByteArrayOutputStream(72);
-//        try {
-//            DERSequenceGenerator seq = new DERSequenceGenerator(bos);
-//            seq.addObject(new ASN1Integer(sig.r));
-//            seq.addObject(new ASN1Integer(sig.s));
-//            seq.close();
-//        } catch (IOException e) {
-//            throw new ZCashException("Cannot encode signature into transaction in ZCashTransaction_zaddr.getInputSignature", e);
-//        }
-//
-//        return bos.toByteArray();
-//    }
 
     private byte[] getSignatureHash() {
         byte[] personalization = Bytes.concat(ZCASH_SIGNATURE_HASH_PERSONALIZATION, Utils.int32BytesLE(consensusBranchId));
@@ -351,7 +236,7 @@ public class ZCashTransaction_zaddr {
     private SpendProof addSpendS(ReceivedNotesRoom in) {
         SaplingWitnessesRoom witness = dbManager.getAppDb().getSaplingWitnessesDao().getWitness(in.getCm());
         IncrementalWitness iw = IncrementalWitness.fromJson(witness.getWitness());
-//        IncrementalWitness iw = IncrementalWitness.fromJson(iwSer);
+
         String anchor = iw.root();
         MerklePath mp = iw.path();
         Timber.d("addSpendS anchor=%s", anchor);
@@ -362,34 +247,18 @@ public class ZCashTransaction_zaddr {
         Timber.d("addSpendS alpha=%s", alpha);
         String v = in.getValue().toString();
 
-
-//        RustAPI rapi = new RustAPI(context);
-//        rapi.checkInit();
-
         byte[] spProof = RustAPI.spendProof(
-                revHex(bytesToHex(privKey.getAk())),//+ //TODO: check reverse bytes
-                revHex(bytesToHex(privKey.getNsk())),//+ //TODO: check reverse bytes
-                bytesToHex(privKey.getD()),//+
-                (bytesToHex(r)),//+ //TODO: check reverse bytes
-                alpha,//+
-                v,//+
-                revHex(anchor),//+
-                mp.getAuthPathPrimitive(),//+
-                mp.getIndexPrimitive()//+
+                revHex(bytesToHex(privKey.getAk())),
+                revHex(bytesToHex(privKey.getNsk())),
+                bytesToHex(privKey.getD()),
+                (bytesToHex(r)),
+                alpha,
+                v,
+                revHex(anchor),
+                mp.getAuthPathPrimitive(),
+                mp.getIndexPrimitive()
         );
-//        //TODO; check init before spendProof
-//        byte[] spProof = RustAPI.spendProof(
-//                revHex(bytesToHex(newAk)),//+ //TODO: check reverse bytes
-//                revHex(bytesToHex(newNsk)),//+ //TODO: check reverse bytes
-//                bytesToHex(newD),//+
-//                (bytesToHex(r)),//+ //TODO: check reverse bytes
-//                alpha,//+
-//                v,//+
-//                revHex(anchor),//+
-//                mp.getAuthPathPrimitive(),//+
-//                mp.getIndexPrimitive()//+
-//        );
-        // cv, rk, zproof, nf
+
         Timber.d("addSpendS spProof=%s %d", Arrays.toString(spProof), spProof.length);
 
         byte[] cv = new byte[32];
@@ -404,34 +273,17 @@ public class ZCashTransaction_zaddr {
         System.arraycopy(spProof, 64 + 192, nullifier, 0, 32);
 
         Timber.d("addSpendS nf=%s, %s", in.getNf(), bytesToHex(nullifier));
-        //cv + anchor + nullifier + rk + zkproof
-
-//        String nf = "8719a09298fffc28f042b81fd65faa04c179d85675217f16bd056643f4af794a"; //uint256
         return new SpendProof(cv, hexToBytes(anchor), nullifier, rk, zkproof, al);
     }
 
     private byte[] getUotput(byte[] dTo, byte[] pkdTo, Long value) {
-//        byte[] d = newD;
-//        byte[] pkbytes = newPkd;
-//        byte[] ovkM = newOvk;
-//        print("d=" + Arrays.toString(d) + " size=" + d.length);
-//        print("pkbytes=" + Arrays.toString(pkbytes) + " size=" + pkbytes.length);
-        //vShieldedOutput
         String rhex = RustAPI.genr();
         Timber.d("getUotputs rhex=%s", rhex);
-//        SaplingNote sn = new SaplingNote(d, pkbytes, new BigInteger("54321").longValue(), hexToBytes(rhex), rhex);
-//        SaplingNotePlaintext snp = new SaplingNotePlaintext(sn, new byte[512]);
         SaplingNotePlaintext snp = new SaplingNotePlaintext(dTo, TypeConvert.longToBytes(value), hexToBytes(rhex), new byte[512], rhex);
 
         // SaplingNoteEncryption
         String eskhex = RustAPI.genr();
         String epkstr = RustAPI.epk(Utils.bytesToHex(dTo), eskhex);
-        Timber.d("getUotputs epkstr=" + epkstr);
-//        if (epkstr.equals("librustzcash_sapling_ka_derivepublic=false")) {
-//            print("first time is librustzcash_sapling_ka_derivepublic=false - recall");
-//            epkstr = epk(Utils.bytesToHex(d), eskhex);
-//        }
-//
         Timber.d("getUotputs epkstr=" + epkstr);
         SaplingNoteEncryption sne = new SaplingNoteEncryption(reverseByteArray(Utils.hexToBytes(epkstr)), reverseByteArray(hexToBytes(eskhex)), eskhex);
         Timber.d("getUotputs " + sne.toString());
@@ -483,9 +335,6 @@ public class ZCashTransaction_zaddr {
     }
 
     private ProofAndCv getProof(byte[] d, byte[] pkd, byte[] esk, String eskhex, String rStr, Long value) {
-        // TODO:
-        //        checkInit();
-
         /**
          * expected 256 bytes (proof + cv + rcv)
          */
