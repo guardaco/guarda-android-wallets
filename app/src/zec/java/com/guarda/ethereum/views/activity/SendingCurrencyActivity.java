@@ -89,7 +89,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     private boolean isInclude = false;
     private long currentFeeEth;
     private String arrivalAmountToSend;
-    private final Coin defaultFee = Coin.valueOf(558);
+    private final Coin defaultFee = Coin.valueOf(10000);
 
 
     @Override
