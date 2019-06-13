@@ -27,7 +27,9 @@ import java.util.Vector;
 
 import timber.log.Timber;
 
+import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.hexToBytes;
+import static com.guarda.zcash.crypto.Utils.revHex;
 import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 
 public class ZCashTransaction_ttoz {
@@ -124,17 +126,6 @@ public class ZCashTransaction_ttoz {
 
     byte[] bindingSig = RustAPI.getBsig(String.valueOf(-value), getSignatureHash());
     Timber.d("tx geBytes() bindingSig=" + Arrays.toString(bindingSig) + " s=" + bindingSig.length);
-
-//    tx_bytes = Bytes.concat(
-//            tx_bytes,
-//            new byte[32], //hashJoinSplits, zeros for us
-//            new byte[32], //hashShieldedSpends, zeros for us
-//            new byte[32], //hashShieldedOutputs, zeros for us
-//            Utils.int32BytesLE(locktime),
-//            Utils.int32BytesLE(nExpiryHeight),
-//            Utils.int64BytesLE(0),
-//            Utils.compactSizeIntLE(0)
-//    );
 
     tx_bytes = Bytes.concat(
             tx_bytes,
@@ -308,7 +299,7 @@ public class ZCashTransaction_ttoz {
     byte[] zkproof = pacv.proof;
     byte[] cv = pacv.cv;
 
-    String cmhex = RustAPI.cm(Utils.bytesToHex(dTo), Utils.bytesToHex(pkdTo), value.toString(), snp.getRcmStr());
+    String cmhex = RustAPI.cm(Utils.bytesToHex(dTo), bytesToHex(pkdTo), bytesToHex(TypeConvert.longToBytes(value)), revHex(snp.getRcmStr()));
     Timber.d("getUotputs cmhex =" + cmhex);
     byte[] cmrust = reverseByteArray(hexToBytes(cmhex));
 
@@ -327,9 +318,6 @@ public class ZCashTransaction_ttoz {
   }
 
   private ProofAndCv getProof(byte[] d, byte[] pkd, byte[] esk, String eskhex, String rStr, Long value) {
-    // TODO:
-    //        checkInit();
-
     /**
      * expected 256 bytes (proof + cv + rcv)
      */
