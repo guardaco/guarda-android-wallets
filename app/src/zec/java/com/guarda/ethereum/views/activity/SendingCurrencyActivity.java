@@ -85,7 +85,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     private boolean isInclude = false;
     private long currentFeeEth;
     private String arrivalAmountToSend;
-    private final Coin defaultFee = Coin.valueOf(10000);
+    private Coin defaultFee = Coin.valueOf(558);
 
 
     @Override
@@ -129,7 +129,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void initFeeField() {
-//        Coin defaultFee = Coin.valueOf(164000);
+        if (isSaplingAddress) defaultFee = Coin.valueOf(10000);
         currentFeeEth = defaultFee.getValue();
         etFeeAmount.setText(defaultFee.toPlainString());
         updateArrivalField();
