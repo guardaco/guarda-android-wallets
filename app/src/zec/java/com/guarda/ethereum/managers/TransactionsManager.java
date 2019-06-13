@@ -164,7 +164,6 @@ public class TransactionsManager {
             if (item.getVin().size() == 0) return 0;
             if (item.getVin().get(0).getAddr() != null && item.getVin().get(0).getAddr().equals(ownAddress)) {
                 txSum = getOutsSumNew(item, ownAddress);
-//            txSum *= -1;
             } else {
                 txSum = getInputsSumNew(item, ownAddress);
             }

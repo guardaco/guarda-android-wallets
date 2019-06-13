@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.managers.BitcoinNodeManager;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
@@ -29,10 +28,7 @@ import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.utils.CurrencyUtils;
 import com.guarda.ethereum.utils.DigitsInputFilter;
 import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
-import com.guarda.zcash.WalletCallback;
 import com.guarda.zcash.ZCashException;
-import com.guarda.zcash.ZCashTransaction_taddr;
-import com.guarda.zcash.ZCashTransaction_ttoz;
 import com.guarda.zcash.ZCashWalletManager;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -526,50 +522,28 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                     (r1, r2) -> {
                             Timber.d("sendSaplingToSapling onResponse " + r1);
                             if (r1.equals("ok")) {
-                                try {
-                                    byte[] bytes = r2.getBytes();
-                                    Timber.d("sendSaplingToSapling bytes=%s %d", Arrays.toString(bytes), bytes.length);
-                                    String lastTxhex = Utils.bytesToHex(bytes);
-                                    Timber.d("sendSaplingToSapling lastTxhex=%s", lastTxhex);
+                                byte[] bytes = r2.getBytes();
+                                Timber.d("sendSaplingToSapling bytes=%s %d", Arrays.toString(bytes), bytes.length);
+                                String lastTxhex = Utils.bytesToHex(bytes);
+                                Timber.d("sendSaplingToSapling lastTxhex=%s", lastTxhex);
 
-                                    RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
-                                        @Override
-                                        public void onSuccess(Object response) {
-                                            SendRawTxResponse res = (SendRawTxResponse) response;
+                                RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
+                                    @Override
+                                    public void onSuccess(Object response) {
+                                        SendRawTxResponse res = (SendRawTxResponse) response;
 
-                                            Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
-                                            closeProgress();
-                                            showCongratsActivity();
-                                        }
+                                        Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
+                                        closeProgress();
+                                        showCongratsActivity();
+                                    }
 
-                                        @Override
-                                        public void onFailure(String msg) {
-                                            closeProgress();
-                                            doToast(CurrencyUtils.getBtcLikeError(msg));
-                                            Timber.d("broadcastRawTxZexNew e=%s", msg);
-                                        }
-                                    });
-
-//                                    BitcoinNodeManager.sendTransaction(lastTxhex, new ApiMethods.RequestListener() {
-//                                        @Override
-//                                        public void onSuccess(Object response) {
-//                                            SendRawTxResponse res = (SendRawTxResponse) response;
-//                                            Log.d("TX_RES", "res " + res.getHashResult() + " error " + res.getError());
-//                                            closeProgress();
-//                                            showCongratsActivity();
-//                                        }
-//                                        @Override
-//                                        public void onFailure(String msg) {
-//                                            closeProgress();
-//                                            doToast(CurrencyUtils.getBtcLikeError(msg));
-//                                            Log.d("svcom", "failure - " + msg);
-//                                        }
-//                                    });
-                                } catch (ZCashException e) {
-                                    closeProgress();
-                                    doToast("Error: " + e.getMessage());
-                                    Timber.e("sendSaplingToSapling Cannot sign transaction");
-                                }
+                                    @Override
+                                    public void onFailure(String msg) {
+                                        closeProgress();
+                                        doToast(CurrencyUtils.getBtcLikeError(msg));
+                                        Timber.d("broadcastRawTxZexNew e=%s", msg);
+                                    }
+                                });
                             } else {
                                 closeProgress();
                                 doToast("Sending error: " + r1);

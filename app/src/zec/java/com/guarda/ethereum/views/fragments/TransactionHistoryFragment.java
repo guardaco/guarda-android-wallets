@@ -31,7 +31,6 @@ import com.guarda.ethereum.managers.CoinmarketcapHelper;
 import com.guarda.ethereum.managers.NetworkManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.TransactionsManager;
-import com.guarda.ethereum.managers.WalletCreationCallback;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
@@ -373,36 +372,18 @@ public class TransactionHistoryFragment extends BaseFragment {
             String key = args.getString(KEY);
             if (!TextUtils.isEmpty(key)) {
                 showProgress(getStringIfAdded(R.string.restoring_wallet));
-//                if (key.substring(0, 4).equalsIgnoreCase("xprv")) {
-//                    walletManager.restoreFromBlockByXPRV(key, new WalletCreationCallback() {
-//                        @Override
-//                        public void onWalletCreated(Object walletFile) {
-//                            if (isVisible) {
-//                                closeProgress();
-//                                showBalance(true);
-//                            }
-//                        }
-//                    });
-//                } else {
-                    walletManager.restoreFromBlock(key, new WalletCreationCallback() {
-                        @Override
-                        public void onWalletCreated() {
+                    walletManager.restoreFromBlock(key, () -> {
                             try {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
+                                getActivity().runOnUiThread(() -> {
                                         if (isVisible) {
                                             closeProgress();
                                             updBalanceHistSync();
                                         }
-                                    }
                                 });
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        }
                     });
-//                }
             }
         }
     }
