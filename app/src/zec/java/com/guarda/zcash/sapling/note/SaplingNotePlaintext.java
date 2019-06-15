@@ -17,6 +17,7 @@ import java.util.Arrays;
 import timber.log.Timber;
 
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
+import static com.guarda.zcash.crypto.Utils.hexToBytes;
 import static com.guarda.zcash.crypto.Utils.revHex;
 import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 
@@ -203,7 +204,11 @@ public class SaplingNotePlaintext {
     byte[] toBytes() {
         byte[] bytes = new byte[0];
         byte[] leadingByte = T01;
-        return Bytes.concat(bytes, leadingByte, d, vbytes, rcmbytes, memobytes);
+        String hexValue = bytesToHex(vbytes);
+        hexValue = revHex(hexValue);
+        String hexR = bytesToHex(rcmbytes);
+        hexR = revHex(hexR);
+        return Bytes.concat(bytes, leadingByte, d, hexToBytes(hexValue), hexToBytes(hexR), memobytes);
     }
 
     @Override

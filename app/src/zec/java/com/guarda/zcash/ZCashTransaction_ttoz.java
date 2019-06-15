@@ -29,7 +29,6 @@ import timber.log.Timber;
 
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.hexToBytes;
-import static com.guarda.zcash.crypto.Utils.revHex;
 import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 
 public class ZCashTransaction_ttoz {
