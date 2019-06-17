@@ -65,7 +65,12 @@ use jni::{
 };
 
 use zcash_client_backend::{
-    constants::{HRP_SAPLING_EXTENDED_SPENDING_KEY_TEST, HRP_SAPLING_PAYMENT_ADDRESS_TEST},
+    constants::{
+    HRP_SAPLING_EXTENDED_SPENDING_KEY_MAIN,
+    HRP_SAPLING_EXTENDED_SPENDING_KEY_TEST,
+    HRP_SAPLING_PAYMENT_ADDRESS_MAIN,
+    HRP_SAPLING_PAYMENT_ADDRESS_TEST
+    },
     encoding::{
             decode_extended_spending_key, decode_payment_address, encode_extended_spending_key, encode_payment_address,
     },
