@@ -66,38 +66,4 @@ public class CreateTransaction_zaddr extends AbstractZCashRequest implements Run
 
   }
 
-  private ZCashTransaction_zaddr createTransaction() throws ZCashException {
-    List<ReceivedNotesRoom> listRnr = dbManager.getAppDb().getReceivedNotesDao().getAllNotes();
-    Timber.d("listRnr s=%s", listRnr.size());
-
-    List<ZCashTransactionOutput> outputs = new LinkedList<>();
-    long realValue = chooseUTXOs(outputs);
-    if (realValue < fee + value) {
-      throw new ZCashException("Not enough balance.");
-    }
-//    TestScanBlocks tsb = new TestScanBlocks();
-//    tsb.getWintesses();
-//    SpendProof spendProof = tsb.addSpendS();
-    SpendProof spendProof = new SpendProof(new byte[0], new byte[0], new byte[0], new byte[0], new byte[0], new byte[0]);
-
-//    return new ZCashTransaction_zaddr(DumpedPrivateKey.fromBase58(privateKey), fromAddr, toAddr,
-//            value, fee, expiryHeight, outputs, spendProof);
-    return null;
-  }
-
-
-  private long chooseUTXOs(List<ZCashTransactionOutput> outputs) {
-    long realValue = value + fee;
-    long sum = 0;
-    for (ZCashTransactionOutput out : utxos) {
-      outputs.add(out);
-      sum += out.value;
-      if (sum >= realValue) {
-        break;
-      }
-
-    }
-
-    return sum;
-  }
 }

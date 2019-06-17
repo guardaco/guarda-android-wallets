@@ -93,8 +93,6 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
             setCurrentBalance(WalletManager.getFriendlyBalance(walletManager.getMyBalance()), sharedManager.getCurrentCurrency().toUpperCase());
         }
 
-        if (BuildConfig.DEBUG) etAmountToSend.setText("0.00001");
-
         etAmountToSend.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -106,10 +104,8 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
                 hideError(etAmountToSend);
                 if (s.length() > 0) {
                     findViewById(R.id.eth_hint).setVisibility(View.VISIBLE);
-//                    findViewById(R.id.btn_max).setVisibility(View.GONE);
                 } else {
                     findViewById(R.id.eth_hint).setVisibility(View.GONE);
-//                    findViewById(R.id.btn_max).setVisibility(View.VISIBLE);
                 }
                 inputLayout.setCurrentText(s.toString());
             }

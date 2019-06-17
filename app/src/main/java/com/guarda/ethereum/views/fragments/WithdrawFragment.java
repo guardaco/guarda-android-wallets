@@ -162,7 +162,6 @@ public class WithdrawFragment extends BaseFragment{
     private void goNext(final String address) {
         final WithdrawFragment thisFragment = this;
         if (!address.isEmpty()) {
-//            if (!address.toLowerCase().equals(walletManager.getWalletFriendlyAddress().toLowerCase())) {
                     walletManager.isAddressValid(address, new Callback<Boolean>() {
                         @Override
                         public void onResponse(final Boolean response) {
@@ -185,9 +184,6 @@ public class WithdrawFragment extends BaseFragment{
                             }
                         }
                     });
-//            } else {
-//                showError(etSendCoinsAddress, getString(R.string.sanding_address_can_not_be_same));
-//            }
         } else {
             showError(etSendCoinsAddress, getString(R.string.withdraw_address_not_valid));
         }
@@ -243,7 +239,6 @@ public class WithdrawFragment extends BaseFragment{
                     break;
                 case 1:
                     isSaplingAddress = true;
-                    if (BuildConfig.DEBUG) etSendCoinsAddress.setText("ztestsapling1wrjqt8et9elq7p0ejlgfpt4j9m7r7d4qlt7cke7ppp7dwrpev3yln30c37mrnzzekceajk66h0n");
                     break;
             }
         });
@@ -260,17 +255,6 @@ public class WithdrawFragment extends BaseFragment{
     }
 
     private void initDropDownSpinner(final String[] array) {
-
-//        try {
-//            Field popup = Spinner.class.getDeclaredField("mPopup");
-//            popup.setAccessible(true);
-//
-//            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spCurrencies);
-//            popupWindow.setHeight(800);
-//        } catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.view_spinner_item, array);
         spCurrencies.setAdapter(adapter);
         spCurrencies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

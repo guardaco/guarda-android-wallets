@@ -4,7 +4,7 @@ public class Common {
 
     public final static String BLOCK = "passphrase";
     public final static String BTC_NODE_LOGIN = "guarda";
-    public final static String BTC_NODE_PASS = "X5at2B-rGKmVDVMeqEnv4-l9w67cDsXww4pmudHq05g=";
+    public final static String BTC_NODE_PASS = "zeR2qqz0lHiUrjgIZ0XEesFiMlHAsAQYyAbpL4TyNj5eKHTE";
     public final static String NODE_ADDRESS = "https://zec.guarda.co";
     public final static String MAIN_CURRENCY = "zec";
     public final static String MAIN_CURRENCY_NAME = "zcash";

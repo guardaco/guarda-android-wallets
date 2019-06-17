@@ -140,8 +140,6 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 try {
                     HashMap<String, TxFeeResponse> feesMap = (HashMap<String, TxFeeResponse>) response;
                     BigDecimal fee = new BigDecimal(feesMap.get(Common.MAIN_CURRENCY.toLowerCase()).getFee());
-                    //fee to fee per Kb (1 Kb is 1000 bytes)
-//                    fee = fee.divide(avgTxSizeKb, BigDecimal.ROUND_HALF_UP);
                     fee = fee.setScale(8, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
                     etFeeAmount.setText(fee.toPlainString());
 
@@ -263,8 +261,6 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         try {
             currentFeeEth = Coin.parseCoin(etFeeAmount.getText().toString()).getValue();
             long sumSatoshi = Coin.parseCoin(etSumSend.getText().toString()).getValue();
-            // divide on 2 - to prevent not_enough_money_error in case of sending all wallet's money include fee
-//            long totalFee = walletManager.calculateFee(getToAddress(), sumSatoshi / 2, currentFeeEth);
             long totalFee = currentFeeEth;
             Log.d("flint", "1 amountToSend=" + sumSatoshi + ", currentFeeEth=" + currentFeeEth + ", totalFee=" + totalFee);
             if (isInclude) {
@@ -277,7 +273,8 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 arrivalAmountToSend = Coin.valueOf(sumSatoshi).toPlainString();
             }
             etArrivalAmount.setText(arrivalAmountToSend);
-            if (!isInclude && Coin.valueOf(currentFeeEth).plus(Coin.parseCoin(amountToSend)).compareTo(walletManager.getMyBalance()) > 0) {
+            Coin tzBalance = isSaplingAddress ? Coin.parseCoin(saplingBalance) : walletManager.getMyBalance();
+            if (!isInclude && Coin.valueOf(currentFeeEth).plus(Coin.parseCoin(amountToSend)).compareTo(tzBalance) > 0) {
                 showError(etArrivalAmount, getString(R.string.not_enough_money_to_send));
             } else {
                 hideError(etArrivalAmount);
@@ -304,7 +301,6 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
             try {
                 long sumSatoshi = Coin.parseCoin(etSumSend.getText().toString()).getValue();
                 long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
-//                long totalFee = walletManager.calculateFee(getToAddress(), amountSatoshi, currentFeeEth);
                 long totalFee = currentFeeEth;
                 Log.d("flint", "2 amountToSend=" + amountSatoshi + ", currentFeeEth=" + currentFeeEth + ", totalFee=" + totalFee);
                 if (isInclude) {
@@ -346,13 +342,11 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         switch (view.getId()) {
             case R.id.btn_include:
                 isInclude = true;
-//                checkFeeLessAmount();
                 updateArrivalField();
                 checkBtnIncludeStatus(isInclude);
                 break;
             case R.id.btn_exclude:
                 isInclude = false;
-//                checkFeeLessAmount();
                 updateArrivalField();
                 checkBtnIncludeStatus(isInclude);
                 break;
