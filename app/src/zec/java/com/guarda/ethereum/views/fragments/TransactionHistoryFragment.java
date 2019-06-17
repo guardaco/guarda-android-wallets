@@ -196,6 +196,12 @@ public class TransactionHistoryFragment extends BaseFragment {
         updBalanceHistSync();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setSyncStatus();
+    }
+
     @TargetApi(Build.VERSION_CODES.M)
     private void initFabHider() {
         nsvMainScrollLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
