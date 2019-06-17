@@ -155,7 +155,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         initTokens(tokensList);
 
         nsvMainScrollLayout.smoothScrollTo(0, 0);
-        setCryptoBalance();
 
         fabMenu.setClosedOnTouchOutside(true);
         rl_testnet_alert.setVisibility(View.VISIBLE);

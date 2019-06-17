@@ -48,7 +48,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:gravity="center"
-                                android:text="0.00"
+                                android:text="..."
                                 android:textColor="@color/whiteTextColor"
                                 android:textSize="30dp" />
 
@@ -59,7 +59,7 @@
                                 android:layout_below="@+id/tv_wallet_count"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
-                                android:text="0.00 USD"
+                                android:text="... USD"
                                 android:textColor="@color/whiteTextColor"
                                 android:textSize="24dp" />
                         </RelativeLayout>
