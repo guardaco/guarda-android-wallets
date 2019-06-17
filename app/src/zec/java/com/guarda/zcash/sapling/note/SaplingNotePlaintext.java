@@ -44,11 +44,6 @@ public class SaplingNotePlaintext {
     private static final int COMPACT_NOTE_SIZE = 1 + 11 + 8 + 32; // version + diversifier + value + rcv
     private static final byte[] T01 = {(byte) 0x01};
 
-    public SaplingNotePlaintext(SaplingNote sn, byte[] memo) {
-        this.sn = sn;
-        this.memo = memo;
-    }
-
     public SaplingNotePlaintext(byte[] d, byte[] vbytes, byte[] rcmbytes, byte[] memobytes, String rHex) {
         this.d = d;
         this.vbytes = vbytes;
@@ -156,7 +151,6 @@ public class SaplingNotePlaintext {
         byte[] nPub = new byte[AEAD.CHACHA20POLY1305_IETF_NPUBBYTES]; // should be 12 bytes
         LazySodiumAndroid lazySodium = LsaSingle.getInstance();
 
-        // return SaplingEncPlaintext
         String decrypt = lazySodium.decrypt(ciphertextHex, null, nPub, Key.fromBytes(K), AEAD.Method.CHACHA20_POLY1305_IETF);
         Timber.d("decryptFullCipher lazySodium.decrypt hex=%s", decrypt);
 

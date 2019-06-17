@@ -28,4 +28,7 @@ public interface TxDao {
 
     @Delete
     void delete(TxRoom person);
+
+    @Query("DELETE FROM txs")
+    void dropAll();
 }

@@ -32,7 +32,9 @@ public class CallFindWitnesses implements Callable<Boolean> {
 
     private DbManager dbManager;
     private SaplingCustomFullKey saplingKey;
-    private Long startHeight = 490132L;
+//    private Long startHeight = 490132L;
+    private Long startHeight = 419200L;
+    private Long checkHeight = 419200L;
 
     public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey) {
         this.dbManager = dbManager;
@@ -44,10 +46,6 @@ public class CallFindWitnesses implements Callable<Boolean> {
         Timber.d("started");
         SaplingMerkleTree saplingTree = new SaplingMerkleTree();
         List<SaplingWitnessesRoom> existingWitnesses = dbManager.getAppDb().getSaplingWitnessesDao().getAllWitnesses();
-
-//        Long lastHeight = dbManager.getAppDb().getSaplingWitnessesDao().getLastHeight();
-//        Timber.d("last witness height lastHeight=%d", lastHeight);
-//        if (lastHeight != null && lastHeight > startHeight) startHeight = lastHeight;
 
         List<BlockRoom> blocks = dbManager.getAppDb().getBlockDao().getAllBlocksOrdered();
 
@@ -125,14 +123,15 @@ public class CallFindWitnesses implements Callable<Boolean> {
                 }
             }
 
-            if (br.getHeight() == startHeight) {
-                saplingTree = new SaplingMerkleTree(treeOnHeight490132);
+//            if (br.getHeight() == startHeight) {
+            if (br.getHeight() == checkHeight) {
+//                saplingTree = new SaplingMerkleTree(treeOnHeight490132);
                 try {
-                    Timber.d("saplingTree.serialize() at 490132 root=%s", saplingTree.root());
+                    Timber.d("saplingTree.serialize() at %d root=%s", br.getHeight(), saplingTree.root());
                 } catch (ZCashException e) {
-                    Timber.d("saplingTree.serialize() at 490132 errr=%s", e.getMessage());
+                    Timber.d("saplingTree.serialize() at d errr=%s", br.getHeight(), e.getMessage());
                 }
-                Timber.d("saplingTree.serialize() at 490132=%s", saplingTree.serialize());
+                Timber.d("saplingTree.serialize() at d=%s", br.getHeight(), saplingTree.serialize());
             }
 
             //save updated witnesses to DB

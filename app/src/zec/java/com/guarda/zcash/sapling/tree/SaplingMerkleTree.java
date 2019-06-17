@@ -16,7 +16,6 @@ public class SaplingMerkleTree {
     public static final int SAPLING_INCREMENTAL_MERKLE_TREE_DEPTH = 32;
     private static EmptyMerkleRoots emptyroots = new EmptyMerkleRoots(SAPLING_INCREMENTAL_MERKLE_TREE_DEPTH);
 //    private static EmptyMerkleRoots emptyroots = new EmptyMerkleRoots(INCREMENTAL_MERKLE_TREE_DEPTH_TESTING);
-    private int deserIndex = 0;
 
     public SaplingMerkleTree() {
         this.left = "";
@@ -33,32 +32,6 @@ public class SaplingMerkleTree {
         } catch (ZCashException e) {
             Timber.e("serialize wfcheck() e=%s", e.getMessage());
         }
-    }
-
-    public SaplingMerkleTree(String serializedTree) {
-        left = deserializeStep(serializedTree);
-        right = deserializeStep(serializedTree);
-
-        parents = new ArrayList<>();
-
-        int size = Integer.parseInt(serializedTree.substring(deserIndex, deserIndex + 2), 16);
-        if (size == 0) return;
-
-        deserIndex += 2;
-
-        for (int i = 0; i < size; i++)
-            parents.add(i, deserializeStep(serializedTree));
-    }
-
-    private String deserializeStep(String serStr) {
-        String res = "";
-        if (serStr.substring(deserIndex, deserIndex + 2).equals("00")) {
-            deserIndex += 2;
-        } else {
-            res = serStr.substring(deserIndex + 2, deserIndex + 2 + 64);
-            deserIndex += 2 + 64;
-        }
-        return res;
     }
 
     public int size() {
@@ -79,7 +52,6 @@ public class SaplingMerkleTree {
     }
 
     public void append(String hash) throws ZCashException {
-//        hash = Utils.revHex(hash);
         if (isComplete(SAPLING_INCREMENTAL_MERKLE_TREE_DEPTH)) {
 //        if (isComplete(INCREMENTAL_MERKLE_TREE_DEPTH_TESTING)) {
             throw new ZCashException("SaplingMerkleTree append() tree is completed");
@@ -250,10 +222,8 @@ public class SaplingMerkleTree {
             d++;
         }
 
-        //TODO: maybe byte[][]
         List<List<Boolean>> merkelPath = new ArrayList<>();
         for (String b : path) {
-//            byte[] hashv = Utils.reverseByteArray(Utils.hexToBytes(b));
             byte[] hashv = Utils.hexToBytes(b);
             merkelPath.add(Utils.byteArray2BitArray(hashv));
         }
@@ -262,11 +232,6 @@ public class SaplingMerkleTree {
         Collections.reverse(index);
 
         return new MerklePath(merkelPath, index);
-    }
-
-    public String empty_root() {
-        return emptyroots.empty_root(SAPLING_INCREMENTAL_MERKLE_TREE_DEPTH);
-//        return emptyroots.empty_root(INCREMENTAL_MERKLE_TREE_DEPTH_TESTING);
     }
 
     public String last() throws ZCashException {

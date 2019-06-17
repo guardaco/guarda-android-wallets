@@ -4,18 +4,14 @@ import android.content.Context;
 import android.net.Credentials;
 import android.util.Log;
 
-import com.guarda.ethereum.BuildConfig;
-import com.guarda.zcash.RustAPI;
-import com.guarda.zcash.WalletCallback;
-import com.guarda.zcash.ZCashException;
-import com.guarda.zcash.ZCashWalletManager;
-import com.guarda.zcash.crypto.BrainKeyDict;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.utils.DebugHelper;
-import com.guarda.ethereum.utils.FileUtils;
+import com.guarda.zcash.RustAPI;
+import com.guarda.zcash.ZCashException;
+import com.guarda.zcash.ZCashWalletManager;
+import com.guarda.zcash.crypto.BrainKeyDict;
 import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
-
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
@@ -29,16 +25,11 @@ import org.spongycastle.util.encoders.Hex;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.HashSet;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import timber.log.Timber;
-
-import static com.google.common.base.Preconditions.checkState;
-import static com.guarda.ethereum.models.constants.Common.BIP_39_WORDLIST_ASSET;
 
 
 /**
@@ -101,12 +92,6 @@ public class WalletManager {
 
     public void restoreFromBlock(String mnemonicCode, final WalletCreationCallback callback) {
         try {
-//            ZCashWalletManager.getInstance().importWallet_taddr(mnemonicCode,
-//                    ZCashWalletManager.UpdateRequirement.NO_UPDATE,
-//                    (r1, r2) -> {
-//                            callback.onWalletCreated();
-//                            Log.i("RESPONSE CODE", r1);
-//                    });
             mnemonicKey = mnemonicCode;
             walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
             saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());

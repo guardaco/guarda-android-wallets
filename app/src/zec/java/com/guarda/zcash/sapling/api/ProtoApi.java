@@ -20,34 +20,25 @@ import timber.log.Timber;
 @AutoInjector(GuardaApp.class)
 public class ProtoApi {
 
-//    public long pageNum = 252500;
-//    public long pageNum = 282732;
-//    public long pageNum = 280000;
-//    public long pageNum = 478034;
-//    public long pageNum = 451320;
-//    public long pageNum = 464563;
-//    public long pageNum = 421059;
-    public long pageNum = 437489;
-    private ManagedChannel channel = null;
+    public long pageNum = 419200;
+    private ManagedChannel channel;
 
     @Inject
     DbManager dbManager;
 
-//    public ProtoApi(DbManager dbManager) {
     public ProtoApi() {
         GuardaApp.getAppComponent().inject(this);
-//        this.dbManager = new DbManager();
 //        String host = "lightwalletd.z.cash";
-//        String host = "10.88.66.3";
-        String host = "46.4.115.12";
-//        int port = 9067;
-        int port = 7878;
+        String host = "10.88.66.22"; //9067
+//        String host = "46.4.115.12";
+        int port = 9067;
+//        int port = 7878;
         channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
     }
 
     public Boolean gB(long fBlock, long tBlock) {
         Timber.d("ProtoApi getBlocks started");
-        Iterator<CompactFormats.CompactBlock> l = null;
+        Iterator<CompactFormats.CompactBlock> l;
         try {
             CompactTxStreamerGrpc.CompactTxStreamerBlockingStub stub = CompactTxStreamerGrpc.newBlockingStub(channel);
 

@@ -27,7 +27,7 @@ public class SyncManager {
 
     private boolean inProgress;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private long endB = 437489;
+    private long endB = 518945;
 
     @Inject
     DbManager dbManager;

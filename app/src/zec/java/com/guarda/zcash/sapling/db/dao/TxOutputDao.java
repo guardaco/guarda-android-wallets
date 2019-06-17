@@ -27,4 +27,7 @@ public interface TxOutputDao {
 
     @Query("SELECT txHash FROM txouts ots inner join received_notes nts on ots.cmu = nts.cm")
     List<String> getOutputTxIds();
+
+    @Query("DELETE FROM txouts")
+    void dropAll();
 }

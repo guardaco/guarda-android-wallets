@@ -8,7 +8,7 @@ import timber.log.Timber;
 
 public class CallBlockRange implements Callable<Boolean> {
 
-    ProtoApi protoApi;
+    private ProtoApi protoApi;
     private long end;
 
     private static final long BLOCK_RANGE_STEP = 1000;

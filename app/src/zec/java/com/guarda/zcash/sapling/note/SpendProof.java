@@ -31,31 +31,6 @@ public class SpendProof {
         return Bytes.concat(cv, anchor, nullifier, rk, zkproof);
     }
 
-    public byte[] getBytesAndAlpha() {
-        // cv, anchor, nf, rk, spProof, alpha
-        return Bytes.concat(cv, anchor, nullifier, rk, zkproof, alpha);
-    }
-
-    public static SpendProof fromBytesWithAlpha(byte[] byteWithAlpha) {
-
-        byte[] cv = new byte[32];
-        byte[] anchor = new byte[32];
-        byte[] nullifier = new byte[32];
-        byte[] rk = new byte[32];
-        byte[] zkproof = new byte[192];
-        byte[] alpha = new byte[192];
-
-        System.arraycopy(byteWithAlpha, 0, cv, 0, 32);
-        System.arraycopy(byteWithAlpha, 32, anchor, 0, 32);
-        System.arraycopy(byteWithAlpha, 64, nullifier, 0, 32);
-        System.arraycopy(byteWithAlpha, 96, rk, 0, 32);
-        System.arraycopy(byteWithAlpha, 128, zkproof, 0, 192);
-        System.arraycopy(byteWithAlpha, 128 + 192, alpha, 0, 32);
-
-        return new SpendProof(cv, anchor, nullifier, rk, zkproof, alpha);
-    }
-
-
     public byte[] getCv() {
         return cv;
     }

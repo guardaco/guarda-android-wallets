@@ -94,13 +94,6 @@ const NOTE_PLAINTEXT_SIZE: usize = COMPACT_NOTE_SIZE + 512;
 const SAPLING_TREE_DEPTH: usize = 32;
 const ENC_CIPHERTEXT_SIZE: usize = NOTE_PLAINTEXT_SIZE + 16;
 
-#[no_mangle]
-pub extern "C" fn print_hello() -> bool {
-    let guess: u32 = "42".parse().expect("Not a number!");
-
-    true
-}
-
 fn is_small_order<Order>(p: &edwards::Point<Bls12, Order>) -> bool {
     p.double(&JUBJUB).double(&JUBJUB).double(&JUBJUB) == edwards::Point::zero()
 }
@@ -607,21 +600,7 @@ res = 6;
         Err(_) => return res,
     };
 res = 7;
-//let mut resmes: u32 = 0;
-    // Verify the proof
-    //match verify_proof(
-        //unsafe { SAPLING_OUTPUT_VK.as_ref() }.unwrap(),
-        //&zkproof,
-        //&public_input[..],
-    //) {
-        // No error, and proof verification successful
-        //Ok(true) => resmes = 1,
 
-        // Any other case
-        //_ => resmes = 2,
-    //}
-
-    //res = res + resmes;
 
     res
 }
@@ -1199,7 +1178,7 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_getExtsk(
     let extsk = spending_key(&seed, 1, 0);
 
 
-    let address = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY_TEST,
+    let address = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY_MAIN,
                                                   &extsk,
                                                   );
 
@@ -1243,5 +1222,5 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_zAddrFromWif(
 
 fn address_from_extfvk(extfvk: &ExtendedFullViewingKey) -> String {
     let addr = extfvk.default_address().unwrap().1;
-    encode_payment_address(HRP_SAPLING_PAYMENT_ADDRESS_TEST, &addr)
+    encode_payment_address(HRP_SAPLING_PAYMENT_ADDRESS_MAIN, &addr)
 }

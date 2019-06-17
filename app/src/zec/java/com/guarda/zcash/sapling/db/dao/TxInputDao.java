@@ -24,4 +24,7 @@ public interface TxInputDao {
 
     @Query("SELECT nf FROM txins WHERE txHash LIKE :hash")
     String getNfByHash(String hash);
+
+    @Query("DELETE FROM txins")
+    void dropAll();
 }

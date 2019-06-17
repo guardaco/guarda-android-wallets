@@ -72,9 +72,7 @@ public class IncrementalWitness {
     }
 
     public void append_inner(String hash, int depth) throws ZCashException {
-//        hash = Utils.revHex(hash);
         if (cursor != null) {
-//            Timber.d("append_inner cursor != null");
             cursor.append(hash);
 
             if (cursor.isComplete(cursor_depth)) {
@@ -98,22 +96,6 @@ public class IncrementalWitness {
         }
     }
 
-    // https://github.com/str4d/librustzcash/blob/note-spending-v3/zcash_primitives/src/merkle_tree.rs#L275
-    private PathFiller filler() throws ZCashException {
-        String cursorRoot = cursor.root_inner(cursor_depth, new PathFiller());
-
-        LinkedList<String> queue = new LinkedList<>();
-
-        if (!cursorRoot.isEmpty()) {
-            queue.addAll(filled);
-            queue.add(cursorRoot);
-        } else {
-            queue.addAll(filled);
-        }
-
-        return new PathFiller(queue);
-    }
-
     public String root() {
         try {
 //            return tree.root(INCREMENTAL_MERKLE_TREE_DEPTH_TESTING, partialPath());
@@ -127,10 +109,6 @@ public class IncrementalWitness {
 
     public String element() throws ZCashException {
         return tree.last();
-    }
-
-    private String root_inner(int depth) throws ZCashException {
-        return tree.root_inner(depth, partialPath());
     }
 
 }
