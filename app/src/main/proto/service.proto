@@ -7,8 +7,8 @@ import "compact_formats.proto";
 // A BlockID message contains identifiers to select a block: a height or a
 // hash. If the hash is present it takes precedence.
 message BlockID {
-     uint64 height = 1;
-     bytes hash = 2;
+    uint64 height = 1;
+    bytes hash = 2;
 }
 
 // BlockRange technically allows ranging from hash to hash etc but this is not
@@ -22,9 +22,9 @@ message BlockRange {
 // A TxFilter contains the information needed to identify a particular
 // transaction: either a block and an index, or a direct transaction hash.
 message TxFilter {
-     BlockID block = 1;
-     uint64 index = 2;
-     bytes hash = 3;
+    BlockID block = 1;
+    uint64 index = 2;
+    bytes hash = 3;
 }
 
 // RawTransaction contains the complete transaction data.
@@ -42,8 +42,8 @@ message ChainSpec {}
 
 service CompactTxStreamer {
     rpc GetLatestBlock(ChainSpec) returns (BlockID) {}
-    //rpc GetBlock(BlockID) returns (CompactBlock) {}
+    rpc GetBlock(BlockID) returns (CompactBlock) {}
     rpc GetBlockRange(BlockRange) returns (stream CompactBlock) {}
-    //rpc GetTransaction(TxFilter) returns (RawTransaction) {}
-    //rpc SendTransaction(RawTransaction) returns (SendResponse) {}
+    rpc GetTransaction(TxFilter) returns (RawTransaction) {}
+    rpc SendTransaction(RawTransaction) returns (SendResponse) {}
 }
