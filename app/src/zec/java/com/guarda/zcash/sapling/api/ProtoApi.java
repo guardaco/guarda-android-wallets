@@ -29,7 +29,8 @@ public class ProtoApi {
     public ProtoApi() {
         GuardaApp.getAppComponent().inject(this);
 //        String host = "lightwalletd.z.cash";
-        String host = "10.88.66.22"; //9067
+//        String host = "10.88.66.22"; //9067
+        String host = "zec-lightwallet.guarda.co"; //9067
 //        String host = "46.4.115.12";
         int port = 9067;
 //        int port = 7878;

@@ -16,6 +16,7 @@ public class SaplingMerkleTree {
     public static final int SAPLING_INCREMENTAL_MERKLE_TREE_DEPTH = 32;
     private static EmptyMerkleRoots emptyroots = new EmptyMerkleRoots(SAPLING_INCREMENTAL_MERKLE_TREE_DEPTH);
 //    private static EmptyMerkleRoots emptyroots = new EmptyMerkleRoots(INCREMENTAL_MERKLE_TREE_DEPTH_TESTING);
+    private int deserIndex = 0;
 
     public SaplingMerkleTree() {
         this.left = "";
@@ -32,6 +33,32 @@ public class SaplingMerkleTree {
         } catch (ZCashException e) {
             Timber.e("serialize wfcheck() e=%s", e.getMessage());
         }
+    }
+
+    public SaplingMerkleTree(String serializedTree) {
+        left = deserializeStep(serializedTree);
+        right = deserializeStep(serializedTree);
+
+        parents = new ArrayList<>();
+
+        int size = Integer.parseInt(serializedTree.substring(deserIndex, deserIndex + 2), 16);
+        if (size == 0) return;
+
+        deserIndex += 2;
+
+        for (int i = 0; i < size; i++)
+            parents.add(i, deserializeStep(serializedTree));
+    }
+
+    private String deserializeStep(String serStr) {
+        String res = "";
+        if (serStr.substring(deserIndex, deserIndex + 2).equals("00")) {
+            deserIndex += 2;
+        } else {
+            res = serStr.substring(deserIndex + 2, deserIndex + 2 + 64);
+            deserIndex += 2 + 64;
+        }
+        return res;
     }
 
     public int size() {

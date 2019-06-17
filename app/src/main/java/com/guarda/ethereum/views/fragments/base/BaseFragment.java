@@ -171,7 +171,6 @@ public abstract class BaseFragment extends Fragment {
 
     public void setToolbarTitle(String newTitle) {
         try {
-            //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(newTitle);
             ((MainActivity) getActivity()).setToolBarTitle(newTitle);
         } catch (Exception e) {
             e.printStackTrace();
