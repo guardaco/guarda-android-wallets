@@ -37,25 +37,6 @@
                         android:layout_height="200dp">
 
                         <RelativeLayout
-                            android:id="@+id/rl_sync_status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:layout_alignParentEnd="true"
-                            android:visibility="gone"
-                            tools:visibility="visible">
-                            <com.guarda.ethereum.customviews.RobotoTextView
-                                android:id="@+id/tv_syncing_status"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:gravity="center"
-                                tools:text="Syncing..."
-                                android:textColor="@color/whiteTextColor"
-                                android:textSize="14sp" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
                             android:id="@+id/rl_balances"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

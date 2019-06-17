@@ -101,10 +101,6 @@ public class TransactionHistoryFragment extends BaseFragment {
     NestedScrollView nsvMainScrollLayout;
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.rl_sync_status)
-    RelativeLayout rl_sync_status;
-    @BindView(R.id.tv_syncing_status)
-    TextView tv_syncing_status;
     @BindView(R.id.rl_testnet_alert)
     RelativeLayout rl_testnet_alert;
     @BindView(R.id.rv_tokens)
@@ -162,7 +158,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         setCryptoBalance();
 
         fabMenu.setClosedOnTouchOutside(true);
-        rl_sync_status.setVisibility(View.VISIBLE);
         rl_testnet_alert.setVisibility(View.VISIBLE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -275,7 +270,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void setSyncStatus() {
-        tv_syncing_status.setText(syncManager.isSyncInProgress() ? "Syncing..." : "Synced");
+        setToolbarTitle(syncManager.isSyncInProgress() ? "Syncing..." : "Synced");
     }
 
     private void showBalance() {
