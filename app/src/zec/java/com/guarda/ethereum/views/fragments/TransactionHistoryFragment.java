@@ -187,12 +187,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         updBalanceHistSync();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setSyncStatus();
-    }
-
     @TargetApi(Build.VERSION_CODES.M)
     private void initFabHider() {
         nsvMainScrollLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -232,7 +226,6 @@ public class TransactionHistoryFragment extends BaseFragment {
     private void updBalanceHistSync() {
         if (isWalletExist()) {
             showBalance();
-            setSyncStatus();
             syncManager.startSync();
         }
     }
@@ -263,10 +256,6 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     private boolean isWalletExist() {
         return !TextUtils.isEmpty(walletManager.getWalletFriendlyAddress());
-    }
-
-    private void setSyncStatus() {
-        setToolbarTitle(syncManager.isSyncInProgress() ? "Syncing..." : "Synced");
     }
 
     private void showBalance() {
@@ -478,6 +467,15 @@ public class TransactionHistoryFragment extends BaseFragment {
             adapter.updateList(list);
             adapter.notifyDataSetChanged();
         });
+
+        compositeDisposable.add(
+                syncManager.getProgressSubject().subscribe(
+                        (t) -> {
+                            Timber.d("getProgressSubject onNext() t=%b", t);
+                            setToolbarTitle(t ? "Syncing..." : "Synced");
+                        }
+                )
+        );
     }
 
     @Override

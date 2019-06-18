@@ -1,5 +1,6 @@
 package com.guarda.zcash.sapling;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.guarda.ethereum.GuardaApp;
@@ -20,12 +21,12 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
 @AutoInjector(GuardaApp.class)
 public class SyncManager {
 
-    private boolean inProgress;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private long endB = 518945;
 
@@ -38,6 +39,9 @@ public class SyncManager {
     @Inject
     Context context;
 
+    private PublishSubject<Boolean> progressSubject = PublishSubject.create();
+    private boolean inProgress;
+
     public SyncManager() {
         GuardaApp.getAppComponent().inject(this);
     }
@@ -45,21 +49,22 @@ public class SyncManager {
     public void startSync() {
         Timber.d("startSync inProgress=%b", inProgress);
         if (inProgress) return;
-
+        progressSubject.onNext(true);
         inProgress = true;
 
         saplingParamsInit();
     }
 
     public void stopSync() {
+        progressSubject.onNext(false);
         inProgress = false;
 
         compositeDisposable.clear();
         Timber.d("stopSync inProgress=%b", inProgress);
     }
 
-    public boolean isSyncInProgress() {
-        return inProgress;
+    public PublishSubject<Boolean> getProgressSubject() {
+        return progressSubject;
     }
 
     private void saplingParamsInit() {

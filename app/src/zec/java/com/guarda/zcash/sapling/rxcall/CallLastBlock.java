@@ -27,6 +27,7 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
         Timber.d("started");
 
         //check if testnet block exist (490132)
+        //and drop testnet data
         BlockRoom testnetBlock = dbManager.getAppDb().getBlockDao().getBlock("001f14b50a6ee0c124915dd73485eed25f9902df033b0f236cfdc5d3c70394e7");
         if (testnetBlock != null) {
             dbManager.getAppDb().getBlockDao().dropAll();
