@@ -1,6 +1,5 @@
 package com.guarda.zcash.sapling;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.guarda.ethereum.GuardaApp;
@@ -71,6 +70,7 @@ public class SyncManager {
         compositeDisposable.add(Observable
                 .fromCallable(new CallSaplingParamsInit(context))
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((latest) -> {
                     Timber.d("saplingParamsInit done=%s", latest);
                     saplingKeyInit();
@@ -82,6 +82,7 @@ public class SyncManager {
         compositeDisposable.add(Observable
                 .fromCallable(new CallLastBlock(dbManager, protoApi))
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((latest) -> {
                     Timber.d("getBlocks latest=%s", latest);
                     protoApi.pageNum = latest.getLastFromDb();
@@ -115,6 +116,7 @@ public class SyncManager {
         compositeDisposable.add(Observable
                 .fromCallable(new CallFindWitnesses(dbManager, walletManager.getSaplingCustomFullKey()))
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((res) -> {
                     Timber.d("getWintesses finished=%s", res);
                     stopSync();

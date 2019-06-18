@@ -48,6 +48,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
         if (existingWitnesses.size() > 0) {
             Long lastWitnessHeight = dbManager.getAppDb().getSaplingWitnessesDao().getLastHeight();
             startHeight = lastWitnessHeight > startHeight ? lastWitnessHeight : startHeight;
+            Timber.d("existingWitnesses.size()=%d, lastWitnessHeight=%d, startHeight=%d", existingWitnesses.size(), lastWitnessHeight, startHeight);
         }
 
         List<BlockRoom> blocks = dbManager.getAppDb().getBlockDao().getAllBlocksOrdered();
