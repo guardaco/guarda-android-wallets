@@ -15,6 +15,7 @@ import com.guarda.ethereum.rxcall.CallDbFillHistory;
 import com.guarda.ethereum.rxcall.CallNotesFromDb;
 import com.guarda.ethereum.rxcall.CallUpdateFromDbHistory;
 import com.guarda.ethereum.rxcall.CallUpdateTxDetails;
+import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public class HistoryViewModel extends ViewModel {
     private final WalletManager walletManager;
     private final TransactionsManager transactionsManager;
     private final DbManager dbManager;
+    private final SyncManager syncManager;
+
     public final static int INPUTS_HASHES = 0;
     public final static int OUTPUTS_HASHES = 1;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -37,11 +40,17 @@ public class HistoryViewModel extends ViewModel {
     private MutableLiveData<Boolean> showHistory = new MutableLiveData<>();
     private MutableLiveData<Boolean> showTxError = new MutableLiveData<>();
     private MutableLiveData<List<TransactionItem>> showActualTxs = new MutableLiveData<>();
+    private MutableLiveData<Boolean> syncInProgress = new MutableLiveData<>();
 
-    public HistoryViewModel(WalletManager walletManager, TransactionsManager transactionsManager, DbManager dbManager) {
+    public HistoryViewModel(WalletManager walletManager,
+                            TransactionsManager transactionsManager,
+                            DbManager dbManager,
+                            SyncManager syncManager) {
         this.walletManager = walletManager;
         this.transactionsManager = transactionsManager;
         this.dbManager = dbManager;
+        this.syncManager = syncManager;
+        initSubscriptions();
     }
 
     public void loadTransactions() {
@@ -74,7 +83,7 @@ public class HistoryViewModel extends ViewModel {
         });
     }
 
-    public void getAndUpdateSaplingTx() {
+    private void getAndUpdateSaplingTx() {
         //hashes from shielded inputs
         compositeDisposable.add(Observable
                 .fromCallable(new CallNotesFromDb(dbManager, INPUTS_HASHES))
@@ -141,6 +150,25 @@ public class HistoryViewModel extends ViewModel {
                 }));
     }
 
+    public void initSubscriptions() {
+        compositeDisposable.add(syncManager.getPublishSubject().subscribe(t -> {
+            Timber.d("getPublishSubject onNext() t=%b", t);
+            syncInProgress.setValue(t);
+        }));
+    }
+
+    public void setCurrentStatus() {
+        syncInProgress.setValue(syncManager.isInProgress());
+    }
+
+    public void startSync() {
+        syncManager.startSync();
+    }
+
+    public void stopSync() {
+        syncManager.stopSync();
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
@@ -152,16 +180,25 @@ public class HistoryViewModel extends ViewModel {
         private final WalletManager walletManager;
         private final TransactionsManager transactionsManager;
         private final DbManager dbManager;
+        private final SyncManager syncManager;
 
-        public Factory(WalletManager walletManager, TransactionsManager transactionsManager, DbManager dbManager) {
+        public Factory(WalletManager walletManager,
+                       TransactionsManager transactionsManager,
+                       DbManager dbManager,
+                       SyncManager syncManager) {
             this.walletManager = walletManager;
             this.transactionsManager = transactionsManager;
             this.dbManager = dbManager;
+            this.syncManager = syncManager;
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
-            return (T) new HistoryViewModel(this.walletManager, this.transactionsManager, this.dbManager);
+            return (T) new HistoryViewModel(
+                    this.walletManager,
+                    this.transactionsManager,
+                    this.dbManager,
+                    this.syncManager);
         }
     }
 
@@ -175,5 +212,9 @@ public class HistoryViewModel extends ViewModel {
 
     public MutableLiveData<List<TransactionItem>> getShowActualTxs() {
         return showActualTxs;
+    }
+
+    public MutableLiveData<Boolean> getSyncInProgress() {
+        return syncInProgress;
     }
 }

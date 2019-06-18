@@ -65,8 +65,11 @@ import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -142,10 +145,9 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager);
+        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager, syncManager);
         historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
         subscribeUi();
-        setToolbarTitle(statusSycned);
 
         stronglyHistory = true;
 
@@ -229,7 +231,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     private void updBalanceHistSync() {
         if (isWalletExist()) {
             showBalance();
-            syncManager.startSync();
+            historyViewModel.startSync();
         }
     }
 
@@ -471,14 +473,12 @@ public class TransactionHistoryFragment extends BaseFragment {
             adapter.notifyDataSetChanged();
         });
 
-        compositeDisposable.add(
-                syncManager.getProgressSubject().subscribe(
-                        (t) -> {
-                            Timber.d("getProgressSubject onNext() t=%b", t);
-                            setToolbarTitle(t ? statusSyncing : statusSycned);
-                        }
-                )
-        );
+        historyViewModel.getSyncInProgress().observe(getViewLifecycleOwner(), (t) -> {
+            setSyncStatus(t);
+            Timber.d("getSyncInProgress().observe t=%b", t);
+        });
+
+        historyViewModel.setCurrentStatus();
     }
 
     @Override
@@ -497,6 +497,10 @@ public class TransactionHistoryFragment extends BaseFragment {
     public void onStop() {
         super.onStop();
         compositeDisposable.clear();
+    }
+
+    private void setSyncStatus(boolean b) {
+        setToolbarTitle(b ? statusSyncing : statusSycned);
     }
 
     private void initRotation(ImageView ivLoader) {

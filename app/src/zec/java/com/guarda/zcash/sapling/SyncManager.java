@@ -62,8 +62,12 @@ public class SyncManager {
         Timber.d("stopSync inProgress=%b", inProgress);
     }
 
-    public PublishSubject<Boolean> getProgressSubject() {
+    public PublishSubject<Boolean> getPublishSubject() {
         return progressSubject;
+    }
+
+    public boolean isInProgress() {
+        return inProgress;
     }
 
     private void saplingParamsInit() {
