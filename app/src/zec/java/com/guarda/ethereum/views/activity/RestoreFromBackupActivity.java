@@ -71,12 +71,7 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
             }
         });
 
-        imageViewScanQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scanQr_onClick();
-            }
-        });
+        imageViewScanQr.setOnClickListener((view) -> scanQr_onClick());
     }
 
     @Override
@@ -87,45 +82,12 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
     @OnClick(R.id.btn_restore)
     public void restore(View btn) {
         if (!TextUtils.isEmpty(etBackupPhrase.getText().toString().trim())) {
-//            if (etBackupPhrase.getText().toString().substring(0, 4).equalsIgnoreCase("xprv")) {
-//                btnRestore.setEnabled(false);
-//                showProgress();
-//                AsyncTask.execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        walletManager.restoreFromBlockByXPRV2(etBackupPhrase.getText().toString(), new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        if (!"".equals(Coders.decodeBase64(sharedManager.getLastSyncedBlock()))) {
-//                                            goToMainActivity(etBackupPhrase.getText().toString());
-//                                            btnRestore.setEnabled(false);
-//                                        } else {
-//                                            showError(etBackupPhrase, getString(R.string.et_error_wrong_private_key));
-//                                            btnRestore.setEnabled(true);
-//                                        }
-//                                        closeProgress();
-//                                    }
-//                                });
-//                            }
-//                        });
-//                    }
-//                });
-//            } else {
                 if (walletManager.isValidPrivateKey(etBackupPhrase.getText().toString())) {
                     btnRestore.setEnabled(false);
                     showProgress();
-                    AsyncTask.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            walletManager.restoreFromBlock2(etBackupPhrase.getText().toString(), new Runnable() {
-                                @Override
-                                public void run() {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
+                    AsyncTask.execute(() ->
+                            walletManager.restoreFromBlock2(etBackupPhrase.getText().toString(), () ->
+                                    runOnUiThread(() -> {
                                             closeProgress();
                                             if (!"".equals(Coders.decodeBase64(sharedManager.getLastSyncedBlock()))) {
                                                 goToMainActivity(etBackupPhrase.getText().toString());
@@ -134,17 +96,12 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
                                                 showError(etBackupPhrase, getString(R.string.et_error_wrong_private_key));
                                                 btnRestore.setEnabled(true);
                                             }
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
+                                    })
+                            )
+                    );
                 } else {
                     showError(etBackupPhrase, getString(R.string.et_error_wrong_private_key));
                 }
-//            }
-
         } else {
             showError(etBackupPhrase, getString(R.string.et_error_private_key_is_empty));
         }

@@ -87,10 +87,13 @@
             android:layout_alignEnd="@id/tl_bp_phrase"
             android:layout_alignTop="@id/tl_bp_phrase"
             android:layout_marginTop="10dp"
-            android:paddingStart="5dp"
-            android:paddingBottom="5dp"
-            android:scaleX="0.6"
-            android:scaleY="0.6"
+            android:paddingStart="15dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="15dp"
+            android:scaleType="fitEnd"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
             android:tint="@color/baseTextColor"
             app:srcCompat="@drawable/ic_btn_scan_qr_wr" />
     </RelativeLayout>
