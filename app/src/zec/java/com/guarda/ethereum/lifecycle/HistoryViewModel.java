@@ -13,10 +13,12 @@ import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.rxcall.CallDbFillHistory;
 import com.guarda.ethereum.rxcall.CallNotesFromDb;
+import com.guarda.ethereum.rxcall.CallRestoreWallet;
 import com.guarda.ethereum.rxcall.CallUpdateFromDbHistory;
 import com.guarda.ethereum.rxcall.CallUpdateTxDetails;
 import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.rxcall.CallSaplingBalance;
 
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class HistoryViewModel extends ViewModel {
     private MutableLiveData<Boolean> showTxError = new MutableLiveData<>();
     private MutableLiveData<List<TransactionItem>> showActualTxs = new MutableLiveData<>();
     private MutableLiveData<Boolean> syncInProgress = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isRestored = new MutableLiveData<>();
 
     public HistoryViewModel(WalletManager walletManager,
                             TransactionsManager transactionsManager,
@@ -51,6 +54,16 @@ public class HistoryViewModel extends ViewModel {
         this.dbManager = dbManager;
         this.syncManager = syncManager;
         initSubscriptions();
+    }
+
+    public void restoreWallet(String key) {
+        compositeDisposable.add(
+                Observable
+                        .fromCallable(new CallRestoreWallet(walletManager, key))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe((balance) -> isRestored.setValue(true))
+        );
     }
 
     public void loadTransactions() {
@@ -216,5 +229,9 @@ public class HistoryViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getSyncInProgress() {
         return syncInProgress;
+    }
+
+    public MutableLiveData<Boolean> getIsRestored() {
+        return isRestored;
     }
 }

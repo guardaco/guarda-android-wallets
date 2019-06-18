@@ -183,9 +183,6 @@ public class TransactionHistoryFragment extends BaseFragment {
                 createWallet(BLOCK);
             }
         } else {
-            if (firstAction != null && firstAction.equalsIgnoreCase(Extras.SHOW_STRICTLY_HISTORY)) {
-                stronglyHistory = true;
-            }
             checkFromRestore();
         }
 
@@ -254,9 +251,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void openUserWalletFragment() {
-        if (!stronglyHistory) {
-            navigateToFragment(new UserWalletFragment());
-        }
+        navigateToFragment(new UserWalletFragment());
     }
 
     private boolean isWalletExist() {
@@ -363,18 +358,7 @@ public class TransactionHistoryFragment extends BaseFragment {
             String key = args.getString(KEY);
             if (!TextUtils.isEmpty(key)) {
                 showProgress(getStringIfAdded(R.string.restoring_wallet));
-                    walletManager.restoreFromBlock(key, () -> {
-                            try {
-                                getActivity().runOnUiThread(() -> {
-                                        if (isVisible) {
-                                            closeProgress();
-                                            updBalanceHistSync();
-                                        }
-                                });
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                    });
+                historyViewModel.restoreWallet(key);
             }
         }
     }
@@ -479,6 +463,15 @@ public class TransactionHistoryFragment extends BaseFragment {
         });
 
         historyViewModel.setCurrentStatus();
+
+        historyViewModel.getIsRestored().observe(getViewLifecycleOwner(), (t) -> {
+
+            closeProgress();
+            updBalanceHistSync();
+
+            Timber.d("getIsRestored().observe t=%b", t);
+        });
+
     }
 
     @Override
