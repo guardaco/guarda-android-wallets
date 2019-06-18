@@ -101,8 +101,6 @@ public class TransactionHistoryFragment extends BaseFragment {
     NestedScrollView nsvMainScrollLayout;
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.rl_testnet_alert)
-    RelativeLayout rl_testnet_alert;
     @BindView(R.id.rv_tokens)
     RecyclerView rvTokens;
 
@@ -157,7 +155,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         nsvMainScrollLayout.smoothScrollTo(0, 0);
 
         fabMenu.setClosedOnTouchOutside(true);
-        rl_testnet_alert.setVisibility(View.VISIBLE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             initFabHider();
