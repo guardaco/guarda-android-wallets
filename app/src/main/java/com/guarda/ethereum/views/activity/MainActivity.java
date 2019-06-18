@@ -111,7 +111,6 @@ public class MainActivity extends TrackOnStopActivity {
     protected void init(Bundle savedInstanceState) {
         GuardaApp.getAppComponent().inject(this);
         setupSideMenu();
-        initToolbar();
         setToolBarTitle(R.string.app_name);
 
         if (getIntent().getExtras() != null) {
@@ -240,89 +239,82 @@ public class MainActivity extends TrackOnStopActivity {
     }
 
     public void setupSideMenu() {
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(final MenuItem menuItem) {
+        mNavigationView.setNavigationItemSelectedListener((menuItem) -> {
                 mDrawerLayout.closeDrawers();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        String packageName = getApplicationContext().getPackageName();
-                        Fragment fragment = null;
-                        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fl_main_root);
-                        switch (menuItem.getItemId()) {
-                            case R.id.menu_transaction_history:
-                                if (!(currentFragment instanceof TransactionHistoryFragment)) {
-                                    goToTransactionHistory("", Extras.SHOW_STRICTLY_HISTORY);
-                                } else {
-                                    ((TransactionHistoryFragment)currentFragment).scrollToTop();
-                                }
-                                break;
-                            case R.id.menu_buy:
-                                if (SharedManager.flag_disable_buy_menu) {
-                                    setToolBarTitle(getString(R.string.app_purchase_service));
-                                    fragment = new DisabledFragment();
-                                } else {
-                                    if (!(currentFragment instanceof PurchaseServiceFragment)) {
-                                        fragment = new PurchaseServiceFragment();
-                                    }
-                                }
-                                break;
-                            case R.id.menu_purchase:
-                                if (SharedManager.flag_disable_purchase_menu) {
-                                    setToolBarTitle(R.string.title_purchase);
-                                    fragment = new DisabledFragment();
-                                } else {
-                                    if (!(currentFragment instanceof ExchangeFragment)) {
-                                        setToolBarTitle(R.string.title_purchase);
-                                        fragment = new ExchangeFragment();
-                                    }
-                                }
-                                break;
-                            case R.id.menu_withdraw:
-                                if (!(currentFragment instanceof WithdrawFragment)) {
-                                    setToolBarTitle(R.string.title_withdraw2);
-                                    fragment = new WithdrawFragment();
-                                }
-                                break;
-                            case R.id.menu_deposit:
-                                if (!(currentFragment instanceof DepositFragment)) {
-                                    setToolBarTitle(R.string.title_deposit);
-                                    if ("com.guarda.dct".equals(packageName))
-                                        fragment = new DepositFragment_decent();
-                                    else
-                                        fragment = new DepositFragment();
-                                }
-                                break;
-                            case R.id.menu_backup:
-                                if (!(currentFragment instanceof BackupFragment)) {
-                                    if (sharedManager.getIsPinCodeEnable()) {
-                                        Intent intent = new Intent(MainActivity.this, ConfirmPinCodeActivity.class);
-                                        startActivityForResult(intent, RequestCode.CONFIRM_PIN_CODE_REQUEST_MA);
-                                    } else {
-                                        goToBackupFragment();
-                                    }
-                                }
-                                break;
-                            case R.id.menu_settings:
-                                if (!(currentFragment instanceof SettingsFragment)) {
-                                    setToolBarTitle(R.string.title_setting);
-                                    fragment = new SettingsFragment();
-                                }
-                                break;
-                            case R.id.menu_logout:
-                                showLogoutDialog();
-                                break;
-                        }
 
-                        if (fragment != null) {
-                            navigateToFragment(fragment);
+                String packageName = getApplicationContext().getPackageName();
+                Fragment fragment = null;
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fl_main_root);
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_transaction_history:
+                        if (!(currentFragment instanceof TransactionHistoryFragment)) {
+                            goToTransactionHistory("", Extras.SHOW_STRICTLY_HISTORY);
+                        } else {
+                            ((TransactionHistoryFragment)currentFragment).scrollToTop();
                         }
+                        break;
+                    case R.id.menu_buy:
+                        if (SharedManager.flag_disable_buy_menu) {
+                            setToolBarTitle(getString(R.string.app_purchase_service));
+                            fragment = new DisabledFragment();
+                        } else {
+                            if (!(currentFragment instanceof PurchaseServiceFragment)) {
+                                fragment = new PurchaseServiceFragment();
+                            }
+                        }
+                        break;
+                    case R.id.menu_purchase:
+                        if (SharedManager.flag_disable_purchase_menu) {
+                            setToolBarTitle(R.string.title_purchase);
+                            fragment = new DisabledFragment();
+                        } else {
+                            if (!(currentFragment instanceof ExchangeFragment)) {
+                                setToolBarTitle(R.string.title_purchase);
+                                fragment = new ExchangeFragment();
+                            }
+                        }
+                        break;
+                    case R.id.menu_withdraw:
+                        if (!(currentFragment instanceof WithdrawFragment)) {
+                            setToolBarTitle(R.string.title_withdraw2);
+                            fragment = new WithdrawFragment();
+                        }
+                        break;
+                    case R.id.menu_deposit:
+                        if (!(currentFragment instanceof DepositFragment)) {
+                            setToolBarTitle(R.string.title_deposit);
+                            if ("com.guarda.dct".equals(packageName))
+                                fragment = new DepositFragment_decent();
+                            else
+                                fragment = new DepositFragment();
+                        }
+                        break;
+                    case R.id.menu_backup:
+                        if (!(currentFragment instanceof BackupFragment)) {
+                            if (sharedManager.getIsPinCodeEnable()) {
+                                Intent intent = new Intent(MainActivity.this, ConfirmPinCodeActivity.class);
+                                startActivityForResult(intent, RequestCode.CONFIRM_PIN_CODE_REQUEST_MA);
+                            } else {
+                                goToBackupFragment();
+                            }
+                        }
+                        break;
+                    case R.id.menu_settings:
+                        if (!(currentFragment instanceof SettingsFragment)) {
+                            setToolBarTitle(R.string.title_setting);
+                            fragment = new SettingsFragment();
+                        }
+                        break;
+                    case R.id.menu_logout:
+                        showLogoutDialog();
+                        break;
+                }
 
-                    }
-                }, 400);
+                if (fragment != null) {
+                    navigateToFragment(fragment);
+                }
+
                 return true;
-            }
         });
 
         mNavigationView.setItemIconTintList(null);
@@ -522,9 +514,4 @@ public class MainActivity extends TrackOnStopActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        compositeDisposable.clear();
-    }
 }

@@ -48,6 +48,7 @@ public abstract class BaseActivity extends ABaseActivity {
         createLayout();
         ButterKnife.bind(this);
         GuardaApp.getAppComponent().inject(this);
+
         initDefault();
         initToolbar();
         init(savedInstanceState);
