@@ -115,6 +115,8 @@ public class TransactionHistoryFragment extends BaseFragment {
     private String exchangeRate;
     private final String tAddrTitle = "T-address";
     private final String zAddrTitle = "Z-address";
+    private final String statusSyncing = "Syncing...";
+    private final String statusSycned = "Synced";
     private Long transparentBalance;
     private Long saplingBalance;
 
@@ -143,6 +145,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager);
         historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
         subscribeUi();
+        setToolbarTitle(statusSycned);
 
         stronglyHistory = true;
 
@@ -472,7 +475,7 @@ public class TransactionHistoryFragment extends BaseFragment {
                 syncManager.getProgressSubject().subscribe(
                         (t) -> {
                             Timber.d("getProgressSubject onNext() t=%b", t);
-                            setToolbarTitle(t ? "Syncing..." : "Synced");
+                            setToolbarTitle(t ? statusSyncing : statusSycned);
                         }
                 )
         );
