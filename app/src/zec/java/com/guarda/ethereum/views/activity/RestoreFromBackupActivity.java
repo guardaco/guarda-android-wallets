@@ -126,6 +126,7 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
+                                            closeProgress();
                                             if (!"".equals(Coders.decodeBase64(sharedManager.getLastSyncedBlock()))) {
                                                 goToMainActivity(etBackupPhrase.getText().toString());
                                                 btnRestore.setEnabled(false);
@@ -133,7 +134,6 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
                                                 showError(etBackupPhrase, getString(R.string.et_error_wrong_private_key));
                                                 btnRestore.setEnabled(true);
                                             }
-                                            closeProgress();
                                         }
                                     });
                                 }
