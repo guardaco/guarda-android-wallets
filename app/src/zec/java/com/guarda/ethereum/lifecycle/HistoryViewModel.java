@@ -18,7 +18,6 @@ import com.guarda.ethereum.rxcall.CallUpdateFromDbHistory;
 import com.guarda.ethereum.rxcall.CallUpdateTxDetails;
 import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.rxcall.CallSaplingBalance;
 
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class HistoryViewModel extends ViewModel {
     private MutableLiveData<Boolean> syncInProgress = new MutableLiveData<>();
     private MutableLiveData<Boolean> isRestored = new MutableLiveData<>();
 
-    public HistoryViewModel(WalletManager walletManager,
+    private HistoryViewModel(WalletManager walletManager,
                             TransactionsManager transactionsManager,
                             DbManager dbManager,
                             SyncManager syncManager) {
@@ -163,7 +162,7 @@ public class HistoryViewModel extends ViewModel {
                 }));
     }
 
-    public void initSubscriptions() {
+    private void initSubscriptions() {
         compositeDisposable.add(syncManager.getPublishSubject().subscribe(t -> {
             Timber.d("getPublishSubject onNext() t=%b", t);
             syncInProgress.setValue(t);
