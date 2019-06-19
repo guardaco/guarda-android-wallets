@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
+import timber.log.Timber;
+
 public final class CurrencyUtils {
 
     private CurrencyUtils() {
@@ -40,7 +42,7 @@ public final class CurrencyUtils {
 
             }
         } catch (IOException e) {
-            Log.d("CurrencyUtils", e.getMessage());
+            Timber.d("getCurrencyNameByCode ", e.getMessage());
         } finally {
             if (reader != null) {
                 try {
@@ -58,8 +60,8 @@ public final class CurrencyUtils {
         try {
             je = new JsonParser().parse(msg).getAsJsonObject();
         } catch (Exception e) {
-            Log.d("psd", "CurrencyUtils.getBtcLikeError() - " + e.getMessage());
-            return "Sending error.";
+            Timber.d("getBtcLikeError() - " + e.getMessage());
+            return "Sending error. " + msg;
         }
         if (!je.isJsonObject()) return msg;
         String explain = je.getAsJsonObject().get("error").getAsJsonObject().get("message").getAsString();
