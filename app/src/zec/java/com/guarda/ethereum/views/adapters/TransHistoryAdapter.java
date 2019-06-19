@@ -82,6 +82,7 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         });
 
         if (item.getConfirmations() < MIN_CONFIRMATIONS) {
+            holder.tvTxStatus.setVisibility(View.VISIBLE);
             holder.tvTxStatus.setText(R.string.tx_status_wait);
         } else {
             holder.tvTxStatus.setVisibility(View.GONE);
