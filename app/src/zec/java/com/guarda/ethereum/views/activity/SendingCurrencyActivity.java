@@ -22,9 +22,11 @@ import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.SendRawTxResponse;
 import com.guarda.ethereum.models.items.TxFeeResponse;
+import com.guarda.ethereum.models.items.ZecTxResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.rest.RequestorBtc;
+import com.guarda.ethereum.rxcall.CallUpdateTxDetails;
 import com.guarda.ethereum.utils.CurrencyUtils;
 import com.guarda.ethereum.utils.DigitsInputFilter;
 import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
@@ -46,6 +48,10 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 @AutoInjector(GuardaApp.class)
@@ -86,6 +92,8 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     private long currentFeeEth;
     private String arrivalAmountToSend;
     private Coin defaultFee = Coin.valueOf(558);
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
     @Override
@@ -425,32 +433,18 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                         if (r1.equals("ok")) {
                             try {
                                 String lastTxhex = Utils.bytesToHex(r2.getBytes());
-                                Log.i("lastTxhex", lastTxhex);
-                                RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
-                                    @Override
-                                    public void onSuccess(Object response) {
-                                        SendRawTxResponse res = (SendRawTxResponse) response;
-                                        Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
-                                        closeProgress();
-                                        showCongratsActivity();
-                                    }
+                                Timber.d("lastTxhex", lastTxhex);
 
-                                    @Override
-                                    public void onFailure(String msg) {
-                                        closeProgress();
-                                        doToast(CurrencyUtils.getBtcLikeError(msg));
-                                        Timber.d("broadcastRawTxZexNew e=%s", msg);
-                                    }
-                                });
+                                sendTxHashAndUpdateDb(lastTxhex);
                             } catch (ZCashException e) {
                                 closeProgress();
                                 doToast("Can not send the transaction to the node");
-                                Log.i("TX", "Cannot sign transaction");
+                                Timber.d("Cannot sign transaction");
                             }
                         } else {
                             closeProgress();
                             doToast("Can not create the transaction. Check arguments");
-                            Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
+                            Timber.d("createTransaction_taddr: RESPONSE CODE is not ok");
                         }
                 });
     }
@@ -470,32 +464,18 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                         if (r1.equals("ok")) {
                             try {
                                 String lastTxhex = Utils.bytesToHex(r2.getBytes());
-                                Log.i("lastTxhex", lastTxhex);
-                                RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
-                                    @Override
-                                    public void onSuccess(Object response) {
-                                        SendRawTxResponse res = (SendRawTxResponse) response;
-                                        Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
-                                        closeProgress();
-                                        showCongratsActivity();
-                                    }
+                                Timber.d("lastTxhex", lastTxhex);
 
-                                    @Override
-                                    public void onFailure(String msg) {
-                                        closeProgress();
-                                        doToast(CurrencyUtils.getBtcLikeError(msg));
-                                        Timber.d("broadcastRawTxZexNew e=%s", msg);
-                                    }
-                                });
+                                sendTxHashAndUpdateDb(lastTxhex);
                             } catch (ZCashException e) {
                                 closeProgress();
                                 doToast("Can not send the transaction to the node");
-                                Log.i("TX", "Cannot sign transaction");
+                                Timber.d("Cannot sign transaction");
                             }
                         } else {
                             closeProgress();
                             doToast("Can not create the transaction. Check arguments");
-                            Log.i("psd", "createTransaction_taddr: RESPONSE CODE is not ok");
+                            Timber.d("createTransaction_taddr: RESPONSE CODE is not ok");
                         }
                 });
     }
@@ -521,23 +501,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                 String lastTxhex = Utils.bytesToHex(bytes);
                                 Timber.d("sendSaplingToSapling lastTxhex=%s", lastTxhex);
 
-                                RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
-                                    @Override
-                                    public void onSuccess(Object response) {
-                                        SendRawTxResponse res = (SendRawTxResponse) response;
-
-                                        Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
-                                        closeProgress();
-                                        showCongratsActivity();
-                                    }
-
-                                    @Override
-                                    public void onFailure(String msg) {
-                                        closeProgress();
-                                        doToast(CurrencyUtils.getBtcLikeError(msg));
-                                        Timber.d("broadcastRawTxZexNew e=%s", msg);
-                                    }
-                                });
+                                sendTxHashAndUpdateDb(lastTxhex);
                             } else {
                                 closeProgress();
                                 doToast("Sending error: " + r1);
@@ -548,6 +512,53 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
             doToast("Can not send the transaction: " + e.getMessage());
             Timber.e("sendSaplingToSapling createTx ZCashException=" + e.getMessage());
         }
+    }
+
+    private void sendTxHashAndUpdateDb(String lastTxhex) {
+        RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
+            @Override
+            public void onSuccess(Object response) {
+                SendRawTxResponse res = (SendRawTxResponse) response;
+                Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
+                updateFromInsight(res.getTxid());
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                closeProgress();
+                doToast(CurrencyUtils.getBtcLikeError(msg));
+                Timber.d("broadcastRawTxZexNew e=%s", msg);
+            }
+        });
+    }
+
+    private void updateFromInsight(String hash) {
+        RequestorBtc.getOneTx(hash, new ApiMethods.RequestListener() {
+            @Override
+            public void onSuccess(Object response) {
+                ZecTxResponse txResponse = (ZecTxResponse) response;
+                if (txResponse == null) {
+                    Timber.e("getOneTx tx == null");
+                    return;
+                }
+                compositeDisposable.add(Observable
+                        .fromCallable(new CallUpdateTxDetails(dbManager, txResponse))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe((value) -> {
+                            closeProgress();
+                            showCongratsActivity();
+                            Timber.d("CallDbFillHistory value=%b", value);
+                        }));
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                closeProgress();
+                showCongratsActivity();
+                Timber.e("getOneTx e=%s", msg);
+            }
+        });
     }
 
     private void doToast(final String text) {
