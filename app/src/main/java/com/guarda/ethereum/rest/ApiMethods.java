@@ -38,6 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
@@ -277,7 +278,7 @@ public class ApiMethods {
     }
 
     static ZecApiNew createZecApiNew() {
-        return getBaseApi(ZecExplorer.ZEC_EXPLORER_API).create(ZecApiNew.class);
+        return getBaseRxApi(ZecExplorer.ZEC_EXPLORER_API).create(ZecApiNew.class);
     }
 
     static GuardaCoApi createGuardaCoApi() {
@@ -304,6 +305,25 @@ public class ApiMethods {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+
+        return retrofit;
+    }
+
+    private static Retrofit getBaseRxApi(String baseUrl) {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        OkHttpClient client = httpClient
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
 

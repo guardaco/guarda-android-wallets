@@ -1,6 +1,9 @@
 package com.guarda.ethereum.rest;
 
 
+import com.guarda.ethereum.models.items.ZecTxResponse;
+
+import io.reactivex.Observable;
 import retrofit2.Call;
 
 public class RequestorBtc {
@@ -80,59 +83,58 @@ public class RequestorBtc {
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTransactionsBtgNew(String address, ApiMethods.RequestListener listener){
+    public static void getTransactionsBtgNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createBtgApiNew().getTransactions(address);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTransactionsDgbNew(String address, ApiMethods.RequestListener listener){
+    public static void getTransactionsDgbNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createDgbApiNew().getTransactions(address);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTransactionsBchNew(String address, ApiMethods.RequestListener listener){
+    public static void getTransactionsBchNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createBchApi().getTransactions(address);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTransactionsQtumNew(String address, ApiMethods.RequestListener listener){
+    public static void getTransactionsQtumNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createQtumApi().getTransactions(address);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTransactionsKmdNew(String address, int from, int to, ApiMethods.RequestListener listener){
+    public static void getTransactionsKmdNew(String address, int from, int to, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createKmdApi().getTransactions(address, from, to);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTokenBalanceQtumNew(String token, String address, ApiMethods.RequestListener listener){
+    public static void getTokenBalanceQtumNew(String token, String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createQtumApi().getTokenBalance(token, address);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTokenTransactionsQtumNew(String token, String address, ApiMethods.RequestListener listener){
+    public static void getTokenTransactionsQtumNew(String token, String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createQtumApi().getTokenTransactions(token, address);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTransactionsSbtcNew(String address, ApiMethods.RequestListener listener){
+    public static void getTransactionsSbtcNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createSbtcApiNew().getTransactions(address);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTransactionsLtcNew(String address, ApiMethods.RequestListener listener){
+    public static void getTransactionsLtcNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createLtcApiNew().getTransactions(address);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTransactionsZecNew(String address, ApiMethods.RequestListener listener){
+    public static void getTransactionsZecNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createZecApiNew().getTransactions(address);
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getOneTx(String hash, ApiMethods.RequestListener listener){
-        Call call = ApiMethods.createZecApiNew().getOneTx(hash);
-        ApiMethods.makeRequest(call, listener);
+    public static Observable<ZecTxResponse> getOneTx(String hash) {
+        return ApiMethods.createZecApiNew().getOneTx(hash);
     }
 
     public static void getUTXOList(String address, ApiMethods.RequestListener listener) {

@@ -34,8 +34,6 @@ public class HistoryViewModel extends ViewModel {
     private final DbManager dbManager;
     private final SyncManager syncManager;
 
-    public final static int INPUTS_HASHES = 0;
-    public final static int OUTPUTS_HASHES = 1;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private MutableLiveData<Boolean> showHistory = new MutableLiveData<>();
@@ -107,37 +105,44 @@ public class HistoryViewModel extends ViewModel {
                     Timber.d("CallDbFillHistory value size=%d", value.size());
                     if (value.isEmpty()) return;
 
-                    for (String hash : value) {
-                        updateFromInsight(hash);
-                    }
+                    updateFromInsight(value);
                 }));
 
     }
 
-    private void updateFromInsight(String hash) {
-        RequestorBtc.getOneTx(hash, new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                ZecTxResponse txResponse = (ZecTxResponse) response;
-                if (txResponse == null) {
-                    Timber.e("getOneTx tx == null");
-                    return;
-                }
-                compositeDisposable.add(Observable
-                        .fromCallable(new CallUpdateTxDetails(dbManager, txResponse))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe((value) -> {
-//                            if (value) getTxsFromDb();
-                            Timber.d("CallDbFillHistory value=%b", value);
-                        }));
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                Timber.e("getOneTx e=%s", msg);
-            }
-        });
+    private void updateFromInsight(List<String> list) {
+        compositeDisposable.add(
+                Observable
+                        .just(list)
+                        .flatMap(hashes -> {
+                            Timber.d("updateFromInsight list hashes s=%d", hashes.size());
+                            return Observable.fromIterable(hashes);
+                        })
+                        .flatMap(hash -> {
+                            Timber.d("updateFromInsight hash s=%s", hash);
+                            return RequestorBtc.getOneTx(hash);
+                        })
+                        .subscribe(
+                                txResponse -> {
+                                    if (txResponse == null) {
+                                        Timber.e("getOneTx tx == null");
+                                        return;
+                                    } else {
+                                        compositeDisposable.add(Observable
+                                                .fromCallable(new CallUpdateTxDetails(dbManager, txResponse))
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe((value) -> Timber.d("CallDbFillHistory value=%b", value)));
+                                        Timber.d("getOneTx tx=%s", txResponse);
+                                    }
+                                },
+                                e -> Timber.e("updateFromInsight err=%s", e.getMessage()),
+                                () -> {
+                                    getTxsFromDb();
+                                    Timber.d("updateFromInsight completed");
+                                }
+                        )
+        );
     }
 
     public void getTxsFromDb() {

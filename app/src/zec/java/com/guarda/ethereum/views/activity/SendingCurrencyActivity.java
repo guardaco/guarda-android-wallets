@@ -533,32 +533,38 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void updateFromInsight(String hash) {
-        RequestorBtc.getOneTx(hash, new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                ZecTxResponse txResponse = (ZecTxResponse) response;
-                if (txResponse == null) {
-                    Timber.e("getOneTx tx == null");
-                    return;
-                }
-                compositeDisposable.add(Observable
-                        .fromCallable(new CallUpdateTxDetails(dbManager, txResponse))
+        compositeDisposable.add(
+                RequestorBtc
+                        .getOneTx(hash)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe((value) -> {
-                            closeProgress();
-                            showCongratsActivity();
-                            Timber.d("CallDbFillHistory value=%b", value);
-                        }));
-            }
+                        .subscribe(
+                                tx -> {
+                                    if (tx == null) {
+                                        finishSending();
+                                        Timber.e("getOneTx tx == null");
+                                        return;
+                                    }
+                                    compositeDisposable.add(Observable
+                                            .fromCallable(new CallUpdateTxDetails(dbManager, tx))
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe((value) -> {
+                                                finishSending();
+                                                Timber.d("CallDbFillHistory value=%b", value);
+                                            }));
+                                },
+                                e -> {
+                                    finishSending();
+                                    Timber.e("getOneTx e=%s", e.getMessage());
+                                }
+                        )
+        );
+    }
 
-            @Override
-            public void onFailure(String msg) {
-                closeProgress();
-                showCongratsActivity();
-                Timber.e("getOneTx e=%s", msg);
-            }
-        });
+    private void finishSending() {
+        closeProgress();
+        showCongratsActivity();
     }
 
     private void doToast(final String text) {

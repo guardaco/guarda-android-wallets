@@ -186,4 +186,27 @@ public class ZecTxResponse {
     public List<SpendDescs> getSpendDescs() {
         return spendDescs;
     }
+
+    @Override
+    public String toString() {
+        return "ZecTxResponse{" +
+                "txid='" + txid + '\'' +
+                ", version=" + version +
+                ", locktime=" + locktime +
+                ", vin=" + vin +
+                ", vout=" + vout +
+                ", vjoinsplit=" + vjoinsplit +
+                ", blockhash='" + blockhash + '\'' +
+                ", blockheight=" + blockheight +
+                ", confirmations=" + confirmations +
+                ", time=" + time +
+                ", blocktime=" + blocktime +
+                ", valueOut=" + valueOut +
+                ", size=" + size +
+                ", valueIn=" + valueIn +
+                ", fees=" + fees +
+                ", outputDescs=" + outputDescs +
+                ", spendDescs=" + spendDescs +
+                '}';
+    }
 }
