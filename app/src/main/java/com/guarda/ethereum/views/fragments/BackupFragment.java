@@ -17,6 +17,7 @@ import com.guarda.ethereum.models.KeysSpinnerRowModel;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.views.adapters.KeysSpinnerAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
+import com.guarda.zcash.RustAPI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,6 +83,10 @@ public class BackupFragment extends BaseFragment {
                 break;
             case "wif":
                 tvPassPhrase.setText(walletManager.getWifKey());
+                break;
+            case "zec":
+                String spendingKey = RustAPI.getExtsk(walletManager.getPrivateKey().getBytes());
+                tvPassPhrase.setText(spendingKey);
                 break;
         }
     }
@@ -163,6 +168,10 @@ public class BackupFragment extends BaseFragment {
             if (!wif.isEmpty() && !wif.equals("NOT_IMPLEMENTED")) {
                 listTitles.add(new KeysSpinnerRowModel("wif", "WIF"));
             }
+        }
+
+        if (BuildConfig.FLAVOR == "zec") {
+            listTitles.add(new KeysSpinnerRowModel("zec", "Spending key"));
         }
 
         return listTitles;

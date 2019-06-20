@@ -54,9 +54,7 @@ import com.guarda.ethereum.views.fragments.WithdrawFragment;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.rxcall.CallSaplingParamsInit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

@@ -1183,11 +1183,11 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_getExtsk(
     let extsk = spending_key(&seed, 1, 0);
 
 
-    let address = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY_MAIN,
+    let spending_key = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY_MAIN,
                                                   &extsk,
                                                   );
 
-    let output = env.new_string(address)
+    let output = env.new_string(spending_key)
             .expect("Couldn't create java string!");
 
     output.into_inner()
