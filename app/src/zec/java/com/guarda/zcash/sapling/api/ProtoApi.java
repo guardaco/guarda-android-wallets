@@ -20,7 +20,7 @@ import timber.log.Timber;
 @AutoInjector(GuardaApp.class)
 public class ProtoApi {
 
-    public long pageNum = 419200;
+    public long pageNum = 551912; //height
     private ManagedChannel channel;
 
     @Inject
