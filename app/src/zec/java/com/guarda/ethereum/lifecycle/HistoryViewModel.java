@@ -66,6 +66,9 @@ public class HistoryViewModel extends ViewModel {
     }
 
     public void loadTransactions() {
+
+        getTxsFromDb();
+
         RequestorBtc.getTransactionsZecNew(walletManager.getWalletFriendlyAddress(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
@@ -96,9 +99,9 @@ public class HistoryViewModel extends ViewModel {
     }
 
     private void getAndUpdateSaplingTx() {
-        //hashes from shielded inputs
+        //hashes from shielded outputs and inputs
         compositeDisposable.add(Observable
-                .fromCallable(new CallNotesFromDb(dbManager, INPUTS_HASHES))
+                .fromCallable(new CallNotesFromDb(dbManager))
                 .subscribeOn(Schedulers.io())
                 .subscribe((value) -> {
                     Timber.d("CallDbFillHistory value size=%d", value.size());
@@ -108,18 +111,7 @@ public class HistoryViewModel extends ViewModel {
                         updateFromInsight(hash);
                     }
                 }));
-        //hashes from shielded outputs
-        compositeDisposable.add(Observable
-                .fromCallable(new CallNotesFromDb(dbManager, OUTPUTS_HASHES))
-                .subscribeOn(Schedulers.io())
-                .subscribe((value) -> {
-                    Timber.d("CallDbFillHistory value size=%d", value.size());
-                    if (value.isEmpty()) return;
 
-                    for (String hash : value) {
-                        updateFromInsight(hash);
-                    }
-                }));
     }
 
     private void updateFromInsight(String hash) {
@@ -136,7 +128,7 @@ public class HistoryViewModel extends ViewModel {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe((value) -> {
-                            if (value) getTxsFromDb();
+//                            if (value) getTxsFromDb();
                             Timber.d("CallDbFillHistory value=%b", value);
                         }));
             }
