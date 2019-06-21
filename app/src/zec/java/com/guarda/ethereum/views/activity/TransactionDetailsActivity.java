@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.guarda.ethereum.GuardaApp;
@@ -18,6 +20,8 @@ import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.TransactionItem;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
+import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.rxcall.CallGetMemo;
 
 
 import org.bitcoinj.core.Coin;
@@ -31,6 +35,11 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.EXTRA_TRANSACTION_POSITION;
 import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_TX;
@@ -40,42 +49,38 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
 
     @BindView(R.id.et_trans_details_sum)
     EditText etTrValue;
-
     @BindView(R.id.et_trans_details_date)
     EditText etDate;
-
     @BindView(R.id.et_trans_details_time)
     EditText etTime;
-
     @BindView(R.id.et_trans_details_hash)
     EditText etHash;
-
     @BindView(R.id.et_trans_details_balance_after)
     EditText etBalanceAfter;
-
     @BindView(R.id.et_trans_details_balance_before)
     EditText etBalanceBefore;
-
     @BindView(R.id.btn_copy)
     Button btnCopy;
-
     @BindView(R.id.btn_repeat)
     Button btnRepeat;
-
     @BindView(R.id.tv_confirmations)
     TextView etConfirmations;
+    @BindView(R.id.ll_memo)
+    LinearLayout ll_memo;
+    @BindView(R.id.et_memo)
+    EditText et_memo;
 
     @Inject
     TransactionsManager transactionsManager;
-
     @Inject
     WalletManager walletManager;
-
     @Inject
     EthereumNetworkManager networkManager;
-
+    @Inject
+    DbManager dbManager;
 
     private TransactionItem transaction;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -97,6 +102,12 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
         overridePendingTransition(R.anim.no_slide, R.anim.slide_in_right);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        compositeDisposable.clear();
+    }
+
     private void updateViews() {
         if (transaction != null) {
             setValue(transaction.isOut() ? -transaction.getSum() : transaction.getSum());
@@ -105,6 +116,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
             setConfirmations(String.valueOf(transaction.getConfirmations()));
             setBalanceDetails();
             initRepeatButton();
+            showMemo();
         }
     }
 
@@ -117,6 +129,28 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
         }
     }
 
+    private void showMemo() {
+        compositeDisposable.add(
+                Observable
+                        .fromCallable(new CallGetMemo(transaction.getHash(), dbManager))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(memo -> {
+                            String m = memo.get();
+                            Timber.d("CallGetMemo memo=%s", m);
+
+                            if (m == null) return;
+
+                            ll_memo.setVisibility(View.VISIBLE);
+                            et_memo.setText(m);
+                        })
+        );
+    }
+
+    @OnClick(R.id.btn_copy_memo)
+    public void copyMemo(View view) {
+        ClipboardUtils.copyToClipBoard(this, et_memo.getText().toString());
+    }
 
     private void setBalanceDetails() {
         long balanceBefore = transactionsManager.getBalanceByTime(true, walletManager.getMyBalance().getValue(), transaction.getTime());
@@ -133,7 +167,6 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
     private long getStartBalanceAfter(long balanceBefore, long summ) {
         return balanceBefore + summ;
     }
-
 
     private void setConfirmations(String confirmations) {
         if (confirmations != null) {

@@ -101,19 +101,19 @@ public class HistoryViewModel extends ViewModel {
         compositeDisposable.add(Observable
                 .fromCallable(new CallNotesFromDb(dbManager))
                 .subscribeOn(Schedulers.io())
-                .subscribe((value) -> {
-                    Timber.d("CallDbFillHistory value size=%d", value.size());
-                    if (value.isEmpty()) return;
+                .subscribe((hashList) -> {
+                    Timber.d("CallDbFillHistory hashList size=%d", hashList.size());
+                    if (hashList.isEmpty()) return;
 
-                    updateFromInsight(value);
+                    updateFromInsight(hashList);
                 }));
 
     }
 
-    private void updateFromInsight(List<String> list) {
+    private void updateFromInsight(List<String> hashList) {
         compositeDisposable.add(
                 Observable
-                        .just(list)
+                        .just(hashList)
                         .flatMap(hashes -> {
                             Timber.d("updateFromInsight list hashes s=%d", hashes.size());
                             return Observable.fromIterable(hashes);

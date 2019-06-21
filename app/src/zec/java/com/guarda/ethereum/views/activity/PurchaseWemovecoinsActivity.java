@@ -356,21 +356,13 @@ public class PurchaseWemovecoinsActivity extends AToolbarActivity {
         transferOut.addProperty("medium", "blockchain");
         //detailsOut
         JsonObject detailsOut = new JsonObject();
-        //TODO: change to account (address)
-//        details.addProperty("account", walletManager.getWalletFriendlyAddress());
+
         if (generatedAddress.isEmpty()) {
             closeProgress();
             Toast.makeText(getApplicationContext(), "All exchange services are unavailable now.", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (BuildConfig.DEBUG) {
-            detailsOut.addProperty("account", generatedAddress);
-        } else {
-            detailsOut.addProperty("account", generatedAddress);
-        }
-//        detailsOut.addProperty("provider", "isignthis");
-//        detailsOut.addProperty("returnUrl", "https://guarda.co");
-//        detailsOut.addProperty("redirectUrl", "https://guarda.co");
+        detailsOut.addProperty("account", generatedAddress);
         transferOut.add("details", detailsOut);
 
         JsonObject trade = new JsonObject();

@@ -12,12 +12,14 @@ public class ReceivedNotesRoom {
     private Integer spent;
     private Long value;
     private String nf;
+    private String memo;
 
-    public ReceivedNotesRoom(@NonNull String cm, Integer spent, Long value, String nf) {
+    public ReceivedNotesRoom(@NonNull String cm, Integer spent, Long value, String nf, String memo) {
         this.cm = cm;
         this.spent = spent;
         this.value = value;
         this.nf = nf;
+        this.memo = memo;
     }
 
     @NonNull
@@ -35,5 +37,9 @@ public class ReceivedNotesRoom {
 
     public String getNf() {
         return nf;
+    }
+
+    public String getMemo() {
+        return memo;
     }
 }

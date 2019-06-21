@@ -34,14 +34,13 @@ public abstract class AToolbarActivity extends TrackOnStopActivity {
 
     @Override
     protected void initToolbar() {
-        toolBar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolBar = findViewById(R.id.toolbar_main);
         if (toolBar != null) {
-            title = (TextView) findViewById(R.id.tv_toolbar_title);
+            title = findViewById(R.id.tv_toolbar_title);
 
             setSupportActionBar(toolBar);
 
             initBackButton();
-
         }
     }
 

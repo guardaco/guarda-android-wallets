@@ -226,4 +226,8 @@ public class SaplingNotePlaintext {
     public String getRcmStr() {
         return rcmStr;
     }
+
+    public byte[] getMemobytes() {
+        return memobytes;
+    }
 }

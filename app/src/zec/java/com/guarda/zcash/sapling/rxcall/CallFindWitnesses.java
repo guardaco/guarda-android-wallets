@@ -17,6 +17,7 @@ import com.guarda.zcash.sapling.note.SaplingNotePlaintext;
 import com.guarda.zcash.sapling.tree.IncrementalWitness;
 import com.guarda.zcash.sapling.tree.SaplingMerkleTree;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.concurrent.Callable;
 import timber.log.Timber;
 
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
+import static com.guarda.zcash.crypto.Utils.hexToBytes;
 import static com.guarda.zcash.crypto.Utils.revHex;
 import static com.guarda.zcash.sapling.note.SaplingNotePlaintext.tryNoteDecrypt;
 
@@ -121,7 +123,17 @@ public class CallFindWitnesses implements Callable<Boolean> {
                                     revHex(bytesToHex(saplingKey.getNk())),
                                     revHex(bytesToHex(saplingKey.getOvk()))),
                             position);
-                    dbManager.getAppDb().getReceivedNotesDao().insertAll(new ReceivedNotesRoom(out.getCmu(), null, TypeConvert.bytesToLong(snp.vbytes), nf));
+                    //add new received note
+                    dbManager.getAppDb().getReceivedNotesDao().insertAll(
+                            new ReceivedNotesRoom(
+                                    out.getCmu(),
+                                    null,
+                                    TypeConvert.bytesToLong(snp.vbytes),
+                                    nf,
+                                    new String(snp.getMemobytes(), Charset.forName("UTF-16BE"))
+                            )
+                    );
+
                     wtxs.put(out.getCmu(), iw);
                     wtxs.put(out.getCmu(), saplingTree.witness());
                 }

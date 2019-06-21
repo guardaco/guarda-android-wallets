@@ -68,6 +68,7 @@
     <string name="transaction_detail_date">Date</string>
     <string name="transaction_detail_time">Time</string>
     <string name="transaction_detail_hash">Hash</string>
+    <string name="transaction_detail_memo">Memo</string>
     <string name="transaction_detail_balance_before">Balance Before</string>
     <string name="transaction_detail_balance_after">Balance After</string>
     <string name="transaction_detail_confirmations">Confirmations</string>
@@ -158,7 +159,7 @@
     <string name="fee" translatable="false">FEE</string>
     <string name="hotline_file_provider_authority" translatable="false">com.example.demoapp.provider</string>
     <string name="freshchat_file_provider_authority" translatable="false">com.guarda.ethereum.provider</string>
-    <string name="lorem_ipsum" translatable="false">lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh</string>
+
     <string name="app_currency_name" translatable="false">Ethereum</string>
     <string name="logo_wallet" translatable="false">Wallet</string>
 
@@ -351,4 +352,8 @@
 
     <!-- Custom node -->
     <string name="custom_node_expl">Your node must be HTTPS in order to connect.</string>
+
+    <!-- Test data -->
+    <string name="lorem_ipsum" translatable="false">lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam nonummy nibh</string>
+    <string name="lorem_ipsum_512_bytes" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tempor in libero eu egestas. Fusce id risus quis dui pulvinar dapibus vitae et velit. Sed tincidunt ligula et quam aliquam, non dictum urna molestie. Sed ullamcorper risus sed neque euismod, at commodo ex placerat. Integer pulvinar aliquam nunc, in sodales felis ultrices nec. Sed semper lorem quis purus venenatis sagittis. Suspendisse potenti. Fusce ullamcorper, justo ullamcorper bibendum mattis, eros justo congue ligula, ac efficitur massa amet.</string>
 </resources>

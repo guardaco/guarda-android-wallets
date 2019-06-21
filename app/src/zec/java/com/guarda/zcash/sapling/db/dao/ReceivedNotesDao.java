@@ -40,6 +40,13 @@ public interface ReceivedNotesDao {
     @Query("SELECT SUM(value) FROM received_notes WHERE spent IS NULL")
     Long getBalance();
 
+    @Query("SELECT memo " +
+            "FROM received_notes rn " +
+            "LEFT join txins ins on ins.nf = rn.nf " +
+            "LEFT join txouts outs on outs.cmu = rn.cm " +
+            "WHERE ins.txHash like :hash or outs.txHash like :hash")
+    String getMemoByHash(String hash);
+
     @Query("DELETE FROM received_notes")
     void dropAll();
 
