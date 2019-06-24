@@ -48,7 +48,7 @@
     <string name="withdraw_address_send">Destination Address</string>
     <string name="result_transaction_sent">Transaction\n Sent</string>
     <string name="backup_your_back_up_passphrase">Types of private key</string>
-    <string name="backup_instruction">Keeping this secure and private is very important, as it is the only way that you will be able to login to your account. We don\'t store your private login key on the server there is no way to recover it if it is lost!</string>
+    <string name="backup_instruction">Security is essential - this is why you should keep your private key out of the public eye! Please note that Guarda Wallet does not have access to your keys and cannot recover it in case of loss.</string>
     <string name="fragment_disabled_text">Service is temporarily unavailable</string>
     <string name="setting_language">Language</string>
     <string name="setting_local_currency">Local Currency</string>
