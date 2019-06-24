@@ -100,6 +100,7 @@ public class HistoryViewModel extends ViewModel {
         compositeDisposable.add(Observable
                 .fromCallable(new CallNotesFromDb(dbManager))
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((hashList) -> {
                     Timber.d("CallNotesFromDb hashList size=%d", hashList.size());
                     if (hashList.isEmpty()) {
