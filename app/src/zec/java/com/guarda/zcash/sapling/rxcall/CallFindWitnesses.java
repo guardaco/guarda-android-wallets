@@ -34,7 +34,9 @@ public class CallFindWitnesses implements Callable<Boolean> {
 
     private DbManager dbManager;
     private SaplingCustomFullKey saplingKey;
+    //    private Long startHeight = 490132L;
     private Long startHeight = 551912L;
+    private Long checkHeight = 502799L;
 
     public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey) {
         this.dbManager = dbManager;
@@ -47,11 +49,11 @@ public class CallFindWitnesses implements Callable<Boolean> {
         SaplingMerkleTree saplingTree = new SaplingMerkleTree();
         List<SaplingWitnessesRoom> existingWitnesses = dbManager.getAppDb().getSaplingWitnessesDao().getAllWitnesses();
         //skip blocks which we updated witnesses from
-        if (existingWitnesses.size() > 0) {
-            Long lastWitnessHeight = dbManager.getAppDb().getSaplingWitnessesDao().getLastHeight();
-            startHeight = lastWitnessHeight > startHeight ? lastWitnessHeight : startHeight;
-            Timber.d("existingWitnesses.size()=%d, lastWitnessHeight=%d, startHeight=%d", existingWitnesses.size(), lastWitnessHeight, startHeight);
-        }
+//        if (existingWitnesses.size() > 0) {
+//            Long lastWitnessHeight = dbManager.getAppDb().getSaplingWitnessesDao().getLastHeight();
+//            startHeight = lastWitnessHeight > startHeight ? lastWitnessHeight : startHeight;
+//            Timber.d("existingWitnesses.size()=%d, lastWitnessHeight=%d, startHeight=%d", existingWitnesses.size(), lastWitnessHeight, startHeight);
+//        }
 
         List<BlockRoom> blocks = dbManager.getAppDb().getBlockDao().getAllBlocksOrdered();
 
