@@ -450,6 +450,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         historyViewModel.getShowActualTxs().observe(getViewLifecycleOwner(), (list) -> {
             adapter.updateList(list);
             adapter.notifyDataSetChanged();
+//            loaderAnimation.cancel();
         });
 
         historyViewModel.getSyncInProgress().observe(getViewLifecycleOwner(), (t) -> {

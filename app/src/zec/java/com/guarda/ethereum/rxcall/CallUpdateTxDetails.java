@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 
-public class CallUpdateTxDetails implements Callable<Boolean> {
+public class CallUpdateTxDetails implements Callable<String> {
 
     private DbManager dbManager;
     private ZecTxResponse tr;
@@ -20,7 +20,7 @@ public class CallUpdateTxDetails implements Callable<Boolean> {
     }
 
     @Override
-    public Boolean call() throws Exception {
+    public String call() throws Exception {
         boolean isOut = false;
         Long value = 0L;
 
@@ -57,7 +57,7 @@ public class CallUpdateTxDetails implements Callable<Boolean> {
                         "",
                         isOut));
 
-        return true;
+        return tr.getHash();
     }
 
 }

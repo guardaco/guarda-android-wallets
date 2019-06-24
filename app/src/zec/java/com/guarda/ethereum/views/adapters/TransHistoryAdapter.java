@@ -49,14 +49,14 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
     private OnItemClickListener listener;
 
     private List<TransactionItem> transList;
-    private List<TransactionItem> pendingList;
+//    private List<TransactionItem> pendingList;
     private View view;
 
     public TransHistoryAdapter() {
         GuardaApp.getAppComponent().inject(this);
         this.transList = transactionsManager.getTransactionsList();
-        transactionsManager.clearDuplicateTransactions();
-        this.pendingList = transactionsManager.getPendingTransactions();
+//        transactionsManager.clearDuplicateTransactions();
+//        this.pendingList = transactionsManager.getPendingTransactions();
     }
 
 
@@ -104,11 +104,12 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
 
 
     private TransactionItem getTxByPosition(int position) {
-        if (position + 1 <= pendingList.size()) {
-            return pendingList.get(position);
-        } else {
-            return transList.get(position - pendingList.size());
-        }
+//        if (position + 1 <= pendingList.size()) {
+//            return pendingList.get(position);
+//        } else {
+//            return transList.get(position - pendingList.size());
+            return transList.get(position);
+//        }
     }
 
     public void updateList(List<TransactionItem> list) {
@@ -121,7 +122,7 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
 
     @Override
     public int getItemCount() {
-        return transList.size() + pendingList.size();
+        return transList.size();
     }
 
     class TransHistoryItemHolder extends RecyclerView.ViewHolder {

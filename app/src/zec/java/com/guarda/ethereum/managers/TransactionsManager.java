@@ -25,51 +25,47 @@ import static com.guarda.zcash.crypto.Utils.roundDouble;
 public class TransactionsManager {
 
     private List<TransactionItem> transactionsList;
-    private List<TransactionItem> pendingTransactions;
+//    private List<TransactionItem> pendingTransactions;
 
     private List<TransactionItem> txFriendlyList = new ArrayList<>();
 
     public TransactionsManager() {
-        pendingTransactions = new ArrayList<>();
+//        pendingTransactions = new ArrayList<>();
         transactionsList = new ArrayList<>();
     }
 
-    public List<TransactionItem> getPendingTransactions() {
-        return pendingTransactions;
-    }
+//    public List<TransactionItem> getPendingTransactions() {
+//        return pendingTransactions;
+//    }
 
-    private boolean mainListContainsPending(String pendingTxHash) {
-        if (transactionsList != null && transactionsList.size() > 0 && pendingTxHash != null) {
-            for (int i = 0; i < transactionsList.size(); i++) {
-                String currentTxHash = transactionsList.get(i).getHash();
-                if (pendingTxHash.equals(currentTxHash)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    private boolean mainListContainsPending(String pendingTxHash) {
+//        if (transactionsList != null && transactionsList.size() > 0 && pendingTxHash != null) {
+//            for (int i = 0; i < transactionsList.size(); i++) {
+//                String currentTxHash = transactionsList.get(i).getHash();
+//                if (pendingTxHash.equals(currentTxHash)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
-    public void clearDuplicateTransactions() {
-        if (pendingTransactions != null && pendingTransactions.size() > 0) {
-            for (int i = 0; i < pendingTransactions.size(); i++) {
-                String currentTxHash = pendingTransactions.get(i).getHash();
-                if (mainListContainsPending(currentTxHash)) {
-                    pendingTransactions.remove(i);
-                }
-            }
-        }
-    }
+//    public void clearDuplicateTransactions() {
+//        if (pendingTransactions != null && pendingTransactions.size() > 0) {
+//            for (int i = 0; i < pendingTransactions.size(); i++) {
+//                String currentTxHash = pendingTransactions.get(i).getHash();
+//                if (mainListContainsPending(currentTxHash)) {
+//                    pendingTransactions.remove(i);
+//                }
+//            }
+//        }
+//    }
 
     public TransactionItem getTxByPosition(int position) {
-        if (position + 1 <= pendingTransactions.size()) {
-            return pendingTransactions.get(position);
+        if (transactionsList != null && !transactionsList.isEmpty()) {
+            return transactionsList.get(position);
         } else {
-            if (transactionsList != null && !transactionsList.isEmpty()) {
-                return transactionsList.get(position - pendingTransactions.size());
-            } else {
-                return null;
-            }
+            return null;
         }
     }
 
@@ -79,12 +75,11 @@ public class TransactionsManager {
 
     public void setTransactionsList(List<TransactionItem> mTransactionsList) {
         this.transactionsList = mTransactionsList;
-        clearDuplicateTransactions();
+//        clearDuplicateTransactions();
     }
 
     public void clearLists() {
         transactionsList.clear();
-        pendingTransactions.clear();
         txFriendlyList.clear();
     }
 
@@ -163,7 +158,6 @@ public class TransactionsManager {
         long txSum;
 
         if (item.getVjoinsplit() == null || item.getVjoinsplit().size() == 0) {
-            if (item.getVin().size() == 0) return 0;
             if (item.getVin().get(0).getAddr() != null && item.getVin().get(0).getAddr().equals(ownAddress)) {
                 txSum = getOutsSumNew(item, ownAddress);
             } else {
@@ -201,16 +195,10 @@ public class TransactionsManager {
     private long getOutsSumNew(ZecTxResponse item, String ownAddress) {
         long res = 0;
         try {
-            if (item.getVout() != null && item.getOutputDescs() != null) {
-                if (item.getVout().size() == 1 && item.getOutputDescs().size() == 1) {
-                    if (item.getVout().get(0).getScriptPubKey().getAddresses() != null) {
-                        if (item.getVout().get(0).getScriptPubKey().getAddresses().get(0).equals(ownAddress)) {
-                            double d = item.getValueIn() - item.getValueOut();
-                            res = Coin.parseCoin(String.valueOf(roundDouble(d, 8))).getValue();
-                            return res;
-                        }
-                    }
-                }
+            if (item.getOutputDescs() != null && item.getOutputDescs().size() == 1) {
+                double d = item.getValueIn() - item.getValueOut();
+                res = Coin.parseCoin(String.valueOf(roundDouble(d, 8))).getValue();
+                return res;
             }
 
             for (Vout out : item.getVout()) {
