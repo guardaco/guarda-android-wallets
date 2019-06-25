@@ -44,7 +44,7 @@ public class CallBuildTransaction implements Callable<ZcashTransaction> {
             return new ZCashTransaction_ztot(key, toAddress, value, fee, expHeight, unspents, dbManager);
         }
 
-        return new ZCashTransaction_zaddr(key, toAddress, value, fee, expHeight, unspents, dbManager);
+        return new ZCashTransaction_ztot(key, toAddress, value, fee, expHeight, unspents, dbManager);
     }
 
     private List<ReceivedNotesRoom> chooseUnspents(List<ReceivedNotesRoom> allUnspents) {

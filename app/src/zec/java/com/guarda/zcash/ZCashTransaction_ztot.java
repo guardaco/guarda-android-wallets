@@ -76,7 +76,7 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
         this.dbManager = dbManager;
         this.fee = fee;
 
-        valueBalance = value - fee;
+        valueBalance = value + fee;
 
         byte[] toKeyHash = Arrays.copyOfRange(Base58.decodeChecked(toAddress), 2, 22);
         long valuePool = 0;
@@ -196,7 +196,6 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
 
         Blake2bDigest outputsDigest = new Blake2bDigest(null, 32, null, ZCASH_OUTPUTS_HASH_PERSONALIZATION);
         byte[] outputs_ser = new byte[0];
-
         for (int i = 0; i < outputs.size(); i++) {
             TxOutTranspatent out = outputs.get(i);
             outputs_ser = Bytes.concat(
