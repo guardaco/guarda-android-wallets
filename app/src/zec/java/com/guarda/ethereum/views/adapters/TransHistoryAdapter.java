@@ -29,19 +29,12 @@ import butterknife.ButterKnife;
 @AutoInjector(GuardaApp.class)
 public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapter.TransHistoryItemHolder> {
 
-    public interface OnItemClickListener {
-        void OnItemClick(int position);
-    }
-
     @Inject
     WalletManager walletManager;
-
     @Inject
     TransactionsManager transactionsManager;
-
     @Inject
     SharedManager sharedManager;
-
     @Inject
     Context context;
 
@@ -49,21 +42,16 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
     private OnItemClickListener listener;
 
     private List<TransactionItem> transList;
-//    private List<TransactionItem> pendingList;
     private View view;
 
     public TransHistoryAdapter() {
         GuardaApp.getAppComponent().inject(this);
         this.transList = transactionsManager.getTransactionsList();
-//        transactionsManager.clearDuplicateTransactions();
-//        this.pendingList = transactionsManager.getPendingTransactions();
     }
-
 
     public void setItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
-
 
     @Override
     public TransHistoryItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -102,22 +90,12 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         }
     }
 
-
     private TransactionItem getTxByPosition(int position) {
-//        if (position + 1 <= pendingList.size()) {
-//            return pendingList.get(position);
-//        } else {
-//            return transList.get(position - pendingList.size());
-            return transList.get(position);
-//        }
+        return transList.get(position);
     }
 
     public void updateList(List<TransactionItem> list) {
         this.transList = list;
-    }
-
-    private boolean isDebit(String ourAddress, String toAddress) {
-        return ourAddress.equals(toAddress);
     }
 
     @Override
@@ -142,6 +120,10 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(int position);
     }
 }
 
