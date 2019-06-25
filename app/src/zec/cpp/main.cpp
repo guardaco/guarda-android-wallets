@@ -266,7 +266,6 @@ Java_com_guarda_zcash_RustAPI_greeting(
     issV >> value;
 
     if (!librustzcash_sapling_output_proof(ctx, eskunt.begin(), resD, pkdunt.begin(), runt.begin(), value, cv.begin(), zkproof.begin())) {
-        std::string hello = "llibrustzcash_sapling_output_proof=false";
         librustzcash_sapling_proving_ctx_free(ctx);
         return env->NewByteArray(2);
     };

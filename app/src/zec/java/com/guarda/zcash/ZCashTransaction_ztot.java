@@ -1,6 +1,7 @@
 package com.guarda.zcash;
 
 import com.google.common.primitives.Bytes;
+import com.guarda.zcash.crypto.Base58;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -23,6 +24,7 @@ import org.spongycastle.crypto.digests.Blake2bDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 import timber.log.Timber;
 
@@ -31,7 +33,7 @@ import static com.guarda.zcash.crypto.Utils.hexToBytes;
 import static com.guarda.zcash.crypto.Utils.revHex;
 import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 
-public class ZCashTransaction_zaddr implements ZcashTransaction {
+public class ZCashTransaction_ztot implements ZcashTransaction {
 
     private static final byte[] ZCASH_PREVOUTS_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'P', 'r', 'e', 'v', 'o', 'u', 't', 'H', 'a', 's', 'h'}; //ZcashPrevoutHash
     private static final byte[] ZCASH_SEQUENCE_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'S', 'e', 'q', 'u', 'e', 'n', 'c', 'H', 'a', 's', 'h'}; //ZcashSequencHash
@@ -52,6 +54,7 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
     private byte[] tx_sig_bytes;
     private byte[] tx_bytes;
     private List<SpendProof>  spendProofList = new ArrayList<>();
+    private Vector<TxOutTranspatent> outputs = new Vector<>();
     private long locktime = 0;
     private int nExpiryHeight;
     private SaplingCustomFullKey privKey;
@@ -63,15 +66,19 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
     private byte[] shieldedSpendsBlake;
     private DbManager dbManager;
     private Long fee;
+    private Long valueBalance;
 
-    public ZCashTransaction_zaddr(SaplingCustomFullKey privKey, String toAddress, Long value, Long fee, int expiryHeight,
-                                  List<ReceivedNotesRoom> unspents, DbManager dbManager) throws IllegalArgumentException {
+    public ZCashTransaction_ztot(SaplingCustomFullKey privKey, String toAddress, Long value, Long fee, int expiryHeight,
+                                 List<ReceivedNotesRoom> unspents, DbManager dbManager) throws IllegalArgumentException {
 
         this.privKey = privKey;
         this.nExpiryHeight = expiryHeight;
         this.dbManager = dbManager;
         this.fee = fee;
 
+        valueBalance = value - fee;
+
+        byte[] toKeyHash = Arrays.copyOfRange(Base58.decodeChecked(toAddress), 2, 22);
         long valuePool = 0;
 
         //Initialization sapling proving context (it's free after fail or completed)
@@ -81,7 +88,6 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
         /**
          * Shielded spends
          */
-
         for (ReceivedNotesRoom r : unspents) {
             spendProofList.add(addSpendS(r));
             valuePool += r.getValue();
@@ -105,16 +111,10 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
         Timber.d("shieldedSpendsBlake=%s %d", Arrays.toString(shieldedSpendsBlake), shieldedSpendsBlake.length);
 
         /**
-         * Shielded output
+         * Transpatent output
          */
-        byte[] addressToBytes = RustAPI.checkConvertAddr(toAddress);
-        byte[] dTo = new byte[11];
-        byte[] pkdTo = new byte[32];
-        System.arraycopy(addressToBytes, 0, dTo, 0, 11);
-        System.arraycopy(addressToBytes, 11, pkdTo, 0, 32);
+        this.outputs.add(new TxOutTranspatent(toKeyHash, value));
 
-        bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, getUotput(dTo, pkdTo, value));
-        outputsSize++;
         if (valuePool - value - fee > 0) {
             bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, getUotput(privKey.getD(), privKey.getPkd(), valuePool - value - fee));
             outputsSize++;
@@ -140,9 +140,12 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
                 Utils.compactSizeIntLE(0) //transparent inputs size
         );
 
-        tx_bytes = Bytes.concat(tx_bytes, Utils.compactSizeIntLE(0)); //transparent outputs size
+        tx_bytes = Bytes.concat(tx_bytes, Utils.compactSizeIntLE(outputs.size()));
+        for (int i = 0; i < outputs.size(); i++) {
+            tx_bytes = Bytes.concat(tx_bytes, outputs.get(i).getBytes());
+        }
 
-        byte[] bindingSig = RustAPI.getBsig(fee.toString(), getSignatureHash());
+        byte[] bindingSig = RustAPI.getBsig(valueBalance.toString(), getSignatureHash());
         Timber.d("tx geBytes() bindingSig=" + Arrays.toString(bindingSig) + " s=" + bindingSig.length);
 
         byte[] bytesShieldedSpendsAndAuthSig = new byte[0];
@@ -160,7 +163,7 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
                 tx_bytes,
                 Utils.int32BytesLE(locktime),
                 Utils.int32BytesLE(nExpiryHeight),
-                Utils.int64BytesLE(fee), //valuebalance (The net value of Sapling Spend transfers minus Output transfers)
+                Utils.int64BytesLE(valueBalance), //valuebalance (The net value of Sapling Spend transfers minus Output transfers)
                 Utils.compactSizeIntLE(spendProofList.size()), //nShieldedSpend (size)
                 bytesShieldedSpendsAndAuthSig, //TODO: append bytesSpendAuthSig for every spend
                 Utils.compactSizeIntLE(outputsSize), //nShieldedOutput (size)
@@ -194,6 +197,16 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
         Blake2bDigest outputsDigest = new Blake2bDigest(null, 32, null, ZCASH_OUTPUTS_HASH_PERSONALIZATION);
         byte[] outputs_ser = new byte[0];
 
+        for (int i = 0; i < outputs.size(); i++) {
+            TxOutTranspatent out = outputs.get(i);
+            outputs_ser = Bytes.concat(
+                    outputs_ser,
+                    Utils.int64BytesLE(out.value),
+                    Utils.compactSizeIntLE(out.script.length),
+                    out.script
+            );
+        }
+
         outputsDigest.update(outputs_ser, 0, outputs_ser.length);
         outputsDigest.doFinal(hashOutputs, 0);
 
@@ -212,7 +225,7 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
                  * when tx has ShieldedSpends - valueBalance += spends value
                  * when tx has ShieldedOutputs - valueBalance -= outputs value
                  */
-                Utils.int64BytesLE(fee),
+                Utils.int64BytesLE(valueBalance),
                 Utils.int32BytesLE(SIGHASH_ALL)
         );
     }

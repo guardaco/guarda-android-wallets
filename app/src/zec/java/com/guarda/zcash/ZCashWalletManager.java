@@ -1,7 +1,6 @@
 package com.guarda.zcash;
 
 import com.google.common.primitives.Bytes;
-import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.zcash.crypto.Base58;
 import com.guarda.zcash.crypto.BrainKeyDict;
@@ -12,9 +11,9 @@ import com.guarda.zcash.request.AbstractZCashRequest;
 import com.guarda.zcash.request.CreateTransaction_taddr;
 import com.guarda.zcash.request.CreateTransaction_ttoz;
 import com.guarda.zcash.request.CreateTransaction_zaddr;
+import com.guarda.zcash.request.CreateTransaction_ztot;
 import com.guarda.zcash.request.GetBalance_taddr;
 import com.guarda.zcash.request.GetUTXOSRequest;
-import com.guarda.zcash.request.PushTransaction_taddr;
 import com.guarda.zcash.request.UpdateTransactionCache_taddr;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
@@ -24,22 +23,15 @@ import org.spongycastle.crypto.digests.RIPEMD160Digest;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Vector;
 
 import static com.guarda.ethereum.models.constants.Const.ZEC_MAINNET_ADDR_PREFIX;
-import static com.guarda.ethereum.models.constants.Const.ZEC_TESTNET_ADDR_PREFIX;
 
 
 public class ZCashWalletManager {
 
   private static volatile ZCashWalletManager instance;
   public static String value;
-
-  private ZCashWalletManager() {
-  }
 
   public static ZCashWalletManager getInstance() {
     if (instance == null) {
@@ -282,7 +274,7 @@ public class ZCashWalletManager {
                                       final SaplingCustomFullKey privateKey,
                                       final long minconf,
                                       final DbManager dbManager,
-                                      final WalletCallback<String, ZCashTransaction_zaddr> onComplete) throws ZCashException {
+                                      final WalletCallback<String, ZcashTransaction> onComplete) throws ZCashException {
     createTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, minconf, EXPIRY_HEIGHT_NO_LIMIT, dbManager, onComplete);
   }
 
@@ -294,7 +286,7 @@ public class ZCashWalletManager {
                                       final long minconf,
                                       final int expiryHeight,
                                       final DbManager dbManager,
-                                      final WalletCallback<String, ZCashTransaction_zaddr> onComplete) throws ZCashException {
+                                      final WalletCallback<String, ZcashTransaction> onComplete) throws ZCashException {
 
     if (amount < 0) {
       throw new ZCashException("Cannot send negative amount of coins.");
@@ -309,6 +301,53 @@ public class ZCashWalletManager {
     }
 
     new CreateTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, dbManager, onComplete).run();
+  }
+
+  //only for z-to-t transactions
+  public void createTransaction_ztot(final String fromAddr,
+                                     final String toAddr,
+                                     final Long amount,
+                                     final Long fee,
+                                     final SaplingCustomFullKey privateKey,
+                                     final DbManager dbManager,
+                                     final WalletCallback<String, ZcashTransaction> onComplete) throws ZCashException {
+    createTransaction_ztot(fromAddr, toAddr, amount, fee, privateKey, EXPIRY_HEIGHT_NO_LIMIT, dbManager, onComplete);
+  }
+
+  private void createTransaction_ztot(final String fromAddr,
+                                     final String toAddr,
+                                     final Long amount,
+                                     final Long fee,
+                                     final SaplingCustomFullKey privateKey,
+                                     final int expiryHeight,
+                                     final DbManager dbManager,
+                                     final WalletCallback<String, ZcashTransaction> onComplete) throws ZCashException {
+    String methodName = "createTransaction_ztot";
+    checkArgumentNonNull(fromAddr, "fromAddr", methodName);
+    checkArgumentNonNull(toAddr, "toAddr", methodName);
+    checkArgumentNonNull(amount, "amount", methodName);
+    checkArgumentNonNull(fee, "fee", methodName);
+    checkArgumentNonNull(onComplete, "onComplete", methodName);
+
+    try {
+      Base58.decodeChecked(toAddr);
+    } catch (IllegalArgumentException e) {
+      throw new ZCashException("Invalid toAddr.");
+    }
+
+    if (amount < 0) {
+      throw new ZCashException("Cannot send negative amount of coins.");
+    }
+
+    if (fee < 0) {
+      throw new ZCashException("Cannot create transaction with negative fee.");
+    }
+
+    if (amount + fee == 0) {
+      throw new ZCashException("Transaction with amount + fee = 0 would not do anything.");
+    }
+
+    new CreateTransaction_ztot(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, dbManager, onComplete).run();
   }
 
   public void importWallet_taddr(String privateKey,

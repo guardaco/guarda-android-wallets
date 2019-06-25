@@ -138,7 +138,6 @@ public class WithdrawFragment extends BaseFragment{
 
     @OnClick({R.id.btn_scan_qr, R.id.btn_next})
     public void withdrawButtonsClick(View view) {
-        final WithdrawFragment thisFragment = this;
         switch (view.getId()) {
             case R.id.btn_scan_qr:
                 Intent intent = new Intent(getActivity(), ScanQrCodeActivity.class);
@@ -148,11 +147,6 @@ public class WithdrawFragment extends BaseFragment{
                 String address = etSendCoinsAddress.getText().toString();
                 address = filterAddress(address);
                 etSendCoinsAddress.setText(address);
-                //show error for z-to-t transactions
-                if (isSaplingAddress && (address.length() == 35 && address.substring(0, 1).equalsIgnoreCase("t"))) {
-                    showError(etSendCoinsAddress, getString(R.string.withdraw_sending_from_z_to_t_not_supported));
-                    break;
-                }
 
                 goNext(address);
                 break;
@@ -162,13 +156,9 @@ public class WithdrawFragment extends BaseFragment{
     private void goNext(final String address) {
         final WithdrawFragment thisFragment = this;
         if (!address.isEmpty()) {
-                    walletManager.isAddressValid(address, new Callback<Boolean>() {
-                        @Override
-                        public void onResponse(final Boolean response) {
+                    walletManager.isAddressValid(address, (response) -> {
                             try {
-                                thisFragment.getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
+                                thisFragment.getActivity().runOnUiThread(() -> {
                                         try {
                                             if (response)
                                                 openAmountToSendActivity(address);
@@ -177,12 +167,10 @@ public class WithdrawFragment extends BaseFragment{
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
-                                    }
                                 });
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        }
                     });
         } else {
             showError(etSendCoinsAddress, getString(R.string.withdraw_address_not_valid));

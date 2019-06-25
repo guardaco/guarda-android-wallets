@@ -25,41 +25,11 @@ import static com.guarda.zcash.crypto.Utils.roundDouble;
 public class TransactionsManager {
 
     private List<TransactionItem> transactionsList;
-//    private List<TransactionItem> pendingTransactions;
-
     private List<TransactionItem> txFriendlyList = new ArrayList<>();
 
     public TransactionsManager() {
-//        pendingTransactions = new ArrayList<>();
         transactionsList = new ArrayList<>();
     }
-
-//    public List<TransactionItem> getPendingTransactions() {
-//        return pendingTransactions;
-//    }
-
-//    private boolean mainListContainsPending(String pendingTxHash) {
-//        if (transactionsList != null && transactionsList.size() > 0 && pendingTxHash != null) {
-//            for (int i = 0; i < transactionsList.size(); i++) {
-//                String currentTxHash = transactionsList.get(i).getHash();
-//                if (pendingTxHash.equals(currentTxHash)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
-
-//    public void clearDuplicateTransactions() {
-//        if (pendingTransactions != null && pendingTransactions.size() > 0) {
-//            for (int i = 0; i < pendingTransactions.size(); i++) {
-//                String currentTxHash = pendingTransactions.get(i).getHash();
-//                if (mainListContainsPending(currentTxHash)) {
-//                    pendingTransactions.remove(i);
-//                }
-//            }
-//        }
-//    }
 
     public TransactionItem getTxByPosition(int position) {
         if (transactionsList != null && !transactionsList.isEmpty()) {
@@ -75,7 +45,6 @@ public class TransactionsManager {
 
     public void setTransactionsList(List<TransactionItem> mTransactionsList) {
         this.transactionsList = mTransactionsList;
-//        clearDuplicateTransactions();
     }
 
     public void clearLists() {

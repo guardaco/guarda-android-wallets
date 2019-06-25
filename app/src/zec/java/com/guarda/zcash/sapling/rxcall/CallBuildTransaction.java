@@ -1,6 +1,8 @@
 package com.guarda.zcash.sapling.rxcall;
 
 import com.guarda.zcash.ZCashTransaction_zaddr;
+import com.guarda.zcash.ZCashTransaction_ztot;
+import com.guarda.zcash.ZcashTransaction;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.db.model.ReceivedNotesRoom;
 import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 
-public class CallBuildTransaction implements Callable<ZCashTransaction_zaddr> {
+public class CallBuildTransaction implements Callable<ZcashTransaction> {
 
     private DbManager dbManager;
     private String toAddress;
@@ -29,10 +31,18 @@ public class CallBuildTransaction implements Callable<ZCashTransaction_zaddr> {
     }
 
     @Override
-    public ZCashTransaction_zaddr call() throws Exception {
+    public ZcashTransaction call() throws Exception {
         List<ReceivedNotesRoom> unspents = dbManager.getAppDb().getReceivedNotesDao().getUnspents();
 
         unspents = chooseUnspents(unspents);
+
+        if (toAddress.substring(0, 1).equalsIgnoreCase("z")) {
+            //from z to z
+            return new ZCashTransaction_zaddr(key, toAddress, value, fee, expHeight, unspents, dbManager);
+        } else if (toAddress.substring(0, 1).equalsIgnoreCase("t")) {
+            //from z to t
+            return new ZCashTransaction_ztot(key, toAddress, value, fee, expHeight, unspents, dbManager);
+        }
 
         return new ZCashTransaction_zaddr(key, toAddress, value, fee, expHeight, unspents, dbManager);
     }
