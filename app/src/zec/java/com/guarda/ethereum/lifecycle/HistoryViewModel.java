@@ -133,18 +133,12 @@ public class HistoryViewModel extends ViewModel {
                                 Timber.d("getOneTx tx=%s", txResponse);
                                 return Observable
                                         .fromCallable(new CallUpdateTxDetails(dbManager, txResponse));
-//                                compositeDisposable.add(Observable
-//                                        .fromCallable(new CallUpdateTxDetails(dbManager, txResponse))
-//                                        .subscribeOn(Schedulers.io())
-//                                        .observeOn(AndroidSchedulers.mainThread())
-//                                        .subscribe((value) -> Timber.d("CallUpdateTxDetails value=%b", value)));
                             }
                         })
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(txHash -> {
-                                    Timber.d("subscribe CallUpdateTxDetails tx hash=%s", txHash);
-                                },
+                        .subscribe(
+                                txHash -> Timber.d("subscribe CallUpdateTxDetails tx hash=%s", txHash),
                                 e -> Timber.e("updateFromInsight err=%s", e.getMessage()),
                                 () -> {
                                     showHistory.setValue(true);

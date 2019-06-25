@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +21,6 @@ import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.SendRawTxResponse;
 import com.guarda.ethereum.models.items.TxFeeResponse;
-import com.guarda.ethereum.models.items.ZecTxResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.rest.RequestorBtc;
@@ -154,13 +152,13 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                     updateArrivalField();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.d("psd", "getTxFee - onSuccess: " + e.getMessage());
+                    Timber.d("getTxFee - onSuccess: %s", e.getMessage());
                 }
             }
 
             @Override
             public void onFailure(String msg) {
-                Log.d("psd", "getTxFee - onFailure: " + msg);
+                Timber.d("getTxFee - onFailure: %s", msg);
             }
         });
 
@@ -222,8 +220,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 } catch (IllegalFormatConversionException e) {
                     btnConfirm.setEnabled(false);
                 }
-                if (feeLessThanAmountToSend(newFee)
-                        && currentFeeEth > 0) {
+                if (currentFeeEth > 0) {
                     hideError(etFeeAmount);
                     btnConfirm.setEnabled(true);
                 } else if (isInclude) {
@@ -246,31 +243,14 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         }
     }
 
-    private void checkFeeLessAmount() {
-        if (!feeLessThanAmountToSend(etFeeAmount.getText().toString()) && isInclude) {
-            showError(etFeeAmount, getString(R.string.et_error_fee_more_than_amount));
-            btnConfirm.setEnabled(false);
-        } else {
-            hideError(etFeeAmount);
-            btnConfirm.setEnabled(true);
-        }
-    }
-
-    private boolean feeLessThanAmountToSend(String newFee) {
-//        BigDecimal feeDecimal = new BigDecimal(newFee);
-//        BigDecimal amountDecimal = new BigDecimal(etSumSend.getText().toString());
-//        return amountDecimal.compareTo(feeDecimal) > 0;
-        return !false;
-    }
-
     private void updateArrivalField() {
-        Log.d("flint", "SendingCurrencyActivity.updateArrivalField()...");
+        Timber.d("SendingCurrencyActivity.updateArrivalField()...");
         boolean makeSecondCheck = true;
         try {
             currentFeeEth = Coin.parseCoin(etFeeAmount.getText().toString()).getValue();
             long sumSatoshi = Coin.parseCoin(etSumSend.getText().toString()).getValue();
             long totalFee = currentFeeEth;
-            Log.d("flint", "1 amountToSend=" + sumSatoshi + ", currentFeeEth=" + currentFeeEth + ", totalFee=" + totalFee);
+            Timber.d("1 amountToSend=" + sumSatoshi + ", currentFeeEth=" + currentFeeEth + ", totalFee=" + totalFee);
             if (isInclude) {
                 if (Coin.valueOf(sumSatoshi - totalFee).isPositive()) {
                     arrivalAmountToSend = Coin.valueOf(sumSatoshi - totalFee).toPlainString();
@@ -288,11 +268,11 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 hideError(etArrivalAmount);
             }
         } catch (WrongNetworkException wne) {
-            Log.e("psd", wne.toString());
+            Timber.e("updateArrivalField wne=%s", wne.toString());
             String toastStr = String.format(getString(R.string.send_wrong_address), getString(R.string.app_coin_currency));
             Toast.makeText(this, toastStr, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Log.d("flint", "1 amountToSend=... exception: " + e.toString());
+            Timber.d("1 amountToSend=... exception: %s", e.toString());
             btnConfirm.setEnabled(false);
             if (e.getMessage().equalsIgnoreCase("SMALL_SENDING")) {
                 makeSecondCheck = false;
@@ -310,7 +290,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 long sumSatoshi = Coin.parseCoin(etSumSend.getText().toString()).getValue();
                 long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
                 long totalFee = currentFeeEth;
-                Log.d("flint", "2 amountToSend=" + amountSatoshi + ", currentFeeEth=" + currentFeeEth + ", totalFee=" + totalFee);
+                Timber.d("2 amountToSend=" + amountSatoshi + ", currentFeeEth=" + currentFeeEth + ", totalFee=" + totalFee);
                 if (isInclude) {
                     if (Coin.valueOf(sumSatoshi - totalFee).isPositive()) {
                         arrivalAmountToSend = Coin.valueOf(sumSatoshi - totalFee).toPlainString();
@@ -322,9 +302,9 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 }
                 etArrivalAmount.setText(arrivalAmountToSend);
             } catch (Exception e) {
-                Log.d("flint", "2 amountToSend=... exception: " + e.toString());
+                Timber.d("2 amountToSend=... exception: %s", e.toString());
                 btnConfirm.setEnabled(false);
-                if (e.getMessage() == "SMALL_SENDING") {
+                if (e.getMessage().equals("SMALL_SENDING")) {
                     showError(etFeeAmount, getString(R.string.small_sum_of_tx));
                 } else if (e.getMessage().equalsIgnoreCase("java.lang.ArithmeticException: Rounding necessary")) {
                     showError(etFeeAmount, "Fee is too small");
@@ -401,7 +381,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 showError(etSumSend, getString(R.string.withdraw_amount_can_not_be_empty));
             }
         } catch (WrongNetworkException wne) {
-            Log.e("psd", wne.toString());
+            Timber.e("onConfirmClick wne=%s", wne.toString());
             Toast.makeText(this, R.string.send_wrong_address, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(SendingCurrencyActivity.this, "Error of sending", Toast.LENGTH_SHORT).show();
@@ -422,18 +402,18 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     private void sendToTransparent() throws ZCashException {
         Timber.d("sendToTransparent");
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
-        Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
+        Timber.d("amount=%d fee=%d", amountSatoshi, currentFeeEth);
         ZCashWalletManager.getInstance().createTransaction_taddr(walletManager.getWalletFriendlyAddress(),
                 getToAddress(),
                 amountSatoshi,
                 currentFeeEth,
                 walletManager.getPrivateKey(),
                 Common.ZCASH_MIN_CONFIRM, (r1, r2) -> {
-                        Log.i("RESPONSE CODE", r1);
+                        Timber.i("RESPONSE CODE %s", r1);
                         if (r1.equals("ok")) {
                             try {
                                 String lastTxhex = Utils.bytesToHex(r2.getBytes());
-                                Timber.d("lastTxhex", lastTxhex);
+                                Timber.d("lastTxhex %s", lastTxhex);
 
                                 sendTxHashAndUpdateDb(lastTxhex);
                             } catch (ZCashException e) {
@@ -452,7 +432,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     private void sendToSapling() throws ZCashException {
         Timber.d("sendToSapling");
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
-        Log.d("svcom", "amount=" + amountSatoshi + " fee=" + currentFeeEth);
+        Timber.d("amount=%d fee=%d", amountSatoshi, currentFeeEth);
         ZCashWalletManager.getInstance().createTransaction_ttoz(walletManager.getWalletFriendlyAddress(),
                 getToAddress(),
                 amountSatoshi,
@@ -460,11 +440,11 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 walletManager.getPrivateKey(),
                 walletManager.getSaplingCustomFullKey(),
                 Common.ZCASH_MIN_CONFIRM, (r1, r2) -> {
-                        Log.i("RESPONSE CODE", r1);
+                        Timber.i("RESPONSE CODE %s", r1);
                         if (r1.equals("ok")) {
                             try {
                                 String lastTxhex = Utils.bytesToHex(r2.getBytes());
-                                Timber.d("lastTxhex", lastTxhex);
+                                Timber.d("lastTxhex %s", lastTxhex);
 
                                 sendTxHashAndUpdateDb(lastTxhex);
                             } catch (ZCashException e) {
@@ -494,7 +474,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                     1,
                     dbManager,
                     (r1, r2) -> {
-                            Timber.d("sendSaplingToSapling onResponse " + r1);
+                            Timber.d("sendSaplingToSapling onResponse %s", r1);
                             if (r1.equals("ok")) {
                                 byte[] bytes = r2.getBytes();
                                 Timber.d("sendSaplingToSapling bytes=%s %d", Arrays.toString(bytes), bytes.length);
@@ -510,7 +490,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                         });
         } catch (ZCashException e) {
             doToast("Can not send the transaction: " + e.getMessage());
-            Timber.e("sendSaplingToSapling createTx ZCashException=" + e.getMessage());
+            Timber.e("sendSaplingToSapling createTx ZCashException=%s", e.getMessage());
         }
     }
 
@@ -551,7 +531,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .subscribe((value) -> {
                                                 finishSending();
-                                                Timber.d("CallDbFillHistory value=%b", value);
+                                                Timber.d("CallDbFillHistory value=%s", value);
                                             }));
                                 },
                                 e -> {

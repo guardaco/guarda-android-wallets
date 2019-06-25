@@ -103,7 +103,6 @@ public class TransactionHistoryFragment extends BaseFragment {
     RecyclerView rvTokens;
 
     private boolean isVisible = true;
-    private boolean stronglyHistory = false;
     private ObjectAnimator loaderAnimation;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private HistoryViewModel historyViewModel;
@@ -143,8 +142,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager, syncManager);
         historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
         subscribeUi();
-
-        stronglyHistory = true;
 
         initTransactionHistoryRecycler();
 
@@ -450,7 +447,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         historyViewModel.getShowActualTxs().observe(getViewLifecycleOwner(), (list) -> {
             adapter.updateList(list);
             adapter.notifyDataSetChanged();
-//            loaderAnimation.cancel();
         });
 
         historyViewModel.getSyncInProgress().observe(getViewLifecycleOwner(), (t) -> {
