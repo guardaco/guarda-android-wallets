@@ -21,28 +21,30 @@ public class CallUpdateTxDetails implements Callable<String> {
 
     @Override
     public String call() throws Exception {
-        boolean isOut = false;
-        Long value = 0L;
+        boolean isOut;
+        Long txValue = 0L;
+
+        List<String> nfList = dbManager.getAppDb().getTxInputDao().getNfByHash(tr.getHash());
+        if (nfList != null) {
+            for (String nf : nfList) {
+                ReceivedNotesRoom note = dbManager.getAppDb().getReceivedNotesDao().getNoteByNf(nf);
+                if (note != null) {
+                    txValue += note.getValue();
+                }
+            }
+        }
 
         List<String> cmuList = dbManager.getAppDb().getTxOutputDao().getCmByHash(tr.getHash());
         if (cmuList != null) {
             for (String cmu : cmuList) {
                 ReceivedNotesRoom note = dbManager.getAppDb().getReceivedNotesDao().getNoteByCm(cmu);
                 if (note != null) {
-                    value = note.getValue();
-                    isOut = false;
+                    txValue -= note.getValue();
                 }
             }
         }
 
-        String nf = dbManager.getAppDb().getTxInputDao().getNfByHash(tr.getHash());
-        if (nf != null) {
-            ReceivedNotesRoom note = dbManager.getAppDb().getReceivedNotesDao().getNoteByNf(nf);
-            if (note != null) {
-                value = note.getValue();
-                isOut = true;
-            }
-        }
+        isOut = txValue > 0;
 
         dbManager
                 .getAppDb()
@@ -50,7 +52,7 @@ public class CallUpdateTxDetails implements Callable<String> {
                 .insertAll(new DetailsTxRoom(
                         tr.getHash(),
                         tr.getTime().longValue(),
-                        value,
+                        Math.abs(txValue),
                         true,
                         tr.getConfirmations().longValue(),
                         "",

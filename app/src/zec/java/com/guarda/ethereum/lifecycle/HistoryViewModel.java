@@ -20,6 +20,7 @@ import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
 
 import java.util.List;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -113,7 +114,7 @@ public class HistoryViewModel extends ViewModel {
                 }));
     }
 
-    private void updateFromInsight(List<String> hashList) {
+    private void updateFromInsight(Set<String> hashList) {
         compositeDisposable.add(
                 Observable
                         .just(hashList)

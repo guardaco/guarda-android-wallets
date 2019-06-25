@@ -2,12 +2,12 @@ package com.guarda.ethereum.rxcall;
 
 import com.guarda.zcash.sapling.db.DbManager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 
-public class CallNotesFromDb implements Callable<List<String>> {
+public class CallNotesFromDb implements Callable<Set<String>> {
 
     private DbManager dbManager;
 
@@ -16,8 +16,8 @@ public class CallNotesFromDb implements Callable<List<String>> {
     }
 
     @Override
-    public List<String> call() throws Exception {
-        List<String> inouts = new ArrayList<>();
+    public Set<String> call() throws Exception {
+        Set<String> inouts = new HashSet<>();
         inouts.addAll(dbManager.getAppDb().getTxInputDao().getInputTxIds());
         inouts.addAll(dbManager.getAppDb().getTxOutputDao().getOutputTxIds());
 
