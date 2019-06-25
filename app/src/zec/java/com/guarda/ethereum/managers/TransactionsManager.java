@@ -127,6 +127,12 @@ public class TransactionsManager {
         long txSum;
 
         if (item.getVjoinsplit() == null || item.getVjoinsplit().size() == 0) {
+            //for z to t transaction
+            if (item.getVin().size() == 0) {
+                txSum = getOutsSumNew(item, ownAddress);
+                return txSum;
+            }
+
             if (item.getVin().get(0).getAddr() != null && item.getVin().get(0).getAddr().equals(ownAddress)) {
                 txSum = getOutsSumNew(item, ownAddress);
             } else {
