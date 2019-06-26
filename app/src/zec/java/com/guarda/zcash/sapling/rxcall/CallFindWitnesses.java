@@ -33,9 +33,9 @@ public class CallFindWitnesses implements Callable<Boolean> {
 
     private DbManager dbManager;
     private SaplingCustomFullKey saplingKey;
-    //    private Long startHeight = 490132L;
+
     private Long startHeight = 551912L;
-    private Long checkHeight = 502799L;
+    private Long checkWitnessHeight = 551912L;
 
     public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey) {
         this.dbManager = dbManager;
@@ -50,8 +50,8 @@ public class CallFindWitnesses implements Callable<Boolean> {
         //skip blocks which we updated witnesses from
         if (existingWitnesses.size() > 0) {
             Long lastWitnessHeight = dbManager.getAppDb().getSaplingWitnessesDao().getLastHeight();
-            startHeight = lastWitnessHeight > startHeight ? lastWitnessHeight : startHeight;
-            Timber.d("existingWitnesses.size()=%d, lastWitnessHeight=%d, startHeight=%d", existingWitnesses.size(), lastWitnessHeight, startHeight);
+            checkWitnessHeight = lastWitnessHeight > checkWitnessHeight ? lastWitnessHeight : checkWitnessHeight;
+            Timber.d("existingWitnesses.size()=%d, lastWitnessHeight=%d, startHeight=%d", existingWitnesses.size(), lastWitnessHeight, checkWitnessHeight);
         }
 
         List<BlockRoom> blocks = dbManager.getAppDb().getBlockDao().getAllBlocksOrdered();
@@ -109,7 +109,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                     }
 
                     //FIXME: delete after tests
-                    if (br.getHeight() < 551937) continue;
+                    if (br.getHeight() < checkWitnessHeight) continue;
                     SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey);
 
                     //skip if it's not our note
