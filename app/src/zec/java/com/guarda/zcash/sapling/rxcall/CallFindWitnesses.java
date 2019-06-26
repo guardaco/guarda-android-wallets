@@ -34,8 +34,9 @@ public class CallFindWitnesses implements Callable<Boolean> {
     private DbManager dbManager;
     private SaplingCustomFullKey saplingKey;
 
-    private Long startHeight = 551912L;
-    private Long checkWitnessHeight = 551912L;
+    private Long defaultStartHeight = 551912L;
+    private Long startScanBlocksHeight = defaultStartHeight;
+    private Long checkWitnessHeight = defaultStartHeight;
 
     public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey) {
         this.dbManager = dbManager;
@@ -51,16 +52,21 @@ public class CallFindWitnesses implements Callable<Boolean> {
         if (existingWitnesses.size() > 0) {
             Long lastWitnessHeight = dbManager.getAppDb().getSaplingWitnessesDao().getLastHeight();
             checkWitnessHeight = lastWitnessHeight > checkWitnessHeight ? lastWitnessHeight : checkWitnessHeight;
-            Timber.d("existingWitnesses.size()=%d, lastWitnessHeight=%d, startHeight=%d", existingWitnesses.size(), lastWitnessHeight, checkWitnessHeight);
+            Timber.d("existingWitnesses.size()=%d, lastWitnessHeight=%d, checkWitnessHeight=%d", existingWitnesses.size(), lastWitnessHeight, checkWitnessHeight);
         }
 
         List<BlockRoom> blocks = dbManager.getAppDb().getBlockDao().getAllBlocksOrdered();
+        BlockRoom lastBlockWithTree = dbManager.getAppDb().getBlockDao().getLatestBlockWithTree();
+        if (lastBlockWithTree != null) {
+            startScanBlocksHeight = lastBlockWithTree.getHeight();
+            saplingTree = new SaplingMerkleTree(lastBlockWithTree.getTree());
+        }
 
         for (BlockRoom br : blocks) {
 
             if (br.getHeight() % 1000 == 0) Timber.d("height=%d", br.getHeight());
 
-            if (br.getHeight() < startHeight) continue;
+            if (br.getHeight() <= startScanBlocksHeight) continue;
 
             // SCAN BLOCK
             // map for saving wintesses by note commitment hex for current block
@@ -140,7 +146,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                 }
             }
 
-            if (br.getHeight() == startHeight) {
+            if (br.getHeight() == defaultStartHeight) {
                 saplingTree = new SaplingMerkleTree(treeOnHeight551912main);
                 try {
                     Timber.d("saplingTree.serialize() at %d root=%s", br.getHeight(), saplingTree.root());
@@ -160,6 +166,13 @@ public class CallFindWitnesses implements Callable<Boolean> {
         }
 
         dbManager.getAppDb().getSaplingWitnessesDao().insertList(existingWitnesses);
+
+        //storing sapling tree state
+        if (blocks.size() > 0) {
+            BlockRoom lastBlock = blocks.get(blocks.size() - 1);
+            lastBlock.setTree(saplingTree.serialize());
+            dbManager.getAppDb().getBlockDao().insertAll(lastBlock);
+        }
 
         Timber.d("blocks scanning completed");
 
