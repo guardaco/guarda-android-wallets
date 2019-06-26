@@ -344,7 +344,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void checkBtnIncludeStatus(boolean isInclude) {
-        if (isInclude){
+        if (isInclude) {
             btnExclude.setBackground(getResources().getDrawable(R.drawable.btn_enable_gray));
             btnInclude.setBackground(getResources().getDrawable(R.drawable.btn_border_blue));
         } else {
@@ -476,6 +476,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         }
     }
 
+    // Z to Z
     private void sendShieldedToShielded() throws ZCashException {
         Timber.d("sendShieldedToShielded");
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
@@ -504,9 +505,9 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                 Timber.d("z to z - err=%s", r1);
                             }
                         });
-
     }
 
+    // Z to T
     private void sendShieldedToTransparent() throws ZCashException {
         Timber.d("z to t - started");
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();

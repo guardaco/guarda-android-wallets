@@ -31,7 +31,7 @@ public interface SaplingWitnessesDao {
     @Query("SELECT * FROM sapling_witnesses WHERE cm LIKE :cm")
     SaplingWitnessesRoom getWitness(String cm);
 
-    @Query("SELECT witnessHeight FROM sapling_witnesses order by witnessHeight LIMIT 1")
+    @Query("SELECT witnessHeight FROM sapling_witnesses order by witnessHeight desc LIMIT 1")
     Long getLastHeight();
 
     @Query("DELETE FROM sapling_witnesses WHERE witnessHeight LIKE :height")
