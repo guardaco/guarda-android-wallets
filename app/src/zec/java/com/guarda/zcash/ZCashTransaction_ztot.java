@@ -124,11 +124,12 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
 
         Timber.d("bytesShieldedOutputs (bytes)=%s %d",Arrays.toString(bytesShieldedOutputs), bytesShieldedOutputs.length); // 948 bytes for an output
         shieldedOutputsBlake = new byte[32];
-        Blake2bDigest prevoutsDigest = new Blake2bDigest(null, 32, null, ZCASH_SHIELDED_OUTPUTS_HASH_PERSONALIZATION);
-        prevoutsDigest.update(bytesShieldedOutputs, 0, bytesShieldedOutputs.length);
-        prevoutsDigest.doFinal(shieldedOutputsBlake, 0);
+        if (outputsSize > 0) {
+            Blake2bDigest prevoutsDigest = new Blake2bDigest(null, 32, null, ZCASH_SHIELDED_OUTPUTS_HASH_PERSONALIZATION);
+            prevoutsDigest.update(bytesShieldedOutputs, 0, bytesShieldedOutputs.length);
+            prevoutsDigest.doFinal(shieldedOutputsBlake, 0);
+        }
         Timber.d("shieldedOutputsBlake=%s %d", Arrays.toString(shieldedOutputsBlake), shieldedOutputsBlake.length);
-
     }
 
     public byte[] getBytes() {
@@ -166,12 +167,20 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
                 Utils.int64BytesLE(valueBalance), //valuebalance (The net value of Sapling Spend transfers minus Output transfers)
                 Utils.compactSizeIntLE(spendProofList.size()), //nShieldedSpend (size)
                 bytesShieldedSpendsAndAuthSig, //TODO: append bytesSpendAuthSig for every spend
-                Utils.compactSizeIntLE(outputsSize), //nShieldedOutput (size)
-                bytesShieldedOutputs, //hashShieldedOutputs
+                Utils.compactSizeIntLE(outputsSize) //nShieldedOutput (size)
+        );
+
+        if (outputsSize > 0) {
+            tx_bytes = Bytes.concat(tx_bytes,
+                    bytesShieldedOutputs //hashShieldedOutputs
+            );
+        }
+
+        tx_bytes = Bytes.concat(
+                tx_bytes,
                 Utils.compactSizeIntLE(0), //nJoinSplit (size)
                 bindingSig
         );
-
 
         return tx_bytes;
     }
