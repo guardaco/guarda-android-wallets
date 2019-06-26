@@ -27,7 +27,7 @@ import timber.log.Timber;
 public class SyncManager {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private long endB = 518945;
+    private long endB = 437489;
 
     @Inject
     DbManager dbManager;

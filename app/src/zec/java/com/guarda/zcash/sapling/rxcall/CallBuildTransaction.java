@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import timber.log.Timber;
+
 
 public class CallBuildTransaction implements Callable<ZcashTransaction> {
 
@@ -33,6 +35,7 @@ public class CallBuildTransaction implements Callable<ZcashTransaction> {
     @Override
     public ZcashTransaction call() throws Exception {
         List<ReceivedNotesRoom> unspents = dbManager.getAppDb().getReceivedNotesDao().getUnspents();
+        Timber.d("unspents size=%d", unspents.size());
 
         unspents = chooseUnspents(unspents);
 

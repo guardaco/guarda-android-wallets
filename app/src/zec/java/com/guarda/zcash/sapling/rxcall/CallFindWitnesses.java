@@ -34,7 +34,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
     private DbManager dbManager;
     private SaplingCustomFullKey saplingKey;
 
-    private Long defaultStartHeight = 551912L;
+    private Long defaultStartHeight = 490132L;
     private Long startScanBlocksHeight = defaultStartHeight;
     private Long checkWitnessHeight = defaultStartHeight;
 
@@ -115,7 +115,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                     }
 
                     //FIXME: delete after tests
-                    if (br.getHeight() < 551937) continue;
+                    if (br.getHeight() < 499642) continue;
                     SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey);
 
                     //skip if it's not our note
@@ -147,7 +147,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
             }
 
             if (br.getHeight() == defaultStartHeight) {
-                saplingTree = new SaplingMerkleTree(treeOnHeight551912main);
+                saplingTree = new SaplingMerkleTree(treeOnHeight490132test);
                 try {
                     Timber.d("saplingTree.serialize() at %d root=%s", br.getHeight(), saplingTree.root());
                 } catch (ZCashException e) {

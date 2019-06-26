@@ -42,8 +42,8 @@ message ChainSpec {}
 
 service CompactTxStreamer {
     rpc GetLatestBlock(ChainSpec) returns (BlockID) {}
-    rpc GetBlock(BlockID) returns (CompactBlock) {}
+    //rpc GetBlock(BlockID) returns (CompactBlock) {}
     rpc GetBlockRange(BlockRange) returns (stream CompactBlock) {}
-    rpc GetTransaction(TxFilter) returns (RawTransaction) {}
-    rpc SendTransaction(RawTransaction) returns (SendResponse) {}
+    //rpc GetTransaction(TxFilter) returns (RawTransaction) {}
+    //rpc SendTransaction(RawTransaction) returns (SendResponse) {}
 }
