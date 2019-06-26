@@ -129,6 +129,14 @@ public class TransactionsManager {
         if (item.getVjoinsplit() == null || item.getVjoinsplit().size() == 0) {
             //for z to t transaction
             if (item.getVin().size() == 0) {
+                //for send all from z to t
+                if (item.getOutputDescs().size() == 0 && item.getSpendDescs().size() > 0) {
+                    if (item.getVout().get(0).getScriptPubKey().getAddresses().get(0).equals(ownAddress)) {
+                        txSum = convertStrCoinToSatoshi(item.getVout().get(0).getValue());
+                        return txSum;
+                    }
+                }
+                //otherwise
                 txSum = getOutsSumNew(item, ownAddress);
                 return txSum;
             }

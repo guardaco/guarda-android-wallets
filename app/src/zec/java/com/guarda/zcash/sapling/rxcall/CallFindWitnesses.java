@@ -49,24 +49,24 @@ public class CallFindWitnesses implements Callable<Boolean> {
         SaplingMerkleTree saplingTree = new SaplingMerkleTree();
         List<SaplingWitnessesRoom> existingWitnesses = dbManager.getAppDb().getSaplingWitnessesDao().getAllWitnesses();
         //skip blocks which we updated witnesses from
-        if (existingWitnesses.size() > 0) {
-            Long lastWitnessHeight = dbManager.getAppDb().getSaplingWitnessesDao().getLastHeight();
-            checkWitnessHeight = lastWitnessHeight > checkWitnessHeight ? lastWitnessHeight : checkWitnessHeight;
-            Timber.d("existingWitnesses.size()=%d, lastWitnessHeight=%d, checkWitnessHeight=%d", existingWitnesses.size(), lastWitnessHeight, checkWitnessHeight);
-        }
+//        if (existingWitnesses.size() > 0) {
+//            Long lastWitnessHeight = dbManager.getAppDb().getSaplingWitnessesDao().getLastHeight();
+//            checkWitnessHeight = lastWitnessHeight > checkWitnessHeight ? lastWitnessHeight : checkWitnessHeight;
+//            Timber.d("existingWitnesses.size()=%d, lastWitnessHeight=%d, checkWitnessHeight=%d", existingWitnesses.size(), lastWitnessHeight, checkWitnessHeight);
+//        }
 
         List<BlockRoom> blocks = dbManager.getAppDb().getBlockDao().getAllBlocksOrdered();
-        BlockRoom lastBlockWithTree = dbManager.getAppDb().getBlockDao().getLatestBlockWithTree();
-        if (lastBlockWithTree != null) {
-            startScanBlocksHeight = lastBlockWithTree.getHeight();
-            saplingTree = new SaplingMerkleTree(lastBlockWithTree.getTree());
-        }
+//        BlockRoom lastBlockWithTree = dbManager.getAppDb().getBlockDao().getLatestBlockWithTree();
+//        if (lastBlockWithTree != null) {
+//            startScanBlocksHeight = lastBlockWithTree.getHeight();
+//            saplingTree = new SaplingMerkleTree(lastBlockWithTree.getTree());
+//        }
 
         for (BlockRoom br : blocks) {
 
             if (br.getHeight() % 1000 == 0) Timber.d("height=%d", br.getHeight());
 
-            if (br.getHeight() <= startScanBlocksHeight) continue;
+            if (br.getHeight() < startScanBlocksHeight) continue;
 
             // SCAN BLOCK
             // map for saving wintesses by note commitment hex for current block
@@ -115,7 +115,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                     }
 
                     //FIXME: delete after tests
-                    if (br.getHeight() < checkWitnessHeight) continue;
+                    if (br.getHeight() < 551937) continue;
                     SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey);
 
                     //skip if it's not our note
