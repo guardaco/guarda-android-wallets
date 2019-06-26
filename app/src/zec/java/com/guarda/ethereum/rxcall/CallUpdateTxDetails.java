@@ -46,6 +46,11 @@ public class CallUpdateTxDetails implements Callable<String> {
 
         isOut = txValue > 0;
 
+        // for send all from z to t
+        if (nfList != null && nfList.size() > 0 && cmuList != null && cmuList.size() == 0) {
+            isOut = false;
+        }
+
         dbManager
                 .getAppDb()
                 .getDetailsTxDao()
