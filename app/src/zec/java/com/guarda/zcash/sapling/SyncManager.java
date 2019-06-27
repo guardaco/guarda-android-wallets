@@ -28,6 +28,8 @@ public class SyncManager {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private long endB = 518945;
+    private long lastSync = 0L;
+    private static final long SYNC_PERIOD = 2 * 60 * 1000;
 
     @Inject
     DbManager dbManager;
@@ -51,12 +53,19 @@ public class SyncManager {
         progressSubject.onNext(true);
         inProgress = true;
 
+        if (System.currentTimeMillis() - lastSync < SYNC_PERIOD) {
+            stopSync();
+            Timber.d("sync period last=%d", lastSync);
+            return;
+        }
+
         saplingParamsInit();
     }
 
     public void stopSync() {
         progressSubject.onNext(false);
         inProgress = false;
+        lastSync = System.currentTimeMillis();
 
         compositeDisposable.clear();
         Timber.d("stopSync inProgress=%b", inProgress);
