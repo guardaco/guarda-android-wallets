@@ -131,7 +131,6 @@ public class AmountToSendActivity extends AToolbarMenuActivity {
                 .subscribe((balance) -> {
                     Timber.d("getSaplingBalance balance=%d", balance);
 
-                    if (balance == null) return;
                     saplingBalance = Coin.valueOf(balance).toPlainString();
                     setCurrentBalance(saplingBalance, sharedManager.getCurrentCurrency().toUpperCase());
                 }));

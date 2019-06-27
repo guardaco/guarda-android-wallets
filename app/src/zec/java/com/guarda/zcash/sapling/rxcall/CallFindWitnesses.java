@@ -172,6 +172,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
             BlockRoom lastBlock = blocks.get(blocks.size() - 1);
             lastBlock.setTree(saplingTree.serialize());
             dbManager.getAppDb().getBlockDao().insertAll(lastBlock);
+            Timber.d("save tree lastBlock=%d tree=%s", lastBlock.getHeight(), saplingTree.serialize());
         }
 
         Timber.d("blocks scanning completed");
