@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import timber.log.Timber;
+
 
 public class CallBuildTransaction implements Callable<ZcashTransaction> {
 
@@ -35,6 +37,8 @@ public class CallBuildTransaction implements Callable<ZcashTransaction> {
         List<ReceivedNotesRoom> unspents = dbManager.getAppDb().getReceivedNotesDao().getUnspents();
 
         unspents = chooseUnspents(unspents);
+
+        if (unspents.size() == 0) Timber.e("unspents.size() == 0");
 
         if (toAddress.substring(0, 1).equalsIgnoreCase("z")) {
             //from z to z
