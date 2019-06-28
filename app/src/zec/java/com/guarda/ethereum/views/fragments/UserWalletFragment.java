@@ -68,6 +68,7 @@ public class UserWalletFragment extends BaseFragment {
         } else {
             showExistingWallet();
         }
+        setToolbarTitle("");
     }
 
     private void createWallet(String passphrase) {
