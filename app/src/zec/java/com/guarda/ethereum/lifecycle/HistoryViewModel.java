@@ -85,6 +85,8 @@ public class HistoryViewModel extends ViewModel {
                         .subscribe((value) -> {
                             if (value) {
                                 getAndUpdateSaplingTx();
+                            } else {
+                                showTxError.setValue(true);
                             }
                             Timber.d("CallDbFillHistory value=%b", value);
                         }));
