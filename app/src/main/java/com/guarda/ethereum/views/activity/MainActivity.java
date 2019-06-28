@@ -372,12 +372,12 @@ public class MainActivity extends TrackOnStopActivity {
         Button openBackup = logoutView.findViewById(R.id.btn_to_backup);
 
         logOut.setOnClickListener((v) -> {
+            syncManager.stopSync();
             cleanDbLogOut();
             walletManager.clearWallet();
             sharedManager.setLastSyncedBlock("");
             sharedManager.setIsShowBackupAlert(true);
             sharedManager.setIsPinCodeEnable(false);
-            syncManager.stopSync();
             transactionsManager.clearLists();
             finish();
         });
