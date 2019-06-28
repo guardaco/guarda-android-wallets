@@ -73,8 +73,9 @@ public class HistoryViewModel extends ViewModel {
             public void onSuccess(Object response) {
                 ZecTxListResponse txListResponse = (ZecTxListResponse) response;
                 List<ZecTxResponse> txList = txListResponse.getTxs();
-                if (txList == null) {
-                    Timber.e("loadTransactions txList == null");
+                if (txList == null || txList.isEmpty()) {
+                    Timber.d("loadTransactions txList == null  || txList.isEmpty()");
+                    getAndUpdateSaplingTx();
                     return;
                 }
                 compositeDisposable.add(Observable

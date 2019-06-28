@@ -43,8 +43,8 @@ public class TransactionsManager {
         return transactionsList;
     }
 
-    public void setTransactionsList(List<TransactionItem> mTransactionsList) {
-        this.transactionsList = mTransactionsList;
+    public void setTransactionsList(List<TransactionItem> transactionsList) {
+        this.transactionsList = transactionsList;
     }
 
     public void clearLists() {
