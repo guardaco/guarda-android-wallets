@@ -89,7 +89,9 @@ public class SyncManager {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((latest) -> {
                     Timber.d("getBlocks latest=%s", latest);
-                    protoApi.pageNum = latest.getLastFromDb();
+
+                    //if blocks downloading starts from last db height it will rewrite the block with empty tree field
+                    protoApi.pageNum = latest.getLastFromDb() + 1;
                     endB = latest.getLatest();
                     blockRangeToDb();
                 }, (e) -> stopAndLogError("getBlocks", e)));

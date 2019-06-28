@@ -29,6 +29,9 @@ public interface BlockDao {
     @Query("SELECT * FROM blocks order by height")
     List<BlockRoom> getAllBlocksOrdered();
 
+    @Query("SELECT * FROM blocks WHERE height > :height order by height")
+    List<BlockRoom> getBlocksOrderedFromHeight(long height);
+
     @Query("SELECT * FROM blocks WHERE hash LIKE :hash")
     BlockRoom getBlock(String hash);
 
