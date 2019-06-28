@@ -18,6 +18,7 @@ public class CallCleanDbLogOut implements Callable<Boolean> {
         dbManager.getAppDb().getDetailsTxDao().dropAll();
         dbManager.getAppDb().getReceivedNotesDao().dropAll();
         dbManager.getAppDb().getSaplingWitnessesDao().dropAll();
+        dbManager.getAppDb().getBlockDao().dropAllTrees();
         return true;
     }
 

@@ -44,6 +44,9 @@ public interface BlockDao {
     @Query("DELETE FROM blocks WHERE height LIKE :height")
     void deleteHeight(Long height);
 
+    @Query("UPDATE blocks SET tree = '' WHERE tree <> ''")
+    void dropAllTrees();
+
     @Query("DELETE FROM blocks")
     void dropAll();
 
