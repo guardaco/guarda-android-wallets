@@ -62,6 +62,7 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
@@ -326,15 +327,8 @@ public class MainActivity extends TrackOnStopActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RequestCode.CONFIRM_PIN_CODE_REQUEST_MA) {
             if (resultCode == Activity.RESULT_OK) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        goToBackupFragment();
-                    }
-                }, 100);
-
+                new Handler().postDelayed(() -> goToBackupFragment(), 100);
             }
-
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -373,13 +367,12 @@ public class MainActivity extends TrackOnStopActivity {
 
         logOut.setOnClickListener((v) -> {
             syncManager.stopSync();
-            cleanDbLogOut();
             walletManager.clearWallet();
             sharedManager.setLastSyncedBlock("");
             sharedManager.setIsShowBackupAlert(true);
             sharedManager.setIsPinCodeEnable(false);
             transactionsManager.clearLists();
-            finish();
+            cleanDbLogOut();
         });
         openBackup.setOnClickListener((v) -> {
             if (sharedManager.getIsPinCodeEnable()) {
@@ -399,9 +392,16 @@ public class MainActivity extends TrackOnStopActivity {
         compositeDisposable.add(Observable
                 .fromCallable(new CallCleanDbLogOut(dbManager))
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        (latest) -> Timber.d("cleanDbLogOut done=%s", latest),
-                        (e) -> Timber.d("cleanDbLogOut err=%s", e.getMessage())
+                        (latest) -> {
+                            finish();
+                            Timber.d("cleanDbLogOut done=%s", latest);
+                        },
+                        (e) -> {
+                            finish();
+                            Timber.d("cleanDbLogOut err=%s", e.getMessage());
+                        }
                 )
         );
     }
@@ -510,6 +510,12 @@ public class MainActivity extends TrackOnStopActivity {
         } else {
             goToTransactionHistory();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        compositeDisposable.clear();
     }
 
 }
