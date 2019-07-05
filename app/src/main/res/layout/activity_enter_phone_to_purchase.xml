@@ -118,7 +118,7 @@
         android:visibility="visible"
         app:isShowComma="false"
         app:maxCount="11"
-        app:textSize="24" />
+        app:inputTextSize="24" />
 
     <Button
         android:id="@+id/btn_next"

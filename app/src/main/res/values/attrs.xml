@@ -8,7 +8,7 @@
     </declare-styleable>
 
     <declare-styleable name="GuardaInputLayout">
-        <attr name="textSize" format="integer" />
+        <attr name="inputTextSize" format="integer" />
         <attr name="isShowComma" format="boolean" />
         <attr name="maxCount" format="integer" />
     </declare-styleable>

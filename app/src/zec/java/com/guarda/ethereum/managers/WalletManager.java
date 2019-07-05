@@ -347,7 +347,7 @@ public class WalletManager {
         return res;
     }
 
-    private static class ZecParams extends MainNetParams{
+    private static class ZecParams extends MainNetParams {
         ZecParams() {
             super();
 

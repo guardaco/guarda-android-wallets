@@ -4,7 +4,6 @@ package com.guarda.ethereum.customviews;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.os.Vibrator;
 import android.support.v7.widget.GridLayout;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -53,7 +52,7 @@ public class GuardaInputLayout extends GridLayout implements View.OnClickListene
     private void initXmlStyle(AttributeSet attrs) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.GuardaInputLayout);
-            textSize = a.getInt(R.styleable.GuardaInputLayout_textSize, textSize);
+            textSize = a.getInt(R.styleable.GuardaInputLayout_inputTextSize, textSize);
             isShowComma = a.getBoolean(R.styleable.GuardaInputLayout_isShowComma, isShowComma);
             maxCount = a.getInteger(R.styleable.GuardaInputLayout_maxCount, maxCount);
         }
@@ -233,8 +232,6 @@ public class GuardaInputLayout extends GridLayout implements View.OnClickListene
         }
         if (listener != null) {
             listener.onTextChanged(currentText);
-//            Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-//            v.vibrate(80);
         }
     }
 
@@ -243,8 +240,6 @@ public class GuardaInputLayout extends GridLayout implements View.OnClickListene
             currentText = currentText.substring(0, currentText.length() - 1);
             if (listener != null) {
                 listener.onTextChanged(currentText);
-//                Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-//                v.vibrate(80);
             }
         }
     }
@@ -263,8 +258,6 @@ public class GuardaInputLayout extends GridLayout implements View.OnClickListene
             currentText = "";
             if (listener != null) {
                 listener.onTextChanged(currentText);
-//                Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-//                v.vibrate(80);
             }
         }
     }

@@ -110,7 +110,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
         app:isShowComma="true"
-        app:textSize="24" />
+        app:inputTextSize="24" />
     
     <RelativeLayout
         android:layout_width="match_parent"
