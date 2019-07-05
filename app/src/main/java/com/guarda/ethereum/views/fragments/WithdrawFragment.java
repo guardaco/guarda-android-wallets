@@ -19,7 +19,6 @@ import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.customviews.RobotoLightEditText;
-import com.guarda.ethereum.managers.Callback;
 import com.guarda.ethereum.managers.RawNodeManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Extras;
@@ -27,7 +26,6 @@ import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.views.activity.AmountToSendActivity;
 import com.guarda.ethereum.views.activity.ScanQrCodeActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
-import com.llollox.androidtoggleswitch.widgets.ToggleSwitch;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,6 +35,7 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl;
 
 import static com.guarda.ethereum.models.constants.Extras.TOKEN_CODE_EXTRA;
 
@@ -58,8 +57,8 @@ public class WithdrawFragment extends BaseFragment{
     ConstraintLayout clTokensSelectorRoot;
     @BindView(R.id.cl_address_toggle)
     ConstraintLayout cl_address_toggle;
-    @BindView(R.id.toggle_address)
-    ToggleSwitch toggle_address;
+    @BindView(R.id.segmented_control)
+    SegmentedControl segmented_control;
 
     @Inject
     WalletManager walletManager;
@@ -101,12 +100,10 @@ public class WithdrawFragment extends BaseFragment{
     }
 
     private void initAddressField() {
-        etSendCoinsAddress.setOnPasteListener(new RobotoLightEditText.OnPasteTextListener() {
-            @Override
-            public void onPasteText(String text) {
-                etSendCoinsAddress.setText(filterAddress(text));
-            }
-        });
+        etSendCoinsAddress
+                .setOnPasteListener(
+                        text -> etSendCoinsAddress.setText(filterAddress(text))
+                );
     }
 
     private void initViews() {
@@ -219,18 +216,22 @@ public class WithdrawFragment extends BaseFragment{
         if (BuildConfig.FLAVOR != "zec") return;
 
         cl_address_toggle.setVisibility(View.VISIBLE);
-        toggle_address.setVisibility(View.VISIBLE);
-        toggle_address.setOnChangeListener((position) -> {
-            switch (position) {
-                case 0:
-                    isSaplingAddress = false;
-                    break;
-                case 1:
-                    isSaplingAddress = true;
-                    break;
-            }
-        });
-        toggle_address.setCheckedPosition(0);
+        segmented_control.setVisibility(View.VISIBLE);
+        segmented_control
+                .addOnSegmentClickListener(
+                        (segmentViewHolder) -> {
+                            switch (segmentViewHolder.getAbsolutePosition()) {
+                                case 0:
+                                    isSaplingAddress = false;
+                                    break;
+                                case 1:
+                                    isSaplingAddress = true;
+                                    break;
+                            }
+                        }
+                );
+
+        segmented_control.setSelectedSegment(0);
     }
 
     @OnClick(R.id.btn_currency_code)

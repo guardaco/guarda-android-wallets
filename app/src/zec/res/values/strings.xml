@@ -9,4 +9,9 @@
     <string name="top_up_width_other_currency">Purchase ZEC</string>
     <string name="app_currency_name" translatable="false">Zcash</string>
     <string name="et_error_wrong_private_key">Wrong private key</string>
+
+    <string-array name="field_type_array_data">
+        <item>T-ADDRESS</item>
+        <item>Z-ADDRESS</item>
+    </string-array>
 </resources>

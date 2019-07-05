@@ -14,19 +14,19 @@ import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.utils.QrCodeUtils;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
-import com.llollox.androidtoggleswitch.widgets.ToggleSwitch;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl;
 
 @AutoInjector(GuardaApp.class)
 public class DepositFragment extends BaseFragment {
 
-    @BindView(R.id.toggle_address)
-    ToggleSwitch toggle_address;
+    @BindView(R.id.segmented_control)
+    SegmentedControl segmented_control;
     @BindView(R.id.iv_qr_code)
     ImageView ivQrCode;
     @BindView(R.id.tv_address_wallet)
@@ -61,18 +61,21 @@ public class DepositFragment extends BaseFragment {
         }
 
         if (BuildConfig.FLAVOR == "zec") {
-            toggle_address.setVisibility(View.VISIBLE);
-            toggle_address.setOnChangeListener((position) -> {
-                switch (position) {
-                    case 0:
-                        transparent();
-                        break;
-                    case 1:
-                        sapling();
-                        break;
-                }
-            });
-            toggle_address.setCheckedPosition(0);
+            segmented_control.setVisibility(View.VISIBLE);
+            segmented_control
+                    .addOnSegmentClickListener(
+                            (segmentViewHolder) -> {
+                                switch (segmentViewHolder.getAbsolutePosition()) {
+                                    case 0:
+                                        transparent();
+                                        break;
+                                    case 1:
+                                        sapling();
+                                        break;
+                                }
+                            }
+                    );
+            segmented_control.setSelectedSegment(0);
         }
     }
 

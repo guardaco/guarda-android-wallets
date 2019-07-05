@@ -10,20 +10,24 @@
         android:layout_height="0dp"
         android:orientation="vertical">
 
-        <com.llollox.androidtoggleswitch.widgets.ToggleSwitch
-            android:id="@+id/toggle_address"
+        <segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl
+            android:id="@+id/segmented_control"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:visibility="gone"
-            app:textToggleLeft="T-ADDRESS"
-            app:textToggleRight="Z-ADDRESS"
-            app:checkedBackgroundColor="@color/bg_avg"
-            app:checkedTextColor="@android:color/white"
-            app:uncheckedBackgroundColor="@android:color/white"
-            app:uncheckedTextColor="@color/baseDarkGreyTextColor" />
+            tools:visibility="visible"
+            app:columnCount="2"
+            app:selectedBackgroundColor="@color/bg_avg"
+            app:unSelectedBackgroundColor="@android:color/white"
+            app:selectedTextColor="@android:color/white"
+            app:unSelectedTextColor="@color/baseDarkGreyTextColor"
+            app:distributeEvenly="false"
+            app:segments="@array/field_type_array_data"
+            app:radius="6dp"
+            app:textVerticalPadding="10dp"/>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
