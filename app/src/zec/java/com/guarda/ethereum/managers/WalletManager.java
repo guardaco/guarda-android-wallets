@@ -244,6 +244,14 @@ public class WalletManager {
     }
 
     public void isAddressValid(String address, final Callback<Boolean> callback) {
+        int l = address.length();
+        // 35 - t address
+        // 78 - z address
+        // 88 - z testnet address
+        if (l != 35 && l != 78 && l != 88) {
+            callback.onResponse(false);
+            return;
+        }
         if (address.contains("ztestsapling1") || address.contains("zs1")) {
             callback.onResponse(true);
             return;
