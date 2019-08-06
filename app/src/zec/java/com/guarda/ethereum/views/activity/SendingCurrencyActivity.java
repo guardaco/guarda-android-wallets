@@ -424,12 +424,12 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                 sendTxHashAndUpdateDb(lastTxhex);
                             } catch (ZCashException e) {
                                 closeProgress();
-                                doToast("Can not send the transaction to the node");
+                                doToast("Sending error: " + e.getMessage());
                                 Timber.d("Cannot sign transaction");
                             }
                         } else {
                             closeProgress();
-                            doToast("Can not create the transaction. Check arguments");
+                            doToast("Sending error: " + r1);
                             Timber.d("createTransaction_taddr: RESPONSE CODE is not ok");
                         }
                 });
@@ -456,12 +456,12 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                 sendTxHashAndUpdateDb(lastTxhex);
                             } catch (ZCashException e) {
                                 closeProgress();
-                                doToast("Can not send the transaction to the node");
+                                doToast("Sending error: " + e.getMessage());
                                 Timber.d("sendTransparentToSapling Cannot sign transaction e=%s", e.getMessage());
                             }
                         } else {
                             closeProgress();
-                            doToast("Can not create the transaction. Check arguments");
+                            doToast("Sending error: " + r1);
                             Timber.d("sendTransparentToSapling: RESPONSE CODE is not ok");
                         }
                 });
@@ -482,29 +482,29 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         long amountSatoshi = Coin.parseCoin(getAmountToSend()).getValue();
         Timber.d("amount=" + amountSatoshi + " fee=" + currentFeeEth);
 
-            ZCashWalletManager.getInstance().createTransaction_zaddr(walletManager.getSaplingAddress(),
-                    getToAddress(),
-                    amountSatoshi,
-                    currentFeeEth,
-                    walletManager.getSaplingCustomFullKey(),
-                    1,
-                    dbManager,
-                    (r1, r2) -> {
-                            Timber.d("z to z - onResponse %s", r1);
-                            if (r1.equals("ok")) {
-                                ZCashTransaction_zaddr tx = (ZCashTransaction_zaddr) r2;
-                                byte[] bytes = tx.getBytes();
-                                Timber.d("z to z - bytes=%s %d", Arrays.toString(bytes), bytes.length);
-                                String lastTxhex = Utils.bytesToHex(bytes);
-                                Timber.d("z to z - lastTxhex=%s", lastTxhex);
+        ZCashWalletManager.getInstance().createTransaction_zaddr(walletManager.getSaplingAddress(),
+                getToAddress(),
+                amountSatoshi,
+                currentFeeEth,
+                walletManager.getSaplingCustomFullKey(),
+                1,
+                dbManager,
+                (r1, r2) -> {
+                    Timber.d("z to z - onResponse %s", r1);
+                    if (r1.equals("ok")) {
+                        ZCashTransaction_zaddr tx = (ZCashTransaction_zaddr) r2;
+                        byte[] bytes = tx.getBytes();
+                        Timber.d("z to z - bytes=%s %d", Arrays.toString(bytes), bytes.length);
+                        String lastTxhex = Utils.bytesToHex(bytes);
+                        Timber.d("z to z - lastTxhex=%s", lastTxhex);
 
-                                sendTxHashAndUpdateDb(lastTxhex);
-                            } else {
-                                closeProgress();
-                                doToast("Sending error: " + r1);
-                                Timber.d("z to z - err=%s", r1);
-                            }
-                        });
+                        sendTxHashAndUpdateDb(lastTxhex);
+                    } else {
+                        closeProgress();
+                        doToast("Sending error: " + r1);
+                        Timber.d("z to z - err=%s", r1);
+                    }
+                });
     }
 
     // Z to T
@@ -518,7 +518,8 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 amountSatoshi,
                 currentFeeEth,
                 walletManager.getSaplingCustomFullKey(),
-                dbManager, (r1, r2) -> {
+                dbManager,
+                (r1, r2) -> {
                     Timber.i("z to t - RESPONSE CODE %s", r1);
                     if (r1.equals("ok")) {
                         ZCashTransaction_ztot tx = (ZCashTransaction_ztot) r2;
@@ -528,7 +529,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                         sendTxHashAndUpdateDb(lastTxhex);
                     } else {
                         closeProgress();
-                        doToast("Can not create the transaction. Check arguments");
+                        doToast("Sending error: " + r1);
                         Timber.d("z to t - RESPONSE CODE is not ok");
                     }
                 });
