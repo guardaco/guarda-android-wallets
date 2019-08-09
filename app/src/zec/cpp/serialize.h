@@ -23,7 +23,7 @@
 #include <utility>
 #include <vector>
 
-#include "../../../../../../../../../../usr/local/Cellar/boost/boost169/boost/optional/optional.hpp"
+#include "boost/optional/optional.hpp"
 
 #include "prevector.h"
 
