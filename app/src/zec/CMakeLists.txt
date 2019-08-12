@@ -18,9 +18,10 @@ add_subdirectory(zapling-lib)
 add_library(native-lib SHARED cpp/main.cpp cpp/uint256.cpp cpp/utilstrencodings.cpp)
 find_library(log-lib log)
 
-SET(BOOST_ROOT /usr/local/Cellar/boost/boost169)
-SET(Boost_INCLUDE_DIR /usr/local/Cellar/boost/boost169)
-SET(BOOST_LIBRARYDIR /usr/local/Cellar/boost/boost169/lib)
+# Boost location may vary per machine and it may help to download and install the required version
+set(BOOST_ROOT /usr/local/Cellar/boost/boost169)
+set(Boost_INCLUDE_DIR ${BOOST_ROOT})
+set(BOOST_LIBRARYDIR ${BOOST_ROOT}/libs)
 set(Boost_USE_STATIC_LIBS   ON)
 find_package(Boost 1.69.0 REQUIRED)
 include_directories(${BOOST_ROOT})
