@@ -64,9 +64,6 @@ public class RustAPI {
                                           final String nk,
                                           final String position);
 
-    public static native byte[] compactDecrypt(final String key,
-                                               final String cipher);
-
     public static native byte[] encryptNp(final String key,
                                           final String cipher);
 
@@ -106,6 +103,8 @@ public class RustAPI {
     public static native byte[] dPart(final byte[] data);
     public static native String zAddrFromWif(final byte[] data);
     public static native String getExtsk(final byte[] data);
+    public static native byte[] compactDecrypt(final byte[] key,
+                                                   final byte[] cipher);
 
     //endregion
 

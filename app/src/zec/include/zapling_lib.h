@@ -112,12 +112,6 @@ bool librustzcash_sapling_spend_proof(
         unsigned char *nf
 );
 
-bool try_sapling_compact_note_decryption(
-        const unsigned char *key,
-        const unsigned char *encCiphertext,
-        unsigned char *result
-);
-
 unsigned char* encrypt_note_plaintext(
         const unsigned char *key,
         const unsigned char *encCiphertext,

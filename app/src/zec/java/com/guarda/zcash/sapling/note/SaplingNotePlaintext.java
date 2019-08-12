@@ -158,9 +158,7 @@ public class SaplingNotePlaintext {
     }
 
     private static byte[] decryptCompactCipher(String ciphertextHex, byte[] K) {
-        String kHex = revHex(bytesToHex(K));
-
-        byte[] result = RustAPI.compactDecrypt(kHex, ciphertextHex);
+        byte[] result = RustAPI.compactDecrypt(reverseByteArray(K), hexToBytes(ciphertextHex));
         Timber.d("decryptCompactCipher compactDecrypt result=" + Arrays.toString(result));
 
         return result;

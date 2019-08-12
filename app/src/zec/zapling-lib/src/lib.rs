@@ -797,66 +797,6 @@ pub extern "system" fn librustzcash_sapling_spend_proof(
     true
 }
 
-/// Attempts to decrypt and validate the first 52 bytes of `enc_ciphertext` using the
-/// given `ivk`. If successful, the corresponding Sapling note is returned, along with the
-/// `PaymentAddress` to which the note was sent.
-///
-/// Implements the procedure specified in ZIP 307.
-///
-/// from https://github.com/zcash/librustzcash/blob/d4e6a66b73cd6a9eff37c98d978776752efffdb0/zcash_primitives/src/note_encryption.rs#L356
-/// and changed
-#[no_mangle]
-pub extern "system" fn try_sapling_compact_note_decryption(
-    key: [c_uchar; 32],
-    enc_ciphertext: [c_uchar; 52],
-    result: *mut [c_uchar; 52],
-) -> bool {
-
-    let res = compact_note_decryption(key, enc_ciphertext, result).is_some();
-
-    res
-}
-
-fn compact_note_decryption(
-    key: [c_uchar; 32],
-    enc_ciphertext: [c_uchar; 52],
-    result: *mut [c_uchar; 52],
-) -> Option<(Note<Bls12>, PaymentAddress<Bls12>)> {
-
-    // Prefix plaintext with 64 zero-bytes to skip over Poly1305 keying output
-    const CHACHA20_BLOCK_SIZE: usize = 64;
-    let mut plaintext = Vec::with_capacity(CHACHA20_BLOCK_SIZE + COMPACT_NOTE_SIZE);
-    plaintext.extend_from_slice(&[0; CHACHA20_BLOCK_SIZE]);
-    plaintext.extend_from_slice(&enc_ciphertext[0..COMPACT_NOTE_SIZE]);
-    assert_eq!(
-        ChaCha20Ietf::cipher()
-            .decrypt(
-                &mut plaintext,
-                CHACHA20_BLOCK_SIZE + COMPACT_NOTE_SIZE,
-                &key,
-                &[0u8; 12],
-            )
-            .ok()?,
-        CHACHA20_BLOCK_SIZE + COMPACT_NOTE_SIZE
-    );
-
-    let result = unsafe { &mut *result };
-    result.copy_from_slice(&plaintext[CHACHA20_BLOCK_SIZE..]);
-
-
-    let rng = &mut XorShiftRng::from_seed([0x3dbe6259, 0x8d313d76, 0x3237db17, 0xe5bc0654]);
-
-    let to = PaymentAddress {
-                diversifier: Diversifier([0u8; 11]),
-                pk_d: edwards::Point::<Bls12, _>::rand(rng, &JUBJUB).mul_by_cofactor(&JUBJUB),
-            };
-
-    let note = to.create_note(12345, Fs::rand(rng), &JUBJUB).unwrap();
-
-    Some((note, to))
-}
-
-
 #[no_mangle]
 pub extern "system" fn encrypt_note_plaintext(
     key: [c_uchar; 32],
@@ -1191,6 +1131,40 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_getExtsk(
             .expect("Couldn't create java string!");
 
     output.into_inner()
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_compactDecrypt(
+    env: JNIEnv<'_>,
+    _: JClass<'_>,
+    key: jbyteArray,
+    cypher: jbyteArray,
+) -> jbyteArray {
+
+    let key = env.convert_byte_array(key).unwrap();
+    let cypher = env.convert_byte_array(cypher).unwrap();
+
+    // Prefix plaintext with 64 zero-bytes to skip over Poly1305 keying output
+    const CHACHA20_BLOCK_SIZE: usize = 64;
+    let mut plaintext = [0; CHACHA20_BLOCK_SIZE + COMPACT_NOTE_SIZE];
+    plaintext[CHACHA20_BLOCK_SIZE..].copy_from_slice(&cypher[0..COMPACT_NOTE_SIZE]);
+    let cha = ChaCha20Ietf::cipher()
+                .decrypt(
+                    &mut plaintext,
+                    CHACHA20_BLOCK_SIZE + COMPACT_NOTE_SIZE,
+                    &key,
+                    &[0u8; 12],
+                );
+
+    let mut res = vec![];
+    if cha.is_ok() {
+        res.extend_from_slice(&plaintext[CHACHA20_BLOCK_SIZE..]);
+    } else {
+        let mut buf = [0; 0];
+        res.extend_from_slice(&buf);
+    }
+
+    env.byte_array_from_slice(res.as_slice()).expect("Could not convert u8 vec into java byte array!")
 }
 
 pub fn spending_key(seed: &[u8], coin_type: u32, account: u32) -> ExtendedSpendingKey {
