@@ -13,10 +13,10 @@
        <string name="app_show_qr">Montrer le QR-code</string>
        <string name="app_top_up_width_other_currency">Recharger avec une autre devise</string>
        <string name="top_up_width_other_currency">Recharger avec une autre devise</string>
-       <string name="app_transaction_history">Maison</string>
-       <string name="app_purchase">Acheter</string>
-       <string name="app_withdraw">Retirer</string>
-       <string name="app_deposit">Réception</string>
+       <string name="app_transaction_history">Accueil</string>
+       <string name="app_purchase">Échanger</string>
+       <string name="app_withdraw">Envoyer</string>
+       <string name="app_deposit">Recevoir</string>
        <string name="app_backup">Wallet Security</string>
        <string name="app_setting">Options</string>
        <string name="app_log_out">Se déconnecter</string>
@@ -157,7 +157,7 @@
 
     <string name="app_guarda">Guarda</string>
 
-    <string name="app_menu_buy">Achat</string>
+    <string name="app_menu_buy">Acheter</string>
     <string name="app_amount_to_purchase">Montant de l\'achat</string>
     <string name="btn_purchase">Achat</string>
     <string name="et_hint_name_and_surname">Votre nom et prénom</string>
