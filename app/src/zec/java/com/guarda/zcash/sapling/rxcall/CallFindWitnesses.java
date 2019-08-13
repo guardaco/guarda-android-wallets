@@ -112,9 +112,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                         Timber.e("getWintesses saplingTree.append(out.getCmu()); err=%s", zce.getMessage());
                     }
 
-                    //FIXME: delete after tests
                     if (br.getHeight() < 551937) continue;
-//                    if (BuildConfig.DEBUG && br.getHeight() < 557781) continue;
                     SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey);
 
                     //skip if it's not our note
