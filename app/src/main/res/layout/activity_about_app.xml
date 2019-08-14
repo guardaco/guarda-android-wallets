@@ -18,7 +18,7 @@
             android:lineSpacingExtra="6dp"
             android:text="@string/app_about"
             android:textColor="#747474"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 </RelativeLayout>

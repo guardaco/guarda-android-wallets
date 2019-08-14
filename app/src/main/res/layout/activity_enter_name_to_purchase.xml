@@ -32,7 +32,7 @@
                 android:maxLines="1"
                 android:textAlignment="textStart"
                 android:textColor="@color/editTextBlueGreyColor"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </android.support.design.widget.TextInputLayout>
 

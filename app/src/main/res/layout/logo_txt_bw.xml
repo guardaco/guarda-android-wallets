@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:text="@string/app_guarda"
         android:textColor="@color/logo_bw_text_color"
-        android:textSize="53dp"
+        android:textSize="53sp"
         android:textStyle="bold" />
 
     <com.guarda.ethereum.customviews.RobotoTextView
@@ -20,7 +20,7 @@
         android:background="@color/logo_bw_bg_color"
         android:text="@string/app_currency_name"
         android:textColor="@color/logo_bw_currency_color"
-        android:textSize="40dp" />
+        android:textSize="40sp" />
 
     <com.guarda.ethereum.customviews.RobotoTextView
         android:id="@+id/id_wallet"
@@ -29,7 +29,7 @@
         android:layout_below="@+id/id_wallet_name"
         android:text="@string/logo_wallet"
         android:textColor="@color/logo_bw_text_color"
-        android:textSize="60dp"
+        android:textSize="60sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

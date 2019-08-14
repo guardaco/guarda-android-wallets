@@ -31,19 +31,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <!--<com.guarda.ethereum.customviews.RobotoTextView-->
-                <!--android:id="@+id/tv_token_ticker"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginEnd="15dp"-->
-                <!--android:layout_toStartOf="@+id/tv_transaction_sum"-->
-                <!--android:text="REP"-->
-                <!--android:textColor="@color/darkGreyText"-->
-                <!--android:textSize="14sp"-->
-                <!--android:visibility="gone"-->
-                <!--app:textAllCaps="true" />-->
-
             <android.support.constraint.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

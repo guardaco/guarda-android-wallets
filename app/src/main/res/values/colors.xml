@@ -75,7 +75,4 @@
     <color name="logo_clr_bg_color">#FFFFFF</color>
     <color name="logo_clr_currency_color">#B388FF</color>
 
-    <!--<color name="cardview_shadow_start_color">#ff0000</color>-->
-    <!--<color name="cardview_shadow_end_color">#0004ff</color>-->
-
 </resources>

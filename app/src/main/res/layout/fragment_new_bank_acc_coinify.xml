@@ -38,16 +38,6 @@
                     android:textColor="@color/editTextGreyColor"
                     android:text="Bank"/>
 
-                <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:id="@+id/til_bank_name"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:theme="@style/EditTextHintLightGrey">-->
-
-                    <!--<com.guarda.ethereum.customviews.RobotoEditText-->
                     <EditText
                         android:id="@+id/tv_bank_name"
                         android:layout_width="match_parent"
@@ -61,18 +51,6 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
-
-                <!--</android.support.design.widget.TextInputLayout>-->
-
-                <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:id="@+id/til_swift"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:textAlignment="center"-->
-                    <!--android:theme="@style/EditTextHintLightGrey">-->
 
                     <EditText
                         android:id="@+id/tv_swift"
@@ -88,17 +66,6 @@
                         android:textColor="@color/editTextGreyColor"
                         android:textSize="14sp" />
 
-                <!--</android.support.design.widget.TextInputLayout>-->
-
-                <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:id="@+id/til_iban"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:theme="@style/EditTextHintLightGrey">-->
-
                     <EditText
                         android:id="@+id/tv_iban"
                         android:layout_width="match_parent"
@@ -113,7 +80,6 @@
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
 
-                <!--</android.support.design.widget.TextInputLayout>-->
                 <LinearLayout
                     android:id="@+id/ll6"
                     android:layout_width="match_parent"
@@ -166,14 +132,6 @@
                     app:ccp_textGravity="CENTER"
                     app:ccp_textSize="18dp" />
 
-                <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:id="@+id/til_bank_state"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:theme="@style/EditTextHintLightGrey">-->
                     <EditText
                         android:id="@+id/tv_bank_state"
                         android:layout_width="match_parent"
@@ -187,7 +145,6 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
-                <!--</android.support.design.widget.TextInputLayout>-->
             </LinearLayout>
 
             <LinearLayout
@@ -205,16 +162,6 @@
                     android:textColor="@color/editTextGreyColor"
                     android:text="Account holder:"/>
 
-                <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:id="@+id/til_name"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:textAlignment="center"-->
-                    <!--android:theme="@style/EditTextHintLightGrey">-->
-
                     <EditText
                         android:id="@+id/tv_name"
                         android:layout_width="match_parent"
@@ -229,15 +176,6 @@
                         android:textColor="@color/editTextGreyColor"
                         android:textSize="14sp" />
 
-                <!--</android.support.design.widget.TextInputLayout>-->
-                <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:id="@+id/til_street"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:theme="@style/EditTextHintLightGrey">-->
                     <EditText
                         android:id="@+id/tv_street"
                         android:layout_width="match_parent"
@@ -251,16 +189,6 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
-                <!--</android.support.design.widget.TextInputLayout>-->
-                <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:id="@+id/til_zip"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:theme="@style/EditTextHintLightGrey">-->
 
                     <EditText
                         android:id="@+id/tv_zip"
@@ -276,16 +204,6 @@
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
 
-                <!--</android.support.design.widget.TextInputLayout>-->
-                <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:id="@+id/til_city"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:theme="@style/EditTextHintLightGrey">-->
-
                     <EditText
                         android:id="@+id/tv_city"
                         android:layout_width="match_parent"
@@ -300,15 +218,6 @@
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
 
-                <!--</android.support.design.widget.TextInputLayout>-->
-                <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:id="@+id/til_state"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="10dp"-->
-                    <!--android:layout_marginEnd="10dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:theme="@style/EditTextHintLightGrey">-->
                     <EditText
                         android:id="@+id/tv_state"
                         android:layout_width="match_parent"
@@ -322,7 +231,6 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
-                <!--</android.support.design.widget.TextInputLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

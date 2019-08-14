@@ -27,67 +27,6 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"/>
 
-            <!--<android.support.constraint.ConstraintLayout-->
-            <!--android:id="@+id/cl_switch_container"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:focusable="true"-->
-            <!--android:focusableInTouchMode="true">-->
-
-            <!--<com.guarda.ethereum.customviews.RobotoLightTextView-->
-            <!--android:id="@+id/tv_gas"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="8dp"-->
-            <!--android:layout_marginRight="16dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--android:focusable="true"-->
-            <!--android:focusableInTouchMode="true"-->
-            <!--android:text="@string/gas"-->
-            <!--android:textColor="@color/baseBlueTextColor"-->
-            <!--android:textSize="14sp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintRight_toLeftOf="@+id/switch_gas_fee"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-            <!--<com.guarda.ethereum.customviews.RobotoLightTextView-->
-            <!--android:id="@+id/tv_fee"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="8dp"-->
-            <!--android:layout_marginLeft="16dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--android:text="@string/fee"-->
-            <!--android:textColor="@color/baseBlueTextColor"-->
-            <!--android:textSize="14sp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintLeft_toRightOf="@+id/switch_gas_fee"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-            <!--<android.support.v7.widget.SwitchCompat-->
-            <!--android:id="@+id/switch_gas_fee"-->
-            <!--style="@style/SwitchGasFeeStyle"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="8dp"-->
-            <!--android:layout_marginLeft="8dp"-->
-            <!--android:layout_marginRight="8dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintLeft_toLeftOf="parent"-->
-            <!--app:layout_constraintRight_toRightOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--app:theme="@style/SwitchGasFeeStyle" />-->
-            <!--</android.support.constraint.ConstraintLayout>-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/tv_sum_send_label"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:text="@string/withdraw_sum_send" />-->
-
             <TextView
                 android:id="@+id/tv_sum_send_label"
                 android:layout_width="match_parent"
@@ -142,57 +81,6 @@
                 </android.support.design.widget.TextInputLayout>
 
             </RelativeLayout>
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/ll_gas_container"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<android.support.design.widget.TextInputLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:gravity="center"-->
-            <!--android:theme="@style/EditTextHintLightGrey">-->
-
-            <!--<com.guarda.ethereum.customviews.RobotoLightEditText-->
-            <!--android:id="@+id/et_gas_limit"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="start"-->
-            <!--android:hint="Gas limit"-->
-            <!--android:inputType="numberSigned"-->
-            <!--android:maxLength="25"-->
-            <!--android:maxLines="1"-->
-            <!--android:textAlignment="textStart"-->
-            <!--android:textColor="#36464e"-->
-            <!--android:textSize="16dp" />-->
-
-            <!--</android.support.design.widget.TextInputLayout>-->
-
-            <!--<android.support.design.widget.TextInputLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:gravity="center"-->
-            <!--android:theme="@style/EditTextHintLightGrey">-->
-
-            <!--<com.guarda.ethereum.customviews.RobotoLightEditText-->
-            <!--android:id="@+id/et_custom_data"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="start"-->
-            <!--android:hint="Custom data"-->
-            <!--android:inputType="text"-->
-            <!--android:maxLength="25"-->
-            <!--android:maxLines="1"-->
-            <!--android:textAlignment="textStart"-->
-            <!--android:textColor="#36464e"-->
-            <!--android:textSize="16dp" />-->
-
-            <!--</android.support.design.widget.TextInputLayout>-->
-            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/ll_fee_container"

@@ -8,16 +8,6 @@
     android:fitsSystemWindows="true"
     android:padding="10dp">
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/relativeLayout5">-->
-        <!--<RelativeLayout-->
-            <!--android:id="@+id/relativeLayout3"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--tools:visibility="visible">-->
-
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
@@ -56,24 +46,6 @@
                     android:textSize="20sp" />
 
             </android.support.design.widget.TextInputLayout>
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-                <!--<com.guarda.ethereum.customviews.RobotoTextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/allTv"-->
-                    <!--android:layout_margin="10dp"-->
-                    <!--android:text="You send:"/>-->
-
-                <!--<com.guarda.ethereum.customviews.RobotoTextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/coinify_send"-->
-                    <!--android:layout_margin="10dp"-->
-                    <!--android:text=""/>-->
-            <!--</LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -314,18 +286,6 @@
             android:text="Bank processing takes 2-3 business days. The exchange rate used to complete the order will be available at the moment of processing it, which could be different from the one you see now."
             android:textColor="@color/editTextBlueGreyColor" />
     </LinearLayout>
-
-
-    <!--<com.guarda.ethereum.customviews.RobotoTextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/quote_valid"-->
-        <!--android:drawableStart="@drawable/ic_alerts"-->
-        <!--android:drawablePadding="8dp"-->
-        <!--android:layout_marginStart="30dp"-->
-        <!--android:layout_below="@id/linearLayout4"-->
-        <!--android:text="Quote being valid only for 15 min"-->
-        <!--android:textColor="@color/backupBorderXpl" />-->
 
     <Button
         android:id="@+id/btn_next"

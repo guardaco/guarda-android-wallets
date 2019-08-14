@@ -40,7 +40,6 @@
         android:text="30000000 USD"
         android:textColor="@color/whiteTextColor"
         android:textSize="14sp" />
-    <!--android:textColor="@color/whiteTextColor"-->
 
 </RelativeLayout>
 

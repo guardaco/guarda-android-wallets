@@ -16,8 +16,7 @@
             android:id="@+id/tv_privacy_police"
             android:textColor="#747474"
             android:lineSpacingExtra="6dp"
-            android:textSize="14dp"
-            />
+            android:textSize="14sp" />
 
     </LinearLayout>
 </ScrollView>

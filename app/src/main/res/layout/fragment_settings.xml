@@ -17,89 +17,6 @@
             android:background="@color/baseWhiteBgColor"
             android:orientation="vertical">
 
-            <!--<LinearLayout-->
-                <!--android:id="@+id/ll_email"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/settings_row_height"-->
-                <!--android:layout_marginEnd="@dimen/settings_row_horizontal_margin"-->
-                <!--android:layout_marginStart="@dimen/settings_row_horizontal_margin"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1">-->
-
-                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentStart="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:text="@string/setting_email"-->
-                        <!--android:textColor="@color/settingsTextColor"-->
-                        <!--android:textSize="14sp" />-->
-                <!--</RelativeLayout>-->
-
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1">-->
-
-                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:id="@+id/tv_provided_email"-->
-                        <!--android:layout_alignParentEnd="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:text="@string/app_not_provided"-->
-                        <!--android:textColor="#e43834"-->
-                        <!--android:textSize="12sp" />-->
-                <!--</RelativeLayout>-->
-            <!--</LinearLayout>-->
-
-            <!--<include layout="@layout/separator_horizontal" />-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/ll_language"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/settings_row_height"-->
-                <!--android:layout_marginEnd="@dimen/settings_row_horizontal_margin"-->
-                <!--android:layout_marginStart="@dimen/settings_row_horizontal_margin"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1">-->
-
-                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentStart="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:text="@string/setting_language"-->
-                        <!--android:textColor="@color/settingsTextColor"-->
-                        <!--android:textSize="14sp" />-->
-                <!--</RelativeLayout>-->
-
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1">-->
-
-                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentEnd="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:text="English"-->
-                        <!--android:textColor="#bcbcbc"-->
-                        <!--android:textSize="14sp" />-->
-                <!--</RelativeLayout>-->
-            <!--</LinearLayout>-->
-
-            <!--<include layout="@layout/separator_horizontal" />-->
-
             <LinearLayout
                 android:id="@+id/ll_local_currency"
                 android:layout_width="match_parent"
@@ -137,14 +54,6 @@
                         android:background="@color/transparent"
                         android:layout_centerVertical="true" />
 
-                    <!--<com.guarda.ethereum.customViews.RobotoLightTextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentEnd="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:text="USD"-->
-                        <!--android:textColor="#bcbcbc"-->
-                        <!--android:textSize="12sp" />-->
                 </RelativeLayout>
             </LinearLayout>
 
@@ -343,12 +252,7 @@
                         android:gravity="center_vertical"
                         android:text="ver. 0.32"
                         android:id="@+id/ver_about"/>
-                    <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:src="@drawable/ic_arrow_right_grey" />-->
+
                 </RelativeLayout>
             </LinearLayout>
 

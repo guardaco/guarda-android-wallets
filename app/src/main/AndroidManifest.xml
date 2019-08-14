@@ -67,7 +67,6 @@
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
-        <!--android:name=".views.activity.MainActivity"-->
 
         <activity
             android:name=".views.activity.MainActivity"
@@ -181,9 +180,6 @@
 
         <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
 
-        <!--<meta-data-->
-            <!--android:name="io.fabric.ApiKey"-->
-            <!--android:value="6fcfcda331247607204fe3ed1d219129832cf251" />-->
     </application>
 
 </manifest>

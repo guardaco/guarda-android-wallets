@@ -6,13 +6,11 @@
     <string name="restore_backup_restore">Восстановить</string>
     <string name="transaction_history_your_transactions">Ваши транзакции</string>
     <string name="restore_backup_passphrase">Приватный ключ ETH кошелька</string>
-    <!--<string name="app_coin_currency" translatable="false">ETH</string>-->
     <string name="app_usd_currency">USD</string>
     <string name="app_your_address">Ваш адрес</string>
     <string name="app_your_address_alt">Альтернативный адрес</string>
     <string name="app_display_your_address">Показать Aдрес</string>
     <string name="app_display_your_address_alt">Показать Альтернативный адрес</string>
-    <!--<string name="wallet_your_address">@string/app_your_address</string>-->
     <string name="app_copy">Копировать</string>
     <string name="app_show_qr">Показать QR-код</string>
     <string name="app_top_up_width_other_currency">Пополните свой ETH кошелек с помощью:</string>
@@ -25,7 +23,6 @@
     <string name="app_log_out">Выйти</string>
     <string name="app_tap_to_copy">Нажмите, чтобы скопировать</string>
     <string name="withdraw_withdraw_coins">Отправить средства</string>
-    <!--<string name="withdraw_send_coins_to_address">Отправить средства по адресу</string>-->
     <string name="app_scan_qr">Сканировать QR-код</string>
     <string name="withdraw_the_withdrawal_address_is_incorrect">Неверный адрес для отправки</string>
     <string name="app_next">Продолжить</string>
@@ -42,8 +39,6 @@
     <string name="backup_your_back_up_passphrase">Выберите формат ключа</string>
     <string name="backup_instruction">Очень важно, чтобы никто, кроме Вас, не знал кодовую фразу, так как только с ее помощью Вы сможете войти в аккаунт. Мы не храним Ваш личный ключ на сервере, поэтому, если он будет утерян, восстановить его невозможно!</string>
     <string name="purchase_purchase">Обмен</string>
-    <!--<string name="purchase_your_address">Ваш адрес</string>-->
-    <!--<string name="setting_setting">Настройки</string>-->
     <string name="setting_email">E-mail</string>
     <string name="fragment_disabled_text">Сервис временно недоступен</string>
     <string name="setting_language">Язык</string>
@@ -67,8 +62,6 @@
     <string name="transaction_detail_balance_after">Баланс после</string>
     <string name="transaction_detail_confirmations">Подтверждения</string>
     <string name="transaction_detail_repeat">Повторить</string>
-    <!--<string name="navigation_drawer_open">Открыть панель навигации r</string>-->
-    <!--<string name="navigation_drawer_close">Закрыть панель навигации</string>-->
 
     <string name="title_wallet">Кошелек</string>
     <string name="title_deposit">@string/app_your_address</string>
@@ -158,7 +151,6 @@
     <string name="title_about_app">О приложении</string>
     <string name="title_privacy_policy">Политика конфиденциальности</string>
     <string name="title_term_of_use">Условия использования</string>
-    <!--<string name="toolbar_title_withdraw">Withdraw coins</string>-->
     <string name="toolbar_title_generate_address">Введите адрес</string>
     <string name="withdraw_amount_more_than_balance">Сумма превышает баланс</string>
     <string name="withdraw_address_not_valid">Поле \"адрес кошелька\" не может быть пустым</string>

@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="@string/et_hint_your_mobile_phone"
             android:textColor="@color/blueHintColor"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -79,7 +79,7 @@
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:textColor="@color/editTextBlueGreyColor"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -101,7 +101,7 @@
         android:text="@string/number_will_be_used_by_confirm"
         android:textAlignment="textEnd"
         android:textColor="@color/baseLightGreyTextColor"
-        android:textSize="13dp" />
+        android:textSize="13sp" />
 
     <com.guarda.ethereum.customviews.GuardaInputLayout
         android:id="@+id/gi_country_phone"

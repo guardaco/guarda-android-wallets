@@ -79,34 +79,6 @@
                     android:textColor="@color/baseBlueTextColor"
                     android:textSize="14sp" />
 
-                <!--<Button-->
-                    <!--android:id="@+id/btn_exclude"-->
-                    <!--style="?android:attr/buttonBarButtonStyle"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="5dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/btn_enable_gray"-->
-                    <!--android:text="@string/withdraw_exclude"-->
-                    <!--android:textColor="@color/baseBlueTextColor"-->
-                    <!--android:textSize="14sp" />-->
-
-                <!--<Button-->
-                    <!--android:id="@+id/btn_max"-->
-                    <!--style="?android:attr/buttonStyleSmall"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_marginEnd="5dp"-->
-                    <!--android:background="@drawable/btn_border_grey"-->
-                    <!--android:minHeight="0dp"-->
-                    <!--android:minWidth="0dp"-->
-                    <!--android:padding="5dp"-->
-                    <!--android:text="@string/max"-->
-                    <!--android:textAllCaps="true"-->
-                    <!--android:textColor="@color/neutralGreyTextColor"-->
-                    <!--android:textSize="12sp" />-->
             </RelativeLayout>
         </android.support.design.widget.TextInputLayout>
 

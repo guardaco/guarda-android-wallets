@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/til_user_email"
         android:layout_alignStart="@+id/til_user_email"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:textColor="@color/neutralGreyTextColor"
         android:layout_below="@+id/til_user_email"
         android:text="@string/lorem_ipsum"

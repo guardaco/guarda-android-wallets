@@ -33,14 +33,6 @@
             android:layout_toEndOf="@+id/image_service"
             android:textColor="@color/darkGreyText"/>
 
-        <!--<ImageView-->
-        <!--android:layout_width="14dp"-->
-        <!--android:layout_height="14dp"-->
-        <!--android:layout_margin="16dp"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--app:srcCompat="@drawable/ic_arrow_right_purch"/>-->
-
     </RelativeLayout>
 
     <RelativeLayout

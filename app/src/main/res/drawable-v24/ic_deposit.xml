@@ -21,7 +21,3 @@ xmlns:aapt="http://schemas.android.com/aapt"
 <item android:offset="1.0" android:color="#FF6699F8" />
             </gradient></aapt:attr></path>
 </vector>
-    <!--android:startY="-127.5"-->
-    <!--android:startX="250.7790069580078"-->
-    <!--android:endY="222.5"-->
-    <!--android:endX="250.77900695800835"-->

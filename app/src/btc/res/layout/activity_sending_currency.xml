@@ -62,7 +62,7 @@
                             android:maxLines="1"
                             android:textAlignment="textStart"
                             android:textColor="@color/darkGreyText"
-                            android:textSize="20dp" />
+                            android:textSize="20sp" />
 
                         <com.guarda.ethereum.customviews.RobotoLightTextView
                             android:id="@+id/eth_hint_sum"
@@ -74,64 +74,13 @@
                             android:layout_marginEnd="5dp"
                             android:text="@string/app_coin_currency"
                             android:textColor="@color/neutralGreyTextColor"
-                            android:textSize="24dp"
+                            android:textSize="24sp"
                             android:visibility="visible" />
 
                     </RelativeLayout>
                 </android.support.design.widget.TextInputLayout>
 
             </RelativeLayout>
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/ll_gas_container"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<android.support.design.widget.TextInputLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:gravity="center"-->
-            <!--android:theme="@style/EditTextHintLightGrey">-->
-
-            <!--<com.guarda.ethereum.customviews.RobotoLightEditText-->
-            <!--android:id="@+id/et_gas_limit"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="start"-->
-            <!--android:hint="Gas limit"-->
-            <!--android:inputType="numberSigned"-->
-            <!--android:maxLength="25"-->
-            <!--android:maxLines="1"-->
-            <!--android:textAlignment="textStart"-->
-            <!--android:textColor="#36464e"-->
-            <!--android:textSize="16dp" />-->
-
-            <!--</android.support.design.widget.TextInputLayout>-->
-
-            <!--<android.support.design.widget.TextInputLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:gravity="center"-->
-            <!--android:theme="@style/EditTextHintLightGrey">-->
-
-            <!--<com.guarda.ethereum.customviews.RobotoLightEditText-->
-            <!--android:id="@+id/et_custom_data"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="start"-->
-            <!--android:hint="Custom data"-->
-            <!--android:inputType="text"-->
-            <!--android:maxLength="25"-->
-            <!--android:maxLines="1"-->
-            <!--android:textAlignment="textStart"-->
-            <!--android:textColor="#36464e"-->
-            <!--android:textSize="16dp" />-->
-
-            <!--</android.support.design.widget.TextInputLayout>-->
-            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/ll_fee_container"
@@ -171,7 +120,7 @@
                                 android:maxLines="1"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/darkGreyText"
-                                android:textSize="16dp" />
+                                android:textSize="16sp" />
 
                             <com.guarda.ethereum.customviews.RobotoLightTextView
                                 android:id="@+id/eth_hint_fee"
@@ -182,7 +131,7 @@
                                 android:layout_marginEnd="5dp"
                                 android:text="@string/app_fee_kb_currency"
                                 android:textColor="@color/neutralGreyTextColor"
-                                android:textSize="18dp"
+                                android:textSize="18sp"
                                 android:visibility="visible" />
                         </RelativeLayout>
                     </android.support.design.widget.TextInputLayout>
@@ -225,7 +174,7 @@
                                 android:maxLines="1"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/darkGreyText"
-                                android:textSize="16dp" />
+                                android:textSize="16sp" />
 
                             <com.guarda.ethereum.customviews.RobotoLightTextView
                                 android:id="@+id/eth_hint_arrival"
@@ -236,7 +185,7 @@
                                 android:layout_marginEnd="5dp"
                                 android:text="@string/app_coin_currency"
                                 android:textColor="@color/neutralGreyTextColor"
-                                android:textSize="18dp"
+                                android:textSize="18sp"
                                 android:visibility="visible" />
                         </RelativeLayout>
                     </android.support.design.widget.TextInputLayout>
@@ -302,7 +251,7 @@
                     android:shrinkColumns="0, true"
                     android:textAlignment="textStart"
                     android:textColor="@color/darkGreyText"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
             </android.support.design.widget.TextInputLayout>
 

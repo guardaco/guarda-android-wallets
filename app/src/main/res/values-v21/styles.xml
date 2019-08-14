@@ -7,7 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:navigationBarColor">@color/navBarColor</item>
-        <!--<item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -41,7 +40,6 @@
         <item name="colorControlNormal">@color/neutralGreyTextColor</item>
         <item name="colorControlHighlight">@color/greyHintColor</item>
         <item name="colorControlActivated">@color/greyHintColor</item>
-        <!--<item name="textColorError">@color/errorTextColor</item>-->
     </style>
 
     <style name="lightWalletSwitch" parent="Theme.AppCompat.Light">

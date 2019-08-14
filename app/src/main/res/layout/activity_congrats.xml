@@ -20,7 +20,7 @@
             android:gravity="center"
             android:text="@string/result_transaction_sent"
             android:textColor="@color/whiteTextColor"
-            android:textSize="38dp" />
+            android:textSize="38sp" />
     </RelativeLayout>
 
     <ImageView

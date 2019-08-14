@@ -43,7 +43,7 @@
                     android:layout_marginBottom="25dp"
                     android:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
                     android:textColor="@color/baseBlueTextColor"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <com.guarda.ethereum.customviews.RobotoLightTextView
                     android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
                     android:text="@string/app_your_address"
                     android:id="@+id/tv_your_address"
                     android:textColor="@color/baseLightGreyTextColor"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/imageViewAbout"
@@ -75,7 +75,7 @@
                     android:text="@string/app_tap_to_copy"
                     android:id="@+id/tv_tap_to_copy_address"
                     android:textColor="@color/baseLightGreyTextColor"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/btn_display_encrypted_alt"

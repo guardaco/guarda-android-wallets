@@ -28,7 +28,7 @@
                     android:gravity="center"
                     android:text="0.00 ETH"
                     android:textColor="@color/whiteTextColor"
-                    android:textSize="30dp" />
+                    android:textSize="30sp" />
 
                 <com.guarda.ethereum.customviews.RobotoLightTextView
                     android:id="@+id/tv_wallet_usd_count"
@@ -39,7 +39,7 @@
                     android:layout_marginTop="10dp"
                     android:text="0.00 USD"
                     android:textColor="@color/whiteTextColor"
-                    android:textSize="24dp" />
+                    android:textSize="24sp" />
             </RelativeLayout>
 
         </RelativeLayout>
@@ -55,7 +55,7 @@
                 android:layout_alignParentStart="true"
                 android:text="@string/app_your_address"
                 android:textColor="#414141"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/iv_update_address"
@@ -95,7 +95,7 @@
                         android:layout_marginLeft="0dp"
                         android:text="T-address"
                         android:textColor="@color/baseLightGreyTextColor"
-                        android:textSize="14dp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -189,7 +189,7 @@
                         android:text="Z-address"
                         android:id="@+id/tv_your_address"
                         android:textColor="@color/baseLightGreyTextColor"
-                        android:textSize="14dp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 

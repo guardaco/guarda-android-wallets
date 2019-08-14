@@ -26,7 +26,7 @@
             android:layout_toEndOf="@+id/iv_crypto_icon"
             android:text="Bitcoin"
             android:textColor="#455A64"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="wrap_content"

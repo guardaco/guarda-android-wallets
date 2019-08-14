@@ -15,7 +15,7 @@
         android:layout_marginTop="15dp"
         android:text="@string/pincode_access_code_again"
         android:textColor="@color/inputKeyboardTextColor"
-        android:textSize="24dp" />
+        android:textSize="24sp" />
 
     <com.guarda.ethereum.customviews.GuardaPinCodeLayout
         android:layout_width="match_parent"

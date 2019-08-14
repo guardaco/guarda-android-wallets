@@ -20,8 +20,3 @@ xmlns:aapt="http://schemas.android.com/aapt"
             </gradient></aapt:attr>
     </path>
 </vector>
-
-    <!--android:startY="-1.819400040403707E-6"-->
-    <!--android:startX="171.0"-->
-    <!--android:endY="719.9999981805995"-->
-    <!--android:endX="170.99999999999926"-->
