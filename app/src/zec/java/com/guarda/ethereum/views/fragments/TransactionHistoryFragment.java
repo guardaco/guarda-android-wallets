@@ -274,7 +274,6 @@ public class TransactionHistoryFragment extends BaseFragment {
                 setCryptoBalance();
                 tokensList.set(0, new TokenBodyItem(tAddrTitle, new BigDecimal(curBalance), curBalance, 8));
                 tokenAdapter.notifyDataSetChanged();
-                //FIXME: get usd balance
                 getLocalBalance(curBalance);
             }
 
