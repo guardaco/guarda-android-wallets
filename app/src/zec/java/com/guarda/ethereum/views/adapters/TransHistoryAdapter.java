@@ -72,6 +72,7 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         if (item.getConfirmations() < MIN_CONFIRMATIONS) {
             holder.tvTxStatus.setVisibility(View.VISIBLE);
             holder.tvTxStatus.setText(R.string.tx_status_wait);
+            holder.viewIndicator.setVisibility(View.GONE);
         } else {
             holder.tvTxStatus.setVisibility(View.GONE);
             holder.viewIndicator.setBackground(view.getContext().getResources().getDrawable(R.drawable.transaction_indicator_green));
