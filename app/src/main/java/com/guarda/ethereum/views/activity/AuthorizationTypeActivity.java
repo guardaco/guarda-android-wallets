@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
@@ -23,6 +24,7 @@ import com.scottyab.rootbeer.RootBeer;
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
@@ -31,6 +33,8 @@ import static com.guarda.ethereum.models.constants.Extras.FIRST_ACTION_MAIN_ACTI
 
 @AutoInjector(GuardaApp.class)
 public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
+
+    @BindView(R.id.btn_create_wallet) Button btn_create_wallet;
 
     @Inject
     EthereumNetworkManager networkManager;
@@ -120,11 +124,13 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
             intent.putExtra(DISABLE_CHECK, true);
             startActivity(intent);
         } else {
+            btn_create_wallet.setEnabled(false);
             showProgress(getString(R.string.generating_wallet));
             walletManager.createWallet2(passphrase, new Runnable() {
                 @Override
                 public void run() {
                     closeProgress();
+                    btn_create_wallet.setEnabled(true);
                     goToCreateWallet();
                 }
             });
