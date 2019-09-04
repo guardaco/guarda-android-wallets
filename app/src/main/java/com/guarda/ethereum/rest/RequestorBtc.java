@@ -1,6 +1,7 @@
 package com.guarda.ethereum.rest;
 
 
+import com.guarda.ethereum.models.items.RawBlockResponse;
 import com.guarda.ethereum.models.items.ZecTxResponse;
 
 import io.reactivex.Observable;
@@ -135,6 +136,10 @@ public class RequestorBtc {
 
     public static Observable<ZecTxResponse> getOneTx(String hash) {
         return ApiMethods.createZecApiNew().getOneTx(hash);
+    }
+
+    public static Observable<RawBlockResponse> getRawBlockByHash(String hash) {
+        return ApiMethods.createZecApiNew().getRawBlockByHash(hash);
     }
 
     public static void getUTXOList(String address, ApiMethods.RequestListener listener) {

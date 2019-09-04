@@ -5,28 +5,28 @@ import com.google.gson.annotations.SerializedName;
 
 public class RespExch {
 
-    @SerializedName("price_usd")
+    @SerializedName(value = "USD", alternate = "price_usd")
     private String priceUsd;
 
-    @SerializedName("price_eur")
+    @SerializedName(value = "EUR", alternate = "price_eur")
     private String priceEur;
 
-    @SerializedName("price_rub")
+    @SerializedName(value = "RUB", alternate = "price_rub")
     private String priceRur;
 
-    @SerializedName("price_gbp")
+    @SerializedName(value = "GBP", alternate = "price_gbp")
     private String priceGbp;
 
-    @SerializedName("price_dkk")
+    @SerializedName(value = "DKK", alternate = "price_dkk")
     private String priceDkk;
 
-    @SerializedName("price_nok")
+    @SerializedName(value = "NOK", alternate = "price_nok")
     private String priceNok;
 
-    @SerializedName("price_sek")
+    @SerializedName(value = "SEK", alternate = "price_sek")
     private String priceSek;
 
-    @SerializedName("price_inr")
+    @SerializedName(value = "INR", alternate = "price_inr")
     private String priceInr;
 
     public String getPrice(String localCurrency) {

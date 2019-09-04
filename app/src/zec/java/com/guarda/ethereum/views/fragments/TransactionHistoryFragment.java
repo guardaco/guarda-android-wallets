@@ -27,6 +27,7 @@ import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.lifecycle.HistoryViewModel;
 import com.guarda.ethereum.managers.CoinmarketcapHelper;
+import com.guarda.ethereum.managers.CryptocompareHelper;
 import com.guarda.ethereum.managers.NetworkManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.TransactionsManager;
@@ -274,7 +275,7 @@ public class TransactionHistoryFragment extends BaseFragment {
                 setCryptoBalance();
                 tokensList.set(0, new TokenBodyItem(tAddrTitle, new BigDecimal(curBalance), curBalance, 8));
                 tokenAdapter.notifyDataSetChanged();
-                getLocalBalance(curBalance);
+                getLocalBalance();
             }
 
             @Override
@@ -300,24 +301,22 @@ public class TransactionHistoryFragment extends BaseFragment {
                 }));
     }
 
-    private void getLocalBalance(final String balance) {
-        CoinmarketcapHelper.getExchange(Common.MAIN_CURRENCY_NAME,
-                sharedManager.getLocalCurrency().toLowerCase(),
+    private void getLocalBalance() {
+        CryptocompareHelper.getExchange(Common.MAIN_CURRENCY.toUpperCase(),
+                sharedManager.getLocalCurrency().toUpperCase(),
                 new ApiMethods.RequestListener() {
                     @Override
                     public void onSuccess(Object response) {
-                        List<RespExch> exchange = (List<RespExch>) response;
+                        RespExch exchange = (RespExch) response;
 
-                        String localBalance = balance.replace(",", "");
-
-                        exchangeRate = exchange.get(0).getPrice(sharedManager.getLocalCurrency().toLowerCase());
+                        exchangeRate = exchange.getPrice(sharedManager.getLocalCurrency().toLowerCase());
                         if (exchangeRate != null) updateUsdBalances();
                         setUSDBalance();
                     }
 
                     @Override
                     public void onFailure(String msg) {
-                        Timber.d("CoinmarketcapHelper.getExchange onFailure=%s", msg);
+                        Timber.e("CryptocompareHelper.getExchange onFailure=%s", msg);
                     }
                 });
     }

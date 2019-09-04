@@ -42,8 +42,8 @@ public class Requestor {
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getExchangeAmountCc(String from, String to, ApiMethods.RequestListener listener) {
-        Call call = ApiMethods.createCryptocompareApi().getExchange(from, to);
+    public static void getExchangeAmountCc(String from, String to, String apiKey, ApiMethods.RequestListener listener) {
+        Call call = ApiMethods.createCryptocompareApi().getExchange(from, to, apiKey);
         Log.d("Request", "path " + call.request());
         ApiMethods.makeRequest(call, listener);
     }
