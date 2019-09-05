@@ -150,7 +150,7 @@
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonBarButtonStyle"
                     android:background="@drawable/btn_enable_gray"
-                    android:text="@string/top_up_width_other_currency"
+                    android:text="@string/purchase_purchase"
                     android:textAllCaps="false"
                     android:textColor="@color/baseBlueTextColor"
                     android:textSize="14sp" />
@@ -244,7 +244,7 @@
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonBarButtonStyle"
                     android:background="@drawable/btn_enable_gray"
-                    android:text="@string/top_up_width_other_currency"
+                    android:text="@string/purchase_purchase"
                     android:textAllCaps="false"
                     android:textColor="@color/baseBlueTextColor"
                     android:textSize="14sp" />

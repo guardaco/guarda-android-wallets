@@ -12,6 +12,7 @@ import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
+import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.zcash.sapling.SyncManager;
@@ -40,6 +41,10 @@ public class UserWalletFragment extends BaseFragment {
     TextView tvWalletAddress;
     @BindView(R.id.tv_wallet_address_z)
     TextView tv_wallet_address_z;
+    @BindView(R.id.btn_top_up_other_currency)
+    Button btn_top_up_other_currency;
+    @BindView(R.id.btn_top_up_other_currency_z)
+    Button btn_top_up_other_currency_z;
 
     @Inject
     WalletManager walletManager;
@@ -61,6 +66,7 @@ public class UserWalletFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        initView();
         setCryptoBalance();
         setUSDBalance();
         if (TextUtils.isEmpty(walletManager.getWalletFriendlyAddress())) {
@@ -69,6 +75,12 @@ public class UserWalletFragment extends BaseFragment {
             showExistingWallet();
         }
         setToolbarTitle("");
+    }
+
+    private void initView() {
+        String exch = String.format("%s %s", getString(R.string.purchase_purchase), Common.MAIN_CURRENCY.toUpperCase());
+        btn_top_up_other_currency.setText(exch);
+        btn_top_up_other_currency_z.setText(exch);
     }
 
     private void createWallet(String passphrase) {
@@ -127,16 +139,12 @@ public class UserWalletFragment extends BaseFragment {
                 copyAddressZ();
                 break;
             case R.id.btn_show_address_qr:
-                navigateToFragment(new DepositFragment());
-                break;
             case R.id.btn_show_address_qr_z:
                 navigateToFragment(new DepositFragment());
                 break;
             case R.id.btn_top_up_other_currency:
-                navigateToFragment(new PurchaseServiceFragment());
-                break;
             case R.id.btn_top_up_other_currency_z:
-                navigateToFragment(new PurchaseServiceFragment());
+                navigateToFragment(new ExchangeFragment());
                 break;
         }
     }
