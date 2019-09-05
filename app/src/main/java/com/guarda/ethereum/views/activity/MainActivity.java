@@ -252,16 +252,6 @@ public class MainActivity extends TrackOnStopActivity {
                             ((TransactionHistoryFragment)currentFragment).scrollToTop();
                         }
                         break;
-                    case R.id.menu_buy:
-                        if (SharedManager.flag_disable_buy_menu) {
-                            setToolBarTitle(getString(R.string.app_purchase_service));
-                            fragment = new DisabledFragment();
-                        } else {
-                            if (!(currentFragment instanceof PurchaseServiceFragment)) {
-                                fragment = new PurchaseServiceFragment();
-                            }
-                        }
-                        break;
                     case R.id.menu_purchase:
                         if (SharedManager.flag_disable_purchase_menu) {
                             setToolBarTitle(R.string.title_purchase);
@@ -317,10 +307,9 @@ public class MainActivity extends TrackOnStopActivity {
         });
 
         mNavigationView.setItemIconTintList(null);
-        if (sharedManager.getIsShowBackupAlert()) {
-            ImageView i = (ImageView) mNavigationView.getMenu().getItem(5).getActionView();
-            i.setVisibility(View.VISIBLE);
-        }
+
+        ImageView i = (ImageView) mNavigationView.getMenu().getItem(4).getActionView();
+        i.setVisibility(View.VISIBLE);
     }
 
     @Override

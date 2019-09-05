@@ -84,8 +84,6 @@ public class TransactionHistoryFragment extends BaseFragment {
     TextView tvUSDCount;
     @BindView(R.id.fab_menu)
     FloatingActionMenu fabMenu;
-    @BindView(R.id.fab_buy)
-    FloatingActionButton fabBuy;
     @BindView(R.id.fab_purchase)
     FloatingActionButton fabPurchase;
     @BindView(R.id.fab_deposit)
@@ -395,15 +393,10 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.fab_buy, R.id.fab_purchase, R.id.fab_withdraw, R.id.fab_deposit})
+    @OnClick({R.id.fab_purchase, R.id.fab_withdraw, R.id.fab_deposit})
     public void fabButtonsClick(View view) {
         MainActivity mainActivity = (MainActivity) getActivity();
         switch (view.getId()) {
-            case R.id.fab_buy:
-                fabMenu.close(true);
-                navigateToFragment(new PurchaseServiceFragment());
-                mainActivity.setToolBarTitle(R.string.app_amount_to_purchase);
-                break;
             case R.id.fab_purchase:
                 fabMenu.close(true);
                 navigateToFragment(new ExchangeFragment());

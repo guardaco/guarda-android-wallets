@@ -25,7 +25,7 @@ public class IndacoinManager {
         params.put("addressTo", addressTo);
         params.put("email", email);
         HashMap<String, String> queryParams = new HashMap<>();
-//        queryParams.put("apiKey", PUBLIC_API_KEY);
+        queryParams.put("apiKey", INDACOIN_API_KEY);
         makePostQuery("/api/v1/buy/create-transaction", params, queryParams, new Callback2<String, String>() {
             @Override
             public void onResponse(String status, String resp) {
@@ -61,10 +61,10 @@ public class IndacoinManager {
 
     public static void getEstimate(final String amount, final String currencyTo, final Callback2<String, GetEstimateRespModel> onComplete) {
         HashMap<String, String> params = new HashMap<>();
-//        params.put("apiKey", PUBLIC_API_KEY);
         params.put("amount", amount);
         params.put("currencyTo", currencyTo);
-        //params.put("apiKey", PUBLIC_API_KEY);
+        params.put("apiKey", PUBLIC_API_KEY);
+        HashMap<String, String> queryParams = new HashMap<>();
         makeGetQuery("/api/v1/buy/get-estimate", params, new Callback2<String, String>() {
             @Override
             public void onResponse(String status, String resp) {
@@ -93,6 +93,7 @@ public class IndacoinManager {
         HashMap<String, String> params = new HashMap<>();
         params.put("currencyTo", currencyTo);
         params.put("email", email);
+        params.put("apiKey", PUBLIC_API_KEY);
         HashMap<String, String> queryParams = new HashMap<>();
         makePostQuery("/api/v1/buy/get-limits", params, queryParams, new Callback2<String, String>() {
             @Override
@@ -224,5 +225,6 @@ public class IndacoinManager {
     private static final int TIMEOUT_WRITE = 8000;
     private static final int TIMEOUT_READ = 8000;
     private static final String PUBLIC_API_KEY = "d8bfa71d3a06ca958868e11160b6b6c9f216052c26a98915f421dad0a73c0b82";
+    private static final String INDACOIN_API_KEY = "Lv5cx35Oy8ZW0jmQ";
 
 }

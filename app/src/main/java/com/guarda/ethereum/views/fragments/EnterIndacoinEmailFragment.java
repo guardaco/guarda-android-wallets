@@ -88,8 +88,6 @@ public class EnterIndacoinEmailFragment extends BaseFragment {
             Bundle bundle = new Bundle();
             bundle.putString(Extras.USER_EMAIL, email);
             startFragment.setArguments(bundle);
-//            b.putString(Extras.PURCHASE_SERVICE, prevFragment.selectedService);
-//                startFragment.setPrevFragment(thisFragment);
             navigateToFragment(startFragment);
         } else {
             showError(etEmail, getString(R.string.email_is_not_valid));

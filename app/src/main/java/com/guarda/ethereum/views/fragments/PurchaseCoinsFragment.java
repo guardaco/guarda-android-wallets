@@ -70,6 +70,7 @@ import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.ResponseBody;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.ETH_SHOW_PATTERN;
 
@@ -351,7 +352,6 @@ public class PurchaseCoinsFragment extends BaseFragment {
     }
 
     private void updateApproximatelyBalance(final String currency) {
-        Log.d("flint", "PurchaseCoinsFragment.updateApproximatelyBalance()...");
         if (indaPrevFragment != null && "indacoin".equals(indaPrevFragment.selectedService)) {
             String currencyTo = "btc";
             IndacoinManager.getEstimate("150", currencyTo, new Callback2<String, IndacoinManager.GetEstimateRespModel>() {
@@ -361,6 +361,8 @@ public class PurchaseCoinsFragment extends BaseFragment {
                         BigDecimal number = new BigDecimal(resp.estimate);
                         realCurrencyToBtc = 150.0/number.doubleValue();
                         getChangellyExchangeAmount_changenow();
+                    } else {
+                        Timber.e("IndacoinManager.getEstimate resp=null");
                     }
                 }
             });
