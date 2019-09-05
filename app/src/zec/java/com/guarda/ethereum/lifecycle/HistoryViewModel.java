@@ -42,6 +42,7 @@ public class HistoryViewModel extends ViewModel {
     private MutableLiveData<List<TransactionItem>> showActualTxs = new MutableLiveData<>();
     private MutableLiveData<Boolean> syncInProgress = new MutableLiveData<>();
     private MutableLiveData<Boolean> isRestored = new MutableLiveData<>();
+    private MutableLiveData<Boolean> updateBalance = new MutableLiveData<>();
 
     private HistoryViewModel(WalletManager walletManager,
                             TransactionsManager transactionsManager,
@@ -170,6 +171,7 @@ public class HistoryViewModel extends ViewModel {
         compositeDisposable.add(syncManager.getProgressSubject().subscribe(t -> {
             Timber.d("getProgressSubject onNext() t=%b", t);
             syncInProgress.setValue(t);
+            if (!t) updateBalance.setValue(true);
         }));
     }
 
@@ -237,4 +239,9 @@ public class HistoryViewModel extends ViewModel {
     public MutableLiveData<Boolean> getIsRestored() {
         return isRestored;
     }
+
+    public MutableLiveData<Boolean> getUpdateBalance() {
+        return updateBalance;
+    }
+
 }

@@ -262,6 +262,11 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void loadBalance() {
+        loadTransparentBalance();
+        loadShieldedBalance();
+    }
+
+    private void loadTransparentBalance() {
         RequestorBtc.getBalanceZecNew(walletManager.getWalletFriendlyAddress(), new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
@@ -283,7 +288,9 @@ public class TransactionHistoryFragment extends BaseFragment {
                 }
             }
         });
+    }
 
+    private void loadShieldedBalance() {
         compositeDisposable.add(Observable
                 .fromCallable(new CallSaplingBalance(dbManager))
                 .subscribeOn(Schedulers.io())
@@ -443,6 +450,11 @@ public class TransactionHistoryFragment extends BaseFragment {
         historyViewModel.getSyncInProgress().observe(getViewLifecycleOwner(), (t) -> {
             setSyncStatus(t);
             Timber.d("getSyncInProgress().observe t=%b", t);
+        });
+
+        historyViewModel.getUpdateBalance().observe(getViewLifecycleOwner(), (t) -> {
+            if (t) loadShieldedBalance();
+            Timber.d("getUpdateBalance().observe t=%b", t);
         });
 
         historyViewModel.setCurrentStatus();
