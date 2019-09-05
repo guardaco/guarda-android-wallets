@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.managers.WalletManager;
+import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -11,7 +12,10 @@ import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
 import com.guarda.zcash.sapling.rxcall.CallBlockRange;
 import com.guarda.zcash.sapling.rxcall.CallFindWitnesses;
 import com.guarda.zcash.sapling.rxcall.CallLastBlock;
+import com.guarda.zcash.sapling.rxcall.CallRevertLastBlocks;
 import com.guarda.zcash.sapling.rxcall.CallSaplingParamsInit;
+import com.guarda.zcash.sapling.rxcall.CallValidateSaplingTree;
+import com.guarda.zcash.sapling.tree.SaplingMerkleTree;
 
 import javax.inject.Inject;
 
@@ -125,8 +129,52 @@ public class SyncManager {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((res) -> {
                     Timber.d("getWintesses finished=%s", res);
-                    stopSync();
+                    validateSaplingTree();
                 }, (e) -> stopAndLogError("getWintesses", e)));
+    }
+
+    private void validateSaplingTree() {
+        compositeDisposable.add(Observable
+                .fromCallable(new CallValidateSaplingTree(dbManager))
+                .flatMap(it -> {
+                            Timber.d("validateSaplingTree height=%d", it.getHeight());
+                            String raw = RequestorBtc.getRawBlockByHash(it.getHash()).blockingFirst().getRawblock();
+                            String root = new SaplingMerkleTree(it.getTree()).root();
+                            Timber.d("lastBlockWithTree=%d raw=%s root=%s", it.getHeight(), raw, root);
+                            boolean isContained = raw.toLowerCase().contains(root.toLowerCase());
+                            return Observable.just(isContained);
+                        }
+                )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        (res) -> {
+                            Timber.d("validateSaplingTree finished=%s", res);
+                            if (res) {
+                                stopSync();
+                            } else {
+                                revertLastBlocks();
+                            }
+                        },
+                        (e) -> stopAndLogError("validateSaplingTree", e)
+                )
+        );
+    }
+
+    private void revertLastBlocks() {
+        compositeDisposable.add(
+                Observable
+                        .fromCallable(new CallRevertLastBlocks(dbManager))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                (res) -> {
+                                    stopSync();
+                                    Timber.d("revertLastBlocks completed=%s", res);
+                                },
+                                (e) -> stopAndLogError("revertLastBlocks", e)
+                        )
+        );
     }
 
     private void saplingKeyInit() {
@@ -140,7 +188,7 @@ public class SyncManager {
 
     private void stopAndLogError(String method, Throwable t) {
         stopSync();
-        Timber.d("%s e=%s", method, t.getMessage());
+        Timber.e("%s error=%s", method, t.getMessage());
     }
 
 }

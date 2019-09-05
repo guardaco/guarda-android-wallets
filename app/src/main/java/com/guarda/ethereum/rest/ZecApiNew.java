@@ -3,6 +3,7 @@ package com.guarda.ethereum.rest;
 
 import com.guarda.ethereum.models.items.BlockHeightResponse;
 import com.guarda.ethereum.models.items.BtgBalanceResponse;
+import com.guarda.ethereum.models.items.RawBlockResponse;
 import com.guarda.ethereum.models.items.UTXOItem;
 import com.guarda.ethereum.models.items.ZecTxListResponse;
 import com.guarda.ethereum.models.items.ZecTxResponse;
@@ -30,4 +31,7 @@ interface ZecApiNew {
 
     @GET("tx/{hash}")
     Observable<ZecTxResponse> getOneTx(@Path("hash") String hash);
+
+    @GET("rawblock/{hash}")
+    Observable<RawBlockResponse> getRawBlockByHash(@Path("hash") String hash);
 }

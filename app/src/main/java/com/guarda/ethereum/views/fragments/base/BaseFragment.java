@@ -143,7 +143,7 @@ public abstract class BaseFragment extends Fragment {
         isVisible = false;
     }
 
-    public boolean isVisibleOnAttach(){
+    public boolean isVisibleOnAttach() {
         return isVisible;
     }
 

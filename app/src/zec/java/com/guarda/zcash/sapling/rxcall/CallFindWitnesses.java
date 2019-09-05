@@ -1,5 +1,6 @@
 package com.guarda.zcash.sapling.rxcall;
 
+import com.guarda.ethereum.BuildConfig;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;
@@ -159,7 +160,8 @@ public class CallFindWitnesses implements Callable<Boolean> {
             BlockRoom lastBlock = blocks.get(blocks.size() - 1);
             lastBlock.setTree(saplingTree.serialize());
             dbManager.getAppDb().getBlockDao().insertAll(lastBlock);
-            Timber.d("save tree lastBlock=%d tree=%s root=%s", lastBlock.getHeight(), saplingTree.serialize(), saplingTree.root());
+            String lastRoot = saplingTree.root();
+            Timber.d("save tree lastBlock=%d tree=%s root=%s", lastBlock.getHeight(), saplingTree.serialize(), lastRoot);
         }
 
         Timber.d("blocks scanning completed");
