@@ -74,6 +74,8 @@ import static com.guarda.ethereum.models.constants.Common.EXTRA_TRANSACTION_POSI
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
 import static com.guarda.ethereum.models.constants.Extras.FIRST_ACTION_MAIN_ACTIVITY;
 import static com.guarda.ethereum.models.constants.Extras.KEY;
+import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCED;
+import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCING;
 
 @AutoInjector(GuardaApp.class)
 public class TransactionHistoryFragment extends BaseFragment {
@@ -111,8 +113,6 @@ public class TransactionHistoryFragment extends BaseFragment {
     private String exchangeRate;
     private final String tAddrTitle = "T-address";
     private final String zAddrTitle = "Z-address";
-    private final String statusSyncing = "Syncing...";
-    private final String statusSycned = "Synced";
     private Long transparentBalance;
     private Long saplingBalance;
 
@@ -476,7 +476,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void setSyncStatus(boolean b) {
-        setToolbarTitle(b ? statusSyncing : statusSycned);
+        setToolbarTitle(b ? STATUS_SYNCING : STATUS_SYNCED);
     }
 
     private void initRotation(ImageView ivLoader) {

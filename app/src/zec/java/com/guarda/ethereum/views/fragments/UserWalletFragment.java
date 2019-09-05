@@ -25,8 +25,12 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.BLOCK;
+import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCED;
+import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCING;
 
 @AutoInjector(GuardaApp.class)
 public class UserWalletFragment extends BaseFragment {
@@ -55,6 +59,8 @@ public class UserWalletFragment extends BaseFragment {
     @Inject
     SyncManager syncManager;
 
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     public UserWalletFragment() {
         GuardaApp.getAppComponent().inject(this);
     }
@@ -75,6 +81,7 @@ public class UserWalletFragment extends BaseFragment {
             showExistingWallet();
         }
         setToolbarTitle("");
+        initSubscribers();
     }
 
     private void initView() {
@@ -167,4 +174,22 @@ public class UserWalletFragment extends BaseFragment {
         }
     }
 
+    private void initSubscribers() {
+        compositeDisposable.add(
+                syncManager.getProgressSubject().subscribe(t -> {
+                    setSyncStatus(t);
+                    Timber.d("getProgressSubject onNext() t=%b", t);
+                })
+        );
+    }
+
+    private void setSyncStatus(boolean b) {
+        setToolbarTitle(b ? STATUS_SYNCING : STATUS_SYNCED);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
 }

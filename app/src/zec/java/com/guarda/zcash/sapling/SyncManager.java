@@ -30,6 +30,8 @@ import timber.log.Timber;
 @AutoInjector(GuardaApp.class)
 public class SyncManager {
 
+    public static final String STATUS_SYNCING = "Syncing...";
+    public static final String STATUS_SYNCED = "Synced";
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private long endB = 518945;
 
@@ -66,7 +68,7 @@ public class SyncManager {
         Timber.d("stopSync inProgress=%b", inProgress);
     }
 
-    public PublishSubject<Boolean> getPublishSubject() {
+    public PublishSubject<Boolean> getProgressSubject() {
         return progressSubject;
     }
 

@@ -167,8 +167,8 @@ public class HistoryViewModel extends ViewModel {
     }
 
     private void initSubscriptions() {
-        compositeDisposable.add(syncManager.getPublishSubject().subscribe(t -> {
-            Timber.d("getPublishSubject onNext() t=%b", t);
+        compositeDisposable.add(syncManager.getProgressSubject().subscribe(t -> {
+            Timber.d("getProgressSubject onNext() t=%b", t);
             syncInProgress.setValue(t);
         }));
     }
