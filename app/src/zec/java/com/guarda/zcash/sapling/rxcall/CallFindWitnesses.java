@@ -36,6 +36,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
 
     private Long defaultStartHeight = 551912L;
     private Long startScanBlocksHeight = defaultStartHeight;
+    private Long blockCounter = 551912L;
 
     public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey) {
         this.dbManager = dbManager;
@@ -55,7 +56,10 @@ public class CallFindWitnesses implements Callable<Boolean> {
             saplingTree = new SaplingMerkleTree(lastBlockWithTree.getTree());
         } else {
             saplingTree = new SaplingMerkleTree(treeOnHeight551912main);
+            dbManager.getAppDb().getBlockDao().setTreeByHeight(saplingTree.serialize(), defaultStartHeight);
         }
+
+        blockCounter = startScanBlocksHeight;
 
         Timber.d("startScanBlocksHeight=%d", startScanBlocksHeight);
 
@@ -148,6 +152,14 @@ public class CallFindWitnesses implements Callable<Boolean> {
                 SaplingWitnessesRoom sw = new SaplingWitnessesRoom(wx.getKey(), IncrementalWitness.toJson(wx.getValue()), br.getHeight());
                 existingWitnesses.add(sw);
                 Timber.d("iw root=%s at height=%d", wx.getValue().root(), br.getHeight());
+            }
+
+            //save tree state every 1000 blocks for case where tree root is incorrect (after validating tree) and last 10 blocks is deleted
+            if (br.getHeight() >= blockCounter) {
+                br.setTree(saplingTree.serialize());
+                dbManager.getAppDb().getBlockDao().insertAll(br);
+                blockCounter = blockCounter + 1000;
+                Timber.d("block height(%d) >= blockCounter+1000(%d) root=%s", br.getHeight(), blockCounter, saplingTree.root());
             }
 
         }

@@ -35,6 +35,9 @@ public interface BlockDao {
     @Query("SELECT * FROM blocks WHERE tree <> '' AND tree IS NOT NULL order by height DESC LIMIT 1")
     BlockRoom getLatestBlockWithTree();
 
+    @Query("UPDATE blocks SET tree = :tree WHERE height = :height")
+    void setTreeByHeight(String tree, Long height);
+
     @Query("DELETE FROM blocks WHERE hash in (SELECT hash FROM blocks order by height DESC LIMIT :number)")
     void dropLastNumber(int number);
 
