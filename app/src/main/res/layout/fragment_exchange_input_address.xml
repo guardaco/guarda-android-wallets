@@ -104,6 +104,7 @@
                 android:layout_alignTop="@id/editTextAddress"
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
+                android:padding="10dp"
                 android:scaleX="0.8"
                 android:scaleY="0.8"
                 android:tint="@color/baseTextColor"

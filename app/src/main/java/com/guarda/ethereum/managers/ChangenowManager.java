@@ -67,11 +67,6 @@ public class ChangenowManager {
         return supportedCoins;
     }
 
-
-
-
-
-
     private static ChangenowManager instance_s = new ChangenowManager();
 
     private ArrayList<ChangenowApi.SupportedCoinModel> supportedCoins = new ArrayList<>();

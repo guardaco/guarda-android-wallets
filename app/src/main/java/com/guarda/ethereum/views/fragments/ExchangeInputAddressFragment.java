@@ -33,7 +33,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,39 +52,26 @@ public class ExchangeInputAddressFragment extends BaseFragment {
 
     @Inject
     WalletManager walletManager;
-
-
-
     @BindView(R.id.textViewFromCoin)
     TextView textViewFromCoin;
-
     @BindView(R.id.textViewToCoin)
     TextView textViewToCoin;
-
     @BindView(R.id.imageViewFrom)
     ImageView imageViewFrom;
-
     @BindView(R.id.imageViewTo)
     ImageView imageViewTo;
-
     @BindView(R.id.textViewAddressLabel)
     TextView textViewAddressLabel;
-
     @BindView(R.id.editTextAddress)
     EditText editTextAddress;
-
     @BindView(R.id.textViewMemoLabel)
     TextView textViewMemoLabel;
-
     @BindView(R.id.editTextMemo)
     EditText editTextMemo;
-
     @BindView(R.id.imageViewScanQr)
     ImageView imageViewScanQr;
-
     @BindView(R.id.buttonNext)
     Button buttonNext;
-
     @BindView(R.id.tv_min_amount)
     TextView textViewMinAmount;
 
@@ -102,13 +91,20 @@ public class ExchangeInputAddressFragment extends BaseFragment {
 
     private Map<String, ShapeshiftApi.CoinExternalInfoModel> cryptoCurrenciesInfo = new HashMap<>();
 
-
+    private static final List<String> hasExtraField = new ArrayList<String>() {{
+        add("xrp");
+        add("bnbmainnet");
+        add("eos");
+        add("xmr");
+        add("xlm");
+        add("xem");
+        add("atom");
+        add("xdn");
+    }};
 
     public ExchangeInputAddressFragment() {
         GuardaApp.getAppComponent().inject(this);
     }
-
-
 
     public ExchangeInputAddressFragment setData(String spinnerExchangeSymbol, int spinnerFromCoinPosition, int spinnerToCoinPosition, ExchangeFragment prevFragment) {
         this.spinnerExchangeSymbol = spinnerExchangeSymbol;
@@ -118,41 +114,29 @@ public class ExchangeInputAddressFragment extends BaseFragment {
         return this;
     }
 
-
-
     public ExchangeFragment getPrevFragment() {return prevFragment;}
     public String getSpinnerExchangeSymbol() {return spinnerExchangeSymbol;}
     public int getSpinnerFromCoinPosition() {return spinnerFromCoinPosition;}
     public int getSpinnerToCoinPosition() {return spinnerToCoinPosition;}
-
-
 
     public void setCoins(String fromCoin, String toCoin) {
         this.fromCoin = fromCoin;
         this.toCoin = toCoin;
     }
 
-
-
     public void setCoinsNames(String fromCoinName, String toCoinName) {
         this.fromCoinName = fromCoinName;
         this.toCoinName = toCoinName;
     }
 
-
-
     public void setMinimumAmount(BigDecimal minimumAmount) {
         this.minimumAmount = minimumAmount;
     }
-
-
 
     @Override
     protected int getLayout() {
         return R.layout.fragment_exchange_input_address;
     }
-
-
 
     @Override
     protected void init() {
@@ -164,70 +148,18 @@ public class ExchangeInputAddressFragment extends BaseFragment {
 
         textViewAddressLabel.setText(getString(R.string.exchange_dest_address_left) + " " + toCoinName + " " + getString(R.string.exchange_dest_address_right));
 
-        imageViewScanQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scanQr_onClick();
-            }
-        });
+        imageViewScanQr.setOnClickListener((view) -> scanQr_onClick());
 
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonNext_onClick();
-            }
-        });
+        buttonNext.setOnClickListener((view) -> buttonNext_onClick());
 
         textViewMemoLabel.setVisibility(View.GONE);
         editTextMemo.setVisibility(View.GONE);
 
-        final Fragment thisFragment = this;
-        ShapeshiftApi.getCoinsExternalInfo(new Callback2<String, Map<String, ShapeshiftApi.CoinExternalInfoModel>>() {
-            @Override
-            public void onResponse(final String status, final Map<String, ShapeshiftApi.CoinExternalInfoModel> resp) {
-                try {
-                    thisFragment.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                if ("ok".equals(status)) {
-                                    cryptoCurrenciesInfo = resp;
-                                    if (!cryptoCurrenciesInfo.containsKey(toCoin.toUpperCase())) {
-                                        textViewMemoLabel.setText("Memo");
-                                        textViewMemoLabel.setVisibility(View.VISIBLE);
-                                        editTextMemo.setVisibility(View.VISIBLE);
-                                    } else {
-                                        ShapeshiftApi.CoinExternalInfoModel coinExternalInfoModel = cryptoCurrenciesInfo.get(toCoin.toUpperCase());
-                                        if (coinExternalInfoModel.memo != null) {
-                                            textViewMemoLabel.setText(coinExternalInfoModel.memo);
-                                            textViewMemoLabel.setVisibility(View.VISIBLE);
-                                            editTextMemo.setVisibility(View.VISIBLE);
-                                        } else {
-                                            textViewMemoLabel.setVisibility(View.GONE);
-                                            editTextMemo.setVisibility(View.GONE);
-                                        }
-                                    }
-                                } else {
-                                    Toast.makeText(getContext(), getString(R.string.exchange_error_internet_connection), Toast.LENGTH_LONG).show();
-                                    textViewMemoLabel.setText("Memo");
-                                    textViewMemoLabel.setVisibility(View.VISIBLE);
-                                    editTextMemo.setVisibility(View.VISIBLE);
-                                }
-                            } catch (Exception e) {
-                                Toast.makeText(getContext(), getString(R.string.exchange_error_unknown), Toast.LENGTH_LONG).show();
-                                textViewMemoLabel.setText("Memo");
-                                textViewMemoLabel.setVisibility(View.VISIBLE);
-                                editTextMemo.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    textViewMemoLabel.setText("Memo");
-                    textViewMemoLabel.setVisibility(View.VISIBLE);
-                    editTextMemo.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        if (hasExtraField.contains(toCoin.toLowerCase())) {
+            textViewMemoLabel.setText("Memo");
+            textViewMemoLabel.setVisibility(View.VISIBLE);
+            editTextMemo.setVisibility(View.VISIBLE);
+        }
 
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
