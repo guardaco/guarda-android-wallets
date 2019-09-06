@@ -129,30 +129,6 @@ public class MainActivity extends TrackOnStopActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        long lastUpdate = sharedManager.getLastChangelliCurList();
-        if (lastUpdate + CHANGELLY_TIMEOUT > System.currentTimeMillis()) return;
-
-        ChangellyNetworkManager.getCurrencies(new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                try {
-                    ResponseCurrencyItem responseCurrency = (ResponseCurrencyItem) response;
-                    currentCrypto.castResponseCurrencyToCryptoItem(responseCurrency, getApplicationContext());
-                    sharedManager.setLastChangelliCurList(System.currentTimeMillis());
-                } catch (Exception e) {
-                    Log.d("psd", "ChangellyNetworkManager.getCurrencies resp - " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFailure(String msg) {}
-        });
-    }
-
-    @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
@@ -225,10 +201,6 @@ public class MainActivity extends TrackOnStopActivity {
         BackupFragment fragment = new BackupFragment();
         setToolBarTitle(R.string.title_backup);
         navigateToFragment(fragment);
-
-        sharedManager.setIsShowBackupAlert(false);
-        ImageView i = (ImageView) mNavigationView.getMenu().getItem(5).getActionView();
-        i.setVisibility(View.GONE);
     }
 
     private void goToPurchaseFragment() {
@@ -308,6 +280,7 @@ public class MainActivity extends TrackOnStopActivity {
 
         mNavigationView.setItemIconTintList(null);
 
+        //Show red backup alert
         ImageView i = (ImageView) mNavigationView.getMenu().getItem(4).getActionView();
         i.setVisibility(View.VISIBLE);
     }
