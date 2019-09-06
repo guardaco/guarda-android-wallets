@@ -142,7 +142,7 @@ public class SyncManager {
                             Timber.d("validateSaplingTree height=%d", it.getHeight());
                             String raw = RequestorBtc.getRawBlockByHash(it.getHash()).blockingFirst().getRawblock();
                             String root = new SaplingMerkleTree(it.getTree()).root();
-                            Timber.d("lastBlockWithTree=%d raw=%s root=%s", it.getHeight(), raw, root);
+                            Timber.d("lastBlockWithTree=%d root=%s raw=%s", it.getHeight(), root, raw);
                             boolean isContained = raw.toLowerCase().contains(root.toLowerCase());
                             return Observable.just(isContained);
                         }

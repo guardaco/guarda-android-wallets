@@ -33,4 +33,13 @@ public class BlockRoom {
     public void setTree(String tree) {
         this.tree = tree;
     }
+
+    @Override
+    public String toString() {
+        return "BlockRoom{" +
+                "hash='" + hash + '\'' +
+                ", height=" + height +
+                ", tree='" + tree + '\'' +
+                '}';
+    }
 }

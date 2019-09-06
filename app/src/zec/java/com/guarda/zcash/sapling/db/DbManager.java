@@ -36,6 +36,7 @@ public class DbManager {
     public void addBlockWithTxs(CompactFormats.CompactBlock cb) {
         Timber.d("addBlockWithTxs vb=%s", Utils.revHex(cb.getHash().toByteArray()));
         appDb.getBlockDao().insertAll(new BlockRoom(Utils.revHex(cb.getHash().toByteArray()), cb.getHeight(), ""));
+        Timber.d("addBlockWithTxs tx list size=%d", cb.getVtxList().size());
         for (CompactFormats.CompactTx ctx : cb.getVtxList()) {
             appDb.getTxDao().insertAll(new TxRoom(Utils.revHex(ctx.getHash().toByteArray()),
                     Utils.revHex(cb.getHash().toByteArray())));

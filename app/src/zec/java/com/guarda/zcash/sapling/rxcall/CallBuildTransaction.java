@@ -37,8 +37,9 @@ public class CallBuildTransaction implements Callable<ZcashTransaction> {
         List<ReceivedNotesRoom> unspents = dbManager.getAppDb().getReceivedNotesDao().getUnspents();
 
         unspents = chooseUnspents(unspents);
-
-        if (unspents.size() == 0) Timber.e("unspents.size() == 0");
+        int us = unspents.size();
+        if (us == 0) Timber.e("unspents.size() == 0");
+        Timber.d("unspents.size() = %d", us);
 
         if (toAddress.substring(0, 1).equalsIgnoreCase("z")) {
             //from z to z

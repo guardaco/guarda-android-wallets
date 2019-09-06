@@ -157,7 +157,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
             //save tree state every 1000 blocks for case where tree root is incorrect (after validating tree) and last 10 blocks is deleted
             if (br.getHeight() >= blockCounter) {
                 br.setTree(saplingTree.serialize());
-                dbManager.getAppDb().getBlockDao().insertAll(br);
+                dbManager.getAppDb().getBlockDao().update(br);
                 blockCounter = blockCounter + 1000;
                 Timber.d("block height(%d) >= blockCounter+1000(%d) root=%s", br.getHeight(), blockCounter, saplingTree.root());
             }
@@ -170,7 +170,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
         if (blocks.size() > 0) {
             BlockRoom lastBlock = blocks.get(blocks.size() - 1);
             lastBlock.setTree(saplingTree.serialize());
-            dbManager.getAppDb().getBlockDao().insertAll(lastBlock);
+            dbManager.getAppDb().getBlockDao().update(lastBlock);
             String lastRoot = saplingTree.root();
             Timber.d("save tree lastBlock=%d tree=%s root=%s", lastBlock.getHeight(), saplingTree.serialize(), lastRoot);
         }

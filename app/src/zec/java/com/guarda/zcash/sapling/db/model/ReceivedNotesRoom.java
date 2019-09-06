@@ -42,4 +42,15 @@ public class ReceivedNotesRoom {
     public String getMemo() {
         return memo;
     }
+
+    @Override
+    public String toString() {
+        return "ReceivedNotesRoom{" +
+                "cm='" + cm + '\'' +
+                ", spent=" + spent +
+                ", value=" + value +
+                ", nf='" + nf + '\'' +
+                ", memo='" + memo + '\'' +
+                '}';
+    }
 }

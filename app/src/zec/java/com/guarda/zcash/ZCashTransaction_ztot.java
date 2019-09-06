@@ -261,6 +261,7 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
         String anchor = iw.root();
         MerklePath mp = iw.path();
         Timber.d("addSpendS anchor=%s", anchor);
+        Timber.d("addSpendS ReceivedNotesRoom cm=%s", in.getCm());
         TxOutRoom out = dbManager.getAppDb().getTxOutputDao().getOut(in.getCm());
         SaplingNotePlaintext snp = SaplingNotePlaintext.tryNoteDecrypt(out, privKey);
         byte[] r = snp.getRcmbytes();
