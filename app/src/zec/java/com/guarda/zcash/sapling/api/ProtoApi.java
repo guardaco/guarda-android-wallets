@@ -1,6 +1,7 @@
 package com.guarda.zcash.sapling.api;
 
 import com.guarda.ethereum.GuardaApp;
+import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.sapling.db.DbManager;
 
 import java.io.PrintWriter;
@@ -98,6 +99,24 @@ public class ProtoApi {
             e.printStackTrace(pw);
             pw.flush();
             return 0;
+        }
+    }
+
+    public void getTestTxByBlockHeight(long blockHeight) {
+        Service.RawTransaction latest;
+        try {
+            CompactTxStreamerGrpc.CompactTxStreamerBlockingStub stub = CompactTxStreamerGrpc.newBlockingStub(channel);
+            Service.BlockID blockID = Service.BlockID.newBuilder().setHeight(blockHeight).build();
+            Service.TxFilter empty = Service.TxFilter.newBuilder().setBlock(blockID).build();
+
+            latest = stub.getTransaction(empty);
+            Timber.d("getTestTx data=%s", Utils.bytesToHex(latest.toByteArray()));
+        } catch (Exception e) {
+            Timber.e("getTestTx e=%s", e.getMessage());
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            pw.flush();
         }
     }
 
