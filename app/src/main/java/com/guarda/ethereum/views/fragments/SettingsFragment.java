@@ -26,12 +26,21 @@ import com.guarda.ethereum.views.activity.CreateAccessCodeActivity;
 import com.guarda.ethereum.views.activity.SettingsWebViewActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.ethereum.managers.SharedManager;
+import com.guarda.zcash.sapling.SyncManager;
+import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.rxcall.CallDropLastBlockRange;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.PRIVACY_POLICE_LINK;
 import static com.guarda.ethereum.models.constants.Common.TERM_OF_USE_LINK;
@@ -50,6 +59,12 @@ public class SettingsFragment extends BaseFragment {
 
     @Inject
     SharedManager sharedManager;
+    @Inject
+    SyncManager syncManager;
+    @Inject
+    DbManager dbManager;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected int getLayout() {
@@ -137,6 +152,21 @@ public class SettingsFragment extends BaseFragment {
         }
     }
 
+    @OnLongClick(R.id.ll_about_app)
+    public boolean zecResync(View view) {
+        if (!BuildConfig.DEBUG || syncManager.isInProgress()) return true;
+
+        compositeDisposable.add(
+                Observable
+                        .fromCallable(new CallDropLastBlockRange(dbManager))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe((res) -> Timber.d("CallDropLastBlockRange res=%b", res))
+        );
+
+        return true;
+    }
+
     private void openCustomNode() {
         navigateToFragment(new CustomNodeFragment());
     }
@@ -177,4 +207,9 @@ public class SettingsFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
 }
