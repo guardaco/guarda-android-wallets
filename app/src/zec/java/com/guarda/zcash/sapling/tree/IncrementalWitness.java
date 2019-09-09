@@ -111,4 +111,13 @@ public class IncrementalWitness {
         return tree.last();
     }
 
+    @Override
+    public String toString() {
+        return "IncrementalWitness{" +
+                "tree=" + tree +
+                ", filled=" + filled +
+                ", cursor=" + cursor +
+                ", cursor_depth=" + cursor_depth +
+                '}';
+    }
 }
