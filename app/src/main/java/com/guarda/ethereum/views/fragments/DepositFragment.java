@@ -21,6 +21,7 @@ import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl;
+import timber.log.Timber;
 
 @AutoInjector(GuardaApp.class)
 public class DepositFragment extends BaseFragment {
@@ -81,6 +82,10 @@ public class DepositFragment extends BaseFragment {
 
     private void transparent() {
         showedAddress = walletManager.getWalletAddressForDeposit();
+        if (showedAddress == null) {
+            Timber.e("transparent showedAddress == null");
+            return;
+        }
         ivQrCode.setImageBitmap(QrCodeUtils.textToQrCode(showedAddress, QR_CODE_WIDTH));
         tvWalletAddress.setText(showedAddress);
     }
