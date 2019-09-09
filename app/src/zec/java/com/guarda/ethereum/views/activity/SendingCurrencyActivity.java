@@ -33,6 +33,7 @@ import com.guarda.zcash.ZCashTransaction_zaddr;
 import com.guarda.zcash.ZCashTransaction_ztot;
 import com.guarda.zcash.ZCashWalletManager;
 import com.guarda.zcash.crypto.Utils;
+import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
 
 import org.bitcoinj.core.Coin;
@@ -82,6 +83,8 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     TransactionsManager transactionsManager;
     @Inject
     DbManager dbManager;
+    @Inject
+    SyncManager syncManager;
 
     private String walletNumber;
     private String amountToSend;
@@ -468,6 +471,10 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void sendFromShielded() throws ZCashException {
+        if (syncManager.isInProgress()) {
+            doToast("Your z address is currently syncing. Kindly wait till the process is finished.");
+            return;
+        }
         String addr = getToAddress();
         if (addr.substring(0, 1).equalsIgnoreCase("z")) {
             sendShieldedToShielded();
