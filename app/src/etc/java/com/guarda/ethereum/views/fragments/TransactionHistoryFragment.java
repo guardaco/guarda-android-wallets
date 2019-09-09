@@ -246,14 +246,6 @@ public class TransactionHistoryFragment extends BaseFragment {
         return String.format("%s %s", Double.toString(round(res, 2)), sharedManager.getLocalCurrency().toUpperCase());
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (isWalletExist()) {
-//            showBalance();
-        }
-    }
-
     private void showTokens() {
         if (isShouldSyncTokensInfo()) {
             Requestor.getTokensInfo(new ApiMethods.RequestListener() {
@@ -289,16 +281,13 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     private void loadTokens() {
         tokensList.clear();
-        mNodeManager.getTokens(new Callback<List<TokenBodyItem>>() {
-            @Override
-            public void onResponse(List<TokenBodyItem> tokens) {
+        mNodeManager.getTokens(tokens -> {
                 if (isAdded() && !isDetached() && isVisible) {
                     tokensList = tokens;
                     if (!TransactionHistoryFragment.this.isDetached() || isFragmentVisible) {
                         assembleAllTokensCourse();
                     }
                 }
-            }
         });
     }
 
