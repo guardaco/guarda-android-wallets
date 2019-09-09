@@ -327,13 +327,11 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void updateUsdBalances() {
-        Double sum = 0d;
         for (TokenBodyItem tb : tokensList) {
             if (tb.getTokenNum() == null ||
                     tb.getTokenNum().compareTo(BigDecimal.ZERO) == 0) continue;
 
             Double res = Double.valueOf(tb.getTokenNum().toString()) * (Double.valueOf(exchangeRate));
-            sum += res;
             tb.setOtherSum(res);
         }
         tokenAdapter.notifyDataSetChanged();

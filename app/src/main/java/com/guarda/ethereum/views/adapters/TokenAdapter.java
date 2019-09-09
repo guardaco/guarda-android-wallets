@@ -67,13 +67,14 @@ public class TokenAdapter extends ExpandableRecyclerViewAdapter<TokenAdapter.Tok
         }
 
         SharedManager sharedManager = new SharedManager();
-        String otherSum = "...";
-        if (token.getOtherSum() != 0.0) {
-            otherSum = token.getOtherSum() >= 0? Double.toString(round(token.getOtherSum(), 2)): "- ";
+        String otherSum;
+        if (token.getOtherSum() == null) {
+            otherSum = "...";
+        } else {
+            otherSum = token.getOtherSum() >= 0 ? Double.toString(round(token.getOtherSum(), 2)): "- ";
         }
         otherSum = String.format("%s %s", otherSum, sharedManager.getLocalCurrency().toUpperCase());
         holder.setTokenSum(otherSum);
-
     }
 
     public static double round(double value, int places) {
