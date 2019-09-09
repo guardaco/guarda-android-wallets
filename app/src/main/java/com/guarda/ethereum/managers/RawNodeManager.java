@@ -7,7 +7,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.guarda.ethereum.GuardaApp;
-import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.items.TokenBalanceResponse;
 import com.guarda.ethereum.models.items.TokenBodyItem;
 import com.guarda.ethereum.rest.ApiMethods;
@@ -98,8 +97,6 @@ public class RawNodeManager {
                             walletTokensCodes.add(tokensList.get(i));
                         }
                     } catch (Exception e) {
-//                        Log.e("flint", "exception: RawNodeManager.getTokens()... " + e.toString());
-//                        Log.e("flint", "  valueWithoutPrefix: " + valueWithoutPrefix);
                         e.printStackTrace();
                     }
                 }
