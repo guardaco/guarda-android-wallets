@@ -20,10 +20,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -36,7 +34,6 @@ import com.guarda.ethereum.R;
 import com.guarda.ethereum.customviews.RateDialog;
 import com.guarda.ethereum.managers.Callback;
 import com.guarda.ethereum.managers.CoinmarketcapHelper;
-import com.guarda.ethereum.managers.EtcchainHelper;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.GastrackerHelper;
 import com.guarda.ethereum.managers.NetworkManager;
@@ -51,7 +48,6 @@ import com.guarda.ethereum.models.items.RespExch;
 import com.guarda.ethereum.models.items.TokenBodyItem;
 import com.guarda.ethereum.models.items.TokenHeaderItem;
 import com.guarda.ethereum.models.items.TransactionResponse;
-import com.guarda.ethereum.models.items.TransactionsListResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.utils.CalendarHelper;
@@ -63,7 +59,6 @@ import com.guarda.ethereum.views.adapters.TransHistoryAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
-import org.json.JSONObject;
 import org.web3j.crypto.WalletFile;
 
 import java.io.IOException;
