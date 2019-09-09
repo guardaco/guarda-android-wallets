@@ -137,7 +137,11 @@ public class HistoryViewModel extends ViewModel {
                             } else {
                                 Timber.d("getOneTx tx=%s", txResponse);
                                 return Observable
-                                        .fromCallable(new CallUpdateTxDetails(dbManager, txResponse));
+                                        .fromCallable(new CallUpdateTxDetails(
+                                                dbManager,
+                                                txResponse,
+                                                walletManager.getWalletFriendlyAddress()
+                                        ));
                             }
                         })
                         .subscribeOn(Schedulers.io())

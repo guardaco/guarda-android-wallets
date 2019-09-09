@@ -567,7 +567,11 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                         return;
                                     }
                                     compositeDisposable.add(Observable
-                                            .fromCallable(new CallUpdateTxDetails(dbManager, tx))
+                                            .fromCallable(new CallUpdateTxDetails(
+                                                    dbManager,
+                                                    tx,
+                                                    walletManager.getWalletFriendlyAddress()
+                                            ))
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .subscribe((value) -> {
