@@ -47,6 +47,12 @@ public interface ReceivedNotesDao {
             "WHERE ins.txHash like :hash or outs.txHash like :hash")
     String getMemoByHash(String hash);
 
+    @Query("SELECT cm " +
+            "FROM received_notes rn " +
+            "LEFT join txouts outs on outs.cmu = rn.cm " +
+            "WHERE outs.txHash = :txHash")
+    String getCmByHash(String txHash);
+
     @Query("DELETE FROM received_notes")
     void dropAll();
 

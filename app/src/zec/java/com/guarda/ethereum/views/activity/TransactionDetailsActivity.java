@@ -17,10 +17,14 @@ import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
+import com.guarda.ethereum.models.items.OutputDescs;
 import com.guarda.ethereum.models.items.TransactionItem;
+import com.guarda.ethereum.models.items.ZecTxResponse;
+import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
 import com.guarda.zcash.sapling.db.DbManager;
+import com.guarda.zcash.sapling.note.SaplingNotePlaintext;
 import com.guarda.zcash.sapling.rxcall.CallGetMemo;
 
 
@@ -28,6 +32,7 @@ import org.bitcoinj.core.Coin;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -36,8 +41,10 @@ import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -130,21 +137,86 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
     }
 
     private void showMemo() {
-        compositeDisposable.add(
-                Observable
-                        .fromCallable(new CallGetMemo(transaction.getHash(), dbManager))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(memo -> {
-                            String m = memo.get();
-                            Timber.d("CallGetMemo memo=%s", m);
+        Observable getCmFromDb = Observable.fromCallable(new CallGetMemo(transaction.getHash(), dbManager));
+        Observable getTxFromExplorer = RequestorBtc.getOneTx(transaction.getHash());
+        compositeDisposable.add(getCmFromDb.zipWith(getTxFromExplorer, new BiFunction<String, ZecTxResponse, OutputDescs>() {
+                    @Override
+                    public OutputDescs apply(String cm, ZecTxResponse txResponse) throws Exception {
+                        Timber.d("showMemo zipWith cm=%s tx=%s", cm, txResponse);
+                        if (txResponse == null || cm == null) return null;
+                        List<OutputDescs> outs = txResponse.getOutputDescs();
+                        if (outs == null || outs.size() == 0) return null;
+                        for (OutputDescs o : outs) {
+                            if (o.getCmu() == cm) {
+                                return o;
+                            }
+                        }
+                        return null;
+                    }
+                }
+        ).subscribe(out -> {
+                    Timber.d("res=%s", out);
+                    if (out == null) return;
 
-                            if (m == null) return;
+            SaplingNotePlaintext.decrypt(out);
+                }
+        ));
+//        compositeDisposable.add(
+//                Observable.fromCallable(new CallGetMemo(transaction.getHash(), dbManager)).
+//                RequestorBtc
+//                        .getOneTx(transaction.getHash())
+//                        .flatMap(zecTxResponse -> {
+//                            String encCipher = "";
+//                            if (zecTxResponse != null) {
+//                                zecTxResponse.getOutputDescs()
+//                            } else {
+//                                Timber.d("zecTxResponse is null");
+//                            }
+//                            return Observable.just(encCipher);
+//                        })
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(
+//                                t -> {
+//                                    Timber.d("dfdfd");
+//                                },
+//                                e -> Timber.d("showMemo e=%s", e.getMessage()))
+//        );
 
-                            ll_memo.setVisibility(View.VISIBLE);
-                            et_memo.setText(m);
-                        })
-        );
+
+//        compositeDisposable.add(
+//                Observable.just(transaction.getHash())
+//                        .flatMap(hash -> {
+//                            Timber.d("showMemo hash=%s", hash);
+//                            return Observable.fromCallable(new CallGetMemo(hash, dbManager));
+//                        })
+//                        .flatMap(txCm -> {
+//                            String cm = txCm.get();
+//                            Timber.d("CallGetMemo cm=%s", cm);
+//                            return Observable.just(cm);
+//                        })
+//                        .flatMap(str -> {
+//
+//                            return Observable.just("");
+//                        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(mem -> {
+//
+//                        }
+//                )
+//                Observable
+//                        .fromCallable(new CallGetMemo(transaction.getHash(), dbManager))
+//                        .flatMap(txCm -> {
+//                            String cm = txCm.get();
+//                            Timber.d("CallGetMemo cm=%s", cm);
+//                            if (cm == null) return;
+//                            return Observable.just(cm);
+//                        }).flatMap(
+//
+//                )
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(memo -> {
+//                        })
+//        );
     }
 
     @OnClick(R.id.btn_copy_memo)
