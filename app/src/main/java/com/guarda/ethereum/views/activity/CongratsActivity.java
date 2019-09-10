@@ -28,6 +28,8 @@ public class CongratsActivity extends TrackOnStopActivity {
     @Inject
     SharedManager sharedManager;
 
+    private final static int SHOWING_DELAY = 2000;
+
     @Override
     protected void init(Bundle savedInstanceState) {
         GuardaApp.getAppComponent().inject(this);
@@ -57,7 +59,7 @@ public class CongratsActivity extends TrackOnStopActivity {
                     finish();
                 }
             }
-        }, 4000);
+        }, SHOWING_DELAY);
     }
 
     @Override
