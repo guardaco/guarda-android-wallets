@@ -116,7 +116,7 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
         this.outputs.add(new TxOutTranspatent(toKeyHash, value));
 
         if (valuePool - value - fee > 0) {
-            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, getUotput(privKey.getD(), privKey.getPkd(), valuePool - value - fee));
+            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(privKey, valuePool - value - fee));
             outputsSize++;
         } else if (valuePool - value - fee < 0) {
             throw new IllegalArgumentException("Found sapling unspents cannot fund this transaction.");
@@ -296,92 +296,6 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
 
         Timber.d("addSpendS nf=%s, %s", in.getNf(), bytesToHex(nullifier));
         return new SpendProof(cv, hexToBytes(anchor), nullifier, rk, zkproof, al);
-    }
-
-    private byte[] getUotput(byte[] dTo, byte[] pkdTo, Long value) {
-        String rhex = RustAPI.genr();
-        Timber.d("getUotputs rhex=%s", rhex);
-        SaplingNotePlaintext snp = new SaplingNotePlaintext(dTo, TypeConvert.longToBytes(value), hexToBytes(rhex), new byte[0], rhex);
-
-        // SaplingNoteEncryption
-        String eskhex = RustAPI.genr();
-        String epkstr = RustAPI.epk(Utils.bytesToHex(dTo), eskhex);
-        Timber.d("getUotputs epkstr=" + epkstr);
-        SaplingNoteEncryption sne = new SaplingNoteEncryption(reverseByteArray(Utils.hexToBytes(epkstr)), reverseByteArray(hexToBytes(eskhex)), eskhex);
-        Timber.d("getUotputs " + sne.toString());
-        SaplingNotePlaintextEncryptionResult snper = snp.encrypt(pkdTo, sne);
-
-        /**
-         * outCiphertext
-         * 1. get SaplingOutgoingPlaintext - it's a sequence of  pkd and esk
-         * 2. call outPlaintext.encrypt(
-         *             output.ovk,
-         *             odesc.cv,
-         *             odesc.cm,
-         *             encryptor);
-         *
-         *  where encryptor is epk and esk
-         * 3. inside encrypt() call encryptor.encrypt_to_ourselves(ovk, cv, cm, pt);
-         * where pt is SaplingOutgoingPlaintext (pkd + esk)
-         * 4.
-         *
-         */
-
-        /**
-         * zkproof - 192 bytes
-         * cv - 32 bytes
-         * rcv - 32 bytes
-         */
-        ProofAndCv pacv = getProof(dTo, pkdTo, snper.sne.eskbS, eskhex, snp.getRcmStr(), value);
-
-
-        byte[] zkproof = pacv.proof;
-        byte[] cv = pacv.cv;
-
-        //z2z
-        String cmhex = RustAPI.cm(
-                bytesToHex(dTo),
-                bytesToHex(pkdTo),
-                value.toString(),
-                snp.getRcmStr());
-        Timber.d("getUotputs cmhex =" + cmhex);
-        byte[] cmrust = reverseByteArray(hexToBytes(cmhex));
-
-        byte[] ephemeralKey = snper.sne.epkbP;
-        byte[] encCiphertext = snper.secbyte;
-
-        SaplingOutgoingPlaintext sop = new SaplingOutgoingPlaintext(pkdTo, snper.sne.eskbS);
-        byte[] outCiphertext = SaplingOutgoingPlaintext.encryptToOurselves(privKey.getOvk(), cv, cmrust, snper.sne.epkbP, sop.toByte());
-
-        OutputDescription od = new OutputDescription(cv, cmrust, ephemeralKey, encCiphertext, outCiphertext, zkproof);   //cv, cmu, ephemeralKey, encCiphertext, outCiphertext, zkproof
-        Timber.d(od.toString());
-
-        byte[] outBytes = Bytes.concat(cv, cmrust, ephemeralKey, encCiphertext, outCiphertext, zkproof);
-
-        return outBytes;
-    }
-
-    private ProofAndCv getProof(byte[] d, byte[] pkd, byte[] esk, String eskhex, String rStr, Long value) {
-        /**
-         * expected 256 bytes (proof + cv + rcv)
-         */
-        Timber.d("greeting eskhex=%s s=%s", eskhex, eskhex.length());
-        Timber.d("greeting d=%s s=%s", Arrays.toString(d), d.length);
-        Timber.d("greeting pkd=%s s=%s", Arrays.toString(pkd), pkd.length);
-
-        byte[] gstr = RustAPI.greeting(eskhex,
-                Utils.bytesToHex(d),
-                Utils.bytesToHex(pkd),
-                rStr,
-                value.toString());
-        Timber.d("greeting =" + Arrays.toString(gstr) + " s=" + gstr.length);
-
-        byte[] proof = new byte[192];
-        byte[] cv = new byte[32];
-        System.arraycopy(gstr, 0, proof, 0, 192);
-        System.arraycopy(gstr, 192, cv, 0, 32);
-
-        return new ProofAndCv(proof, cv, new byte[1]);
     }
 
 }
