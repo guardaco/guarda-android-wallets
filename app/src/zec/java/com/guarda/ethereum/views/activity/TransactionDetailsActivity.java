@@ -140,6 +140,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
                             Timber.d("CallGetMemo memo=%s", m);
 
                             if (m == null) return;
+                            if (m.isEmpty()) return;
 
                             ll_memo.setVisibility(View.VISIBLE);
                             et_memo.setText(m);

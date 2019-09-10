@@ -79,8 +79,11 @@ public class SaplingNotePlaintext {
         System.arraycopy(fromByteArray, 11 + 1, vbytes, 0, 8);
         System.arraycopy(fromByteArray, 8 + 11 + 1, rcm, 0, 32);
         // don't need for Note from Compact ciphertext (which length is 52)
-        if (fromByteArray.length == ZC_SAPLING_ENCPLAINTEXT_SIZE)
+        if (fromByteArray.length == ZC_SAPLING_ENCPLAINTEXT_SIZE) {
             System.arraycopy(fromByteArray, 32 + 8 + 11 + 1, memobytes, 0, 512);
+        } else {
+            memobytes = new byte[0];
+        }
 
         return new SaplingNotePlaintext(d, reverseByteArray(vbytes), reverseByteArray(rcm), memobytes);
     }

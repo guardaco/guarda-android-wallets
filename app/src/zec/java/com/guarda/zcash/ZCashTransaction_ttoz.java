@@ -259,7 +259,7 @@ public class ZCashTransaction_ttoz {
     //vShieldedOutput
     String rhex = RustAPI.genr();
     Timber.d("getUotputs rhex=%s", rhex);
-    SaplingNotePlaintext snp = new SaplingNotePlaintext(dTo, TypeConvert.longToBytes(value), hexToBytes(rhex), new byte[512], rhex);
+    SaplingNotePlaintext snp = new SaplingNotePlaintext(dTo, TypeConvert.longToBytes(value), hexToBytes(rhex), new byte[0], rhex);
 
     // SaplingNoteEncryption
     String eskhex = RustAPI.genr();
