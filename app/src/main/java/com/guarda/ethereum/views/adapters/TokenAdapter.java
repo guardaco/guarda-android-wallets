@@ -8,7 +8,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.items.TokenBodyItem;
@@ -59,12 +58,7 @@ public class TokenAdapter extends ExpandableRecyclerViewAdapter<TokenAdapter.Tok
         symbols.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat(ETH_SHOW_PATTERN, symbols);
 
-        if (token.getTokenNum().compareTo(new BigDecimal("0.00001")) < 0 &&
-                !(token.getTokenNum().compareTo(BigDecimal.ZERO) == 0)) {
-            holder.setTokenNum("~" + decimalFormat.format(token.getTokenNum()));
-        } else {
-            holder.setTokenNum(decimalFormat.format(token.getTokenNum()));
-        }
+        holder.setTokenNum(decimalFormat.format(token.getTokenNum()));
 
         SharedManager sharedManager = new SharedManager();
         String otherSum;

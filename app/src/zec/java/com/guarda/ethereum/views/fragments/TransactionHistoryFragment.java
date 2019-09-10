@@ -26,7 +26,6 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.lifecycle.HistoryViewModel;
-import com.guarda.ethereum.managers.CoinmarketcapHelper;
 import com.guarda.ethereum.managers.CryptocompareHelper;
 import com.guarda.ethereum.managers.NetworkManager;
 import com.guarda.ethereum.managers.SharedManager;
@@ -277,7 +276,7 @@ public class TransactionHistoryFragment extends BaseFragment {
                 String curBalance = WalletManager.getFriendlyBalance(walletManager.getMyBalance());
                 setCryptoBalance();
                 tokensList.set(0, new TokenBodyItem(tAddrTitle, new BigDecimal(curBalance), curBalance, 8));
-                tokenAdapter.notifyDataSetChanged();
+                tokenAdapter.notifyItemChanged(0);
                 getLocalBalance();
             }
 
@@ -302,7 +301,7 @@ public class TransactionHistoryFragment extends BaseFragment {
                     saplingBalance = balance;
                     setCryptoBalance();
                     tokensList.set(1, new TokenBodyItem(zAddrTitle, new BigDecimal(Coin.valueOf(balance).toPlainString()), Coin.valueOf(balance).toPlainString(), 8));
-                    tokenAdapter.notifyDataSetChanged();
+                    tokenAdapter.notifyItemChanged(1);
                 }));
     }
 
