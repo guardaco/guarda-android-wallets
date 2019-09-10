@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import timber.log.Timber;
 
 public class ChangenowApi {
 
@@ -67,7 +68,7 @@ public class ChangenowApi {
             @Override
             public void onResponse(String status, String resp) {
                 try {
-                    Log.d("flint", "resp ("+pair+"): " + resp);
+                    Timber.d("getRate pair=%s resp=%s status=%s", pair, resp, status);
                     if ("ok".equals(status)) {
                         HashMap<String, ChangenowApi.SupportedCoinModel> res = new HashMap<>();
                         JSONObject obj = new JSONObject(resp);
@@ -96,7 +97,7 @@ public class ChangenowApi {
             @Override
             public void onResponse(String status, String resp) {
                 try {
-                    Log.d("flint", "resp ("+pair+"): " + resp);
+                    Timber.d("getMinAmount pair=%s resp=%s status=%s", pair, resp, status);
                     if ("ok".equals(status)) {
                         HashMap<String, ChangenowApi.SupportedCoinModel> res = new HashMap<>();
                         JSONObject obj = new JSONObject(resp);

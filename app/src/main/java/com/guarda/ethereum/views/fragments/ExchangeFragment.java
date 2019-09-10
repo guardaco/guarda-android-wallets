@@ -48,6 +48,7 @@ import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
+import timber.log.Timber;
 
 @AutoInjector(GuardaApp.class)
 public class ExchangeFragment extends BaseFragment {
@@ -234,7 +235,7 @@ public class ExchangeFragment extends BaseFragment {
 
         initMenuButton();
 
-        loadIconsUrls();
+//        loadIconsUrls();
     }
 
     private void removeCoinFromListBySymbol(String symbol, List<ExchangeSpinnerRowModel> list) {
@@ -404,39 +405,28 @@ public class ExchangeFragment extends BaseFragment {
             final String fromCoin = ((ExchangeSpinnerRowModel) (spinnerFromCoin.getAdapter().getItem(spinnerFromCoin.getSelectedItemPosition()))).symbol;
             final String toCoin = ((ExchangeSpinnerRowModel) (spinnerToCoin.getAdapter().getItem(spinnerToCoin.getSelectedItemPosition()))).symbol;
             if (!fromCoin.equals(toCoin)) {
-                ChangenowManager.getInstance().getRate(fromCoin, toCoin, new Callback<ChangenowApi.GetRateRespModel>() {
-                    @Override
-                    public void onResponse(final ChangenowApi.GetRateRespModel response) {
+                ChangenowManager.getInstance().getRate(fromCoin, toCoin, response -> {
                         try {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textViewExchangeRateHeader.setVisibility(View.VISIBLE);
-                                    textViewExchangeRate.setText("1 " + fromCoin.toUpperCase() + " ~ " + response.rate.toString() + " " + toCoin.toUpperCase());
-                                    if (response.rate.longValue() == 0)
-                                        disableStartExchangeButton();
-                                }
+                            getActivity().runOnUiThread(() -> {
+                                textViewExchangeRateHeader.setVisibility(View.VISIBLE);
+                                textViewExchangeRate.setText("1 " + fromCoin.toUpperCase() + " ~ " + response.rate.toString() + " " + toCoin.toUpperCase());
+                                Timber.d("updateSelectedPairRate_changenow response.rate.longValue() = %s", response.rate.toPlainString());
+                                if (response.rate.compareTo(BigDecimal.ZERO) == 0)
+                                    disableStartExchangeButton();
                             });
                         } catch (Exception e) {
                             disableStartExchangeButton();
                             e.printStackTrace();
                         }
-                    }
-                });
-                ChangenowManager.getInstance().getMinAmount(fromCoin, toCoin, new Callback<ChangenowApi.GetRateRespModel>() {
-                    @Override
-                    public void onResponse(final ChangenowApi.GetRateRespModel response) {
+                    });
+                ChangenowManager.getInstance().getMinAmount(fromCoin, toCoin, response -> {
                         try {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    minimumAmount = response.minimum;
-                                }
+                            getActivity().runOnUiThread(() -> {
+                                minimumAmount = response.minimum;
                             });
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
                 });
             }
         } catch (Exception e) {
