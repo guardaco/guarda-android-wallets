@@ -2,6 +2,7 @@ package com.guarda.ethereum.managers;
 
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.items.TransactionItem;
+import com.guarda.ethereum.models.items.Vin;
 import com.guarda.ethereum.models.items.Vjoinsplit;
 import com.guarda.ethereum.models.items.Vout;
 import com.guarda.ethereum.models.items.ZecTxResponse;
@@ -85,8 +86,25 @@ public class TransactionsManager {
     private boolean getIsOut(ZecTxResponse item, String ownAddress) {
         if (item.getVjoinsplit() == null || item.getVjoinsplit().size() == 0) {
             if (item.getVin().size() == 0) return false;
-            if (item.getVin().get(0).getAddr() != null) {
-                return item.getVin().get(0).getAddr().equals(ownAddress);
+            String inAddr = item.getVin().get(0).getAddr();
+            if (inAddr != null) {
+                //in case transactions is self
+                if (item.getVin().size() > 0 && item.getVout().size() > 0) {
+                    boolean isSelfTx = true;
+                    for (Vin vin : item.getVin()) {
+                        if (!vin.getAddr().equalsIgnoreCase(ownAddress)) {
+                            isSelfTx = false;
+                        }
+                    }
+                    for (Vout vout : item.getVout()) {
+                        if (!vout.getScriptPubKey().getAddresses().contains(ownAddress)) {
+                            isSelfTx = false;
+                        }
+                    }
+                    if (isSelfTx) return false;
+                }
+                //other cases
+                return inAddr.equals(ownAddress);
             }
         } else {
             if (item.getVout().size() == 0) {
@@ -189,6 +207,7 @@ public class TransactionsManager {
 
     private long getOutsSumNew(ZecTxResponse item, String ownAddress) {
         long res = 0;
+        long resSelf = 0;
         try {
             if (item.getOutputDescs() != null && item.getOutputDescs().size() == 1) {
                 double d = item.getValueIn() - item.getValueOut();
@@ -201,12 +220,15 @@ public class TransactionsManager {
                 if (out.getScriptPubKey().getAddresses() == null) continue;
                 if (!out.getScriptPubKey().getAddresses().get(0).equals(ownAddress)) {
                     res += convertStrCoinToSatoshi(out.getValue());
+                } else {
+                    resSelf += convertStrCoinToSatoshi(out.getValue());
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             Timber.d("getOutsSumNew e=%s", e.getMessage());
         }
+        if (resSelf != 0) return resSelf;
         return res;
     }
 
