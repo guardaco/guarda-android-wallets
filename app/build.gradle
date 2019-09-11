@@ -143,8 +143,8 @@ android {
 
         zec {
             dimension "version"
-            versionCode 56
-            versionName "1.17"
+            versionCode 57
+            versionName "1.18"
             applicationId "guarda.shielded"
             dimension "tier"
         }
