@@ -115,7 +115,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
             setHash(transaction.getHash());
             setConfirmations(String.valueOf(transaction.getConfirmations()));
             setBalanceDetails();
-            initRepeatButton();
+//            initRepeatButton();
             showMemo();
         }
     }
