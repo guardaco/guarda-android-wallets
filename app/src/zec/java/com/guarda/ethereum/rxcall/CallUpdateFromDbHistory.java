@@ -2,7 +2,7 @@ package com.guarda.ethereum.rxcall;
 
 import com.guarda.ethereum.models.items.TransactionItem;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.db.model.DetailsTxRoom;
+import com.guarda.zcash.sapling.db.model.TxDetailsRoom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +20,9 @@ public class CallUpdateFromDbHistory implements Callable<List<TransactionItem>> 
     @Override
     public List<TransactionItem> call() throws Exception {
         List<TransactionItem> txList = new ArrayList<>();
-        List<DetailsTxRoom> dbDetailsList = dbManager.getAppDb().getDetailsTxDao().getTxDetailsListOrdered();
-        for (DetailsTxRoom dtx : dbDetailsList) {
-            txList.add(new TransactionItem(dtx.getHash(), dtx.getTime(), dtx.getSum(), dtx.getReceived(), dtx.getConfirmations(), dtx.getFrom(), dtx.getTo(), dtx.getOut()));
+        List<TxDetailsRoom> dbDetailsList = dbManager.getAppDb().getTxDetailsDao().getTxDetailsListOrdered();
+        for (TxDetailsRoom dtx : dbDetailsList) {
+            txList.add(new TransactionItem(dtx.getHash(), dtx.getTime(), dtx.getSum(), true, dtx.getConfirmations(), dtx.getFromAddress(), dtx.getToAddress(), dtx.getOut()));
         }
 
         return txList;

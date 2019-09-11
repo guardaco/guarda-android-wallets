@@ -3,11 +3,13 @@ package com.guarda.ethereum.rxcall;
 import com.guarda.ethereum.models.items.Vout;
 import com.guarda.ethereum.models.items.ZecTxResponse;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.db.model.DetailsTxRoom;
 import com.guarda.zcash.sapling.db.model.ReceivedNotesRoom;
+import com.guarda.zcash.sapling.db.model.TxDetailsRoom;
 
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import static com.guarda.ethereum.lifecycle.HistoryViewModel.Z_TX_KEY_PREFIX;
 
 
 public class CallUpdateTxDetails implements Callable<String> {
@@ -62,18 +64,18 @@ public class CallUpdateTxDetails implements Callable<String> {
             }
         }
 
-        dbManager
-                .getAppDb()
-                .getDetailsTxDao()
-                .insertAll(new DetailsTxRoom(
+        dbManager.getAppDb().getTxDetailsDao().insertAll(
+                new TxDetailsRoom(
+                        Z_TX_KEY_PREFIX + tr.getHash(),
                         tr.getHash(),
                         tr.getTime().longValue(),
                         Math.abs(txValue),
-                        true,
                         tr.getConfirmations().longValue(),
                         "",
                         "",
-                        isOut));
+                        isOut
+                )
+        );
 
         return tr.getHash();
     }

@@ -10,6 +10,7 @@ import com.guarda.ethereum.models.items.ZecTxResponse;
 import org.bitcoinj.core.Coin;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import timber.log.Timber;
@@ -24,7 +25,7 @@ import static com.guarda.zcash.crypto.Utils.roundDouble;
 
 public class TransactionsManager {
 
-    private List<TransactionItem> transactionsList;
+    private List<TransactionItem> transactionsList = new ArrayList<>();
     private List<TransactionItem> txFriendlyList = new ArrayList<>();
 
     public TransactionsManager() {
@@ -45,6 +46,17 @@ public class TransactionsManager {
 
     public void setTransactionsList(List<TransactionItem> transactionsList) {
         this.transactionsList = transactionsList;
+        //sort transactions with the same hash (self)
+        //out transaction should be first
+        Collections.sort(this.transactionsList,
+                (tx1, tx2) -> {
+                    if (!tx1.getHash().equalsIgnoreCase(tx2.getHash())) return 0;
+
+                    if (tx1.isOut() && !tx2.isOut()) return 1;
+                    if (!tx1.isOut() && tx2.isOut()) return -1;
+
+                    return 0;
+                });
     }
 
     public void clearLists() {

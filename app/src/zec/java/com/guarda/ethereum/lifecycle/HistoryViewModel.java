@@ -44,6 +44,9 @@ public class HistoryViewModel extends ViewModel {
     private MutableLiveData<Boolean> isRestored = new MutableLiveData<>();
     private MutableLiveData<Boolean> updateBalance = new MutableLiveData<>();
 
+    public static final String Z_TX_KEY_PREFIX = "Z";
+    public static final String T_TX_KEY_PREFIX = "T";
+
     private HistoryViewModel(WalletManager walletManager,
                             TransactionsManager transactionsManager,
                             DbManager dbManager,

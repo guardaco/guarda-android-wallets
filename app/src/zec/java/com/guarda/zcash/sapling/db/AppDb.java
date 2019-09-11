@@ -8,12 +8,14 @@ import com.guarda.zcash.sapling.db.dao.DetailsTxDao;
 import com.guarda.zcash.sapling.db.dao.ReceivedNotesDao;
 import com.guarda.zcash.sapling.db.dao.SaplingWitnessesDao;
 import com.guarda.zcash.sapling.db.dao.TxDao;
+import com.guarda.zcash.sapling.db.dao.TxDetailsDao;
 import com.guarda.zcash.sapling.db.dao.TxInputDao;
 import com.guarda.zcash.sapling.db.dao.TxOutputDao;
 import com.guarda.zcash.sapling.db.model.BlockRoom;
 import com.guarda.zcash.sapling.db.model.DetailsTxRoom;
 import com.guarda.zcash.sapling.db.model.ReceivedNotesRoom;
 import com.guarda.zcash.sapling.db.model.SaplingWitnessesRoom;
+import com.guarda.zcash.sapling.db.model.TxDetailsRoom;
 import com.guarda.zcash.sapling.db.model.TxInRoom;
 import com.guarda.zcash.sapling.db.model.TxOutRoom;
 import com.guarda.zcash.sapling.db.model.TxRoom;
@@ -25,8 +27,9 @@ import com.guarda.zcash.sapling.db.model.TxRoom;
         TxInRoom.class,
         ReceivedNotesRoom.class,
         SaplingWitnessesRoom.class,
-        DetailsTxRoom.class
-}, version = 2)
+        DetailsTxRoom.class,
+        TxDetailsRoom.class
+}, version = 3)
 public abstract class AppDb extends RoomDatabase {
     public abstract BlockDao getBlockDao();
     public abstract TxDao getTxDao();
@@ -36,4 +39,5 @@ public abstract class AppDb extends RoomDatabase {
     public abstract ReceivedNotesDao getReceivedNotesDao();
     public abstract SaplingWitnessesDao getSaplingWitnessesDao();
     public abstract DetailsTxDao getDetailsTxDao();
+    public abstract TxDetailsDao getTxDetailsDao();
 }

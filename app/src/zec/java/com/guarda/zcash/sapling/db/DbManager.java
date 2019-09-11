@@ -1,6 +1,8 @@
 package com.guarda.zcash.sapling.db;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 
 import com.guarda.ethereum.GuardaApp;
@@ -29,7 +31,8 @@ public class DbManager {
 
     public DbManager() {
         GuardaApp.getAppComponent().inject(this);
-        appDb = Room.databaseBuilder(context, AppDb.class, DB_NAME).fallbackToDestructiveMigration()
+        appDb = Room.databaseBuilder(context, AppDb.class, DB_NAME)
+                .addMigrations(MIGRATION_2_3)
                 .build();
     }
 
@@ -63,6 +66,13 @@ public class DbManager {
             }
         }
     }
+
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE tx_details (primaryHash TEXT NOT NULL, hash TEXT NOT NULL, time INTEGER, sum INTEGER, confirmations INTEGER, fromAddress TEXT, toAddress TEXT, isOut INTEGER, PRIMARY KEY(primaryHash))");
+        }
+    };
 
     public AppDb getAppDb() {
         return appDb;

@@ -6,9 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.guarda.zcash.sapling.db.model.BlockRoom;
 import com.guarda.zcash.sapling.db.model.DetailsTxRoom;
-import com.guarda.zcash.sapling.db.model.TxRoom;
 
 import java.util.List;
 
