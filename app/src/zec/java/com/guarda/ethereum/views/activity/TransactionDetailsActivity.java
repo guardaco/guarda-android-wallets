@@ -115,18 +115,13 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
             setHash(transaction.getHash());
             setConfirmations(String.valueOf(transaction.getConfirmations()));
             setBalanceDetails();
-//            initRepeatButton();
+            initRepeatButton();
             showMemo();
         }
     }
 
     private void initRepeatButton() {
-        if (isDebit(walletManager.getWalletFriendlyAddress(), transaction.getTo())
-                || transaction.getTo().equalsIgnoreCase(Common.ZCASH_JOIN_SPLIT)) {
-            btnRepeat.setVisibility(View.GONE);
-        } else {
-            btnRepeat.setVisibility(View.VISIBLE);
-        }
+        btnRepeat.setVisibility(View.GONE);
     }
 
     private void showMemo() {
