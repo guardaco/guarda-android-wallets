@@ -10,6 +10,7 @@ Guarda does not store any personal information, wallet data or private keys of o
 Read the detailed instruction [here](https://guarda.freshdesk.com/support/solutions/articles/36000095874-how-to-install-a-guarda-open-source-android-wallet).
 ## About
 Cryptocurrency wallets support:
+- ZEC Shielded (Z-addresses, mainnet) - [/APKs/zec-shielded.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-shielded.apk)
 - ZEC-Beta-Testnet (Zcash Shielded) - [/APKs/zec-testnet-beta.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-testnet-beta.apk)
 - BTC (Bitcoin) - [/APKs/btc-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/btc-release.apk)
 - ETH (Ethereum) - [/APKs/eth-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/eth-release.apk)
