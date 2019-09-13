@@ -101,7 +101,7 @@ public class TransactionsManager {
                             isSelfTx = false;
                         }
                     }
-                    if (isSelfTx) return false;
+                    if (isSelfTx && item.getOutputDescs().size() == 0) return false;
                 }
                 //other cases
                 return inAddr.equals(ownAddress);
