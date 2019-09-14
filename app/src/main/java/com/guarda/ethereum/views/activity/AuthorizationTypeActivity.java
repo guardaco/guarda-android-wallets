@@ -1,16 +1,16 @@
 package com.guarda.ethereum.views.activity;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.customviews.RootDialog;
+import com.guarda.ethereum.lifecycle.AuthorizationViewModel;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
 import static com.guarda.ethereum.models.constants.Extras.DISABLE_CHECK;
@@ -50,8 +51,13 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
     protected void init(Bundle savedInstanceState) {
         GuardaApp.getAppComponent().inject(this);
 
+        AuthorizationViewModel.Factory factory = new AuthorizationViewModel.Factory(walletManager);
+        authorizationViewModel = ViewModelProviders.of(this, factory).get(AuthorizationViewModel.class);
+
         walletManager.clearWallet();
         sharedManager.setIsShowBackupAlert(true);
+
+        initSubscriptions();
     }
 
     @Override
@@ -123,14 +129,7 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
         } else {
             btn_create_wallet.setEnabled(false);
             showProgress(getString(R.string.generating_wallet));
-            walletManager.createWallet2(passphrase, new Runnable() {
-                @Override
-                public void run() {
-                    closeProgress();
-                    btn_create_wallet.setEnabled(true);
-                    goToCreateWallet();
-                }
-            });
+            authorizationViewModel.createWallet();
         }
     }
 

@@ -89,6 +89,20 @@ public class WalletManager {
         }.start();
     }
 
+    public void createWallet() {
+        try {
+            BrainKeyDict.init(context.getAssets());
+            mnemonicKey = ZCashWalletManager.generateNewPrivateKey_taddr();
+            walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
+            saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (ZCashException zce) {
+            zce.printStackTrace();
+        }
+        sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
+    }
+
     public void restoreFromBlock(String mnemonicCode, final WalletCreationCallback callback) {
         try {
             mnemonicKey = mnemonicCode;
