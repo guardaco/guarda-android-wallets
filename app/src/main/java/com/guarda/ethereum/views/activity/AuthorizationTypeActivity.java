@@ -19,7 +19,6 @@ import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.views.activity.base.SimpleTrackOnStopActivity;
 import com.guarda.zcash.sapling.SyncManager;
-import com.scottyab.rootbeer.RootBeer;
 
 import javax.inject.Inject;
 
@@ -45,7 +44,7 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
     @Inject
     SyncManager syncManager;
 
-    DialogFragment rootDialog;
+    private AuthorizationViewModel authorizationViewModel;
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -57,8 +56,6 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
 
     @Override
     protected void onResume() {
-        isRootDevice();
-
         Log.d("psd", "AuthorizationTypeActivity onResume");
         String block = sharedManager.getLastSyncedBlock();
         if (!block.isEmpty()) {
@@ -137,27 +134,13 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
         }
     }
 
-    private void isRootDevice() {
-        try {
-            RootBeer rb = new RootBeer(this);
-            if (rb.detectRootCloakingApps()
-                    || rb.checkForSuBinary()
-                    || rb.checkForDangerousProps()
-                    || rb.checkForRWPaths()
-                    || rb.checkSuExists()
-                    || rb.checkForRootNative()) {
-                showRootDialog();
-            }
-        } catch (Exception e) {
-            showRootDialog();
-            e.printStackTrace();
-        }
+    private void initSubscriptions() {
+        authorizationViewModel.getIsCreated().observe(this, created -> {
+            Timber.d("authorizationViewModel.getIsCreated()");
+            closeProgress();
+            btn_create_wallet.setEnabled(true);
+            goToCreateWallet();
+        });
     }
 
-    private void showRootDialog() {
-        if (getSupportFragmentManager().findFragmentByTag(RootDialog.TAG) == null) {
-            rootDialog = new RootDialog();
-            rootDialog.show(getSupportFragmentManager(), RootDialog.TAG);
-        }
-    }
 }
