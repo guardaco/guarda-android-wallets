@@ -85,7 +85,9 @@ public class BackupFragment extends BaseFragment {
                 tvPassPhrase.setText(walletManager.getWifKey());
                 break;
             case "zec":
-                String spendingKey = RustAPI.getExtsk(walletManager.getPrivateKey().getBytes());
+                String key = walletManager.getPrivateKey();
+                if (key == null) break;
+                String spendingKey = RustAPI.getExtsk(key.getBytes());
                 tvPassPhrase.setText(spendingKey);
                 break;
         }
