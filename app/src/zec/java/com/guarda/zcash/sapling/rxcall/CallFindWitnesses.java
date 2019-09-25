@@ -142,7 +142,6 @@ public class CallFindWitnesses implements Callable<Boolean> {
                             )
                     );
 
-                    wtxs.put(out.getCmu(), iw);
                     wtxs.put(out.getCmu(), saplingTree.witness());
                 }
             }
