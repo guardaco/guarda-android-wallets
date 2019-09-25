@@ -151,7 +151,7 @@ public class SyncManager {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         (res) -> {
-                            Timber.d("validateSaplingTree finished=%s", res);
+                            Timber.d("validateSaplingTree finished isContained(right)=%s", res);
                             if (res) {
                                 stopSync();
                             } else {
