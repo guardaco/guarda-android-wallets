@@ -2,18 +2,12 @@ package com.guarda.zcash;
 
 import com.google.common.primitives.Bytes;
 import com.guarda.zcash.crypto.Utils;
-import com.guarda.zcash.globals.TypeConvert;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.db.model.ReceivedNotesRoom;
 import com.guarda.zcash.sapling.db.model.SaplingWitnessesRoom;
 import com.guarda.zcash.sapling.db.model.TxOutRoom;
 import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
-import com.guarda.zcash.sapling.note.OutputDescription;
-import com.guarda.zcash.sapling.note.ProofAndCv;
-import com.guarda.zcash.sapling.note.SaplingNoteEncryption;
 import com.guarda.zcash.sapling.note.SaplingNotePlaintext;
-import com.guarda.zcash.sapling.note.SaplingNotePlaintextEncryptionResult;
-import com.guarda.zcash.sapling.note.SaplingOutgoingPlaintext;
 import com.guarda.zcash.sapling.note.SpendProof;
 import com.guarda.zcash.sapling.tree.IncrementalWitness;
 import com.guarda.zcash.sapling.tree.MerklePath;
@@ -29,7 +23,6 @@ import timber.log.Timber;
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.hexToBytes;
 import static com.guarda.zcash.crypto.Utils.revHex;
-import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 
 public class ZCashTransaction_zaddr implements ZcashTransaction {
 
@@ -107,10 +100,17 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
         /**
          * Shielded output
          */
-        bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(privKey, value));
+        byte[] addressToBytes = RustAPI.checkConvertAddr(toAddress);
+        byte[] dToAddress = new byte[11];
+        byte[] pkdToAddress = new byte[32];
+        System.arraycopy(addressToBytes, 0, dToAddress, 0, 11);
+        System.arraycopy(addressToBytes, 11, pkdToAddress, 0, 32);
+
+        bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(dToAddress, pkdToAddress, privKey, value));
         outputsSize++;
+        // the change should be returned to own address
         if (valuePool - value - fee > 0) {
-            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(privKey, valuePool - value - fee));
+            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(privKey.getD(), privKey.getPkd(), privKey, valuePool - value - fee));
             outputsSize++;
         } else if (valuePool - value - fee < 0) {
             throw new IllegalArgumentException("Found sapling unspents cannot fund this transaction.");

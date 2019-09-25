@@ -5,14 +5,7 @@ import com.guarda.zcash.crypto.Base58;
 import com.guarda.zcash.crypto.ECKey;
 import com.guarda.zcash.crypto.Sha256Hash;
 import com.guarda.zcash.crypto.Utils;
-import com.guarda.zcash.globals.TypeConvert;
 import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
-import com.guarda.zcash.sapling.note.OutputDescription;
-import com.guarda.zcash.sapling.note.ProofAndCv;
-import com.guarda.zcash.sapling.note.SaplingNoteEncryption;
-import com.guarda.zcash.sapling.note.SaplingNotePlaintext;
-import com.guarda.zcash.sapling.note.SaplingNotePlaintextEncryptionResult;
-import com.guarda.zcash.sapling.note.SaplingOutgoingPlaintext;
 
 import org.spongycastle.asn1.ASN1Integer;
 import org.spongycastle.asn1.DERSequenceGenerator;
@@ -26,10 +19,6 @@ import java.util.List;
 import java.util.Vector;
 
 import timber.log.Timber;
-
-import static com.guarda.zcash.crypto.Utils.bytesToHex;
-import static com.guarda.zcash.crypto.Utils.hexToBytes;
-import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 
 public class ZCashTransaction_ttoz {
   private static final byte[] ZCASH_PREVOUTS_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'P', 'r', 'e', 'v', 'o', 'u', 't', 'H', 'a', 's', 'h'}; //ZcashPrevoutHash
@@ -82,7 +71,12 @@ public class ZCashTransaction_ttoz {
     /**
      * Shielded output
      */
-    bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(privKey, value));
+    byte[] addressToBytes = RustAPI.checkConvertAddr(toAddr);
+    byte[] dToAddress = new byte[11];
+    byte[] pkdToAddress = new byte[32];
+    System.arraycopy(addressToBytes, 0, dToAddress, 0, 11);
+    System.arraycopy(addressToBytes, 11, pkdToAddress, 0, 32);
+    bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(dToAddress, pkdToAddress, privKey, value));
 
     Timber.d("bytesShieldedOutputs (bytes)=%s %d", Arrays.toString(bytesShieldedOutputs), bytesShieldedOutputs.length); // 948 bytes for an output
     shieldedOutputsBlake = new byte[32];
