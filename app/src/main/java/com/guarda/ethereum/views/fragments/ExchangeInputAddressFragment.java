@@ -3,8 +3,6 @@ package com.guarda.ethereum.views.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.managers.Callback;
 import com.guarda.ethereum.managers.Callback2;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.ChangenowApi;
@@ -26,7 +23,7 @@ import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.models.items.ResponseGenerateAddress;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.views.activity.AmountToSendActivity;
-import com.guarda.ethereum.views.activity.ScanQrCodeActivity;
+import com.guarda.ethereum.views.activity.DecoderActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
 import java.math.BigDecimal;
@@ -44,8 +41,6 @@ import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
-
-import static com.guarda.ethereum.models.constants.Extras.TOKEN_CODE_EXTRA;
 
 @AutoInjector(GuardaApp.class)
 public class ExchangeInputAddressFragment extends BaseFragment {
@@ -216,7 +211,7 @@ public class ExchangeInputAddressFragment extends BaseFragment {
 
 
     private void scanQr_onClick() {
-        Intent intent = new Intent(getActivity(), ScanQrCodeActivity.class);
+        Intent intent = new Intent(getActivity(), DecoderActivity.class);
         startActivityForResult(intent, RequestCode.QR_CODE_REQUEST_CODE);
     }
 

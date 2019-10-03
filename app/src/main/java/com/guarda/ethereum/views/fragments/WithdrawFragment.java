@@ -24,7 +24,7 @@ import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.views.activity.AmountToSendActivity;
-import com.guarda.ethereum.views.activity.ScanQrCodeActivity;
+import com.guarda.ethereum.views.activity.DecoderActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
 import java.util.regex.Matcher;
@@ -137,7 +137,7 @@ public class WithdrawFragment extends BaseFragment{
     public void withdrawButtonsClick(View view) {
         switch (view.getId()) {
             case R.id.btn_scan_qr:
-                Intent intent = new Intent(getActivity(), ScanQrCodeActivity.class);
+                Intent intent = new Intent(getActivity(), DecoderActivity.class);
                 startActivityForResult(intent, RequestCode.QR_CODE_REQUEST_CODE);
                 break;
             case R.id.btn_next:

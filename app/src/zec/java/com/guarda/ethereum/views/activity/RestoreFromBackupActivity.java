@@ -123,7 +123,7 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
     }
 
     private void scanQr_onClick() {
-        Intent intent = new Intent(this, ScanQrCodeActivity.class);
+        Intent intent = new Intent(this, DecoderActivity.class);
         startActivityForResult(intent, RequestCode.QR_CODE_REQUEST_CODE);
     }
 

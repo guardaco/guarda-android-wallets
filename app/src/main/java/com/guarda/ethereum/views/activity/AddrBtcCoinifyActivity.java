@@ -59,7 +59,7 @@ public class AddrBtcCoinifyActivity extends AToolbarActivity {
     public void withdrawButtonsClick(View view) {
         switch (view.getId()) {
             case R.id.btn_scan_qr:
-                Intent intent = new Intent(this, ScanQrCodeActivity.class);
+                Intent intent = new Intent(this, DecoderActivity.class);
                 startActivityForResult(intent, RequestCode.QR_CODE_REQUEST_CODE);
                 break;
             case R.id.btn_next:
