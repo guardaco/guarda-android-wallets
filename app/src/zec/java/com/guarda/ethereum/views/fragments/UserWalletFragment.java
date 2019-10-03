@@ -80,7 +80,7 @@ public class UserWalletFragment extends BaseFragment {
         } else {
             showExistingWallet();
         }
-        setToolbarTitle("");
+
         initSubscribers();
     }
 
@@ -105,6 +105,7 @@ public class UserWalletFragment extends BaseFragment {
             tv_wallet_address_z.setText(walletManager.getSaplingAddress());
         }
         if (isWalletExist()) syncManager.startSync();
+        setSyncStatus(true);
     }
 
     private boolean isWalletExist() {

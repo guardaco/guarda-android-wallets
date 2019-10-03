@@ -187,7 +187,6 @@ public class MainActivity extends TrackOnStopActivity {
 
     private void goToUserWallet() {
         UserWalletFragment fragment = new UserWalletFragment();
-        setToolBarTitle(R.string.toolbar_title_wallet);
         navigateToFragment(fragment);
     }
 

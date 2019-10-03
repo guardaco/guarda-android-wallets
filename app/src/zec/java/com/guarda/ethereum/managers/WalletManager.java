@@ -111,9 +111,11 @@ public class WalletManager {
         } catch (IllegalArgumentException iae) {
             callback.onWalletCreated();
             iae.printStackTrace();
+            Timber.e("restoreFromBlock IllegalArgumentException e=%s", iae.getMessage());
         } catch (ZCashException zce) {
             callback.onWalletCreated();
             zce.printStackTrace();
+            Timber.e("restoreFromBlock ZCashException e=%s", zce.getMessage());
         }
 
         callback.onWalletCreated();
