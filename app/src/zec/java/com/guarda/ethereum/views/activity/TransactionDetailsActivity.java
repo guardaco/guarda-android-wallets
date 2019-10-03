@@ -69,6 +69,8 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
     LinearLayout ll_memo;
     @BindView(R.id.et_memo)
     EditText et_memo;
+    @BindView(R.id.ll_balances_before_after)
+    LinearLayout ll_balances_before_after;
 
     @Inject
     TransactionsManager transactionsManager;
@@ -109,6 +111,8 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
     }
 
     private void updateViews() {
+        ll_balances_before_after.setVisibility(View.GONE);
+
         if (transaction != null) {
             setValue(transaction.isOut() ? -transaction.getSum() : transaction.getSum());
             setDateAndTime();

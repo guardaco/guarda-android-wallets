@@ -176,6 +176,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_balances_before_after"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
