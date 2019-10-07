@@ -231,7 +231,9 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void updateFromDbOrEmpty() {
-        if (transactionsManager.getTransactionsList().size() == 0) {
+        if (transactionsManager.getTransactionsList().size() == 0 &&
+                transparentBalance == 0L &&
+                saplingBalance == 0L) {
             GuardaApp.isTransactionsEmpty = true;
             openUserWalletFragment();
         } else {
@@ -380,8 +382,10 @@ public class TransactionHistoryFragment extends BaseFragment {
 
         long sum = tb + zb;
 
-        tvCryptoCount.setText(String.format(Locale.US, "%s " + sharedManager.getCurrentCurrency().toUpperCase(),
-                Coin.valueOf(sum).toPlainString()));
+        tvCryptoCount.setText(String.format(Locale.US,
+                "%s %s",
+                Coin.valueOf(sum).toPlainString(),
+                sharedManager.getCurrentCurrency().toUpperCase()));
     }
 
     private void setUSDBalance() {
