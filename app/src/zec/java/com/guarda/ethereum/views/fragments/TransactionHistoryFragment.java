@@ -114,6 +114,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     private final String zAddrTitle = "Z-address";
     private Long transparentBalance;
     private Long saplingBalance;
+    private boolean isUpdating = false;
 
     @Inject
     WalletManager walletManager;
@@ -217,7 +218,7 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     private void updBalanceHistSync() {
         if (isWalletExist()) {
-            showBalance();
+            showBalanceHistory();
             historyViewModel.startSync();
         }
     }
@@ -250,8 +251,11 @@ public class TransactionHistoryFragment extends BaseFragment {
         return !TextUtils.isEmpty(walletManager.getWalletFriendlyAddress());
     }
 
-    private void showBalance() {
+    private void showBalanceHistory() {
         if (isAdded() && !isDetached() && isVisible && NetworkManager.isOnline(getActivity())) {
+            //check if history updating is in progress
+            if (isUpdating) return;
+            isUpdating = true;
             startClockwiseRotation();
             loadBalance();
             historyViewModel.loadTransactions();
@@ -431,6 +435,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     private void subscribeUi() {
         historyViewModel.getShowHistory().observe(getViewLifecycleOwner(), (v) -> {
             if (v) {
+                isUpdating = false;
                 updateFromDbOrEmpty();
                 loaderAnimation.cancel();
             }
@@ -438,6 +443,7 @@ public class TransactionHistoryFragment extends BaseFragment {
 
         historyViewModel.getShowTxError().observe(getViewLifecycleOwner(), (v) -> {
             if (v) {
+                isUpdating = false;
                 loaderAnimation.cancel();
                 ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_get_history), R.drawable.err_history);
             }
