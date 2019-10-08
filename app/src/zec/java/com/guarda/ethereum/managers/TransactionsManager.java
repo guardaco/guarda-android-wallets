@@ -228,7 +228,8 @@ public class TransactionsManager {
             e.printStackTrace();
             Timber.d("getOutsSumNew e=%s", e.getMessage());
         }
-        if (resSelf != 0) return resSelf;
+        //resSelf is only for computing sum of self transactions
+        if (resSelf != 0 && res == 0) return resSelf;
         return res;
     }
 
