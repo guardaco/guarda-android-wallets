@@ -114,7 +114,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
         ll_balances_before_after.setVisibility(View.GONE);
 
         if (transaction != null) {
-            setValue(transaction.isOut() ? -transaction.getSum() : transaction.getSum());
+            setValue();
             setDateAndTime();
             setHash(transaction.getHash());
             setConfirmations(String.valueOf(transaction.getConfirmations()));
@@ -188,9 +188,15 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
         etTime.setText(timeFormat.format(date));
     }
 
-    private void setValue(long value) {
-        Coin coin = Coin.valueOf(value);
-        etTrValue.setText(String.format("%s %s", WalletManager.getFriendlyBalance(coin), Common.MAIN_CURRENCY.toUpperCase()));
+    private void setValue() {
+        if (transaction.getFrom().isEmpty() && transaction.getTo().isEmpty() &&
+                transaction.getSum() == 0L && transaction.getConfirmations() == 0L) {
+            //for z transactions which have syncing status
+            etTrValue.setText(R.string.tx_status_syncing);
+        } else {
+            Coin coin = Coin.valueOf(transaction.isOut() ? -transaction.getSum() : transaction.getSum());
+            etTrValue.setText(String.format("%s %s", WalletManager.getFriendlyBalance(coin), Common.MAIN_CURRENCY.toUpperCase()));
+        }
     }
 
     private boolean isDebit(String ourAddress, String toAddress) {
