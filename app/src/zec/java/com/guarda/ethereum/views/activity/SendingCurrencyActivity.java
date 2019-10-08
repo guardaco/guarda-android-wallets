@@ -424,7 +424,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                 String lastTxhex = Utils.bytesToHex(r2.getBytes());
                                 Timber.d("lastTxhex %s", lastTxhex);
 
-                                sendTxHashAndUpdateDb(lastTxhex);
+                                sendTxHashAndUpdateDb(lastTxhex, false);
                             } catch (ZCashException e) {
                                 closeProgress();
                                 doToast("Sending error: " + e.getMessage());
@@ -456,7 +456,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                 String lastTxhex = Utils.bytesToHex(r2.getBytes());
                                 Timber.d("sendTransparentToSapling lastTxhex %s", lastTxhex);
 
-                                sendTxHashAndUpdateDb(lastTxhex);
+                                sendTxHashAndUpdateDb(lastTxhex, false);
                             } catch (ZCashException e) {
                                 closeProgress();
                                 doToast("Sending error: " + e.getMessage());
@@ -505,7 +505,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                         String lastTxhex = Utils.bytesToHex(bytes);
                         Timber.d("z to z - lastTxhex=%s", lastTxhex);
 
-                        sendTxHashAndUpdateDb(lastTxhex);
+                        sendTxHashAndUpdateDb(lastTxhex, true);
                     } else {
                         closeProgress();
                         doToast("Sending error: " + r1);
@@ -533,7 +533,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                         String lastTxhex = Utils.bytesToHex(tx.getBytes());
                         Timber.d("z to t - lastTxhex %s", lastTxhex);
 
-                        sendTxHashAndUpdateDb(lastTxhex);
+                        sendTxHashAndUpdateDb(lastTxhex, true);
                     } else {
                         closeProgress();
                         doToast("Sending error: " + r1);
@@ -542,13 +542,16 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 });
     }
 
-    private void sendTxHashAndUpdateDb(String lastTxhex) {
+    private void sendTxHashAndUpdateDb(String lastTxhex, boolean isDetailsNeeded) {
         RequestorBtc.broadcastRawTxZexNew(lastTxhex, new ApiMethods.RequestListener() {
             @Override
             public void onSuccess(Object response) {
                 SendRawTxResponse res = (SendRawTxResponse) response;
                 Timber.d("broadcastRawTxZexNew txid=%s", res.getTxid());
-                updateFromInsight(res.getTxid());
+                //if we send from Z address we need to get details from explorer
+                //if we send from T address we go after sending to history where the transaction is
+                // after history is updated
+                if (isDetailsNeeded) updateFromInsight(res.getTxid());
             }
 
             @Override
