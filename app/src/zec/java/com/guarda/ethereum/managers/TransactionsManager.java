@@ -212,7 +212,7 @@ public class TransactionsManager {
             if (item.getOutputDescs() != null && item.getOutputDescs().size() == 1) {
                 double d = item.getValueIn() - item.getValueOut();
                 res = Coin.parseCoin(String.valueOf(roundDouble(d, 8))).getValue();
-                return res;
+                return (res < 0) ? -res : res;
             }
 
             for (Vout out : item.getVout()) {
