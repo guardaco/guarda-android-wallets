@@ -3,7 +3,6 @@ package com.guarda.ethereum.views.fragments;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.Callback;
-import com.guarda.ethereum.managers.Callback2;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.ChangenowApi;
 import com.guarda.ethereum.managers.ChangenowManager;
@@ -42,7 +40,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -88,15 +85,10 @@ public class ExchangeFragment extends BaseFragment {
 
     private BigDecimal minimumAmount = new BigDecimal(0.0);
 
-    private List<CryptoItem> changellyCoins = new ArrayList<>();
-
     private Map<String, ShapeshiftApi.CoinExternalInfoModel> cryptoCurrenciesInfo = new HashMap<>();
-    private HashMap<String, IconItemResponse> iconTickerMap = new HashMap<>();
     private ExchangeSpinnerAdapter exchangeFromSpinnerAdapter;
     private ExchangeSpinnerAdapter exchangeToSpinnerAdapter;
     private ExchangeSpinnerAdapter exchangesAdapter;
-
-    private AtomicInteger exchangeServicesInitCounter = new AtomicInteger(0);
 
     public ExchangeFragment() {
         isSpinnerInitialized = false;
@@ -173,48 +165,39 @@ public class ExchangeFragment extends BaseFragment {
             }
         });
 
-        imageViewAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    navigateToFragment(new ExchangeAboutFragment().setData(((ExchangeSpinnerRowModel)(spinnerExchange.getAdapter().getItem(spinnerExchange.getSelectedItemPosition()))).symbol, spinnerFromCoin.getSelectedItemPosition(), spinnerToCoin.getSelectedItemPosition(), thisFragment));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        imageViewAbout.setOnClickListener((View view) -> {
+            try {
+                navigateToFragment(new ExchangeAboutFragment().setData(((ExchangeSpinnerRowModel)(spinnerExchange.getAdapter().getItem(spinnerExchange.getSelectedItemPosition()))).symbol, spinnerFromCoin.getSelectedItemPosition(), spinnerToCoin.getSelectedItemPosition(), thisFragment));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
-        buttonStartExchange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    if (Common.MAIN_CURRENCY.equalsIgnoreCase(((ExchangeSpinnerRowModel)spinnerToCoin.getSelectedItem()).symbol)) {
-                        ExchangeStartFragment startFragment = new ExchangeStartFragment().setData(((ExchangeSpinnerRowModel)(spinnerExchange.getAdapter().getItem(spinnerExchange.getSelectedItemPosition()))).symbol, spinnerFromCoin.getSelectedItemPosition(), spinnerToCoin.getSelectedItemPosition(), thisFragment);
-                        startFragment.setCoins(((ExchangeSpinnerRowModel) spinnerFromCoin.getSelectedItem()).symbol, ((ExchangeSpinnerRowModel) spinnerToCoin.getSelectedItem()).symbol);
-                        startFragment.setCoinsNames(((ExchangeSpinnerRowModel) spinnerFromCoin.getSelectedItem()).text, ((ExchangeSpinnerRowModel) spinnerToCoin.getSelectedItem()).text);
-                        startFragment.setMinimumAmount(minimumAmount);
-                        navigateToFragment(startFragment);
-                    } else if (Common.MAIN_CURRENCY.equalsIgnoreCase(((ExchangeSpinnerRowModel)spinnerFromCoin.getSelectedItem()).symbol)) {
-                        ExchangeInputAddressFragment exchangeInputAddressFragment = new ExchangeInputAddressFragment().setData(((ExchangeSpinnerRowModel)(spinnerExchange.getAdapter().getItem(spinnerExchange.getSelectedItemPosition()))).symbol, spinnerFromCoin.getSelectedItemPosition(), spinnerToCoin.getSelectedItemPosition(), thisFragment);
-                        exchangeInputAddressFragment.setCoins(((ExchangeSpinnerRowModel) spinnerFromCoin.getSelectedItem()).symbol, ((ExchangeSpinnerRowModel) spinnerToCoin.getSelectedItem()).symbol);
-                        exchangeInputAddressFragment.setCoinsNames(((ExchangeSpinnerRowModel) spinnerFromCoin.getSelectedItem()).text, ((ExchangeSpinnerRowModel) spinnerToCoin.getSelectedItem()).text);
-                        exchangeInputAddressFragment.setMinimumAmount(minimumAmount);
-                        navigateToFragment(exchangeInputAddressFragment);
-                    } else {
-                        Toast.makeText(getContext(), getString(R.string.exchange_unsupported_pair), Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+        buttonStartExchange.setOnClickListener((View view) -> {
+            try {
+                if (Common.MAIN_CURRENCY.equalsIgnoreCase(((ExchangeSpinnerRowModel) spinnerToCoin.getSelectedItem()).symbol)) {
+                    ExchangeStartFragment startFragment = new ExchangeStartFragment().setData(((ExchangeSpinnerRowModel)(spinnerExchange.getAdapter().getItem(spinnerExchange.getSelectedItemPosition()))).symbol, spinnerFromCoin.getSelectedItemPosition(), spinnerToCoin.getSelectedItemPosition(), thisFragment);
+                    startFragment.setCoins(((ExchangeSpinnerRowModel) spinnerFromCoin.getSelectedItem()).symbol, ((ExchangeSpinnerRowModel) spinnerToCoin.getSelectedItem()).symbol);
+                    startFragment.setCoinsNames(((ExchangeSpinnerRowModel) spinnerFromCoin.getSelectedItem()).text, ((ExchangeSpinnerRowModel) spinnerToCoin.getSelectedItem()).text);
+                    startFragment.setMinimumAmount(minimumAmount);
+                    navigateToFragment(startFragment);
+                } else if (Common.MAIN_CURRENCY.equalsIgnoreCase(((ExchangeSpinnerRowModel) spinnerFromCoin.getSelectedItem()).symbol)) {
+                    ExchangeInputAddressFragment exchangeInputAddressFragment = new ExchangeInputAddressFragment().setData(((ExchangeSpinnerRowModel)(spinnerExchange.getAdapter().getItem(spinnerExchange.getSelectedItemPosition()))).symbol, spinnerFromCoin.getSelectedItemPosition(), spinnerToCoin.getSelectedItemPosition(), thisFragment);
+                    exchangeInputAddressFragment.setCoins(((ExchangeSpinnerRowModel) spinnerFromCoin.getSelectedItem()).symbol, ((ExchangeSpinnerRowModel) spinnerToCoin.getSelectedItem()).symbol);
+                    exchangeInputAddressFragment.setCoinsNames(((ExchangeSpinnerRowModel) spinnerFromCoin.getSelectedItem()).text, ((ExchangeSpinnerRowModel) spinnerToCoin.getSelectedItem()).text);
+                    exchangeInputAddressFragment.setMinimumAmount(minimumAmount);
+                    navigateToFragment(exchangeInputAddressFragment);
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.exchange_unsupported_pair), Toast.LENGTH_LONG).show();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
-        //updateInitializedData();
         Log.d("flint", "spinnerExchange.setSelection");
         spinnerExchange.setSelection(spinnerExchangePosition);
-        String serviceSysName = ((ExchangeSpinnerRowModel)spinnerExchange.getSelectedItem()).symbol;
-        if ("changelly".equals(serviceSysName))
-            loadCurrencies_changelly();
+
         recreateCoinSpinnerLists();
 
         spinnerToCoin.setOnTouchListener(new View.OnTouchListener() {
@@ -235,7 +218,6 @@ public class ExchangeFragment extends BaseFragment {
 
         initMenuButton();
 
-//        loadIconsUrls();
     }
 
     private void removeCoinFromListBySymbol(String symbol, List<ExchangeSpinnerRowModel> list) {
@@ -264,13 +246,7 @@ public class ExchangeFragment extends BaseFragment {
     }
 
     private void spinnerExchange_onItemSelected() {
-        String serviceSysName = ((ExchangeSpinnerRowModel)spinnerExchange.getSelectedItem()).symbol;
-        if ("changelly".equals(serviceSysName))
-            loadCurrencies_changelly();
-        else if ("shapeshift".equals(serviceSysName))
-            loadCurrencies_shapeshift();
-        else
-            loadCurrencies_changenow();
+        loadCurrencies_changenow();
         spinnerExchangePosition = spinnerExchange.getSelectedItemPosition();
     }
 
@@ -279,12 +255,7 @@ public class ExchangeFragment extends BaseFragment {
         Handler handler = new Handler();
         spinner.setOnItemSelectedListener(null);
         spinner.setSelection(pos);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                spinner.setOnItemSelectedListener(listener);
-            }
-        });
+        handler.post(() -> spinner.setOnItemSelectedListener(listener));
     }
 
     private void updateInitializedData() {
@@ -380,14 +351,11 @@ public class ExchangeFragment extends BaseFragment {
             List<ChangenowApi.SupportedCoinModel> supportedCoins = ChangenowManager.getInstance().getSupportedCoins();
             for (ChangenowApi.SupportedCoinModel coin : supportedCoins) {
                 Drawable coinIcon = getResources().getDrawable(R.drawable.ic_curr_empty);
-                res.add(new ExchangeSpinnerRowModel(coinIcon, coin.name, coin.symbol, ""));
+                String coinName = coin.name.isEmpty() ? coin.symbol.toUpperCase() : coin.name;
+                res.add(new ExchangeSpinnerRowModel(coinIcon, coinName, coin.symbol, coin.imageUrl));
             }
-            Collections.sort(res, new Comparator<ExchangeSpinnerRowModel>() {
-                @Override
-                public int compare(ExchangeSpinnerRowModel exchangeSpinnerRowModel, ExchangeSpinnerRowModel t1) {
-                    return exchangeSpinnerRowModel.text.compareToIgnoreCase(t1.text);
-                }
-            });
+            Collections.sort(res, (ExchangeSpinnerRowModel exchangeSpinnerRowModel, ExchangeSpinnerRowModel t1) ->
+                    exchangeSpinnerRowModel.text.compareToIgnoreCase(t1.text));
         } catch (Exception e) {
             Log.d("flint", "createSendSpinnerRows_changenow... exception: " + e.toString());
         }
@@ -421,9 +389,7 @@ public class ExchangeFragment extends BaseFragment {
                     });
                 ChangenowManager.getInstance().getMinAmount(fromCoin, toCoin, response -> {
                         try {
-                            getActivity().runOnUiThread(() -> {
-                                minimumAmount = response.minimum;
-                            });
+                            getActivity().runOnUiThread(() -> minimumAmount = response.minimum);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -436,12 +402,9 @@ public class ExchangeFragment extends BaseFragment {
 
     private void disableStartExchangeButton() {
         try {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    textViewExchangeRateHeader.setVisibility(View.INVISIBLE);
-                    textViewExchangeRate.setText(getResources().getString(R.string.exchange_service_unavailable));
-                }
+            getActivity().runOnUiThread(() -> {
+                textViewExchangeRateHeader.setVisibility(View.INVISIBLE);
+                textViewExchangeRate.setText(getResources().getString(R.string.exchange_service_unavailable));
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -468,101 +431,14 @@ public class ExchangeFragment extends BaseFragment {
         }
     }
 
-    private void loadCurrencies_changelly() {
-        ChangellyNetworkManager.getCurrencies(new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                try {
-                    ResponseCurrencyItem responseCurrency = (ResponseCurrencyItem) response;
-                    List<CryptoItem> list = currentCrypto.castResponseCurrencyToCryptoItem(responseCurrency, getActivity().getApplicationContext());
-                    Collections.sort(list, new Comparator<CryptoItem>() {
-                        @Override
-                        public int compare(CryptoItem cryptoItem, CryptoItem t1) {
-                            return cryptoItem.getName().compareToIgnoreCase(t1.getName());
-                        }
-                    });
-                    changellyCoins = list;
-                    recreateCoinSpinnerLists();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(String msg) {}
-        });
-    }
-
-    private void loadCurrencies_shapeshift() {
-        ShapeshiftManager.getInstance().updateSupportedCoinsList(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Boolean response) {
-                try {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            recreateCoinSpinnerLists();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     private void loadCurrencies_changenow() {
-        ChangenowManager.getInstance().updateSupportedCoinsList(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Boolean response) {
-                try {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            recreateCoinSpinnerLists();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        ChangenowManager.getInstance().updateSupportedCoinsList((Boolean response) -> {
+            try {
+                getActivity().runOnUiThread(() -> recreateCoinSpinnerLists());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-    }
-
-    private void loadIconsUrls() {
-        Log.d("psd", "loadIconsUrls");
-        if (iconTickerMap.size() == 0) {
-            Requestor.getIconsUrls(new ApiMethods.RequestListener() {
-                @Override
-                public void onSuccess(Object response) {
-                    if (isAdded()) {
-                        try {
-                            iconTickerMap = (HashMap<String, IconItemResponse>) response;
-                            updateSpinnerTickerIcons(spinnerFromCoin);
-                            updateSpinnerTickerIcons(spinnerToCoin);
-                        } catch (Exception e) {
-                            Log.e("psd", "getIconsUrls (onSuccess)  error: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(String msg) {
-                    Log.e("psd", "getIconsUrls: onFailure" + msg);
-                }
-            });
-        }
-    }
-
-    private void updateSpinnerTickerIcons(Spinner spinner) {
-        for (int i = 0; i < spinner.getAdapter().getCount(); ++i) {
-            ExchangeSpinnerRowModel row = (ExchangeSpinnerRowModel)spinner.getAdapter().getItem(i);
-            IconItemResponse urlItem = iconTickerMap.get(row.symbol.toLowerCase());
-            if (urlItem != null)
-                row.url = urlItem.getIconURL();
-        }
-        ((ExchangeSpinnerAdapter)spinner.getAdapter()).notifyDataSetChanged();
     }
 
     private void recreateCoinSpinnerLists() {
@@ -572,7 +448,6 @@ public class ExchangeFragment extends BaseFragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String serviceSysName = ((ExchangeSpinnerRowModel) spinnerExchange.getSelectedItem()).symbol;
                     List<ExchangeSpinnerRowModel> coinsList = createSendSpinnerRows_changenow();
                     String fromCoinSymbol = "";
                     String toCoinSymbol = "";

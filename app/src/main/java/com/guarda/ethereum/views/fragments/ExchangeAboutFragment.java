@@ -1,8 +1,5 @@
 package com.guarda.ethereum.views.fragments;
 
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.TextView;
 
 import com.guarda.ethereum.GuardaApp;

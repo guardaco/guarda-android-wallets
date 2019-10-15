@@ -1,8 +1,6 @@
 package com.guarda.ethereum.views.fragments;
 
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,11 +12,9 @@ import com.guarda.ethereum.managers.Callback2;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.ChangenowApi;
 import com.guarda.ethereum.managers.ShapeshiftApi;
-import com.guarda.ethereum.managers.ShapeshiftManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Const;
-import com.guarda.ethereum.models.items.ResponseChangellyMinAmount;
 import com.guarda.ethereum.models.items.ResponseGenerateAddress;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.utils.ClipboardUtils;
@@ -40,41 +36,28 @@ public class ExchangeStartFragment extends BaseFragment {
 
     @Inject
     WalletManager walletManager;
-
     @BindView(R.id.textViewFromCoin)
     TextView textViewFromCoin;
-
     @BindView(R.id.textViewToCoin)
     TextView textViewToCoin;
-
     @BindView(R.id.tv_address_wallet)
     TextView textViewAddressWallet;
-
     @BindView(R.id.tv_tap_to_copy_address)
     TextView textViewTapToCopy;
-
     @BindView(R.id.iv_qr_code)
     ImageView ivQrCode;
-
     @BindView(R.id.buttonShowQr)
     Button buttonShowQr;
-
     @BindView(R.id.buttonShowAddress)
     Button buttonShowAddress;
-
     @BindView(R.id.textViewHint)
     TextView textViewHint;
-
     @BindView(R.id.imageViewFrom)
     ImageView imageViewFrom;
-
     @BindView(R.id.imageViewTo)
     ImageView imageViewTo;
-
     @BindView(R.id.tv_min_amount)
     TextView textViewMinAmount;
-
-
 
     private ExchangeFragment prevFragment = new ExchangeFragment();
     private String spinnerExchangeSymbol = "";
@@ -91,13 +74,9 @@ public class ExchangeStartFragment extends BaseFragment {
 
     private BigDecimal minimumAmount = new BigDecimal(0.0);
 
-
-
     public ExchangeStartFragment() {
         GuardaApp.getAppComponent().inject(this);
     }
-
-
 
     public ExchangeStartFragment setData(String spinnerExchangeSymbol, int spinnerFromCoinPosition, int spinnerToCoinPosition, ExchangeFragment prevFragment) {
         this.spinnerExchangeSymbol = spinnerExchangeSymbol;
@@ -107,41 +86,26 @@ public class ExchangeStartFragment extends BaseFragment {
         return this;
     }
 
-
-
     public ExchangeFragment getPrevFragment() {return prevFragment;}
-    public String getSpinnerExchangeSymbol() {return spinnerExchangeSymbol;}
-    public int getSpinnerFromCoinPosition() {return spinnerFromCoinPosition;}
-    public int getSpinnerToCoinPosition() {return spinnerToCoinPosition;}
-
-
 
     public void setCoins(String fromCoin, String toCoin) {
         this.fromCoin = fromCoin;
         this.toCoin = toCoin;
     }
 
-
-
     public void setCoinsNames(String fromCoinName, String toCoinName) {
         this.fromCoinName = fromCoinName;
         this.toCoinName = toCoinName;
     }
 
-
-
     public void setMinimumAmount(BigDecimal minimumAmount) {
         this.minimumAmount = minimumAmount;
     }
-
-
 
     @Override
     protected int getLayout() {
         return R.layout.fragment_exchange_start;
     }
-
-
 
     @Override
     protected void init() {
@@ -228,35 +192,22 @@ public class ExchangeStartFragment extends BaseFragment {
             });
         }
 
-
-        buttonShowQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showQrCode = true;
-                updateDepositAddressView();
-            }
+        buttonShowQr.setOnClickListener((View view) -> {
+            showQrCode = true;
+            updateDepositAddressView();
         });
 
-        buttonShowAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showQrCode = false;
-                updateDepositAddressView();
-            }
+        buttonShowAddress.setOnClickListener((View view) -> {
+            showQrCode = false;
+            updateDepositAddressView();
         });
 
-        textViewTapToCopy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardUtils.copyToClipBoard(getContext(), depositAddress);
-            }
+        textViewTapToCopy.setOnClickListener((View view) -> {
+            ClipboardUtils.copyToClipBoard(getContext(), depositAddress);
         });
 
-        textViewAddressWallet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardUtils.copyToClipBoard(getContext(), depositAddress);
-            }
+        textViewAddressWallet.setOnClickListener((View view) -> {
+            ClipboardUtils.copyToClipBoard(getContext(), depositAddress);
         });
 
         updateIconFrom();
@@ -272,8 +223,6 @@ public class ExchangeStartFragment extends BaseFragment {
         initBackButton();
     }
 
-
-
     private void updateIconFrom() {
         Drawable coinIcon = getResources().getDrawable(R.drawable.ic_icon_image_shapeshift);
         Integer id = getContext().getResources().getIdentifier("ic_" + fromCoin.toLowerCase(), "drawable", getContext().getPackageName());
@@ -285,8 +234,6 @@ public class ExchangeStartFragment extends BaseFragment {
         imageViewFrom.setImageDrawable(coinIcon);
     }
 
-
-
     private void updateIconTo() {
         Drawable coinIcon = getResources().getDrawable(R.drawable.ic_icon_image_shapeshift);
         Integer id = getContext().getResources().getIdentifier("ic_" + toCoin.toLowerCase(), "drawable", getContext().getPackageName());
@@ -297,8 +244,6 @@ public class ExchangeStartFragment extends BaseFragment {
         }
         imageViewTo.setImageDrawable(coinIcon);
     }
-
-
 
     private void updateDepositAddressView() {
         try {
@@ -318,15 +263,11 @@ public class ExchangeStartFragment extends BaseFragment {
         }
     }
 
-
-
     @Override
     public boolean onBackPressed() {
         navigateToFragment(prevFragment.setData(spinnerExchangeSymbol, spinnerFromCoinPosition, spinnerToCoinPosition));
         return true;
     }
-
-
 
     @Override
     public boolean onHomePressed() {

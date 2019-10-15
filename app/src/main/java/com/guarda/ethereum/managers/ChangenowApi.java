@@ -60,8 +60,6 @@ public class ChangenowApi {
         });
     }
 
-
-
     public static void getRate(final String fromCoin, final String toCoin, final Callback2<String, ChangenowApi.GetRateRespModel> onComplete) {
         final String pair = fromCoin + "_" + toCoin;
         makeGetQuery("/api/v1/exchange-amount/1/" + pair, new Callback2<String, String>() {
@@ -89,8 +87,6 @@ public class ChangenowApi {
         });
     }
 
-
-
     public static void getMinAmount(final String fromCoin, final String toCoin, final Callback2<String, ChangenowApi.GetRateRespModel> onComplete) {
         final String pair = fromCoin + "_" + toCoin;
         makeGetQuery("/api/v1/min-amount/" + pair, new Callback2<String, String>() {
@@ -116,8 +112,6 @@ public class ChangenowApi {
             }
         });
     }
-
-
 
     public static void generateAddress(final String fromCoin, final String toCoin, final String toAddress, final String extraId, final Callback2<String, ChangenowApi.GenerateAddressRespModel> onComplete) {
         Log.d("flint", "ChangenowApi.generateAddress...");
@@ -153,18 +147,9 @@ public class ChangenowApi {
         });
     }
 
-
-
-
-
-
-
-
     private static void makeGetQuery(final String subUrl, final Callback2<String, String> callback) {
         makeGetQueryEx(API_URL, subUrl, callback);
     }
-
-
 
     private static void makeGetQueryEx(final String apiUrl, final String subUrl, final Callback2<String, String> callback) {
         try {
@@ -193,8 +178,6 @@ public class ChangenowApi {
             callback.onResponse("error: " + e.toString(), "");
         }
     }
-
-
 
     private static void makePostQuery(final String subUrl, final Map<String,String> params, final Callback2<String, String> callback) {
         try {
@@ -227,9 +210,6 @@ public class ChangenowApi {
         }
     }
 
-
-
-
     public static class SupportedCoinModel {
         public String name = "";
         public String symbol = "";
@@ -237,22 +217,14 @@ public class ChangenowApi {
         public boolean isAbailable = false;
     }
 
-
-
     public static class GetRateRespModel {
         public BigDecimal rate = new BigDecimal(0.0);
         public BigDecimal minimum = new BigDecimal(0.0);
     }
 
-
-
     public static class GenerateAddressRespModel {
         public String depositAddress = "";
     }
-
-
-
-
 
     private static final String API_URL = "https://changenow.io";
     private static final int TIMEOUT_CONNECT = 8000;

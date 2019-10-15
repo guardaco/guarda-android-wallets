@@ -109,7 +109,7 @@
     <string name="exchange_unsupported_pair">Selected combination is not supported</string>
     <string name="exchange_service_unavailable">Selected exchange is unavailable</string>
 
-    <string name="exchange_about">The exchange service is converting one crypto to another one. The variety of exchange services is available in-app. You can select as exchange service provider as coins for conversion.\n\nPlease follow the on-screen instruсtion step-by-step for the exchange.\n\nYou can either top up your wallet using other crypto, either convert your crypto to another blockchain. Please make sure that exchanged amount is greater than a minimum limit.</string>
+    <string name="exchange_about">The exchange service is swapping one cryptocurrency to another. A variety of exchange services are available within the application. Select the exchange service provider along with the coins you\'d like to swap.\n\nPlease follow the on-screen instruсtions to perform the exchange.\n\nYou can top the wallet up with crypto you already own or by exchanging the coins belonging to a different blockchain. When swapping, make sure the exchanged amount is bigger than the minimum limit.</string>
 
     <string name="title_fragment_decent_deposit_about">About</string>
     <string name="deposit_decent_about">Notify: In Guarda Decent wallet, you are able to use two types of wallet addresses either your E-mail or the Encrypted alternative address to manage your DCT coins.</string>

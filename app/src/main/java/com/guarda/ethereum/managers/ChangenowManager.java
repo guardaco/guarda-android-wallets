@@ -10,8 +10,6 @@ public class ChangenowManager {
         return instance_s;
     }
 
-
-
     public void updateSupportedCoinsList(final Callback<Boolean> callback) {
         ChangenowApi.getSupportedCoins(new Callback2<String, Map<String, ChangenowApi.SupportedCoinModel>>() {
             @Override
@@ -33,8 +31,6 @@ public class ChangenowManager {
         });
     }
 
-
-
     public void getRate(final String fromCoin, final String toCoin, final Callback<ChangenowApi.GetRateRespModel> callback) {
         ChangenowApi.getRate(fromCoin, toCoin, new Callback2<String, ChangenowApi.GetRateRespModel>() {
             @Override
@@ -47,8 +43,6 @@ public class ChangenowManager {
         });
     }
 
-
-
     public void getMinAmount(final String fromCoin, final String toCoin, final Callback<ChangenowApi.GetRateRespModel> callback) {
         ChangenowApi.getMinAmount(fromCoin, toCoin, new Callback2<String, ChangenowApi.GetRateRespModel>() {
             @Override
@@ -60,8 +54,6 @@ public class ChangenowManager {
             }
         });
     }
-
-
 
     public List<ChangenowApi.SupportedCoinModel> getSupportedCoins() {
         return supportedCoins;

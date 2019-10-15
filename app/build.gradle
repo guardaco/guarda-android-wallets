@@ -306,6 +306,11 @@ dependencies {
     implementation 'io.grpc:grpc-stub:1.19.0'
 
     implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.caverock:androidsvg-aar:1.4'
+    implementation 'jp.wasabeef:glide-transformations:4.0.0'
 
     //eth
     ethImplementation 'org.web3j:core-android:2.2.1'
