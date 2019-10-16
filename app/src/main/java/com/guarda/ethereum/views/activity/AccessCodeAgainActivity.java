@@ -35,12 +35,9 @@ public class AccessCodeAgainActivity extends APinCodeActivity {
 
         firstPinCode = getIntent().getStringExtra(Extras.PIN_CODE);
 
-        ilInputLayout.setInputListener(new GuardaPinCodeLayout.OnPinCodeListener() {
-            @Override
-            public void onTextChanged(String text) {
-                pinCode = text;
-                checkPinCode(pinCode);
-            }
+        ilInputLayout.setInputListener((String text) -> {
+            pinCode = text;
+            checkPinCode(pinCode);
         });
     }
 

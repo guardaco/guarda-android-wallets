@@ -104,21 +104,17 @@ public class SettingsFragment extends BaseFragment {
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }
-
         });
     }
 
     private void initSwitchChecked() {
-        swSecureCode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked != sharedManager.getIsPinCodeEnable()) {
-                    if (swSecureCode.isChecked()) {
-                        startActivity(new Intent(getActivity(), CreateAccessCodeActivity.class));
-                    } else {
-                        Intent intent = new Intent(getActivity(), ConfirmPinCodeActivity.class);
-                        startActivityForResult(intent, RequestCode.CONFIRM_PIN_CODE_REQUEST);
-                    }
+        swSecureCode.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
+            if (isChecked != sharedManager.getIsPinCodeEnable()) {
+                if (swSecureCode.isChecked()) {
+                    startActivity(new Intent(getActivity(), CreateAccessCodeActivity.class));
+                } else {
+                    Intent intent = new Intent(getActivity(), ConfirmPinCodeActivity.class);
+                    startActivityForResult(intent, RequestCode.CONFIRM_PIN_CODE_REQUEST);
                 }
             }
         });

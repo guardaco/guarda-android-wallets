@@ -23,7 +23,7 @@ public class GuardaPinCodeLayout extends LinearLayout {
     private int pinCodeMarginBottom = 24;
     private Integer maxCount = 4;
 
-    private final int VIBRATE_ERROR_TIME = 400;
+    private final int VIBRATE_ERROR_TIME = 200;
 
     private Context context;
     private LinearLayout pinCodeLayout;
@@ -115,29 +115,22 @@ public class GuardaPinCodeLayout extends LinearLayout {
         guardaInputLayout.setMaxCount(maxCount);
 
 
-        guardaInputLayout.setInputListener(new GuardaInputLayout.onGuardaInputLayoutListener() {
-            @Override
-            public void onTextChanged(String inputText) {
+        guardaInputLayout.setInputListener((String inputText) -> {
+            checkPinCodeImg(inputText.length());
 
-                checkPinCodeImg(inputText.length());
-
-                if (listener != null) {
-                    listener.onTextChanged(inputText);
-                }
-
+            if (listener != null) {
+                listener.onTextChanged(inputText);
             }
         });
 
         addView(pinCodeLayout);
         addView(getWarningView());
         addView(guardaInputLayout);
-
-
     }
 
     private View getWarningView() {
         warningView = LayoutInflater.from(context).inflate(R.layout.pin_code_warning_layout, null);
-        warningText = (TextView) warningView.findViewById(R.id.tv_warning_text);
+        warningText = warningView.findViewById(R.id.tv_warning_text);
         warningView.setVisibility(INVISIBLE);
         return warningView;
     }
@@ -172,13 +165,10 @@ public class GuardaPinCodeLayout extends LinearLayout {
     public void callError() {
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(VIBRATE_ERROR_TIME);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                guardaInputLayout.clearText();
-            }
+        new Handler().postDelayed(() -> {
+            guardaInputLayout.clearText();
+            setErrorMessage(getResources().getString(R.string.incorrect_pin_warning));
         }, VIBRATE_ERROR_TIME);
-
     }
 
 }

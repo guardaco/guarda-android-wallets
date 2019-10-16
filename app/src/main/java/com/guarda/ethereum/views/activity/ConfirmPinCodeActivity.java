@@ -22,6 +22,7 @@ import butterknife.BindView;
 
 @AutoInjector(GuardaApp.class)
 public class ConfirmPinCodeActivity extends APinCodeActivity {
+
     private static final int MAX_WRONG_ATTEMPTS = 3;
     private static final int SHORT_BLOCK_TIME_MIN = 5;
     private static final int LONG_BLOCK_TIME_MIN = 15;
@@ -35,7 +36,6 @@ public class ConfirmPinCodeActivity extends APinCodeActivity {
     private String savedPinCode;
     private String pinCode;
     private Boolean isScreenLocked = false;
-    private boolean isInputEnable = true;
 
     private int wrongAttemptsCount = MAX_WRONG_ATTEMPTS;
     private Handler handler;
@@ -64,12 +64,9 @@ public class ConfirmPinCodeActivity extends APinCodeActivity {
         handler = new Handler();
         savedPinCode = sharedManager.getPinCode();
 
-        ilInputLayout.setInputListener(new GuardaPinCodeLayout.OnPinCodeListener() {
-            @Override
-            public void onTextChanged(String text) {
-                pinCode = text;
-                checkPinCode(pinCode);
-            }
+        ilInputLayout.setInputListener((String text) -> {
+            pinCode = text;
+            checkPinCode(pinCode);
         });
 
         if (isScreenLocked) {
@@ -169,16 +166,10 @@ public class ConfirmPinCodeActivity extends APinCodeActivity {
 
     private void disableInput() {
         ilInputLayout.disableButtons();
-        isInputEnable = false;
     }
 
     private void enableInput() {
         ilInputLayout.enableButtons();
-        isInputEnable = true;
-    }
-
-    private boolean isInputEnable() {
-        return isInputEnable;
     }
 
     @Override

@@ -11,14 +11,13 @@ import android.widget.TextView;
 
 import com.guarda.ethereum.R;
 
-public abstract class APinCodeActivity extends SimpleBaseActivity{
+public abstract class APinCodeActivity extends SimpleBaseActivity {
 
     protected TextView title;
     protected Toolbar toolBar;
 
     @Override
     protected void createLayout() {
-
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         final ViewGroup mainView = (ViewGroup) inflater.inflate(R.layout.activity_base, null, false);
         View contentView = inflater.inflate(getLayout(), mainView, false);
@@ -28,23 +27,16 @@ public abstract class APinCodeActivity extends SimpleBaseActivity{
         mainView.addView(contentView, 0);
 
         setContentView(mainView);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
     protected void initToolbar() {
-        toolBar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolBar = findViewById(R.id.toolbar_main);
         if (toolBar != null) {
-            title = (TextView) findViewById(R.id.tv_toolbar_title);
+            title = findViewById(R.id.tv_toolbar_title);
             setSupportActionBar(toolBar);
 
             initBackButton();
-
         }
     }
 

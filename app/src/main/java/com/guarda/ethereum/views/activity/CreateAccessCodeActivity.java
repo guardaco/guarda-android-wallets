@@ -18,18 +18,11 @@ public class CreateAccessCodeActivity extends APinCodeActivity {
     @BindView(R.id.gpl_pin_code)
     GuardaPinCodeLayout ilInputLayout;
 
-    private String pinCode;
-
     @Override
     protected void init(Bundle savedInstanceState) {
         setToolBarTitle("");
 
-        ilInputLayout.setInputListener(new GuardaPinCodeLayout.OnPinCodeListener() {
-            @Override
-            public void onTextChanged(String text) {
-                pinCode = text;
-            }
-        });
+        ilInputLayout.setInputListener((String text) -> checkPinCode(text));
     }
 
     @Override
@@ -37,8 +30,7 @@ public class CreateAccessCodeActivity extends APinCodeActivity {
         return R.layout.activity_create_access_code;
     }
 
-    @OnClick(R.id.btn_ok)
-    public void btnOkClick(View view) {
+    void checkPinCode(String pinCode) {
         if (pinCode != null && pinCode.length() == 4) {
             Intent intent = new Intent(CreateAccessCodeActivity.this, AccessCodeAgainActivity.class);
             intent.putExtra(Extras.PIN_CODE, pinCode);
