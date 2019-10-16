@@ -56,6 +56,12 @@ public class SettingsFragment extends BaseFragment {
     TextView verAbout;
     @BindView(R.id.ll_custom_node)
     LinearLayout ll_custom_node;
+    @BindView(R.id.ll_support)
+    LinearLayout ll_support;
+    @BindView(R.id.ll_terms_of_use)
+    LinearLayout ll_terms_of_use;
+    @BindView(R.id.ll_privacy_policy)
+    LinearLayout ll_privacy_policy;
 
     @Inject
     SharedManager sharedManager;
@@ -123,6 +129,9 @@ public class SettingsFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        ll_support.setEnabled(true);
+        ll_terms_of_use.setEnabled(true);
+        ll_privacy_policy.setEnabled(true);
         swSecureCode.setChecked(sharedManager.getIsPinCodeEnable());
     }
 
@@ -134,12 +143,15 @@ public class SettingsFragment extends BaseFragment {
                 spLocalCurrency.performClick();
                 break;
             case R.id.ll_terms_of_use:
+                ll_terms_of_use.setEnabled(false);
                 openWebURL(TERM_OF_USE_LINK);
                 break;
             case R.id.ll_privacy_policy:
+                ll_privacy_policy.setEnabled(false);
                 openWebURL(PRIVACY_POLICE_LINK);
                 break;
             case R.id.ll_support:
+                ll_support.setEnabled(false);
                 openSupportConversation();
                 break;
             case R.id.ll_custom_node:
