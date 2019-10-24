@@ -69,6 +69,8 @@ public class ExchangeStartFragment extends BaseFragment {
     ImageView imageViewTo;
     @BindView(R.id.tv_min_amount)
     TextView textViewMinAmount;
+    @BindView(R.id.tv_rate)
+    TextView tv_rate;
 
 
     private String fromCoin = "";
@@ -145,6 +147,7 @@ public class ExchangeStartFragment extends BaseFragment {
             selectedExchange = exchange;
             createExchange();
             getMinAmount();
+            updateSelectedPairRateChangenow();
             updateIconsFromTo();
         });
     }
@@ -246,6 +249,29 @@ public class ExchangeStartFragment extends BaseFragment {
                 getResources().getString(R.string.minimal_amount),
                 formattedAmount,
                 coinFrom.name.toUpperCase()));
+    }
+
+    private void updateSelectedPairRateChangenow() {
+        try {
+            ChangenowManager.getInstance().getRate(coinFrom.symbol, coinTo.symbol, response -> {
+                try {
+                    getActivity().runOnUiThread(() -> {
+                        BigDecimal rate = response.rate.divide(BigDecimal.valueOf(1000.0d), BigDecimal.ROUND_DOWN);
+                        tv_rate.setText(String.format("Exchange rate: 1 %s ~ %s %s",
+                                coinFrom.symbol.toUpperCase(),
+                                rate.toString(),
+                                coinTo.symbol.toUpperCase()));
+                        Timber.d("updateSelectedPairRateChangenow response.rate.longValue() = %s", response.rate.toPlainString());
+                    });
+                } catch (Exception e) {
+                    Timber.e("updateSelectedPairRateChangenow 1 error=%s", e.getMessage());
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            Timber.e("updateSelectedPairRateChangenow 2 error=%s", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void updateHint() {

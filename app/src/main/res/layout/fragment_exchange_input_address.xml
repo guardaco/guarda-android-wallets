@@ -107,6 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="373dp"
         android:background="@color/baseWhiteBgColor"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -183,10 +184,22 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
+            android:id="@+id/tv_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_centerHorizontal="true"
+            android:drawablePadding="8dp"
+            tools:text="@string/minimal_amount"
+            app:layout_constraintBottom_toTopOf="@id/tv_min_amount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
             android:id="@+id/tv_min_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="8dp"
             android:layout_centerHorizontal="true"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_alarm_warning_wr"
@@ -201,11 +214,7 @@
             style="@style/colorButtonStyle"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_gravity="center_horizontal"
             android:drawableEnd="@drawable/ic_arrow_right_wr"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:elevation="5dp"
             android:paddingStart="20dp"
             android:paddingEnd="10dp"

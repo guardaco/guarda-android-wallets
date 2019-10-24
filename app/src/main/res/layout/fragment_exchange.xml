@@ -136,7 +136,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
                 android:drawableEnd="@drawable/ic_arrow_right_wr"
                 android:elevation="5dp"
                 android:paddingEnd="15dp"

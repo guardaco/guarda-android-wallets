@@ -42,6 +42,7 @@ public class ExchangeViewModel extends ViewModel {
     }
 
     private void initState() {
+        Timber.d("initState()");
         //get local list of carrencies or call it from changenow API
         String map = sharedManager.getListCurrencies();
         if (!map.isEmpty()) {

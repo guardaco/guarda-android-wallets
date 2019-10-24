@@ -196,8 +196,8 @@
 
         <ImageView
             android:id="@+id/iv_qr_code"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             android:layout_marginTop="18dp"
             android:src="@drawable/btn_gradient_background"
             android:layout_centerHorizontal="true"
@@ -205,6 +205,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_centerHorizontal="true"
+            android:drawablePadding="8dp"
+            tools:text="@string/minimal_amount"
+            app:layout_constraintBottom_toTopOf="@id/tv_min_amount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/tv_min_amount"

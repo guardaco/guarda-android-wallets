@@ -21,6 +21,7 @@ import com.guarda.ethereum.managers.ChangenowApi;
 import com.guarda.ethereum.managers.ChangenowManager;
 import com.guarda.ethereum.managers.ShapeshiftApi;
 import com.guarda.ethereum.managers.WalletManager;
+import com.guarda.ethereum.models.ExchangeSpinnerRowModel;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
@@ -78,6 +79,8 @@ public class ExchangeInputAddressFragment extends BaseFragment {
     Button buttonNext;
     @BindView(R.id.tv_min_amount)
     TextView textViewMinAmount;
+    @BindView(R.id.tv_rate)
+    TextView tv_rate;
 
 
     private String fromCoin = "";
@@ -147,6 +150,7 @@ public class ExchangeInputAddressFragment extends BaseFragment {
         sharedViewModel.selectedExchange.observe(this, exchange -> {
             selectedExchange = exchange;
             getMinAmount();
+            updateSelectedPairRateChangenow();
             updateIconsFromTo();
         });
     }
@@ -251,6 +255,29 @@ public class ExchangeInputAddressFragment extends BaseFragment {
                 getResources().getString(R.string.minimal_amount),
                 formattedAmount,
                 fromCoin.toUpperCase()));
+    }
+
+    private void updateSelectedPairRateChangenow() {
+        try {
+            ChangenowManager.getInstance().getRate(coinFrom.symbol, coinTo.symbol, response -> {
+                try {
+                    getActivity().runOnUiThread(() -> {
+                        BigDecimal rate = response.rate.divide(BigDecimal.valueOf(10000.0d), BigDecimal.ROUND_DOWN);
+                        tv_rate.setText(String.format("Exchange rate: 1 %s ~ %s %s",
+                                coinFrom.symbol.toUpperCase(),
+                                rate.toString(),
+                                coinTo.symbol.toUpperCase()));
+                        Timber.d("updateSelectedPairRateChangenow response.rate.longValue() = %s", response.rate.toPlainString());
+                    });
+                } catch (Exception e) {
+                    Timber.e("updateSelectedPairRateChangenow 1 error=%s", e.getMessage());
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            Timber.e("updateSelectedPairRateChangenow 2 error=%s", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void showMemo() {
