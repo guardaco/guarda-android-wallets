@@ -32,6 +32,7 @@
     <color name="greyHintColor">@color/txStatusGrey</color>
     <color name="lightGreyHintColor">#d8d8d8</color>
     <color name="errorTextColor">#e63935</color>
+    <color name="warningTextColor">#ffc107</color>
     <color name="editTextBlueGreyColor">#536d79</color>
 
     <color name="editTextGreyColor">#36464e</color>

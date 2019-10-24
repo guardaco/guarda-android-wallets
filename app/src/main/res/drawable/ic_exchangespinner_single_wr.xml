@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:autoMirrored="false" android:constantSize="false" android:variablePadding="false">
+    <item android:drawable="@drawable/ic_exchangespinner_single" />
+</selector>

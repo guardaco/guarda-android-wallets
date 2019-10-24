@@ -50,6 +50,11 @@ public class ExchangeSpinnerAdapter extends BaseAdapter implements SpinnerAdapte
         return rows.size();
     }
 
+    public void updateRows(List<ExchangeSpinnerRowModel> rows) {
+        this.rows = rows;
+        notifyDataSetChanged();
+    }
+
     @Override
     public Object getItem(int i) {
         try {

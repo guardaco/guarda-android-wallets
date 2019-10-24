@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +51,7 @@ public class ChangenowApi {
                             onComplete.onResponse(status, null);
                     }
                 } catch (Exception e) {
-                    Log.e("flint", "ChangenowApi.getRate... getSupportedCoins: " + e.toString());
+                    Log.e("flint", "ChangenowApi... getSupportedCoins: " + e.getMessage());
                     if (onComplete != null)
                         onComplete.onResponse("error: " + e.toString(), null);
                 }
@@ -62,7 +61,7 @@ public class ChangenowApi {
 
     public static void getRate(final String fromCoin, final String toCoin, final Callback2<String, ChangenowApi.GetRateRespModel> onComplete) {
         final String pair = fromCoin + "_" + toCoin;
-        makeGetQuery("/api/v1/exchange-amount/1/" + pair, new Callback2<String, String>() {
+        makeGetQuery("/api/v1/exchange-amount/1000/" + pair, new Callback2<String, String>() {
             @Override
             public void onResponse(String status, String resp) {
                 try {
@@ -80,6 +79,7 @@ public class ChangenowApi {
                             onComplete.onResponse(status, null);
                     }
                 } catch (Exception e) {
+                    Log.e("flint", "ChangenowApi... getRate: " + e.getMessage());
                     if (onComplete != null)
                         onComplete.onResponse("error: " + e.toString(), null);
                 }
@@ -106,6 +106,7 @@ public class ChangenowApi {
                             onComplete.onResponse(status, null);
                     }
                 } catch (Exception e) {
+                    Log.e("flint", "ChangenowApi... getMinAmount: " + e.getMessage());
                     if (onComplete != null)
                         onComplete.onResponse("error: " + e.toString(), null);
                 }
@@ -140,6 +141,7 @@ public class ChangenowApi {
                             onComplete.onResponse(status, null);
                     }
                 } catch (Exception e) {
+                    Log.e("flint", "ChangenowApi... generateAddress: " + e.getMessage());
                     if (onComplete != null)
                         onComplete.onResponse("error: " + e.toString(), null);
                 }

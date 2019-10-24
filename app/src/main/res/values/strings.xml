@@ -125,6 +125,7 @@
     <string name="exchange_error_unknown">Unexpected error, please try later</string>
     <string name="exchange_progress_generate_address">Exchange address generation</string>
     <string name="exchange_error_empty_address">Fill address field</string>
+    <string name="exchange_error_empty_extra">Fill extra id field</string>
     <string name="exchange_error_generate_address">Generating exchange address error, please try later</string>
 
     <string name="number_zero">0</string>

@@ -55,6 +55,8 @@ public class SharedManager {
     private static final String COINIFY_TRADE = "COINIFY_TRADE";
     private static final String CUSTOM_NODE = "CUSTOM_NODE";
     private static final String LAST_CHANGELLY_CURR_LIST = "LAST_CHANGELLY_CURR_LIST";
+    private static final String TIME_UPDATE_CURR = "TIME_UPDATE_CURR";
+    private static final String LIST_CURRENCIES = "LIST_CURRENCIES";
 
     public static boolean flag_disable_buy_menu = false;
     public static boolean flag_disable_purchase_menu = false;
@@ -407,5 +409,21 @@ public class SharedManager {
 
     public void setLastChangelliCurList(long time) {
         settings.edit().putLong(LAST_CHANGELLY_CURR_LIST, time).apply();
+    }
+
+    public long getTimeUpdateCurr() {
+        return settings.getLong(TIME_UPDATE_CURR, 0);
+    }
+
+    public void setTimeUpdateCurr(long timeUpdateCurr) {
+        settings.edit().putLong(TIME_UPDATE_CURR, timeUpdateCurr).apply();
+    }
+
+    public String getListCurrencies() {
+        return settings.getString(LIST_CURRENCIES, "");
+    }
+
+    public void setListCurrencies(String listCurrencies) {
+        settings.edit().putString(LIST_CURRENCIES, listCurrencies).apply();
     }
 }

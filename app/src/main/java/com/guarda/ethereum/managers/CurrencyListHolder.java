@@ -40,8 +40,8 @@ public class CurrencyListHolder {
 
     private List<CryptoItem> prepareListCurrencies(List<CryptoItem> listOfCurrencies) {
         List<CryptoItem> list = new ArrayList<>();
-        for (CryptoItem item : listOfCurrencies){
-            if (item.getName().charAt(0) == ' '){
+        for (CryptoItem item : listOfCurrencies) {
+            if (item.getName().charAt(0) == ' ') {
                 item.setName(item.getName().replaceFirst(" ", ""));
             }
 

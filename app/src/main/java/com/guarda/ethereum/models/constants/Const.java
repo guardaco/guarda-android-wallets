@@ -19,6 +19,7 @@ public interface Const {
     byte[] ZEC_MAINNET_ADDR_PREFIX = {(byte) 0x1c, (byte) 0xb8};
     byte[] ZEC_TESTNET_ADDR_PREFIX = {(byte) 0x1d, (byte) 0x25};
 
+    //Exchange
     Map<String, String> COIN_TO_RETURN_ADDRESS = new HashMap<String, String>() {{
         put("ZRX", "");
         put("ANT", "");
@@ -72,4 +73,20 @@ public interface Const {
         put("USNBT", "B88K3eAoJs4DXHLPM5NjAFVFJiLuyAXT6s");
         put("WINGS", "t1R2sgsitXLpxm59CBqvAn7pxftUCGAKexD");
     }};
+
+    //changenow get list of currencies timeout
+    long UPD_CURRENCIES_DELAY = 24 * 60 * 60 * 1000;
+
+    //urls
+    String CHANGENOW_URL = "https://changenow.io/api/v1/";
+
+    //ChangeNOW
+    String GET_CURRENCIES = "currencies?active";
+    String GET_PAIRS = "market-info/available-pairs";
+    String GET_CURRENCIES_TO = "currencies-to/{ticker}";
+    String GET_MIN_AMOUNT = "min-amount/{from}_{to}";
+    String GET_ESTIMATED = "exchange-amount/{amount}/{from}_{to}";
+    String GET_TX_STATUS = "transactions/{id}/{apikey}";
+    String POST_TRANSACTION = "transactions/{apikey}";
+    String POST_TOKEN_DEST = "transactions/{txId}/tokens-destination";
 }

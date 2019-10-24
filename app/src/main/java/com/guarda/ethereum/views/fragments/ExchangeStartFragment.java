@@ -1,24 +1,32 @@
 package com.guarda.ethereum.views.fragments;
 
-import android.graphics.drawable.Drawable;
+import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.drawable.PictureDrawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.Callback2;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.ChangenowApi;
+import com.guarda.ethereum.managers.ChangenowManager;
 import com.guarda.ethereum.managers.ShapeshiftApi;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Const;
 import com.guarda.ethereum.models.items.ResponseGenerateAddress;
 import com.guarda.ethereum.rest.ApiMethods;
+import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.utils.QrCodeUtils;
+import com.guarda.ethereum.utils.svg.GlideApp;
+import com.guarda.ethereum.utils.svg.SvgSoftwareLayerSetter;
+import com.guarda.ethereum.views.activity.SharedViewModel;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
 import java.math.BigDecimal;
@@ -30,6 +38,9 @@ import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
+import timber.log.Timber;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 @AutoInjector(GuardaApp.class)
 public class ExchangeStartFragment extends BaseFragment {
@@ -59,47 +70,23 @@ public class ExchangeStartFragment extends BaseFragment {
     @BindView(R.id.tv_min_amount)
     TextView textViewMinAmount;
 
-    private ExchangeFragment prevFragment = new ExchangeFragment();
-    private String spinnerExchangeSymbol = "";
-    private int spinnerFromCoinPosition = 0;
-    private int spinnerToCoinPosition = 0;
 
     private String fromCoin = "";
     private String toCoin = "";
-    private String fromCoinName = "";
-    private String toCoinName = "";
 
     private String depositAddress = "";
     private boolean showQrCode = true;
 
     private BigDecimal minimumAmount = new BigDecimal(0.0);
 
+    private SharedViewModel sharedViewModel;
+    private ChangenowApi.SupportedCoinModel coinFrom;
+    private ChangenowApi.SupportedCoinModel coinTo;
+    private String selectedExchange;
+    private RequestBuilder<PictureDrawable> requestBuilder;
+
     public ExchangeStartFragment() {
         GuardaApp.getAppComponent().inject(this);
-    }
-
-    public ExchangeStartFragment setData(String spinnerExchangeSymbol, int spinnerFromCoinPosition, int spinnerToCoinPosition, ExchangeFragment prevFragment) {
-        this.spinnerExchangeSymbol = spinnerExchangeSymbol;
-        this.spinnerFromCoinPosition = spinnerFromCoinPosition;
-        this.spinnerToCoinPosition = spinnerToCoinPosition;
-        this.prevFragment = prevFragment;
-        return this;
-    }
-
-    public ExchangeFragment getPrevFragment() {return prevFragment;}
-
-    public void setCoins(String fromCoin, String toCoin) {
-        this.fromCoin = fromCoin;
-        this.toCoin = toCoin;
-    }
-
-    public void setCoinsNames(String fromCoinName, String toCoinName) {
-        this.fromCoinName = fromCoinName;
-        this.toCoinName = toCoinName;
-    }
-
-    public void setMinimumAmount(BigDecimal minimumAmount) {
-        this.minimumAmount = minimumAmount;
     }
 
     @Override
@@ -109,88 +96,15 @@ public class ExchangeStartFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        final ExchangeStartFragment thisFragment = this;
-        setToolbarTitle(getString(R.string.title_fragment_exchange_start) + " " + toCoinName);
-        textViewFromCoin.setText(fromCoinName);
-        textViewToCoin.setText(toCoinName);
+        sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        subscribeUi();
+
         textViewAddressWallet.setVisibility(View.GONE);
         textViewTapToCopy.setVisibility(View.GONE);
         ivQrCode.setVisibility(View.GONE);
-        textViewHint.setText(getString(R.string.exchange_generate_hint_left) + " " + fromCoinName + " " + getString(R.string.exchange_generate_hint_mid) + " " + toCoinName);
         buttonShowQr.setText(getString(R.string.exchange_show_qr));
         buttonShowAddress.setText(getString(R.string.exchange_show_address));
         showProgress(getString(R.string.exchange_progress_generate_address));
-        String returnAddress = Const.COIN_TO_RETURN_ADDRESS.get(fromCoin.toUpperCase()) == null ? "" : Const.COIN_TO_RETURN_ADDRESS.get(fromCoin.toUpperCase());
-        if ("shapeshift".equalsIgnoreCase(spinnerExchangeSymbol))
-        {
-            ShapeshiftApi.generateAddress(fromCoin, toCoin, walletManager.getWalletAddressForDeposit(), returnAddress, new Callback2<String, ShapeshiftApi.GenerateAddressRespModel>() {
-                @Override
-                public void onResponse(final String status, final ShapeshiftApi.GenerateAddressRespModel resp) {
-                    try {
-                        thisFragment.getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if ("ok".equals(status)) {
-                                    depositAddress = resp.depositAddress;
-                                } else {
-                                    showQrCode = false;
-                                    depositAddress = getResources().getString(R.string.fragment_disabled_text);
-                                }
-                                updateDepositAddressView();
-                                closeProgress();
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        closeProgress();
-                    }
-                }
-            });
-        } else if ("changelly".equalsIgnoreCase(spinnerExchangeSymbol)) {
-            ChangellyNetworkManager.generateAddress(fromCoin.toLowerCase(), toCoin.toLowerCase(), walletManager.getWalletFriendlyAddress(), null, new ApiMethods.RequestListener() {
-                @Override
-                public void onSuccess(Object response) {
-                    ResponseGenerateAddress addressItem = (ResponseGenerateAddress) response;
-                    if (addressItem.getAddress() != null && addressItem.getAddress().getAddress() != null) {
-                        depositAddress = addressItem.getAddress().getAddress();
-                    } else {
-                        showQrCode = false;
-                        depositAddress = getResources().getString(R.string.exchange_service_unavailable);
-                    }
-                    updateDepositAddressView();
-                    closeProgress();
-                }
-
-                @Override
-                public void onFailure(String msg) {
-                    closeProgress();
-                }
-            });
-        } else if ("changenow".equalsIgnoreCase(spinnerExchangeSymbol)) {
-            ChangenowApi.generateAddress(fromCoin, toCoin, walletManager.getWalletAddressForDeposit(), "", new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
-                @Override
-                public void onResponse(final String status, final ChangenowApi.GenerateAddressRespModel resp) {
-                    try {
-                        thisFragment.getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if ("ok".equals(status)) {
-                                    depositAddress = resp.depositAddress;
-                                } else {
-                                    showQrCode = false;
-                                    depositAddress = getResources().getString(R.string.fragment_disabled_text);
-                                }
-                                updateDepositAddressView();
-                                closeProgress();
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        closeProgress();
-                    }
-                }
-            });
-        }
 
         buttonShowQr.setOnClickListener((View view) -> {
             showQrCode = true;
@@ -210,39 +124,149 @@ public class ExchangeStartFragment extends BaseFragment {
             ClipboardUtils.copyToClipBoard(getContext(), depositAddress);
         });
 
-        updateIconFrom();
-        updateIconTo();
+        //for coins icons loading
+        initImageLoader();
 
+        initBackButton();
+    }
+
+    private void subscribeUi() {
+        sharedViewModel.selectedFrom.observe(this, from -> {
+            coinFrom = from;
+            textViewFromCoin.setText(coinFrom.name);
+        });
+        sharedViewModel.selectedTo.observe(this, to -> {
+            coinTo = to;
+            setToolbarTitle(getString(R.string.title_fragment_exchange_start) + " " + coinTo.name);
+            textViewToCoin.setText(coinTo.name);
+            updateHint();
+        });
+        sharedViewModel.selectedExchange.observe(this, exchange -> {
+            selectedExchange = exchange;
+            createExchange();
+            getMinAmount();
+            updateIconsFromTo();
+        });
+    }
+
+    private void createExchange() {
+        if (coinFrom == null || coinTo == null || selectedExchange == null) {
+            Timber.e("createExchange: coinFrom == null || coinTo == null || selectedExchange == null");
+        }
+        String returnAddress = Const.COIN_TO_RETURN_ADDRESS.get(fromCoin.toUpperCase()) == null ? "" : Const.COIN_TO_RETURN_ADDRESS.get(fromCoin.toUpperCase());
+        if ("shapeshift".equalsIgnoreCase(selectedExchange)) {
+            ShapeshiftApi.generateAddress(coinFrom.symbol, coinTo.symbol, walletManager.getWalletAddressForDeposit(), returnAddress, new Callback2<String, ShapeshiftApi.GenerateAddressRespModel>() {
+                @Override
+                public void onResponse(final String status, final ShapeshiftApi.GenerateAddressRespModel resp) {
+                    try {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if ("ok".equals(status)) {
+                                    depositAddress = resp.depositAddress;
+                                } else {
+                                    showQrCode = false;
+                                    depositAddress = getResources().getString(R.string.fragment_disabled_text);
+                                }
+                                updateDepositAddressView();
+                                closeProgress();
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        closeProgress();
+                    }
+                }
+            });
+        } else if ("changelly".equalsIgnoreCase(selectedExchange)) {
+            ChangellyNetworkManager.generateAddress(coinFrom.symbol.toLowerCase(), coinTo.symbol.toLowerCase(), walletManager.getWalletFriendlyAddress(), null, new ApiMethods.RequestListener() {
+                @Override
+                public void onSuccess(Object response) {
+                    ResponseGenerateAddress addressItem = (ResponseGenerateAddress) response;
+                    if (addressItem.getAddress() != null && addressItem.getAddress().getAddress() != null) {
+                        depositAddress = addressItem.getAddress().getAddress();
+                    } else {
+                        showQrCode = false;
+                        depositAddress = getResources().getString(R.string.exchange_service_unavailable);
+                    }
+                    updateDepositAddressView();
+                    closeProgress();
+                }
+
+                @Override
+                public void onFailure(String msg) {
+                    closeProgress();
+                }
+            });
+        } else if ("changenow".equalsIgnoreCase(selectedExchange)) {
+            ChangenowApi.generateAddress(coinFrom.symbol, coinTo.symbol, walletManager.getWalletAddressForDeposit(), "", new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
+                @Override
+                public void onResponse(final String status, final ChangenowApi.GenerateAddressRespModel resp) {
+                    try {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if ("ok".equals(status)) {
+                                    depositAddress = resp.depositAddress;
+                                } else {
+                                    showQrCode = false;
+                                    depositAddress = getResources().getString(R.string.fragment_disabled_text);
+                                }
+                                updateDepositAddressView();
+                                closeProgress();
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        closeProgress();
+                    }
+                }
+            });
+        }
+    }
+
+    private void getMinAmount() {
+        ChangenowManager.getInstance().getMinAmount(coinFrom.symbol, coinTo.symbol, response -> {
+            try {
+                getActivity().runOnUiThread(() -> setMinAmount(response));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void setMinAmount(ChangenowApi.GetRateRespModel response) {
+        minimumAmount = response.minimum;
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat(Common.ETH_SHOW_PATTERN, symbols);
         decimalFormat.setRoundingMode(RoundingMode.UP);
         String formattedAmount = decimalFormat.format(minimumAmount);
-        textViewMinAmount.setText(String.format("%s %s %s", getResources().getString(R.string.minimal_amount), formattedAmount, fromCoin));
-
-        initBackButton();
+        textViewMinAmount.setText(String.format("%s %s %s",
+                getResources().getString(R.string.minimal_amount),
+                formattedAmount,
+                coinFrom.name.toUpperCase()));
     }
 
-    private void updateIconFrom() {
-        Drawable coinIcon = getResources().getDrawable(R.drawable.ic_icon_image_shapeshift);
-        Integer id = getContext().getResources().getIdentifier("ic_" + fromCoin.toLowerCase(), "drawable", getContext().getPackageName());
-        if (id != null && id != 0) {
-            coinIcon = getContext().getResources().getDrawable(id);
-        } else {
-            coinIcon = getContext().getResources().getDrawable(R.drawable.ic_curr_empty);
+    private void updateHint() {
+        if (coinFrom != null && coinTo != null) {
+            textViewHint.setText(String.format("%s %s %s %s",
+                    getString(R.string.exchange_generate_hint_left),
+                    coinFrom.name,
+                    getString(R.string.exchange_generate_hint_mid),
+                    coinTo.name));
         }
-        imageViewFrom.setImageDrawable(coinIcon);
     }
 
-    private void updateIconTo() {
-        Drawable coinIcon = getResources().getDrawable(R.drawable.ic_icon_image_shapeshift);
-        Integer id = getContext().getResources().getIdentifier("ic_" + toCoin.toLowerCase(), "drawable", getContext().getPackageName());
-        if (id != null && id != 0) {
-            coinIcon = getContext().getResources().getDrawable(id);
-        } else {
-            coinIcon = getContext().getResources().getDrawable(R.drawable.ic_curr_empty);
-        }
-        imageViewTo.setImageDrawable(coinIcon);
+    private void updateIconsFromTo() {
+        if (coinFrom == null || coinTo == null) return;
+
+        requestBuilder
+                .load(coinFrom.imageUrl)
+                .into(imageViewFrom);
+        requestBuilder
+                .load(coinTo.imageUrl)
+                .into(imageViewTo);
     }
 
     private void updateDepositAddressView() {
@@ -263,9 +287,18 @@ public class ExchangeStartFragment extends BaseFragment {
         }
     }
 
+    private void initImageLoader() {
+        requestBuilder = GlideApp.with(getContext())
+                .as(PictureDrawable.class)
+                .transition(withCrossFade())
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .error(R.drawable.ic_curr_empty_black)
+                .listener(new SvgSoftwareLayerSetter());
+    }
+
     @Override
     public boolean onBackPressed() {
-        navigateToFragment(prevFragment.setData(spinnerExchangeSymbol, spinnerFromCoinPosition, spinnerToCoinPosition));
+        navigateToFragment(new ExchangeFragment());
         return true;
     }
 

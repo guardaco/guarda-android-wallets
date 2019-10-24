@@ -38,6 +38,7 @@ import com.guarda.ethereum.models.items.TokenBodyItem;
 import com.guarda.ethereum.models.items.TokenHeaderItem;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.RequestorBtc;
+import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.views.activity.MainActivity;
 import com.guarda.ethereum.views.activity.TransactionDetailsActivity;
 import com.guarda.ethereum.views.adapters.TokenAdapter;

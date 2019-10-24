@@ -1,164 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/baseBgColor">
 
-
-    <android.support.v7.widget.CardView
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_coins"
         android:layout_width="match_parent"
         android:layout_height="124dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/cardView3" >
+        android:background="@color/baseWhiteBgColor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/ll_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewExchange">
+
+            <ImageView
+                android:id="@+id/imageViewFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_1st"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewFromCoin"
+                app:layout_constraintEnd_toEndOf="@+id/textViewFromCoin"
+                app:layout_constraintBottom_toTopOf="@+id/textViewFromCoin"/>
+
+            <TextView
+                android:id="@+id/textViewFromCoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center_horizontal"
+                android:text=""
+                tools:text="Bitcoin Gold"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewFrom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
 
         <ImageView
             android:id="@+id/imageViewExchange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/ic_exchange" />
+            app:srcCompat="@drawable/ic_exchange"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ll_from"
+            app:layout_constraintEnd_toStartOf="@+id/ll_to"/>
 
-        <ImageView
-            android:id="@+id/imageViewFrom"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/ll_to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginLeft="87dp"
-            app:srcCompat="@drawable/ic_1st" />
-
-        <TextView
-            android:id="@+id/textViewFromCoin"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="42dp"
-            android:layout_marginTop="75dp"
-            android:gravity="center_horizontal"
-            android:text="Bitcoin Gold"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/imageViewTo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginLeft="242dp"
-            app:srcCompat="@drawable/ic_1st" />
-
-        <TextView
-            android:id="@+id/textViewToCoin"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="197dp"
-            android:layout_marginTop="75dp"
-            android:gravity="center_horizontal"
-            android:text="Bitcoin Cash"
-            android:textSize="18sp" />
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="252dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
-
-        <RelativeLayout
-            android:paddingBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.guarda.ethereum.customviews.RobotoLightTextView
-                android:id="@+id/tv_tap_to_copy_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="@string/app_tap_to_copy"
-                android:textColor="@color/baseLightGreyTextColor"
-                android:textSize="14dp" />
-
-            <com.guarda.ethereum.customviews.RobotoTextView
-                android:id="@+id/tv_address_wallet"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_centerHorizontal="true"
-                android:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
-                android:textColor="@color/baseBlueTextColor"
-                android:textSize="20dp" />
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/imageViewExchange"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
-                android:id="@+id/iv_qr_code"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:layout_marginTop="30dp"
-                android:src="@drawable/btn_gradient_background"
-                android:layout_centerHorizontal="true"
-                android:adjustViewBounds="false" />
-
-            <TextView
-                android:id="@+id/tv_min_amount"
+                android:id="@+id/imageViewTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:drawablePadding="8dp"
-                android:drawableStart="@drawable/ic_alarm_wr"
-                android:text="@string/minimal_amount"
-                android:textColor="@android:color/holo_red_dark" />
+                app:srcCompat="@drawable/ic_1st"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewToCoin"
+                app:layout_constraintEnd_toEndOf="@+id/textViewToCoin"
+                app:layout_constraintBottom_toTopOf="@+id/textViewToCoin"/>
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/textViewToCoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center_horizontal"
+                android:text=""
+                tools:text="Bitcoin Cash"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewTo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </android.support.v7.widget.CardView>
+        </android.support.constraint.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textViewHint"
-        android:layout_width="wrap_content"
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_buttons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cardView3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:gravity="center_horizontal"
-        android:text="Generate Dash address and QR code for transaction"
-        android:textStyle="bold" />
+        app:layout_constraintTop_toBottomOf="@+id/cl_coins"
+        app:layout_constraintBottom_toTopOf="@+id/cl_addresses"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <Button
-        android:id="@+id/buttonShowQr"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textViewHint"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="15dp"
-        android:width="130dp"
-        android:height="36dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:background="@color/bntBgColor"
-        android:textColor="@color/baseBlueTextColor"
-        android:textSize="14sp"
-        android:text="Show QR" />
+        <TextView
+            android:id="@+id/textViewHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardView3"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="Generate Dash address and QR code for transaction"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Button
-        android:id="@+id/buttonShowAddress"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/buttonShowQr"
-        android:layout_marginEnd="40dp"
-        android:width="130dp"
-        android:height="36dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:background="@color/bntBgColor"
-        android:textColor="@color/baseBlueTextColor"
-        android:textSize="14sp"
-        android:text="Show Address" />
+        <Button
+            android:id="@+id/buttonShowQr"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/btn_border_blue"
+            android:text="Show QR"
+            android:textColor="@color/baseBlueTextColor"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewHint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonShowAddress"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/buttonShowAddress"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/btn_border_blue"
+            android:textColor="@color/baseBlueTextColor"
+            android:textSize="14sp"
+            android:text="Show Address"
+            app:layout_constraintTop_toBottomOf="@+id/textViewHint"
+            app:layout_constraintStart_toEndOf="@+id/buttonShowQr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_addresses"
+        android:layout_width="match_parent"
+        android:layout_height="252dp"
+        android:background="@color/baseWhiteBgColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.guarda.ethereum.customviews.RobotoLightTextView
+            android:id="@+id/tv_tap_to_copy_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/app_tap_to_copy"
+            android:textColor="@color/baseLightGreyTextColor"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.guarda.ethereum.customviews.RobotoTextView
+            android:id="@+id/tv_address_wallet"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            tools:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
+            android:textColor="@color/baseBlueTextColor"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tap_to_copy_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_qr_code"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="18dp"
+            android:src="@drawable/btn_gradient_background"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_min_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_alarm_warning_wr"
+            android:text="@string/minimal_amount"
+            android:textColor="@color/warningTextColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

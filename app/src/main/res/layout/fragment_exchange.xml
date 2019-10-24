@@ -1,37 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <Spinner
         android:id="@+id/spinnerExchange"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:spinnerMode="dropdown"
-        android:background="@drawable/ic_exchangespinner_background_wr"
+        android:background="@drawable/ic_exchangespinner_single"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="52dp" />
+        android:layout_marginTop="52dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/textViewExchange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/spinnerExchange"
-        android:layout_alignStart="@+id/spinnerExchange"
-        android:layout_marginBottom="-45dp" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="5dp"
+        tools:text="textViewExchange"
+        app:layout_constraintStart_toStartOf="@id/spinnerExchange"
+        app:layout_constraintBottom_toTopOf="@id/spinnerExchange"/>
 
     <ImageView
         android:id="@+id/imageViewAbout"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_alignBottom="@+id/textViewExchange"
-        android:layout_marginStart="11dp"
+        android:layout_marginStart="10dp"
         android:padding="5dp"
         android:foregroundGravity="center"
-        android:layout_toEndOf="@+id/textViewExchange"
-        app:srcCompat="@drawable/ic_help_icon_wr" />
+        app:srcCompat="@drawable/ic_help_icon_wr"
+        app:layout_constraintStart_toEndOf="@id/textViewExchange"
+        app:layout_constraintTop_toTopOf="@id/textViewExchange"
+        app:layout_constraintBottom_toBottomOf="@id/textViewExchange"/>
+
+    <TextView
+        android:id="@+id/textViewSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_change"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="5dp"
+        tools:text="textViewSend"
+        app:layout_constraintBottom_toTopOf="@id/spinnerFromCoin"
+        app:layout_constraintStart_toStartOf="@id/spinnerFromCoin"/>
 
     <Spinner
         android:id="@+id/spinnerFromCoin"
@@ -40,30 +58,20 @@
         android:layout_alignParentStart="true"
         android:spinnerMode="dropdown"
         android:background="@drawable/ic_exchangespinner_background_wr"
-        android:layout_below="@+id/spinnerExchange"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="45dp" />
+        android:layout_marginTop="45dp"
+        app:layout_constraintTop_toBottomOf="@id/spinnerExchange" />
 
-    <TextView
-        android:id="@+id/textViewSend"
+    <ImageView
+        android:id="@+id/img_change"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/spinnerFromCoin"
-        android:layout_alignStart="@+id/spinnerFromCoin"
-        android:layout_marginBottom="-38dp"
-        android:paddingBottom="0dp" />
-
-    <com.guarda.ethereum.customviews.SpinnerCrutch
-        android:id="@+id/spinnerToCoin"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/ic_exchangespinner_background_wr"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/spinnerFromCoin"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="45dp" />
+        app:srcCompat="@drawable/ic_exchange_small"
+        android:padding="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerFromCoin"/>
 
     <TextView
         android:id="@+id/textViewReceive"
@@ -71,15 +79,31 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/spinnerToCoin"
         android:layout_alignStart="@+id/spinnerToCoin"
-        android:layout_marginBottom="-38dp"
-        android:paddingBottom="0dp" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="5dp"
+        tools:text="textViewReceive"
+        app:layout_constraintBottom_toTopOf="@id/spinnerToCoin"
+        app:layout_constraintStart_toStartOf="@id/spinnerToCoin"/>
 
+    <com.guarda.ethereum.customviews.SpinnerCrutch
+        android:id="@+id/spinnerToCoin"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/ic_exchangespinner_background_wr"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/img_change"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="154dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:paddingBottom="10dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/textViewExchangeRateHeader"
@@ -87,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="Exchange rate (expected)" />
+            tools:text="textViewExchangeRateHeader"/>
 
         <TextView
             android:id="@+id/textViewExchangeRate"
@@ -95,11 +119,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:text="Exchange rate (expected)" />
+            tools:text="textViewExchangeRate"/>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="100dp"
+            android:padding="10dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layout_gravity="bottom">
 
             <Button
                 android:id="@+id/buttonStartExchange"
@@ -117,14 +145,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                app:layout_constraintTop_toBottomOf="@id/buttonStartExchange"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

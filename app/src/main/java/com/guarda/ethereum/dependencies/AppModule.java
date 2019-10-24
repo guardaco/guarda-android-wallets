@@ -4,21 +4,18 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.google.gson.Gson;
 import com.guarda.ethereum.managers.CurrencyListHolder;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.RawNodeManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
+import com.guarda.ethereum.utils.GsonUtils;
 import com.guarda.ethereum.utils.KeyStoreUtils;
-import com.guarda.zcash.RustAPI;
-import com.guarda.zcash.request.CreateTransaction_zaddr;
 import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.rxcall.CallBlockRange;
-import com.guarda.zcash.sapling.rxcall.CallFindWitnesses;
-import com.guarda.zcash.sapling.rxcall.CallLastBlock;
 
 import javax.inject.Singleton;
 
@@ -103,6 +100,12 @@ public class AppModule {
     @Singleton
     DbManager provideDbManager() {
         return new DbManager();
+    }
+
+    @Provides
+    @Singleton
+    GsonUtils provideGsonUtils() {
+        return new GsonUtils(new Gson());
     }
 
 }

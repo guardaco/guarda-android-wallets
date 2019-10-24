@@ -21,4 +21,9 @@ public class ExchangeSpinnerRowModel {
         this.url = url;
     }
 
+    public ExchangeSpinnerRowModel(String text, String symbol, String url) {
+        this.text = text;
+        this.symbol = symbol;
+        this.url = url;
+    }
 }

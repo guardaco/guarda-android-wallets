@@ -13,6 +13,7 @@ import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
+import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.zcash.sapling.SyncManager;
