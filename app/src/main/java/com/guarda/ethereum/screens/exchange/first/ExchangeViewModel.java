@@ -10,6 +10,7 @@ import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.utils.GsonUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -101,11 +102,16 @@ public class ExchangeViewModel extends ViewModel {
         for (String p : strPairs) {
             if (!p.contains(filerCoin)) continue;
             int index = p.indexOf("_");
-            if (p.substring(0, index).equalsIgnoreCase(current)) { toCoins.add(p.substring(index + 1)); }
             if (p.substring(index + 1).equalsIgnoreCase(current)) { fromCoins.add(p.substring(0, index)); }
-            pairs.put("to", toCoins);
-            pairs.put("from", fromCoins);
+            if (p.substring(0, index).equalsIgnoreCase(current)) { toCoins.add(p.substring(index + 1)); }
         }
+
+        Collections.sort(fromCoins);
+        Collections.sort(toCoins);
+
+        pairs.put("from", fromCoins);
+        pairs.put("to", toCoins);
+
         return pairs;
     }
 
