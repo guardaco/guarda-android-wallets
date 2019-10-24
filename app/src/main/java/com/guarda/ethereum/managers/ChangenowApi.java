@@ -17,6 +17,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import timber.log.Timber;
 
+import static com.guarda.ethereum.screens.exchange.first.ExchangeFragment.EXCHANGE_DIVIDER_STRING;
+
 public class ChangenowApi {
 
     public static void getSupportedCoins(final Callback2<String, Map<String, ChangenowApi.SupportedCoinModel>> onComplete) {
@@ -61,7 +63,7 @@ public class ChangenowApi {
 
     public static void getRate(final String fromCoin, final String toCoin, final Callback2<String, ChangenowApi.GetRateRespModel> onComplete) {
         final String pair = fromCoin + "_" + toCoin;
-        makeGetQuery("/api/v1/exchange-amount/10000/" + pair, new Callback2<String, String>() {
+        makeGetQuery("/api/v1/exchange-amount/" + EXCHANGE_DIVIDER_STRING +"/" + pair, new Callback2<String, String>() {
             @Override
             public void onResponse(String status, String resp) {
                 try {

@@ -1,9 +1,6 @@
 package com.guarda.ethereum.screens.exchange.first;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -98,6 +95,9 @@ public class ExchangeFragment extends BaseFragment {
     private List<ExchangeSpinnerRowModel> fromCoinsList = new ArrayList<>();
     private List<ExchangeSpinnerRowModel> toCoinsList = new ArrayList<>();
     private String selectedTicker = "";
+
+    public static final String EXCHANGE_DIVIDER_STRING = "10000";
+    public static final Double EXCHANGE_DIVIDER_DOUBLE = Double.parseDouble(EXCHANGE_DIVIDER_STRING);
 
     public ExchangeFragment() { GuardaApp.getAppComponent().inject(this); }
 
@@ -280,7 +280,7 @@ public class ExchangeFragment extends BaseFragment {
                         try {
                             getActivity().runOnUiThread(() -> {
                                 textViewExchangeRateHeader.setVisibility(View.VISIBLE);
-                                BigDecimal rate = response.rate.divide(BigDecimal.valueOf(1000.0d), BigDecimal.ROUND_DOWN);
+                                BigDecimal rate = response.rate.divide(BigDecimal.valueOf(EXCHANGE_DIVIDER_DOUBLE), BigDecimal.ROUND_DOWN);
                                 textViewExchangeRate.setText("1 " + fromCoin.toUpperCase() + " ~ " + rate.toString() + " " + toCoin.toUpperCase());
                                 Timber.d("updateSelectedPairRateChangenow response.rate.longValue() = %s", response.rate.toPlainString());
                                 if (response.rate.compareTo(BigDecimal.ZERO) == 0)

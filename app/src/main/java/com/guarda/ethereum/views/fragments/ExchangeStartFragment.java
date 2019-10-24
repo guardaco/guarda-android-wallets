@@ -41,6 +41,7 @@ import butterknife.BindView;
 import timber.log.Timber;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+import static com.guarda.ethereum.screens.exchange.first.ExchangeFragment.EXCHANGE_DIVIDER_DOUBLE;
 
 @AutoInjector(GuardaApp.class)
 public class ExchangeStartFragment extends BaseFragment {
@@ -256,7 +257,7 @@ public class ExchangeStartFragment extends BaseFragment {
             ChangenowManager.getInstance().getRate(coinFrom.symbol, coinTo.symbol, response -> {
                 try {
                     getActivity().runOnUiThread(() -> {
-                        BigDecimal rate = response.rate.divide(BigDecimal.valueOf(1000.0d), BigDecimal.ROUND_DOWN);
+                        BigDecimal rate = response.rate.divide(BigDecimal.valueOf(EXCHANGE_DIVIDER_DOUBLE), BigDecimal.ROUND_DOWN);
                         tv_rate.setText(String.format("Exchange rate: 1 %s ~ %s %s",
                                 coinFrom.symbol.toUpperCase(),
                                 rate.toString(),
