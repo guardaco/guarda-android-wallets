@@ -113,8 +113,8 @@ public class TransactionHistoryFragment extends BaseFragment {
     private String exchangeRate;
     private final String tAddrTitle = "T-address";
     private final String zAddrTitle = "Z-address";
-    private Long transparentBalance;
-    private Long saplingBalance;
+    private Long transparentBalance = 0L;
+    private Long saplingBalance = 0L;
     private boolean isUpdating = false;
 
     @Inject
