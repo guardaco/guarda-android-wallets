@@ -116,13 +116,12 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
             throw new IllegalArgumentException("Found sapling unspents cannot fund this transaction.");
         }
 
-        Timber.d("bytesShieldedOutputs (bytes)=%s %d",Arrays.toString(bytesShieldedOutputs), bytesShieldedOutputs.length); // 948 bytes for an output
+        Timber.d("bytesShieldedOutputs (bytes)=%s %d", Arrays.toString(bytesShieldedOutputs), bytesShieldedOutputs.length); // 948 bytes for an output
         shieldedOutputsBlake = new byte[32];
         Blake2bDigest prevoutsDigest = new Blake2bDigest(null, 32, null, ZCASH_SHIELDED_OUTPUTS_HASH_PERSONALIZATION);
         prevoutsDigest.update(bytesShieldedOutputs, 0, bytesShieldedOutputs.length);
         prevoutsDigest.doFinal(shieldedOutputsBlake, 0);
         Timber.d("shieldedOutputsBlake=%s %d", Arrays.toString(shieldedOutputsBlake), shieldedOutputsBlake.length);
-
     }
 
     public byte[] getBytes() {

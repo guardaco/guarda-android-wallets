@@ -97,6 +97,9 @@ public class ZcashTransactionHelper {
                 value.toString());
         Timber.d("greeting =" + Arrays.toString(gstr) + " s=" + gstr.length);
 
+        //in case the destination address is invalid
+        if (gstr.length != 192 + 32) return new ProofAndCv(new byte[0], new byte[0], new byte[1]);
+
         byte[] proof = new byte[192];
         byte[] cv = new byte[32];
         System.arraycopy(gstr, 0, proof, 0, 192);
