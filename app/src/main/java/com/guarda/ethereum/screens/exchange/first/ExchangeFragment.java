@@ -58,8 +58,6 @@ public class ExchangeFragment extends BaseFragment {
     TextView textViewReceive;
     @BindView(R.id.spinnerToCoin)
     Spinner spinnerToCoin;
-    @BindView(R.id.img_change)
-    ImageView img_change;
     @BindView(R.id.textViewExchangeRateHeader)
     TextView textViewExchangeRateHeader;
     @BindView(R.id.textViewExchangeRate)
@@ -67,27 +65,14 @@ public class ExchangeFragment extends BaseFragment {
     @BindView(R.id.buttonStartExchange)
     Button buttonStartExchange;
     @Inject
-    CurrencyListHolder currentCrypto;
-    @Inject
     SharedManager sharedManager;
     @Inject
     GsonUtils gsonUtils;
-
-    private boolean isSpinnerInitialized = false;
-    private int spinnerExchangePosition = 0;
-    private int spinnerFromCoinPosition = 0;
-    private int spinnerToCoinPosition = 0;
-    private int spinnerFromPrevPosition = 0;
-    private int spinnerToPrevPosition = 0;
-
-    private BigDecimal minimumAmount = new BigDecimal(0.0);
 
     private ExchangeSpinnerAdapter exchangeFromSpinnerAdapter;
     private ExchangeSpinnerAdapter exchangeToSpinnerAdapter;
     private ExchangeSpinnerAdapter exchangesAdapter;
 
-    //
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private ExchangeViewModel exchangeViewModel;
     private SharedViewModel sharedViewModel;
     private Map<String, ChangenowApi.SupportedCoinModel> mapCurrencies;
@@ -170,6 +155,7 @@ public class ExchangeFragment extends BaseFragment {
 
     @OnClick(R.id.img_change)
     public void changeDirection(View v) {
+        if (exchangeFromSpinnerAdapter == null) return;
         if (exchangeFromSpinnerAdapter.getCount() == 1) {
             fillSpinnersToCoin();
         } else {
