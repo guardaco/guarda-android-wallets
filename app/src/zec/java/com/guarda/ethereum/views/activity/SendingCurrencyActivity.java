@@ -472,14 +472,15 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
 
     private void sendFromShielded() throws ZCashException {
         if (syncManager.isInProgress()) {
+            closeProgress();
             doToast("Your z address is currently syncing. Kindly wait till the process is finished.");
-            return;
-        }
-        String addr = getToAddress();
-        if (addr.substring(0, 1).equalsIgnoreCase("z")) {
-            sendShieldedToShielded();
-        } else if (addr.substring(0, 1).equalsIgnoreCase("t")) {
-            sendShieldedToTransparent();
+        } else {
+            String addr = getToAddress();
+            if (addr.substring(0, 1).equalsIgnoreCase("z")) {
+                sendShieldedToShielded();
+            } else if (addr.substring(0, 1).equalsIgnoreCase("t")) {
+                sendShieldedToTransparent();
+            }
         }
     }
 
