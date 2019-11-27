@@ -51,19 +51,6 @@ public class CallUpdateTxDetails implements Callable<String> {
 
         isOut = txValue > 0;
 
-        // for send all from z to t
-        if (nfList != null && nfList.size() > 0 && cmuList != null && cmuList.size() == 0) {
-            isOut = false;
-            // check if t address is mine or not
-            List<Vout> outs = tr.getVout();
-            for (Vout out : outs) {
-                List<String> addrs = out.getScriptPubKey().getAddresses();
-                if (!addrs.contains(ownAddress)) {
-                    isOut = true;
-                }
-            }
-        }
-
         dbManager.getAppDb().getTxDetailsDao().insertAll(
                 new TxDetailsRoom(
                         Z_TX_KEY_PREFIX + tr.getHash(),
