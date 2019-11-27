@@ -552,7 +552,11 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 //if we send from Z address we need to get details from explorer
                 //if we send from T address we go after sending to history where the transaction is
                 // after history is updated
-                if (isDetailsNeeded) updateFromInsight(res.getTxid());
+                if (isDetailsNeeded) {
+                    updateFromInsight(res.getTxid());
+                } else {
+                    finishSending();
+                }
             }
 
             @Override
