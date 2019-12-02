@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/baseWhiteBgColor"
     android:fitsSystemWindows="true">
 
@@ -232,7 +233,7 @@
                 android:gravity="center"
                 android:theme="@style/EditTextHintLightGrey">
 
-                <com.guarda.ethereum.customviews.RobotoEditText
+                <EditText
                     android:id="@+id/et_send_coins_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -249,7 +250,8 @@
                     android:shrinkColumns="0, true"
                     android:textAlignment="textStart"
                     android:textColor="@color/darkGreyText"
-                    android:textSize="20dp" />
+                    android:textSize="20sp"
+                    tools:text="zs1qqqqqqqqqqqqqqqqqqxrrfaccydp867g6zg7ne5ht37z38jtfyw0ygmp0jae6hhf07twjqj2ug6x"/>
 
             </android.support.design.widget.TextInputLayout>
 
