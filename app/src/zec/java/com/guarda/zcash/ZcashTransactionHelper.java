@@ -61,7 +61,6 @@ public class ZcashTransactionHelper {
         byte[] zkproof = pacv.proof;
         byte[] cv = pacv.cv;
 
-        //z2z
         String cmhex = RustAPI.cm(
                 bytesToHex(dToAddress),
                 bytesToHex(pkdToAddress),

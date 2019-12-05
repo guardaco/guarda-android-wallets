@@ -96,6 +96,11 @@ public class SyncManager {
                 .subscribe((latest) -> {
                     Timber.d("getBlocks latest=%s", latest);
 
+                    if (latest.getLatest() == 0) {
+                        stopAndLogError("getBlocks", new Exception("can't get last block from litenode"));
+                        return;
+                    }
+
                     //if blocks downloading starts from last db height it will rewrite the block with empty tree field
                     protoApi.pageNum = latest.getLastFromDb() + 1;
                     endB = latest.getLatest();
