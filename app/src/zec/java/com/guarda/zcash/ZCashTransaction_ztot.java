@@ -40,6 +40,7 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
     private static final int header = 0x80000004; //version=4, fooverwintered=1
     private static final int versionGroupId = VERSION_BRANCH_ID_BLOSSOM;
     private static final int consensusBranchId = CONSENSUS_BRANCH_ID_BLOSSOM;
+    private static final int SIGHASH_ALL = 1;
 
     private byte[] tx_sig_bytes;
     private byte[] tx_bytes;
