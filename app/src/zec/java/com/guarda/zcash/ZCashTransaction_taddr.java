@@ -20,13 +20,12 @@ public class ZCashTransaction_taddr {
   private static final byte[] ZCASH_SEQUENCE_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'S', 'e', 'q', 'u', 'e', 'n', 'c', 'H', 'a', 's', 'h'}; //ZcashSequencHash
   private static final byte[] ZCASH_OUTPUTS_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'O', 'u', 't', 'p', 'u', 't', 's', 'H', 'a', 's', 'h'};  //ZcashOutputsHash
   private static final byte[] ZCASH_SIGNATURE_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'S', 'i', 'g', 'H', 'a', 's', 'h'}; // ZcashSigHash (12 bytes)
-  private static final int VERSION_BRANCH_ID_OVERWINTER = 0x03C48270;
-  private static final int VERSION_BRANCH_ID_SAPLING = 0x892F2085;
-  private static final int CONSENSUS_BRANCH_ID_OVERWINTER = 0x5ba81b19;
-  private static final int CONSENSUS_BRANCH_ID_SAPLING = 0x76b809bb;
+
+  private static final int VERSION_BRANCH_ID_BLOSSOM = 0x892F2085;
+  private static final int CONSENSUS_BRANCH_ID_BLOSSOM = 0x2BB40E60;
   private static final int header = 0x80000004; //version=4, fooverwintered=1
-  private static final int versionGroupId = VERSION_BRANCH_ID_SAPLING;
-  private static final int consensusBranchId = CONSENSUS_BRANCH_ID_SAPLING;
+  private static final int versionGroupId = VERSION_BRANCH_ID_BLOSSOM;
+  private static final int consensusBranchId = CONSENSUS_BRANCH_ID_BLOSSOM;
   private static final int SIGHASH_ALL = 1;
 
   private byte[] tx_sig_bytes;
