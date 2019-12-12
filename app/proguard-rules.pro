@@ -96,3 +96,4 @@
 -keepclassmembers class * extends com.sun.jna.* { public *; }
 
 -keep class com.guarda.ethereum.models.items.* { *; }
+-keep class com.guarda.ethereum.models.guarda.* { *; }

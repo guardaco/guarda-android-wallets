@@ -686,7 +686,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                                 LOGGER_ENV,
                                 String.valueOf(System.currentTimeMillis()),
                                 type,
-                                gson.toJson(body)
+                                body.toString()
                         )
                 )
                         .subscribeOn(Schedulers.io())

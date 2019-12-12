@@ -12,4 +12,20 @@ data class LogMessageBody (
         val tBalance: String,
         val zBalance: String,
         val errorMessage: String
-)
+) {
+
+    override fun toString(): String {
+        return "LogMessageBody(" +
+                "fromAddress='$fromAddress', " +
+                "toAddress='$toAddress', " +
+                "amount='$amount', " +
+                "fee='$fee', " +
+                "isInclude=$isInclude, " +
+                "isSyncing=$isSyncing, " +
+                "isFromShielded=$isFromShielded, " +
+                "tBalance='$tBalance', " +
+                "zBalance='$zBalance', " +
+                "errorMessage='$errorMessage'" +
+                ")"
+    }
+}
