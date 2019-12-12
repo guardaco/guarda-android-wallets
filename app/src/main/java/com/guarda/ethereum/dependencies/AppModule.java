@@ -26,7 +26,7 @@ import dagger.Provides;
  * Created by SV on 10.08.2017.
  */
 
-@Module
+@Module(includes = RetrofitServicesModule.class)
 public class AppModule {
 
     private Context mContext;
