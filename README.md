@@ -10,15 +10,14 @@ Guarda does not store any personal information, wallet data or private keys of o
 Read the detailed instruction [here](https://guarda.freshdesk.com/support/solutions/articles/36000095874-how-to-install-a-guarda-open-source-android-wallet).
 ## About
 Cryptocurrency wallets support:
-- ZEC Shielded (Z-addresses, mainnet) - [/APKs/zec-shielded.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-shielded.apk)
-- ZEC-Beta-Testnet (Zcash Shielded) - [/APKs/zec-testnet-beta.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-testnet-beta.apk)
+- ZEC Shielded (Z-addresses, mainnet) - [/APKs/zec-shielded-mainnet.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-shielded-mainnet.apk)
+- ZEC Shielded (Z-addresses, testnet) - [/APKs/zec-shielded-testnet.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-shielded-testnet.apk)
 - BTC (Bitcoin) - [/APKs/btc-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/btc-release.apk)
 - ETH (Ethereum) - [/APKs/eth-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/eth-release.apk)
 - BCH (Bitcoin Cash) - [/APKs/bch-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/bch-release.apk)
 - LTC (Litecoin) - [/APKs/ltc-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/ltc-release.apk)
 - IOTA (Iota) - [/APKs/iota-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/iota-release.apk)
 - ETC (Ethereum Classic) - [/APKs/etc-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/etc-release.apk)
-- ZEC (Zcash) - [/APKs/zec-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-release.apk)
 - BTG (Bitcoin Gold) - [/APKs/btg-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/btg-release.apk)
 - QTUM (Qtum) - [/APKs/qtum-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/qtum-release.apk)
 - BTS (BitShares) - [/APKs/bts-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/bts-release.apk)
