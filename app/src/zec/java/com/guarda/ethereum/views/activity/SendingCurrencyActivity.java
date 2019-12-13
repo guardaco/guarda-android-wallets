@@ -1,6 +1,7 @@
 package com.guarda.ethereum.views.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
@@ -19,9 +22,12 @@ import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
+import com.guarda.ethereum.models.guarda.LogMessageBody;
+import com.guarda.ethereum.models.guarda.LogMessageRequest;
 import com.guarda.ethereum.models.items.SendRawTxResponse;
 import com.guarda.ethereum.models.items.TxFeeResponse;
 import com.guarda.ethereum.rest.ApiMethods;
+import com.guarda.ethereum.rest.GuardaLoggingApi;
 import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.rxcall.CallUpdateTxDetails;
@@ -55,6 +61,18 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
+import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_BUILDING_T_T;
+import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_BUILDING_T_Z;
+import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_BUILDING_Z_T;
+import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_BUILDING_Z_Z;
+import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_COMMON_EXCEPTION;
+import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_COMMON_ZCASHEXCEPTION;
+import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_NODE_RESPONSE;
+import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_WRONG_NETWORK;
+import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_Z_ADDRESS_SYNCING;
+import static com.guarda.ethereum.models.guarda.LogMessageRequest.LOGGER_ENV;
+import static com.guarda.ethereum.models.guarda.LogMessageRequest.LOGGER_PLATFORM;
+
 @AutoInjector(GuardaApp.class)
 public class SendingCurrencyActivity extends AToolbarMenuActivity {
 
@@ -85,6 +103,8 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     DbManager dbManager;
     @Inject
     SyncManager syncManager;
+    @Inject
+    GuardaLoggingApi guardaLoggingApi;
 
     private String walletNumber;
     private String amountToSend;
@@ -95,6 +115,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     private long currentFeeEth;
     private String arrivalAmountToSend;
     private Coin defaultFee = Coin.valueOf(558);
+    private Gson gson = new Gson();
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -386,15 +407,20 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 showError(etSumSend, getString(R.string.withdraw_amount_can_not_be_empty));
             }
         } catch (WrongNetworkException wne) {
+            closeProgress();
+            doToast(getString(R.string.send_wrong_address));
+            sendLogMessage(wne.getMessage(), ERROR_SENDING_WRONG_NETWORK);
             Timber.e("onConfirmClick wne=%s", wne.toString());
-            Toast.makeText(this, R.string.send_wrong_address, Toast.LENGTH_SHORT).show();
         } catch (ZCashException e) {
+            closeProgress();
             doToast("Can not send the transaction: " + e.getMessage());
+            sendLogMessage(e.getMessage(), ERROR_SENDING_COMMON_ZCASHEXCEPTION);
             Timber.e("createTx ZCashException=%s", e.getMessage());
         } catch (Exception e) {
-            Toast.makeText(SendingCurrencyActivity.this, "Error of sending", Toast.LENGTH_SHORT).show();
             closeProgress();
-            e.printStackTrace();
+            doToast("Error of sending");
+            sendLogMessage(e.getMessage(), ERROR_SENDING_COMMON_EXCEPTION);
+            Timber.e("createTx Exception=%s", e.getMessage());
         }
     }
 
@@ -428,11 +454,13 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                             } catch (ZCashException e) {
                                 closeProgress();
                                 doToast("Sending error: " + e.getMessage());
+                                sendLogMessage(e.getMessage(), ERROR_SENDING_BUILDING_T_T);
                                 Timber.d("Cannot sign transaction");
                             }
                         } else {
                             closeProgress();
                             doToast("Sending error: " + r1);
+                            sendLogMessage(r1, ERROR_SENDING_BUILDING_T_T);
                             Timber.d("createTransaction_taddr: RESPONSE CODE is not ok");
                         }
                 });
@@ -460,11 +488,13 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                             } catch (ZCashException e) {
                                 closeProgress();
                                 doToast("Sending error: " + e.getMessage());
+                                sendLogMessage(e.getMessage(), ERROR_SENDING_BUILDING_T_Z);
                                 Timber.d("sendTransparentToSapling Cannot sign transaction e=%s", e.getMessage());
                             }
                         } else {
                             closeProgress();
                             doToast("Sending error: " + r1);
+                            sendLogMessage(r1, ERROR_SENDING_BUILDING_T_Z);
                             Timber.d("sendTransparentToSapling: RESPONSE CODE is not ok");
                         }
                 });
@@ -474,6 +504,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         if (syncManager.isInProgress()) {
             closeProgress();
             doToast("Your z address is currently syncing. Kindly wait till the process is finished.");
+            sendLogMessage("z address is currently syncing", ERROR_SENDING_Z_ADDRESS_SYNCING);
         } else {
             String addr = getToAddress();
             if (addr.substring(0, 1).equalsIgnoreCase("z")) {
@@ -510,6 +541,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                     } else {
                         closeProgress();
                         doToast("Sending error: " + r1);
+                        sendLogMessage(r1, ERROR_SENDING_BUILDING_Z_Z);
                         Timber.d("z to z - err=%s", r1);
                     }
                 });
@@ -538,6 +570,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                     } else {
                         closeProgress();
                         doToast("Sending error: " + r1);
+                        sendLogMessage(r1, ERROR_SENDING_BUILDING_Z_T);
                         Timber.d("z to t - RESPONSE CODE is not ok");
                     }
                 });
@@ -563,6 +596,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
             public void onFailure(String msg) {
                 closeProgress();
                 doToast(CurrencyUtils.getBtcLikeError(msg));
+                sendLogMessage(msg, ERROR_SENDING_NODE_RESPONSE);
                 Timber.d("broadcastRawTxZexNew e=%s", msg);
             }
         });
@@ -625,5 +659,45 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         intent.putExtra(Extras.COME_FROM, Extras.FROM_WITHDRAW);
         startActivity(intent);
     }
+
+    private void sendLogMessage(String errorMessage, String type) {
+        String device = String.format("brand: %s, device: %s, model: %s", Build.BRAND, Build.DEVICE, Build.MODEL);
+        String from = isSaplingAddress ? "FROM_Z_ADDRESS" : walletManager.getWalletFriendlyAddress();
+        String to = getToAddress();
+        if (to.startsWith("z")) to = "TO_Z_ADDRESS";
+        LogMessageBody body = new LogMessageBody(
+                from,
+                to,
+                getAmountToSend(),
+                String.valueOf(currentFeeEth),
+                isInclude,
+                syncManager.isInProgress(),
+                isSaplingAddress,
+                walletManager.getMyBalance().toFriendlyString(),
+                saplingBalance,
+                errorMessage
+                );
+        compositeDisposable.add(
+                guardaLoggingApi.sendMessage(
+                        new LogMessageRequest(
+                                LOGGER_PLATFORM,
+                                device,
+                                BuildConfig.VERSION_NAME,
+                                LOGGER_ENV,
+                                String.valueOf(System.currentTimeMillis()),
+                                type,
+                                body.toString()
+                        )
+                )
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                responseBody -> Timber.d("guardaLoggingApi.sendMessage=%s", responseBody),
+                                e -> Timber.e("guardaLoggingApi.sendMessage e=%s", e.getMessage())
+                        )
+        );
+    }
+
+
 
 }

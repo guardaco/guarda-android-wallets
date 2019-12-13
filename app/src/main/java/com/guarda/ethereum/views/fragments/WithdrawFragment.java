@@ -12,13 +12,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.customviews.RobotoLightEditText;
 import com.guarda.ethereum.managers.RawNodeManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Extras;
@@ -44,7 +44,7 @@ public class WithdrawFragment extends BaseFragment{
 
 
     @BindView(R.id.et_send_coins_address)
-    RobotoLightEditText etSendCoinsAddress;
+    EditText etSendCoinsAddress;
     @BindView(R.id.btn_scan_qr)
     ImageButton btScanQr;
     @BindView(R.id.btn_next)
@@ -77,7 +77,6 @@ public class WithdrawFragment extends BaseFragment{
     protected void init() {
         GuardaApp.getAppComponent().inject(this);
         initViews();
-        initAddressField();
         initTokens();
     }
 
@@ -97,13 +96,6 @@ public class WithdrawFragment extends BaseFragment{
     private boolean isTokensAvailable() {
         return tokenManager.getWalletTokensList() != null
                 && !tokenManager.getWalletTokensList().isEmpty();
-    }
-
-    private void initAddressField() {
-        etSendCoinsAddress
-                .setOnPasteListener(
-                        text -> etSendCoinsAddress.setText(filterAddress(text))
-                );
     }
 
     private void initViews() {

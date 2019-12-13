@@ -298,14 +298,6 @@ public class SharedManager {
         settings.edit().putBoolean(IS_WAIT_FOUR_TR, b).apply();
     }
 
-    public boolean getIsShowBackupAlert() {
-        return settings.getBoolean(IS_SHOW_BACKUP_ALERT, true);
-    }
-
-    public void setIsShowBackupAlert(boolean b) {
-        settings.edit().putBoolean(IS_SHOW_BACKUP_ALERT, b).apply();
-    }
-
     public void setJsonExcep(String ex) {
         settings.edit().putString(LOAD_JSON_EXCEPTION, ex).apply();
     }

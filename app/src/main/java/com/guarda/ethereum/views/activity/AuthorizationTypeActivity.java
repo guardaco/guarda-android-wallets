@@ -55,7 +55,6 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
         authorizationViewModel = ViewModelProviders.of(this, factory).get(AuthorizationViewModel.class);
 
         walletManager.clearWallet();
-        sharedManager.setIsShowBackupAlert(true);
 
         initSubscriptions();
     }

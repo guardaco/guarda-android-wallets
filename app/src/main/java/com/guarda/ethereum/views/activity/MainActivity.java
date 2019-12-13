@@ -322,10 +322,10 @@ public class MainActivity extends TrackOnStopActivity {
         Button openBackup = logoutView.findViewById(R.id.btn_to_backup);
 
         logOut.setOnClickListener((v) -> {
+            showProgress("Processing...");
             syncManager.stopSync();
             walletManager.clearWallet();
             sharedManager.setLastSyncedBlock("");
-            sharedManager.setIsShowBackupAlert(true);
             sharedManager.setIsPinCodeEnable(false);
             transactionsManager.clearLists();
             cleanDbLogOut();
@@ -351,10 +351,12 @@ public class MainActivity extends TrackOnStopActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         (latest) -> {
+                            closeProgress();
                             finish();
                             Timber.d("cleanDbLogOut done=%s", latest);
                         },
                         (e) -> {
+                            closeProgress();
                             finish();
                             Timber.d("cleanDbLogOut err=%s", e.getMessage());
                         }
