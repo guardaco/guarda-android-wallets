@@ -34,7 +34,7 @@ class RustAPITest {
             Timber.d("res = %s", Arrays.toString(res0))
         }
 
-        val res1 = RustAPI.testEncryptNp(ByteArray(32), ByteArray(564))
+        val res1 = RustAPI.encryptNp(ByteArray(32), ByteArray(564))
         Timber.d("res1 = %s", Arrays.toString(res1))
 
         if (isDeviceOk) assert(res0.contentEquals(res1))

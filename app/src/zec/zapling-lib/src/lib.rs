@@ -1168,7 +1168,7 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_compactDecrypt(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_testEncryptNp(
+pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_encryptNp(
     env: JNIEnv<'_>,
     _: JClass<'_>,
     key: jbyteArray,

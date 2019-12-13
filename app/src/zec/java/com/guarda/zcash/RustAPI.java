@@ -64,6 +64,7 @@ public class RustAPI {
                                           final String nk,
                                           final String position);
 
+    @Deprecated
     public static native byte[] encryptNp(final String key,
                                           final String cipher);
 
@@ -106,7 +107,7 @@ public class RustAPI {
     public static native byte[] compactDecrypt(final byte[] key,
                                                    final byte[] cipher);
 
-    public static native byte[] testEncryptNp(final byte[] key,
+    public static native byte[] encryptNp(final byte[] key,
                                                final byte[] cipher);
 
     //endregion

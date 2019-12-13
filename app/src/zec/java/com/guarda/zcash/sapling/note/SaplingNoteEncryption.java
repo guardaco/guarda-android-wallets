@@ -36,7 +36,7 @@ public class SaplingNoteEncryption {
         Timber.d("encryptToRecipient K=%s, s=%s", Arrays.toString(K), K.length);
 
         byte[] sec2 = new byte[0];
-        sec2 = RustAPI.encryptNp(revHex(bytesToHex(K)), bytesToHex(dFromNote));
+        sec2 = RustAPI.encryptNp(K, dFromNote);
         Timber.d("encryptToRecipient sec2=%s %d", Arrays.toString(sec2), sec2.length);
         return sec2;
     }
