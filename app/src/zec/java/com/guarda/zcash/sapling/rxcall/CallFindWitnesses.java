@@ -34,9 +34,11 @@ public class CallFindWitnesses implements Callable<Boolean> {
     private DbManager dbManager;
     private SaplingCustomFullKey saplingKey;
 
-    private Long defaultStartHeight = 551912L;
+//    private Long defaultStartHeight = 551912L;
+    private Long defaultStartHeight = 620000L; //testnet
     private Long startScanBlocksHeight = defaultStartHeight;
-    private Long blockCounter = 551912L;
+//    private Long blockCounter = 551912L;
+    private Long blockCounter = 620000L; //testnet
 
     public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey) {
         this.dbManager = dbManager;
@@ -55,7 +57,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
             startScanBlocksHeight = lastBlockWithTree.getHeight();
             saplingTree = new SaplingMerkleTree(lastBlockWithTree.getTree());
         } else {
-            saplingTree = new SaplingMerkleTree(treeOnHeight551912main);
+            saplingTree = new SaplingMerkleTree(treeOnHeight620000test);
             dbManager.getAppDb().getBlockDao().setTreeByHeight(saplingTree.serialize(), defaultStartHeight);
         }
 
@@ -116,7 +118,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                         Timber.e("getWintesses saplingTree.append(out.getCmu()); err=%s", zce.getMessage());
                     }
 
-                    if (br.getHeight() < 551937) continue;
+                    if (br.getHeight() < 620000) continue;
                     SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey);
 
                     //skip if it's not our note
@@ -181,5 +183,8 @@ public class CallFindWitnesses implements Callable<Boolean> {
 
     //mainnet
     private static final String treeOnHeight551912main = "01d192b19aef282b71be4330345048b2e2c11ad7e7919a989eb616b9fe9f6ab2580170b5e8deedb2780affc0a81f27d7c46dc73ad618368c9aad820b079cb558ce580f000188349ea325f12f3f9bc64a17965da7756244a2742f4547928f3fe0f38ca956270126729ec7710ba839684f2522da582c2aa3dc88fc7c6c202ea47f2df40c1e5f0d000000019ec91f70592f5010f156684754b9c584d0caedda479b16e9629e1761eed46c21013a85c25ee7bee68f899b713868e2923ea16ce53b6d8ddb9ecdb4c0f7cc7f4047018fbd5b7f31ba10a344ed1070e5ac858b5fbf137f6609ab40dbf6699efc2ca42b01175555acb7f78f4a9720549438cc73bba265ce4737b9541307a71a5ec40e5c58012557fe4d4cd152a6c7bc0b99fc93c6a84fff74d91962a424dfe8c78184465c3100013457c7289a51a355b01114a154e1666f5a83dd19257db331ccef1ec7a72caa420143359e122f3e93ad3b9dbf673c12c1551a31efde6e4195d98e571e0db70dee47014bc8cc7ccc3f42d408bd00d811eafff7cd23b0d0d656ef383ac81a7789d0011a";
+
+    //testnet
+    private static final String treeOnHeight620000test = "0170cf036ea1ea3c6e08432e18b6a372ca0b8b83671cc13ab0cf9e28c182f6c36f00100000013f3fc2c16ac4780f1c472ca65534ab08911f325a9edde5ea7f24364b47c9a95300017621b12e518cbbbdb7511ab423e0bddda412ed61ed3cff5be2140de65d6a0069010576153a5a2098812e7a028c37c3398e186f398c9b07bc199784ab97e5535c3e0000019a6ce2f0f7dbb2de493a315abf62d8ca96ccc701f116b6ddfae33870a2183d3c01c9d3564eff54ebc328eab2e4f1150c3637f4f47516f879a0cfebdf49fe7b1d5201c104705fac60a85596010e41260d07f3a64f38f37a112eaef41cd9d736edc5270145e3d4899fcd7f0f1236ae31eafb3f4b65ad6b11a17eae1729cec09bd3afa01a000000011f8322ef806eb2430dc4a7a41c1b344bea5be946efc7b4349c1c9edb14ff9d39";
 
 }

@@ -29,7 +29,8 @@ public class ProtoApi {
 
     public ProtoApi() {
         GuardaApp.getAppComponent().inject(this);
-        String host = "zec-lightwallet.guarda.co"; //9067
+//        String host = "zec-lightwallet.guarda.co"; //9067 //mainnet
+        String host = "34.68.177.238"; //9067 //testnet
         int port = 9067;
         channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
     }
