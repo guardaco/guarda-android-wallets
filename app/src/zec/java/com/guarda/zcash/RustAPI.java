@@ -64,10 +64,6 @@ public class RustAPI {
                                           final String nk,
                                           final String position);
 
-    @Deprecated
-    public static native byte[] encryptNp(final String key,
-                                          final String cipher);
-
     public static native String proveContextInit();
 
     public static native byte[] spendProof(final String ak,
