@@ -17,7 +17,7 @@ android {
         targetSdkVersion 28
         versionCode 51
         versionName "0.61"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
@@ -47,6 +47,10 @@ android {
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
         }
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
 
     externalNativeBuild {
@@ -311,10 +315,11 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
 
     //tests
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.google.code.findbugs'
-    })
+//    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+////        exclude group: 'com.android.support', module: 'support-annotations'
+////        exclude group: 'com.google.code.findbugs'
+////    })
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     testImplementation 'junit:junit:4.12'
 
     //eth
@@ -373,13 +378,18 @@ dependencies {
     zecImplementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     zecImplementation "android.arch.persistence.room:runtime:1.1.1"
     zecAnnotationProcessor "android.arch.persistence.room:compiler:1.1.1"
-    androidTestZecImplementation "android.arch.persistence.room:testing:1.1.1"
     zecImplementation "com.goterl.lazycode:lazysodium-android:3.6.3@aar"
     zecImplementation "net.java.dev.jna:jna:5.3.1@aar"
     zecImplementation 'com.facebook.stetho:stetho:1.5.1'
     //lifecycle
     zecImplementation "android.arch.lifecycle:extensions:1.1.1"
     zecAnnotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    //tests
+    androidTestZecImplementation "android.arch.persistence.room:testing:1.1.1"
+    androidTestZecImplementation 'androidx.test:runner:1.2.0'
+    androidTestZecImplementation 'androidx.test:rules:1.2.0'
+    androidTestZecImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

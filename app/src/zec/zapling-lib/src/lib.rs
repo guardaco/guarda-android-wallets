@@ -1167,6 +1167,30 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_compactDecrypt(
     env.byte_array_from_slice(res.as_slice()).expect("Could not convert u8 vec into java byte array!")
 }
 
+#[no_mangle]
+pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_testEncryptNp(
+    env: JNIEnv<'_>,
+    _: JClass<'_>,
+    key: jbyteArray,
+    cypher: jbyteArray,
+) -> jbyteArray {
+
+            let key = env.convert_byte_array(key).unwrap();
+            let cypher = env.convert_byte_array(cypher).unwrap();
+
+            assert_eq!(cypher.len(), NOTE_PLAINTEXT_SIZE);
+
+            let mut output = [0u8; ENC_CIPHERTEXT_SIZE];
+            assert_eq!(
+                ChachaPolyIetf::aead_cipher()
+                    .seal_to(&mut output, &cypher, &[], &key, &[0u8; 12])
+                    .unwrap(),
+                ENC_CIPHERTEXT_SIZE
+            );
+
+            env.byte_array_from_slice(&output).expect("Could not convert u8 vec into java byte array!")
+}
+
 pub fn spending_key(seed: &[u8], coin_type: u32, account: u32) -> ExtendedSpendingKey {
     ExtendedSpendingKey::from_path(
         &ExtendedSpendingKey::master(&seed),

@@ -106,6 +106,9 @@ public class RustAPI {
     public static native byte[] compactDecrypt(final byte[] key,
                                                    final byte[] cipher);
 
+    public static native byte[] testEncryptNp(final byte[] key,
+                                               final byte[] cipher);
+
     //endregion
 
     public static String checkInit(Context context) {
