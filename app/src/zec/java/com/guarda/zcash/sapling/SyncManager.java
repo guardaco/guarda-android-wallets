@@ -177,7 +177,7 @@ public class SyncManager {
                         .subscribe(
                                 (res) -> {
                                     stopSync();
-                                    Timber.d("revertLastBlocks completed=%s", res);
+                                    Timber.d("revertLastBlocks (all blocks dropped) completed=%s", res);
                                 },
                                 (e) -> stopAndLogError("revertLastBlocks", e)
                         )
