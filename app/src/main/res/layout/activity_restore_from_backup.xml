@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/baseGreyBgColor"
+    android:background="@color/whiteTextColor"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -202,7 +202,8 @@
 
         <Button
             android:id="@+id/btn_restore"
-            style="@style/colorButtonStyle"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/btn_gradient_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -210,6 +211,9 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="25dp"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="18sp"
+            android:textAllCaps="false"
             android:drawableEnd="@drawable/ic_arrow_right_wr"
             android:paddingEnd="15dp"
             android:paddingStart="25dp"

@@ -110,6 +110,7 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
         intent.putExtra(FIRST_ACTION_MAIN_ACTIVITY, CREATE_WALLET);
         intent.putExtra(DISABLE_CHECK, true);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.no_slide);
     }
 
     public void goToMainActivity(String backUpPhrase) {

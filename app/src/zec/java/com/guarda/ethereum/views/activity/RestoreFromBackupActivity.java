@@ -79,6 +79,12 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
         return R.layout.activity_restore_from_backup;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.no_slide, R.anim.slide_in_right);
+    }
+
     @OnClick(R.id.btn_restore)
     public void restore(View btn) {
         if (!TextUtils.isEmpty(etBackupPhrase.getText().toString().trim())) {
