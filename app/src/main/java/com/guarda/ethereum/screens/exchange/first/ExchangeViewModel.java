@@ -49,14 +49,14 @@ public class ExchangeViewModel extends ViewModel {
         if (!map.isEmpty()) {
             Map<String, ChangenowApi.SupportedCoinModel> mapCoins = gsonUtils.fromGsonCurrencies(map);
             currencies.setValue(mapCoins);
+
+            //if it's time to update list of currencies
+            long s = System.currentTimeMillis();
+            if (s > sharedManager.getTimeUpdateCurr() + UPD_CURRENCIES_DELAY)
+                getCurrencies(false);
         } else {
             getCurrencies(true);
         }
-
-        //if it's time to update list of currencies
-        long s = System.currentTimeMillis();
-        if (s > sharedManager.getTimeUpdateCurr() + UPD_CURRENCIES_DELAY)
-            getCurrencies(false);
     }
 
     private void getCurrencies(boolean isReturnMap) {
