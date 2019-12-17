@@ -64,9 +64,6 @@ public class RustAPI {
                                           final String nk,
                                           final String position);
 
-    public static native byte[] encryptNp(final String key,
-                                          final String cipher);
-
     public static native String proveContextInit();
 
     public static native byte[] spendProof(final String ak,
@@ -105,6 +102,9 @@ public class RustAPI {
     public static native String getExtsk(final byte[] data);
     public static native byte[] compactDecrypt(final byte[] key,
                                                    final byte[] cipher);
+
+    public static native byte[] encryptNp(final byte[] key,
+                                               final byte[] cipher);
 
     //endregion
 

@@ -10,6 +10,7 @@ import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
 import com.guarda.zcash.sapling.rxcall.CallBlockRange;
+import com.guarda.zcash.sapling.rxcall.CallBlocksForSync;
 import com.guarda.zcash.sapling.rxcall.CallFindWitnesses;
 import com.guarda.zcash.sapling.rxcall.CallLastBlock;
 import com.guarda.zcash.sapling.rxcall.CallRevertLastBlocks;
@@ -130,14 +131,32 @@ public class SyncManager {
     }
 
     private void getWintesses() {
-        compositeDisposable.add(Observable
-                .fromCallable(new CallFindWitnesses(dbManager, walletManager.getSaplingCustomFullKey()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((res) -> {
-                    Timber.d("getWintesses finished=%s", res);
-                    validateSaplingTree();
-                }, (e) -> stopAndLogError("getWintesses", e)));
+        compositeDisposable.add(
+                Observable.fromCallable(new CallBlocksForSync(dbManager))
+                        .flatMap(listBlocks -> {
+                            Timber.d("CallBlocksForSync finished=%s", listBlocks.size());
+                            return Observable.fromIterable(listBlocks);
+                        })
+                        .flatMap(
+                                block -> {
+                                    Timber.d("block for witnessing: %s", block.getHeight());
+                                    return Observable.fromCallable(
+                                            new CallFindWitnesses(
+                                                    dbManager,
+                                                    walletManager.getSaplingCustomFullKey(),
+                                                    block));
+                                }
+                        )
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                (b) -> Timber.d("CallFindWitnesses block witnessed=%s", b),
+                                (e) -> stopAndLogError("CallFindWitnesses", e),
+                                () -> {
+                                    Timber.d("CallFindWitnesses completed");
+                                    validateSaplingTree();
+                                })
+        );
     }
 
     private void validateSaplingTree() {
@@ -177,7 +196,7 @@ public class SyncManager {
                         .subscribe(
                                 (res) -> {
                                     stopSync();
-                                    Timber.d("revertLastBlocks completed=%s", res);
+                                    Timber.d("revertLastBlocks (all blocks dropped) completed=%s", res);
                                 },
                                 (e) -> stopAndLogError("revertLastBlocks", e)
                         )

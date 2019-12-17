@@ -183,16 +183,11 @@ public class SaplingMerkleTree {
 
     String root_inner(int depth, PathFiller filler) throws ZCashException {
         if (depth <= 0) throw new ZCashException("SaplingMerkleTree root_inner depth <= 0 =" + depth);
-        Timber.d("root_inner filler=%s", filler);
-        Timber.d("root_inner left=%s", left);
-        Timber.d("root_inner right=%s", right);
         String combineLeft = !left.isEmpty() ? left : filler.next(0);
         String combineRight = !right.isEmpty() ? right : filler.next(0);
 
         PedersenHash root = PedersenHash.combine(new PedersenHash(combineLeft), new PedersenHash(combineRight), 0);
-        Timber.d("root_inner 1root=%s", root.getHash());
         int d = 1;
-        Timber.d("root_inner parents=%s", parents);
         for (String parent : parents) {
             if (!parent.isEmpty()) {
                 root = PedersenHash.combine(new PedersenHash(parent), root, d);
@@ -205,7 +200,6 @@ public class SaplingMerkleTree {
 
         while (d < depth) {
             root = PedersenHash.combine(root, new PedersenHash(filler.next(d)), d);
-            Timber.d("root_inner root=%s, d=%d", root.getHash(), d);
             d++;
         }
 

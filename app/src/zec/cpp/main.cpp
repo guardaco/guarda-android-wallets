@@ -566,42 +566,6 @@ Java_com_guarda_zcash_RustAPI_computeNf(
     return env->NewStringUTF(strHex.c_str());
 }
 
-JNIEXPORT jbyteArray JNICALL
-Java_com_guarda_zcash_RustAPI_encryptNp(
-        JNIEnv *env,
-        jobject,
-        jstring key,
-        jstring ciphertext) {
-
-    // Key to uint256
-    std::string cpstrKey = env->GetStringUTFChars(key, NULL);
-    uint256 keyunt;
-    keyunt.SetHex(cpstrKey);
-
-    // ciphertext to unsigned char array
-    std::string cpstrCph = env->GetStringUTFChars(ciphertext, NULL);
-    std::vector<char> bytesCph;
-    for (unsigned int i = 0; i < cpstrCph.length(); i += 2) {
-        std::string byteString = cpstrCph.substr(i, 2);
-        char byte = (char) strtol(byteString.c_str(), NULL, 16);
-        bytesCph.push_back(byte);
-    }
-    unsigned char* resCph = new unsigned char[bytesCph.size()];
-    std::copy(bytesCph.begin(), bytesCph.end(), resCph);
-
-    std::array<unsigned char, 580> result;
-
-    encrypt_note_plaintext(keyunt.begin(), resCph, result.begin());
-
-    unsigned char* restest = new unsigned char[580];
-    std::copy(result.begin(), result.end(), restest);
-
-    jbyteArray array = env->NewByteArray(580);
-    env->SetByteArrayRegion(array, 0, 580, reinterpret_cast<jbyte*>(restest));
-
-    return array;
-}
-
 JNIEXPORT jstring JNICALL
 Java_com_guarda_zcash_RustAPI_proveContextInit(
         JNIEnv *env,

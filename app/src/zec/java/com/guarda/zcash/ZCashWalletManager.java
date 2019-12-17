@@ -26,6 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
 import static com.guarda.ethereum.models.constants.Const.ZEC_MAINNET_ADDR_PREFIX;
+import static com.guarda.ethereum.models.constants.Const.ZEC_TESTNET_ADDR_PREFIX;
 
 
 public class ZCashWalletManager {

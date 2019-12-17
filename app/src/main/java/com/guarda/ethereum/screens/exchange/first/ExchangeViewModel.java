@@ -49,21 +49,21 @@ public class ExchangeViewModel extends ViewModel {
         if (!map.isEmpty()) {
             Map<String, ChangenowApi.SupportedCoinModel> mapCoins = gsonUtils.fromGsonCurrencies(map);
             currencies.setValue(mapCoins);
+
+            //if it's time to update list of currencies
+            long s = System.currentTimeMillis();
+            if (s > sharedManager.getTimeUpdateCurr() + UPD_CURRENCIES_DELAY)
+                getCurrencies(false);
         } else {
             getCurrencies(true);
         }
-
-        //if it's time to update list of currencies
-        long s = System.currentTimeMillis();
-        if (s > sharedManager.getTimeUpdateCurr() + UPD_CURRENCIES_DELAY)
-            getCurrencies(false);
     }
 
     private void getCurrencies(boolean isReturnMap) {
         ChangenowApi.getSupportedCoins((String status, Map<String, ChangenowApi.SupportedCoinModel> resp) -> {
             if ("ok".equals(status)) {
                 sharedManager.setListCurrencies(gsonUtils.toGsonCurrencies(resp));
-                if (isReturnMap) currencies.setValue(resp);
+                if (isReturnMap) currencies.postValue(resp);
             } else {
                 Timber.e("ChangenowApi.getSupportedCoins is NOT ok");
             }
