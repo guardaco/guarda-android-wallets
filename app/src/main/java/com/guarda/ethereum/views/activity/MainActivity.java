@@ -328,16 +328,17 @@ public class MainActivity extends TrackOnStopActivity {
             sharedManager.setLastSyncedBlock("");
             sharedManager.setIsPinCodeEnable(false);
             transactionsManager.clearLists();
+            logoutDialog.cancel();
             cleanDbLogOut();
         });
         openBackup.setOnClickListener((v) -> {
+            logoutDialog.cancel();
             if (sharedManager.getIsPinCodeEnable()) {
                 Intent intent = new Intent(MainActivity.this, ConfirmPinCodeActivity.class);
                 startActivityForResult(intent, RequestCode.CONFIRM_PIN_CODE_REQUEST_MA);
             } else {
                 goToBackupFragment();
             }
-            logoutDialog.cancel();
         });
 
         logoutDialog.setView(logoutView);

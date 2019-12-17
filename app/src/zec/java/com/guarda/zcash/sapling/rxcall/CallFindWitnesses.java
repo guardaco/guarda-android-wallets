@@ -33,16 +33,16 @@ public class CallFindWitnesses implements Callable<Boolean> {
 
     private DbManager dbManager;
     private SaplingCustomFullKey saplingKey;
+    private BlockRoom br;
 
 //    private Long defaultStartHeight = 551912L;
     private Long defaultStartHeight = 620000L; //testnet
     private Long startScanBlocksHeight = defaultStartHeight;
-//    private Long blockCounter = 551912L;
-    private Long blockCounter = 620000L; //testnet
 
-    public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey) {
+    public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey, BlockRoom br) {
         this.dbManager = dbManager;
         this.saplingKey = saplingKey;
+        this.br = br;
     }
 
     @Override
@@ -61,122 +61,97 @@ public class CallFindWitnesses implements Callable<Boolean> {
             dbManager.getAppDb().getBlockDao().setTreeByHeight(saplingTree.serialize(), defaultStartHeight);
         }
 
-        blockCounter = startScanBlocksHeight;
-
         Timber.d("startScanBlocksHeight=%d", startScanBlocksHeight);
 
-        //blocks after last block with tree state (excluded)
-        List<BlockRoom> blocks = dbManager.getAppDb().getBlockDao().getBlocksOrderedFromHeight(startScanBlocksHeight);
+        // SCAN BLOCK
+        // map for saving wintesses by note commitment hex for current block
+        Map<String, IncrementalWitness> wtxs = new HashMap<>();
+        List<TxRoom> blockTxs = dbManager.getAppDb().getTxDao().getAllBlockTxs(br.getHash());
+        List<String> nullifiers = dbManager.getAppDb().getReceivedNotesDao().getAllNf();
 
-        for (BlockRoom br : blocks) {
+        for (TxRoom tx : blockTxs) {
 
-            if (br.getHeight() % 1000 == 0) Timber.d("height=%d", br.getHeight());
-
-            // SCAN BLOCK
-            // map for saving wintesses by note commitment hex for current block
-            Map<String, IncrementalWitness> wtxs = new HashMap<>();
-            List<TxRoom> blockTxs = dbManager.getAppDb().getTxDao().getAllBlockTxs(br.getHash());
-            List<String> nullifiers = dbManager.getAppDb().getReceivedNotesDao().getAllNf();
-            for (TxRoom tx : blockTxs) {
-
-                //check nullifiers and update spend status for the note
-                List<TxInRoom> spends = dbManager.getAppDb().getTxDao().getAllTxInputs(tx.getHash());
-                for (TxInRoom in : spends) {
-                    if (nullifiers.contains(in.getNf())) {
-                        dbManager.getAppDb().getReceivedNotesDao().spentNoteByNf(in.getNf());
-                    }
+            //check nullifiers and update spend status for the note
+            List<TxInRoom> spends = dbManager.getAppDb().getTxDao().getAllTxInputs(tx.getHash());
+            for (TxInRoom in : spends) {
+                if (nullifiers.contains(in.getNf())) {
+                    dbManager.getAppDb().getReceivedNotesDao().spentNoteByNf(in.getNf());
                 }
+            }
 
-                List<TxOutRoom> outs = dbManager.getAppDb().getTxDao().getAllTxOutputs(tx.getHash());
-                for (int i = 0; i < outs.size(); i++) {
-                    TxOutRoom out = outs.get(i);
-                    for (SaplingWitnessesRoom ew : existingWitnesses) {
-                        IncrementalWitness iw = IncrementalWitness.fromJson(ew.getWitness());
-                        try {
-                            iw.append(Utils.revHex(out.getCmu()));
-                        } catch (ZCashException e) {
-                            Timber.e("getWintesses existingWitnesses.entrySet e=%s", e.getMessage());
-                        }
-                        ew.setWitness(IncrementalWitness.toJson(iw));
-                        ew.setWitnessHeight(br.getHeight());
-                    }
-                    //append every previous wintess
-                    //like blockWitnesses in original rust code
-                    for (Map.Entry<String, IncrementalWitness> wx : wtxs.entrySet()) {
-                        IncrementalWitness iw = wx.getValue();
-                        try {
-                            iw.append(Utils.revHex(out.getCmu()));
-                        } catch (ZCashException e) {
-                            Timber.e("getWintesses iw.append(Utils.revHex(out.getCmu())) e=%s", e.getMessage());
-                        }
-                    }
-                    //append to main tree
+            List<TxOutRoom> outs = dbManager.getAppDb().getTxDao().getAllTxOutputs(tx.getHash());
+            for (int i = 0; i < outs.size(); i++) {
+                TxOutRoom out = outs.get(i);
+                for (SaplingWitnessesRoom ew : existingWitnesses) {
+                    IncrementalWitness iw = IncrementalWitness.fromJson(ew.getWitness());
                     try {
-                        saplingTree.append(Utils.revHex(out.getCmu()));
-                    } catch (ZCashException zce) {
-                        zce.printStackTrace();
-                        Timber.e("getWintesses saplingTree.append(out.getCmu()); err=%s", zce.getMessage());
+                        iw.append(Utils.revHex(out.getCmu()));
+                    } catch (ZCashException e) {
+                        Timber.e("getWintesses existingWitnesses.entrySet e=%s", e.getMessage());
                     }
-
-                    if (br.getHeight() < 620000) continue;
-                    SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey);
-
-                    //skip if it's not our note
-                    if (snp == null) continue;
-
-                    IncrementalWitness iw = saplingTree.witness();
-                    int position = iw.position();
-                    SaplingNote sNote = snp.getSaplingNote();
-                    String nf = sNote.nullifier(
-                            new SaplingFullViewingKey(
-                                    revHex(bytesToHex(saplingKey.getAk())),
-                                    revHex(bytesToHex(saplingKey.getNk())),
-                                    revHex(bytesToHex(saplingKey.getOvk()))),
-                            position);
-                    //add new received note
-                    dbManager.getAppDb().getReceivedNotesDao().insertAll(
-                            new ReceivedNotesRoom(
-                                    out.getCmu(),
-                                    null,
-                                    TypeConvert.bytesToLong(snp.vbytes),
-                                    nf,
-                                    new String(snp.getMemobytes(), Charset.forName("UTF-16BE"))
-                            )
-                    );
-
-                    wtxs.put(out.getCmu(), saplingTree.witness());
+                    ew.setWitness(IncrementalWitness.toJson(iw));
+                    ew.setWitnessHeight(br.getHeight());
                 }
-            }
+                //append every previous wintess
+                //like blockWitnesses in original rust code
+                for (Map.Entry<String, IncrementalWitness> wx : wtxs.entrySet()) {
+                    IncrementalWitness iw = wx.getValue();
+                    try {
+                        iw.append(Utils.revHex(out.getCmu()));
+                    } catch (ZCashException e) {
+                        Timber.e("getWintesses iw.append(Utils.revHex(out.getCmu())) e=%s", e.getMessage());
+                    }
+                }
+                //append to main tree
+                try {
+                    saplingTree.append(Utils.revHex(out.getCmu()));
+                } catch (ZCashException zce) {
+                    zce.printStackTrace();
+                    Timber.e("getWintesses saplingTree.append(out.getCmu()); err=%s", zce.getMessage());
+                }
 
-            //save updated witnesses to DB
-            for (Map.Entry<String, IncrementalWitness> wx : wtxs.entrySet()) {
-                SaplingWitnessesRoom sw = new SaplingWitnessesRoom(wx.getKey(), IncrementalWitness.toJson(wx.getValue()), br.getHeight());
-                existingWitnesses.add(sw);
-                Timber.d("iw root=%s at height=%d", wx.getValue().root(), br.getHeight());
-            }
+                if (br.getHeight() < 620000) continue;
+                SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey);
 
-            //save tree state every 1000 blocks for case where tree root is incorrect (after validating tree) and last 10 blocks is deleted
-            if (br.getHeight() >= blockCounter) {
-                br.setTree(saplingTree.serialize());
-                dbManager.getAppDb().getBlockDao().update(br);
-                blockCounter = blockCounter + 1000;
-                Timber.d("block height(%d) >= blockCounter+1000(%d) root=%s", br.getHeight(), blockCounter, saplingTree.root());
-            }
+                //skip if it's not our note
+                if (snp == null) continue;
 
+                IncrementalWitness iw = saplingTree.witness();
+                int position = iw.position();
+                SaplingNote sNote = snp.getSaplingNote();
+                String nf = sNote.nullifier(
+                        new SaplingFullViewingKey(
+                                revHex(bytesToHex(saplingKey.getAk())),
+                                revHex(bytesToHex(saplingKey.getNk())),
+                                revHex(bytesToHex(saplingKey.getOvk()))),
+                        position);
+                //add new received note
+                dbManager.getAppDb().getReceivedNotesDao().insertAll(
+                        new ReceivedNotesRoom(
+                                out.getCmu(),
+                                null,
+                                TypeConvert.bytesToLong(snp.vbytes),
+                                nf,
+                                new String(snp.getMemobytes(), Charset.forName("UTF-16BE"))
+                        )
+                );
+
+                wtxs.put(out.getCmu(), saplingTree.witness());
+            }
         }
 
+        //save updated witnesses to DB
+        for (Map.Entry<String, IncrementalWitness> wx : wtxs.entrySet()) {
+            SaplingWitnessesRoom sw = new SaplingWitnessesRoom(wx.getKey(), IncrementalWitness.toJson(wx.getValue()), br.getHeight());
+            existingWitnesses.add(sw);
+            Timber.d("iw root=%s at height=%d", wx.getValue().root(), br.getHeight());
+        }
         dbManager.getAppDb().getSaplingWitnessesDao().insertList(existingWitnesses);
 
-        //storing sapling tree state
-        if (blocks.size() > 0) {
-            BlockRoom lastBlock = blocks.get(blocks.size() - 1);
-            lastBlock.setTree(saplingTree.serialize());
-            dbManager.getAppDb().getBlockDao().update(lastBlock);
-            String lastRoot = saplingTree.root();
-            Timber.d("save tree lastBlock=%d tree=%s root=%s", lastBlock.getHeight(), saplingTree.serialize(), lastRoot);
-        }
+        br.setTree(saplingTree.serialize());
+        dbManager.getAppDb().getBlockDao().update(br);
 
-        Timber.d("blocks scanning completed");
+        Timber.d("save tree lastBlock=%d root=%s tree=%s", br.getHeight(), saplingTree.root(), saplingTree.serialize());
 
         return true;
     }
