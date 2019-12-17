@@ -63,7 +63,7 @@ public class ExchangeViewModel extends ViewModel {
         ChangenowApi.getSupportedCoins((String status, Map<String, ChangenowApi.SupportedCoinModel> resp) -> {
             if ("ok".equals(status)) {
                 sharedManager.setListCurrencies(gsonUtils.toGsonCurrencies(resp));
-                if (isReturnMap) currencies.setValue(resp);
+                if (isReturnMap) currencies.postValue(resp);
             } else {
                 Timber.e("ChangenowApi.getSupportedCoins is NOT ok");
             }
