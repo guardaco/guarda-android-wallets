@@ -35,8 +35,8 @@ public class CallFindWitnesses implements Callable<Boolean> {
     private SaplingCustomFullKey saplingKey;
     private BlockRoom br;
 
-//    private Long defaultStartHeight = 551912L;
-    private Long defaultStartHeight = 620000L; //testnet
+    private Long defaultStartHeight = 551912L;
+//    private Long defaultStartHeight = 620000L; //testnet
     private Long startScanBlocksHeight = defaultStartHeight;
 
     public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey, BlockRoom br) {
@@ -57,7 +57,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
             startScanBlocksHeight = lastBlockWithTree.getHeight();
             saplingTree = new SaplingMerkleTree(lastBlockWithTree.getTree());
         } else {
-            saplingTree = new SaplingMerkleTree(treeOnHeight620000test);
+            saplingTree = new SaplingMerkleTree(treeOnHeight551912main);
             dbManager.getAppDb().getBlockDao().setTreeByHeight(saplingTree.serialize(), defaultStartHeight);
         }
 
@@ -110,7 +110,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                     Timber.e("getWintesses saplingTree.append(out.getCmu()); err=%s", zce.getMessage());
                 }
 
-                if (br.getHeight() < 620000) continue;
+                if (br.getHeight() < 551937) continue;
                 SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey);
 
                 //skip if it's not our note

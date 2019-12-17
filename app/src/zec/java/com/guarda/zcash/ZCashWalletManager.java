@@ -101,9 +101,9 @@ public class ZCashWalletManager {
     ripemd160Digest.update(pubKey, 0, pubKey.length);
     ripemd160Digest.doFinal(pubKeyHash, 0);
 
-//    pubKey = Bytes.concat(ZEC_MAINNET_ADDR_PREFIX, pubKeyHash);
+    pubKey = Bytes.concat(ZEC_MAINNET_ADDR_PREFIX, pubKeyHash);
     //                               ^~~~~~~~~~~~~~~~~~~~~~~~ mainnet prefix
-    pubKey = Bytes.concat(ZEC_TESTNET_ADDR_PREFIX, pubKeyHash);
+//    pubKey = Bytes.concat(ZEC_TESTNET_ADDR_PREFIX, pubKeyHash);
     //                               ^~~~~~~~~~~~~~~~~~~~~~~~ testnet prefix
 
     byte[] checksum = Sha256Hash.hashTwice(pubKey);

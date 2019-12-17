@@ -1123,8 +1123,8 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_getExtsk(
     let extsk = spending_key(&seed, 1, 0);
 
 
-    //let spending_key = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY_MAIN,
-    let spending_key = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY_TEST,
+    let spending_key = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY_MAIN,
+    //let spending_key = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY_TEST,
                                                   &extsk,
                                                   );
 
@@ -1226,6 +1226,6 @@ pub unsafe extern "C" fn Java_com_guarda_zcash_RustAPI_zAddrFromWif(
 
 fn address_from_extfvk(extfvk: &ExtendedFullViewingKey) -> String {
     let addr = extfvk.default_address().unwrap().1;
-    //encode_payment_address(HRP_SAPLING_PAYMENT_ADDRESS_MAIN, &addr)
-    encode_payment_address(HRP_SAPLING_PAYMENT_ADDRESS_TEST, &addr)
+    encode_payment_address(HRP_SAPLING_PAYMENT_ADDRESS_MAIN, &addr)
+    //encode_payment_address(HRP_SAPLING_PAYMENT_ADDRESS_TEST, &addr)
 }

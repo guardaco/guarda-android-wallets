@@ -74,8 +74,8 @@ public class DumpedPrivateKey {
     // A stringified buffer is:
     //   1 byte version + data bytes + 4 bytes check code (a truncated hash)
     byte[] addressBytes = new byte[1 + bytes.length + 4];
-//    addressBytes[0] = DUMPED_PRIVATE_KEY_HEADER_MAINNET;
-    addressBytes[0] = DUMPED_PRIVATE_KEY_HEADER_TESTNET;
+    addressBytes[0] = DUMPED_PRIVATE_KEY_HEADER_MAINNET;
+//    addressBytes[0] = DUMPED_PRIVATE_KEY_HEADER_TESTNET;
     System.arraycopy(bytes, 0, addressBytes, 1, bytes.length);
     byte[] checksum = Sha256Hash.hashTwice(addressBytes, 0, bytes.length + 1);
     System.arraycopy(checksum, 0, addressBytes, bytes.length + 1, 4);

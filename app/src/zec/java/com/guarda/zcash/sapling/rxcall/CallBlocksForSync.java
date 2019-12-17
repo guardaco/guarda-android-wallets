@@ -13,9 +13,8 @@ public class CallBlocksForSync implements Callable<List<BlockRoom>> {
 
     private DbManager dbManager;
 
-//    private Long defaultStartHeight = 551912L;
-    private Long defaultStartHeight = 620000L; //testnet
-    private Long startScanBlocksHeight = defaultStartHeight;
+//    private Long startScanBlocksHeight = 620000L; //testnet
+    private Long startScanBlocksHeight = 551912L;
 
     public CallBlocksForSync(DbManager dbManager) {
         this.dbManager = dbManager;

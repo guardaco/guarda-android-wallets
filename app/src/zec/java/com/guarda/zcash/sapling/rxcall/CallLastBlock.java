@@ -29,7 +29,8 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
         long latestFromServer = protoApi.getLastBlock();
         Timber.d("latestFromServer = %d", latestFromServer);
         BlockRoom blockRoom = dbManager.getAppDb().getBlockDao().getLatestBlock();
-        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : FIRST_BLOCK_TO_SYNC_TESTNET;
+        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : FIRST_BLOCK_TO_SYNC_MAINNET;
+//        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : FIRST_BLOCK_TO_SYNC_TESTNET;
         Timber.d("lastFromDb = %d", lastFromDb);
         return new BlockSyncRange(latestFromServer, lastFromDb);
     }
