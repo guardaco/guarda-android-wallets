@@ -66,6 +66,10 @@ public class ZCashTransaction_ttoz {
       value_pool += out.value;
     }
 
+    //Initialization sapling proving context (it's free after fail or completed)
+    String res = RustAPI.proveContextInit();
+    Timber.d("proveContextInit res=%s", res);
+
     /**
      * Shielded output
      */
