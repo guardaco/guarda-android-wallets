@@ -661,7 +661,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void sendLogMessage(String errorMessage, String type) {
-        String device = String.format("brand: %s, device: %s, model: %s", Build.BRAND, Build.DEVICE, Build.MODEL);
+        String device = String.format("brand: %s, device: %s, model: %s android: %s", Build.BRAND, Build.DEVICE, Build.MODEL, Build.VERSION.SDK_INT);
         String from = isSaplingAddress ? "FROM_Z_ADDRESS" : walletManager.getWalletFriendlyAddress();
         String to = getToAddress();
         if (to.startsWith("z")) to = "TO_Z_ADDRESS";
