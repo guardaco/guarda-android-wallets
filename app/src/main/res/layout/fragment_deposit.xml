@@ -52,18 +52,18 @@
                     android:layout_centerHorizontal="true"
                     android:adjustViewBounds="false" />
 
-                <com.guarda.ethereum.customviews.RobotoTextView
+                <TextView
                     android:id="@+id/tv_address_wallet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_below="@+id/iv_qr_code"
-                    tools:text="FsohjerSGVrDRSGdtgDRtgEbgDFGDVRhgcfBGD"
+                    tools:text="ztestsapling1uqwjdlqrsvu5u8nls5pvxn57zfjem5xs8mqqpq9yulln47dhnn4ku0mmq09dd05fvwpv2wwrczz"
                     android:textColor="@color/baseBlueTextColor"
                     android:textSize="20sp" />
 
-                <com.guarda.ethereum.customviews.RobotoLightTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_address_wallet"
