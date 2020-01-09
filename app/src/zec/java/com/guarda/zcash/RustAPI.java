@@ -130,7 +130,7 @@ public class RustAPI {
         Bech32.Bech32Data ddd = Bech32.decodeWithoutVeryfy(address);
         Timber.d("checkConvertAddr ddd=%s", Arrays.toString(ddd.data));
         byte[] bytesConverted = BitcoinCashBitArrayConverter.convertBits(ddd.data, 5, 8, true);
-        Timber.d("checkConvertAddr ddd=%s", Arrays.toString(bytesConverted));
+        Timber.d("checkConvertAddr bytesConverted=%s", Arrays.toString(bytesConverted));
         return bytesConverted;
     }
 
