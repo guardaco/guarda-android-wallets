@@ -673,7 +673,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 isInclude,
                 syncManager.isInProgress(),
                 isSaplingAddress,
-                walletManager.getMyBalance().toFriendlyString(),
+                walletManager.getMyBalance().toPlainString(),
                 saplingBalance,
                 errorMessage
                 );
