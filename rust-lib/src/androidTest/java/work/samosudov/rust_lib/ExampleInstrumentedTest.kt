@@ -15,10 +15,21 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+
+    companion object {
+        init {
+            System.loadLibrary("native-lib")
+        }
+    }
+
+
     @Test
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("work.samosudov.rust_lib.test", appContext.packageName)
+
+        println(RustAPI.testString())
+
     }
 }
