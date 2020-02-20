@@ -3,40 +3,18 @@ package com.guarda.ethereum.views.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.constants.Extras;
-import com.guarda.ethereum.models.items.CoinifyBankAcc;
-import com.guarda.ethereum.rest.ApiMethods;
-import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.views.activity.base.AToolbarExtMenuActivity;
-import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
-import com.guarda.ethereum.views.adapters.BankAccountsAdapter;
-import com.guarda.ethereum.views.adapters.PurchaseServicesAdapter;
 import com.guarda.ethereum.views.fragments.AddBankAccCoinifyFragment;
 import com.guarda.ethereum.views.fragments.ListBankAccCoinifyFragment;
-import com.guarda.ethereum.views.fragments.UserWalletFragment;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 import autodagger.AutoInjector;
-import butterknife.BindView;
-import butterknife.OnClick;
 
 @AutoInjector(GuardaApp.class)
 public class BankAccCoinifyActivity extends AToolbarExtMenuActivity {

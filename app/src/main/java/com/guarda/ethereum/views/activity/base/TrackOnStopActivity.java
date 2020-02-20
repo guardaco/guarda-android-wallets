@@ -1,13 +1,11 @@
 package com.guarda.ethereum.views.activity.base;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
@@ -17,8 +15,6 @@ import com.guarda.ethereum.managers.SharedManager;
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
-
-import static com.guarda.ethereum.models.constants.Extras.DISABLE_CHECK;
 
 @AutoInjector(GuardaApp.class)
 public abstract class TrackOnStopActivity extends BaseActivity {

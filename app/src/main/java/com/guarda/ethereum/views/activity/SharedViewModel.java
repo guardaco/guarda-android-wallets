@@ -1,13 +1,11 @@
 package com.guarda.ethereum.views.activity;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.guarda.ethereum.managers.ChangenowApi;
 
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.SortedMap;
 
 import io.reactivex.disposables.CompositeDisposable;
 

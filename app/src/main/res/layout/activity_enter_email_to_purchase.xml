@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                 android:textColor="@color/editTextBlueGreyColor"
                 android:textSize="20sp" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_next"

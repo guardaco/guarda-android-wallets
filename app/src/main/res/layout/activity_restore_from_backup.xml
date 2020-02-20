@@ -31,7 +31,7 @@
         android:layout_marginTop="52dp"
         android:visibility="gone"/>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
@@ -51,13 +51,13 @@
             android:textColorHint="@color/blueHintColor"
             android:textSize="@dimen/edit_text_text_size" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rl_backup_phrase">
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tl_bp_phrase"
@@ -77,7 +77,7 @@
                 android:padding="5dp"
                 android:paddingEnd="25dp"
                 android:text="" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <ImageView
@@ -154,7 +154,7 @@
 
     </RelativeLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -175,7 +175,7 @@
             android:textColorHint="@color/blueHintColor"
             android:textSize="@dimen/edit_text_text_size" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

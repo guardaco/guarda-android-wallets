@@ -1,5 +1,0 @@
-<resources>
-    <string name="restore_backup_passphrase">Приватный ключ CLO кошелька</string>
-    <string name="app_top_up_width_other_currency">Пополните свой CLO кошелек с помощью:</string>
-    <string name="top_up_width_other_currency">Купить CLO</string>
-</resources>

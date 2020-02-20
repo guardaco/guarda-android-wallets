@@ -6,13 +6,15 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
+
 import com.guarda.ethereum.R;
 
 /**
  * Created by psd on 24.01.2018.
  */
 
-public class RootDialog extends android.support.v4.app.DialogFragment {
+public class RootDialog extends DialogFragment {
     public static final String TAG = "RootDialog";
 
     @Override

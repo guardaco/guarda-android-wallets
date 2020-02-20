@@ -14,7 +14,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="guarda.shielded.provider"
             tools:replace="android:authorities"
             android:exported="false"

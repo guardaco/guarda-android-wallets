@@ -2,7 +2,7 @@ package com.guarda.ethereum.dependencies;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
 import com.guarda.ethereum.managers.CurrencyListHolder;

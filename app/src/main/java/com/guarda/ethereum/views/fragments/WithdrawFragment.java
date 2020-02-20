@@ -3,7 +3,7 @@ package com.guarda.ethereum.views.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;

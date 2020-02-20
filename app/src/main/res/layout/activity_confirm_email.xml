@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:padding="10dp">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_user_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             android:textColorHint="@color/blueHintColor"
             android:textSize="@dimen/edit_text_text_size" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="match_parent"

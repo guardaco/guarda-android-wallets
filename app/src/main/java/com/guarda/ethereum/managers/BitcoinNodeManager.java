@@ -1,17 +1,13 @@
 package com.guarda.ethereum.managers;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.guarda.ethereum.models.constants.Changelly;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
-import com.guarda.ethereum.utils.Coders;
-
-import java.util.HashMap;
 
 public class BitcoinNodeManager {
 

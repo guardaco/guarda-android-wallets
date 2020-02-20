@@ -1,7 +1,7 @@
 package com.guarda.ethereum.views.fragments;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.drawable.PictureDrawable;
 import android.view.View;

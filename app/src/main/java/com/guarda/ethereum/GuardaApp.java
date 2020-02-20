@@ -5,8 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.multidex.MultiDex;
-import android.support.v7.app.AppCompatDelegate;
+import androidx.multidex.MultiDex;
+import androidx.appcompat.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;

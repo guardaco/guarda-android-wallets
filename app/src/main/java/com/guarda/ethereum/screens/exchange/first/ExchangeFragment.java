@@ -1,6 +1,6 @@
 package com.guarda.ethereum.screens.exchange.first;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +14,6 @@ import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.ChangenowApi;
 import com.guarda.ethereum.managers.ChangenowManager;
-import com.guarda.ethereum.managers.CurrencyListHolder;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.ExchangeSpinnerRowModel;
 import com.guarda.ethereum.models.constants.Common;
@@ -38,7 +37,6 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 @AutoInjector(GuardaApp.class)

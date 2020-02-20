@@ -2,14 +2,10 @@ package com.guarda.ethereum.views.fragments;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
-import android.support.design.widget.TextInputLayout;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,36 +14,26 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.SharedManager;
-import com.guarda.ethereum.models.constants.Coinify;
 import com.guarda.ethereum.models.constants.Extras;
-import com.guarda.ethereum.models.items.CoinifyAuthResponse;
-import com.guarda.ethereum.models.items.CoinifySignUpResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.hbb20.CountryCodePicker;
-
-import org.json.JSONObject;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.guarda.ethereum.models.constants.Coinify.COINIFY_GRANT_TYPE_EMAIL_PASS;
 
 @AutoInjector(GuardaApp.class)
 public class NewBankAccCoinifyFragment extends BaseFragment {

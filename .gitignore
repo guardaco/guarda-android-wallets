@@ -14,3 +14,4 @@
 .externalNativeBuild
 google-services.json
 /app/.cxx
+/rust-lib/.cxx

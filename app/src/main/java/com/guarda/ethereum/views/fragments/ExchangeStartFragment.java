@@ -1,6 +1,6 @@
 package com.guarda.ethereum.views.fragments;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.graphics.drawable.PictureDrawable;
 import android.view.View;
 import android.widget.Button;

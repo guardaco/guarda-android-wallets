@@ -4,11 +4,9 @@ package com.guarda.ethereum.views.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
@@ -16,9 +14,6 @@ import com.guarda.ethereum.customviews.RobotoLightEditText;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;

@@ -1,11 +1,7 @@
 package com.guarda.ethereum.views.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
@@ -15,9 +11,6 @@ import android.widget.EditText;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.models.constants.Extras;
-import com.guarda.ethereum.utils.KeyboardManager;
-import com.guarda.ethereum.views.activity.EnterPhoneToPurchaseActivity;
-import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
 import java.util.regex.Matcher;

@@ -2,9 +2,8 @@ package com.guarda.ethereum.views.fragments;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
@@ -50,8 +49,6 @@ import com.guarda.ethereum.views.activity.ConfirmCoinifyActivity;
 import com.guarda.ethereum.views.activity.EnterNameToPurchaseActivity;
 import com.guarda.ethereum.views.activity.PurchaseWemovecoinsActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.math.BigDecimal;

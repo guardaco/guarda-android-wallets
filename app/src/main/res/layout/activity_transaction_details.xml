@@ -14,7 +14,7 @@
         android:background="@color/baseWhiteBgColor"
         android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_trans_details_sum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:textColor="@color/editTextGreyColor"
                 android:textSize="20sp" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:layout_marginStart="15dp"
             android:orientation="horizontal">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_trans_details_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,9 +87,9 @@
                     android:textColor="@color/darkGreyText"
                     android:textSize="16sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_trans_details_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                     android:textColor="@color/darkGreyText"
                     android:textSize="16sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -130,7 +130,7 @@
             android:layout_marginStart="15dp"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_trans_details_hash"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                     android:textAlignment="textStart"
                     android:textSize="14dp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_copy"
@@ -180,7 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_trans_details_balance_before"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -212,9 +212,9 @@
                     android:textColor="@color/darkGreyText"
                     android:textSize="16sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_trans_details_balance_after"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                     android:textColor="@color/darkGreyText"
                     android:textSize="16sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -313,7 +313,7 @@
             tools:visibility="visible"
             android:visibility="gone">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_memo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -339,7 +339,7 @@
                     android:textAlignment="textStart"
                     android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_copy_memo"

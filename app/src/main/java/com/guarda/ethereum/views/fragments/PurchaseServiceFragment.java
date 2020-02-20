@@ -1,35 +1,12 @@
 package com.guarda.ethereum.views.fragments;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.models.ExchangeSpinnerRowModel;
 import com.guarda.ethereum.models.constants.Common;
-import com.guarda.ethereum.models.constants.Extras;
-import com.guarda.ethereum.views.activity.TransactionDetailsActivity;
-import com.guarda.ethereum.views.adapters.ExchangeSpinnerAdapter;
 import com.guarda.ethereum.views.adapters.PurchaseServicesAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 

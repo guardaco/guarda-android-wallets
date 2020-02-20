@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:adnroid="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_view_margin"
@@ -87,7 +87,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <android.support.v7.widget.SwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switch_security_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -298,6 +298,6 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </ScrollView>

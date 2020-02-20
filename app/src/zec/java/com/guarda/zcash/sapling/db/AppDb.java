@@ -1,7 +1,7 @@
 package com.guarda.zcash.sapling.db;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
 import com.guarda.zcash.sapling.db.dao.BlockDao;
 import com.guarda.zcash.sapling.db.dao.DetailsTxDao;

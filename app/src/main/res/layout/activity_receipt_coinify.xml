@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_trans_details_sum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,9 +53,9 @@
                     android:textColor="@color/editTextGreyColor"
                     android:textSize="20sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_trans_details_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,9 +85,9 @@
                     android:textColor="@color/darkGreyText"
                     android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -116,7 +116,7 @@
                     android:textAlignment="textStart"
                     android:textColor="@color/darkGreyText"
                     android:textSize="14sp" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <com.guarda.ethereum.customviews.RobotoLightTextView
@@ -170,7 +170,7 @@
                 android:layout_below="@+id/quote_minutes1"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -202,9 +202,9 @@
                         android:textColor="@color/editTextGreyColor"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_trans_details_time1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
             </LinearLayout>
@@ -272,7 +272,7 @@
                     android:textColor="@color/editTextGreyColor"
                     android:text="Account details:"/>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_swift"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -303,9 +303,9 @@
                         android:textColor="@color/editTextGreyColor"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_iban"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -335,13 +335,13 @@
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
                 <LinearLayout
                     android:id="@+id/ll6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -372,8 +372,8 @@
                             android:textColor="@color/darkGreyText"
                             android:textSize="14sp" />
 
-                    </android.support.design.widget.TextInputLayout>
-                    <android.support.design.widget.TextInputLayout
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_curr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -404,7 +404,7 @@
                             android:textColor="@color/darkGreyText"
                             android:textSize="14sp" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -423,7 +423,7 @@
                     android:textColor="@color/editTextGreyColor"
                     android:text="Account holder:"/>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -454,8 +454,8 @@
                         android:textColor="@color/editTextGreyColor"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -485,8 +485,8 @@
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -514,8 +514,8 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_street"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -543,12 +543,12 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -579,8 +579,8 @@
                             android:textColor="@color/darkGreyText"
                             android:textSize="14sp" />
 
-                    </android.support.design.widget.TextInputLayout>
-                    <android.support.design.widget.TextInputLayout
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_zip"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -611,7 +611,7 @@
                             android:textColor="@color/darkGreyText"
                             android:textSize="14sp" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -630,7 +630,7 @@
                     android:textColor="@color/editTextGreyColor"
                     android:text="Bank details:"/>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_bank_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -661,8 +661,8 @@
                         android:textColor="@color/editTextGreyColor"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_bank_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -692,8 +692,8 @@
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
 
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_bank_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -721,8 +721,8 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_bank_street"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -750,12 +750,12 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/darkGreyText"
                         android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_bank_country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -786,8 +786,8 @@
                             android:textColor="@color/darkGreyText"
                             android:textSize="14sp" />
 
-                    </android.support.design.widget.TextInputLayout>
-                    <android.support.design.widget.TextInputLayout
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_bank_zip"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -818,7 +818,7 @@
                             android:textColor="@color/darkGreyText"
                             android:textSize="14sp" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
@@ -850,7 +850,7 @@
             android:layout_below="@id/tv_sell_expl"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
@@ -880,9 +880,9 @@
                     android:textColorHint="@color/greyHintColor"
                     android:textSize="14sp"
                     app:backgroundTint="@color/baseWhiteBgColor" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
@@ -911,9 +911,9 @@
                     android:textColor="@color/darkGreyText"
                     android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
@@ -942,9 +942,9 @@
                     android:textColor="@color/darkGreyText"
                     android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
@@ -973,9 +973,9 @@
                     android:textColor="@color/darkGreyText"
                     android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
@@ -1004,7 +1004,7 @@
                     android:textColor="@color/darkGreyText"
                     android:textSize="14sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
 
