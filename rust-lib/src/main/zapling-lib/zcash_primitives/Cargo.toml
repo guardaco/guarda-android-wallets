@@ -1,0 +1,24 @@
+[package]
+name = "zcash_primitives"
+version = "0.0.0"
+authors = [
+    "Jack Grigg <jack@z.cash>",
+]
+
+[dependencies]
+byteorder = "1"
+ff = { path = "../ff" }
+hex = "0.3"
+lazy_static = "1"
+pairing = { path = "../pairing" }
+rand = "0.4"
+sapling-crypto = { path = "../sapling-crypto" }
+sha2 = "0.8"
+
+[dependencies.blake2-rfc]
+git = "https://github.com/gtank/blake2-rfc"
+rev = "7a5b5fc99ae483a0043db7547fb79a6fa44b88a9"
+
+[dependencies.chacha20-poly1305-aead]
+git = "https://github.com/gtank/chacha20-poly1305-aead"
+rev = "aefc71f95e8bc43f2070e3c5b08130d9c86bbf4f"

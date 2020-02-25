@@ -60,6 +60,7 @@ public class CallBuildTransaction implements Callable<ZcashTransaction> {
         for (ReceivedNotesRoom r : allUnspents) {
             list.add(r);
             sum += r.getValue();
+            Timber.d("chooseUnspents ReceivedNotesRoom: r=%s", r.toString());
             if (sum >= realValue) break;
         }
 
