@@ -210,6 +210,8 @@ dependencies {
     androidTestZecImplementation 'androidx.test:rules:1.2.0'
     androidTestZecImplementation 'androidx.test:core:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    implementation project(path: ':rust-lib')
+//    implementation project(path: ':rust-lib-release')
 }
 
 apply plugin: 'com.google.gms.google-services'
