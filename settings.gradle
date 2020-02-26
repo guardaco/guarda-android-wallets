@@ -1,1 +1,1 @@
-include ':app', ':rust-lib'
+include ':app', ':rust-lib-release', ':rust-lib'
