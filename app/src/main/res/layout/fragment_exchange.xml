@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:spinnerMode="dropdown"
-        android:background="@drawable/ic_exchangespinner_single"
+        android:background="@android:color/white"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="52dp"
