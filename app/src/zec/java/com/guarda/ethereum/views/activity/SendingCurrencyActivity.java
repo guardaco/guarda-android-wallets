@@ -70,6 +70,7 @@ import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_COMMON_Z
 import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_NODE_RESPONSE;
 import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_WRONG_NETWORK;
 import static com.guarda.ethereum.models.constants.Guarda.ERROR_SENDING_Z_ADDRESS_SYNCING;
+import static com.guarda.ethereum.models.constants.Guarda.SENDING_SUCCESS;
 import static com.guarda.ethereum.models.guarda.LogMessageRequest.LOGGER_ENV;
 import static com.guarda.ethereum.models.guarda.LogMessageRequest.LOGGER_PLATFORM;
 
@@ -590,6 +591,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 } else {
                     finishSending();
                 }
+                sendLogMessage(res.getTxid(), SENDING_SUCCESS);
             }
 
             @Override
@@ -660,8 +662,8 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         startActivity(intent);
     }
 
-    private void sendLogMessage(String errorMessage, String type) {
-        String device = String.format("brand: %s, device: %s, model: %s android: %s", Build.BRAND, Build.DEVICE, Build.MODEL, Build.VERSION.SDK_INT);
+    private void sendLogMessage(String message, String type) {
+        String device = String.format("brand: %s, device: %s, model: %s, android: %s", Build.BRAND, Build.DEVICE, Build.MODEL, Build.VERSION.SDK_INT);
         String from = isSaplingAddress ? "FROM_Z_ADDRESS" : walletManager.getWalletFriendlyAddress();
         String to = getToAddress();
         if (to.startsWith("z")) to = "TO_Z_ADDRESS";
@@ -675,7 +677,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 isSaplingAddress,
                 walletManager.getMyBalance().toPlainString(),
                 saplingBalance,
-                errorMessage
+                message
                 );
         compositeDisposable.add(
                 guardaLoggingApi.sendMessage(
