@@ -41,6 +41,7 @@
     <string name="withdraw_amount_to_send">Amount to send</string>
     <string name="withdraw_sending">Sending</string>
     <string name="withdraw_sum_send">Sum Send</string>
+    <string name="sending_memo_hint">Memo field</string>
     <string name="withdraw_fee_amount">Fee Amount</string>
     <string name="withdraw_arrival_amount">Arrival Amount</string>
     <string name="withdraw_include">Include</string>

@@ -20,14 +20,16 @@ public class CallBuildTransaction implements Callable<ZcashTransaction> {
     private String toAddress;
     private Long value;
     private Long fee;
+    private String memo;
     private SaplingCustomFullKey key;
     private int expHeight;
 
-    public CallBuildTransaction(DbManager dbManager, String toAddress, Long value, Long fee, SaplingCustomFullKey key, int expHeight) {
+    public CallBuildTransaction(DbManager dbManager, String toAddress, Long value, Long fee, String memo, SaplingCustomFullKey key, int expHeight) {
         this.dbManager = dbManager;
         this.toAddress = toAddress;
         this.value = value;
         this.fee = fee;
+        this.memo = memo;
         this.key = key;
         this.expHeight = expHeight;
     }
@@ -43,7 +45,7 @@ public class CallBuildTransaction implements Callable<ZcashTransaction> {
 
         if (toAddress.substring(0, 1).equalsIgnoreCase("z")) {
             //from z to z
-            return new ZCashTransaction_zaddr(key, toAddress, value, fee, expHeight, unspents, dbManager);
+            return new ZCashTransaction_zaddr(key, toAddress, value, fee, memo, expHeight, unspents, dbManager);
         } else if (toAddress.substring(0, 1).equalsIgnoreCase("t")) {
             //from z to t
             return new ZCashTransaction_ztot(key, toAddress, value, fee, expHeight, unspents, dbManager);

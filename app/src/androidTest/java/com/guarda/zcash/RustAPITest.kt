@@ -1,7 +1,6 @@
 package com.guarda.zcash
 
 import androidx.test.core.app.ApplicationProvider
-import com.getkeepsafe.relinker.ReLinker
 import org.junit.Before
 import org.junit.Test
 import timber.log.Timber
@@ -18,10 +17,9 @@ class RustAPITest {
     @Before
     fun initNativeLibrary() {
         try {
-//            val logcatLogger = ReLinker.Logger { message: String? -> Timber.d("ReLinker %s", message) }
-//            ReLinker.log(logcatLogger).loadLibrary(ApplicationProvider.getApplicationContext(), "native-lib")
-        } catch (e: UnsatisfiedLinkError) {
-            Timber.e("System.loadLibrary(\"native-lib\") e=%s", e.message)
+            RustAPI.init(ApplicationProvider.getApplicationContext())
+        } catch (e: Exception) {
+            Timber.e("RustAPI.init e=%s", e.message)
         }
     }
 

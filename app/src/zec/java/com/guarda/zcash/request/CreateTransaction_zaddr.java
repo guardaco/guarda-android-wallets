@@ -28,6 +28,7 @@ public class CreateTransaction_zaddr extends AbstractZCashRequest implements Run
   private WalletCallback<String, ZcashTransaction> callback;
   private long fee;
   private long value;
+  private String memo;
   private List<ZCashTransactionOutput> utxos;
   private int expiryHeight;
 
@@ -38,6 +39,7 @@ public class CreateTransaction_zaddr extends AbstractZCashRequest implements Run
                                  String toAddr,
                                  long value,
                                  long fee,
+                                 String memo,
                                  SaplingCustomFullKey privatekey,
                                  int expiryHeight,
                                  DbManager dbManager,
@@ -46,6 +48,7 @@ public class CreateTransaction_zaddr extends AbstractZCashRequest implements Run
     this.toAddr = toAddr;
     this.value = value;
     this.fee = fee;
+    this.memo = memo;
     this.privateKey = privatekey;
     this.expiryHeight = expiryHeight;
     this.dbManager = dbManager;
@@ -56,7 +59,7 @@ public class CreateTransaction_zaddr extends AbstractZCashRequest implements Run
   public void run() {
 
     compositeDisposable.add(Observable
-            .fromCallable(new CallBuildTransaction(dbManager, toAddr, value, fee, privateKey, expiryHeight))
+            .fromCallable(new CallBuildTransaction(dbManager, toAddr, value, fee, memo, privateKey, expiryHeight))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe((res) -> {

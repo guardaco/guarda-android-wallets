@@ -79,7 +79,7 @@ public class ZCashTransaction_ttoz {
     byte[] pkdToAddress = new byte[32];
     System.arraycopy(addressToBytes, 0, dToAddress, 0, 11);
     System.arraycopy(addressToBytes, 11, pkdToAddress, 0, 32);
-    bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(dToAddress, pkdToAddress, privKey, value));
+    bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(dToAddress, pkdToAddress, privKey, value, ""));
 
     Timber.d("bytesShieldedOutputs (bytes)=%s %d", Arrays.toString(bytesShieldedOutputs), bytesShieldedOutputs.length); // 948 bytes for an output
     shieldedOutputsBlake = new byte[32];

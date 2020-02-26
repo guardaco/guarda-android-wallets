@@ -55,14 +55,22 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
     private byte[] shieldedSpendsBlake;
     private DbManager dbManager;
     private Long fee;
+    private String memo;
 
-    public ZCashTransaction_zaddr(SaplingCustomFullKey privKey, String toAddress, Long value, Long fee, int expiryHeight,
-                                  List<ReceivedNotesRoom> unspents, DbManager dbManager) throws IllegalArgumentException {
+    public ZCashTransaction_zaddr(SaplingCustomFullKey privKey,
+                                  String toAddress,
+                                  Long value,
+                                  Long fee,
+                                  String memo,
+                                  int expiryHeight,
+                                  List<ReceivedNotesRoom> unspents,
+                                  DbManager dbManager) throws IllegalArgumentException {
 
         this.privKey = privKey;
         this.nExpiryHeight = expiryHeight;
         this.dbManager = dbManager;
         this.fee = fee;
+        this.memo = memo;
 
         long valuePool = 0;
 
@@ -105,11 +113,11 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
         System.arraycopy(addressToBytes, 0, dToAddress, 0, 11);
         System.arraycopy(addressToBytes, 11, pkdToAddress, 0, 32);
 
-        bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(dToAddress, pkdToAddress, privKey, value));
+        bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(dToAddress, pkdToAddress, privKey, value, memo));
         outputsSize++;
         // the change should be returned to own address
         if (valuePool - value - fee > 0) {
-            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(privKey.getD(), privKey.getPkd(), privKey, valuePool - value - fee));
+            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(privKey.getD(), privKey.getPkd(), privKey, valuePool - value - fee, ""));
             outputsSize++;
         } else if (valuePool - value - fee < 0) {
             throw new IllegalArgumentException("Found sapling unspents cannot fund this transaction.");

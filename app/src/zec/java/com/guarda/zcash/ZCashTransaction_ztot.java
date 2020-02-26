@@ -108,7 +108,7 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
         this.outputs.add(new TxOutTranspatent(toKeyHash, value));
 
         if (valuePool - value - fee > 0) {
-            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(privKey.getD(), privKey.getPkd(), privKey, valuePool - value - fee));
+            bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(privKey.getD(), privKey.getPkd(), privKey, valuePool - value - fee, ""));
             outputsSize++;
         } else if (valuePool - value - fee < 0) {
             throw new IllegalArgumentException("Found sapling unspents cannot fund this transaction.");

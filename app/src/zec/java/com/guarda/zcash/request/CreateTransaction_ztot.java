@@ -51,7 +51,7 @@ public class CreateTransaction_ztot extends AbstractZCashRequest implements Runn
   public void run() {
 
     compositeDisposable.add(Observable
-            .fromCallable(new CallBuildTransaction(dbManager, toAddr, value, fee, privateKey, expiryHeight))
+            .fromCallable(new CallBuildTransaction(dbManager, toAddr, value, fee, "", privateKey, expiryHeight))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe((res) -> {

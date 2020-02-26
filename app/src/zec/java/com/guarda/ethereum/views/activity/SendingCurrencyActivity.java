@@ -89,6 +89,8 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     Button btnInclude;
     @BindView(R.id.btn_exclude)
     Button btnExclude;
+    @BindView(R.id.et_memo)
+    EditText et_memo;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
     @BindView(R.id.ll_fee_container)
@@ -132,7 +134,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         isSaplingAddress = getIntent().getBooleanExtra(Extras.IS_SAPLING_ADDRESS, false);
         saplingBalance = getIntent().getStringExtra(Extras.SAPLING_BALANCE_STRING);
         checkBtnIncludeStatus(isInclude);
-        setDataToView();
+        initView();
         initSendSumField();
         initFeeField();
         updateArrivalField();
@@ -342,9 +344,13 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         }
     }
 
-    private void setDataToView() {
+    private void initView() {
         etSumSend.setText(amountToSend);
         etWalletAddress.setText(walletNumber);
+        String addr = getToAddress();
+        if (addr.substring(0, 2).equalsIgnoreCase("zs") && isSaplingAddress) {
+            et_memo.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -387,6 +393,10 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
             return etArrivalAmount.getText().toString();
         else
             return etSumSend.getText().toString();
+    }
+
+    private String getMemo() {
+        return et_memo.getText().toString();
     }
 
     @OnClick(R.id.btn_confirm)
@@ -526,6 +536,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 getToAddress(),
                 amountSatoshi,
                 currentFeeEth,
+                getMemo(),
                 walletManager.getSaplingCustomFullKey(),
                 1,
                 dbManager,

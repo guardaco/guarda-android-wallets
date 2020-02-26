@@ -272,22 +272,24 @@ public class ZCashWalletManager {
                                       final String toAddr,
                                       final Long amount,
                                       final Long fee,
+                                      final String memo,
                                       final SaplingCustomFullKey privateKey,
                                       final long minconf,
                                       final DbManager dbManager,
                                       final WalletCallback<String, ZcashTransaction> onComplete) throws ZCashException {
-    createTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, minconf, EXPIRY_HEIGHT_NO_LIMIT, dbManager, onComplete);
+    createTransaction_zaddr(fromAddr, toAddr, amount, fee, memo, privateKey, minconf, EXPIRY_HEIGHT_NO_LIMIT, dbManager, onComplete);
   }
 
   private void createTransaction_zaddr(final String fromAddr,
-                                      final String toAddr,
-                                      final Long amount,
-                                      final Long fee,
-                                      final SaplingCustomFullKey privateKey,
-                                      final long minconf,
-                                      final int expiryHeight,
-                                      final DbManager dbManager,
-                                      final WalletCallback<String, ZcashTransaction> onComplete) throws ZCashException {
+                                       final String toAddr,
+                                       final Long amount,
+                                       final Long fee,
+                                       final String memo,
+                                       final SaplingCustomFullKey privateKey,
+                                       final long minconf,
+                                       final int expiryHeight,
+                                       final DbManager dbManager,
+                                       final WalletCallback<String, ZcashTransaction> onComplete) throws ZCashException {
 
     if (amount < 0) {
       throw new ZCashException("Cannot send negative amount of coins.");
@@ -301,7 +303,11 @@ public class ZCashWalletManager {
       throw new ZCashException("Transaction with amount + fee = 0 would not do anything.");
     }
 
-    new CreateTransaction_zaddr(fromAddr, toAddr, amount, fee, privateKey, expiryHeight, dbManager, onComplete).run();
+    if (memo.getBytes().length > 512) {
+      throw new ZCashException("Memo field is too long");
+    }
+
+    new CreateTransaction_zaddr(fromAddr, toAddr, amount, fee, memo, privateKey, expiryHeight, dbManager, onComplete).run();
   }
 
   //only for z-to-t transactions

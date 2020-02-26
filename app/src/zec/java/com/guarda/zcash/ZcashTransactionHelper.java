@@ -11,6 +11,7 @@ import com.guarda.zcash.sapling.note.SaplingNotePlaintext;
 import com.guarda.zcash.sapling.note.SaplingNotePlaintextEncryptionResult;
 import com.guarda.zcash.sapling.note.SaplingOutgoingPlaintext;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import timber.log.Timber;
@@ -22,10 +23,10 @@ import static com.guarda.zcash.crypto.Utils.reverseByteArray;
 
 public class ZcashTransactionHelper {
 
-    public static byte[] buildOutDesc(byte[] dToAddress, byte[] pkdToAddress, SaplingCustomFullKey privKey, Long value) {
+    public static byte[] buildOutDesc(byte[] dToAddress, byte[] pkdToAddress, SaplingCustomFullKey privKey, Long value, String memo) {
         String rhex = RustAPI.genr();
         Timber.d("getUotputs rhex=%s", rhex);
-        SaplingNotePlaintext snp = new SaplingNotePlaintext(dToAddress, TypeConvert.longToBytes(value), hexToBytes(rhex), new byte[0], rhex);
+        SaplingNotePlaintext snp = new SaplingNotePlaintext(dToAddress, TypeConvert.longToBytes(value), hexToBytes(rhex), memo.getBytes(Charset.forName("UTF-16BE")), rhex);
 
         // SaplingNoteEncryption
         String eskhex = RustAPI.genr();
