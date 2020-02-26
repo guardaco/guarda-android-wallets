@@ -1,6 +1,5 @@
 package com.guarda.zcash.sapling.note;
 
-import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;
 import com.guarda.zcash.sapling.key.SaplingFullViewingKey;
@@ -9,6 +8,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 public class SaplingNote {
     public byte[] d;

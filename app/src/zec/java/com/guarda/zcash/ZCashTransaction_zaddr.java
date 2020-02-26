@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.hexToBytes;

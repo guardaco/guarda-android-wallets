@@ -14,6 +14,7 @@ import com.guarda.zcash.sapling.note.SaplingOutgoingPlaintext;
 import java.util.Arrays;
 
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.hexToBytes;

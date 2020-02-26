@@ -1,6 +1,6 @@
 package com.guarda.zcash.sapling.tree;
 
-import com.guarda.zcash.RustAPI;
+import work.samosudov.rustlib.RustAPI;
 
 import static com.guarda.zcash.crypto.Utils.revHex;
 

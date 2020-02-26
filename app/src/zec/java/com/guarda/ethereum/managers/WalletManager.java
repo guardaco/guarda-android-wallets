@@ -7,7 +7,6 @@ import android.util.Log;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.utils.DebugHelper;
-import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.ZCashWalletManager;
 import com.guarda.zcash.crypto.BrainKeyDict;
@@ -30,6 +29,7 @@ import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 
 /**

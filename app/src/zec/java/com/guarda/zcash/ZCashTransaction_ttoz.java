@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Vector;
 
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 public class ZCashTransaction_ttoz {
   private static final byte[] ZCASH_PREVOUTS_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'P', 'r', 'e', 'v', 'o', 'u', 't', 'H', 'a', 's', 'h'}; //ZcashPrevoutHash

@@ -5,7 +5,6 @@ import android.content.Context;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.rest.RequestorBtc;
-import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
@@ -27,6 +26,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 @AutoInjector(GuardaApp.class)
 public class SyncManager {

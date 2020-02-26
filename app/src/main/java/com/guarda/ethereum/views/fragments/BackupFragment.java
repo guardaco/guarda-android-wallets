@@ -3,7 +3,6 @@ package com.guarda.ethereum.views.fragments;
 
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,10 +16,8 @@ import com.guarda.ethereum.models.KeysSpinnerRowModel;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.views.adapters.KeysSpinnerAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
-import com.guarda.zcash.RustAPI;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,6 +25,7 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
+import work.samosudov.rustlib.RustAPI;
 
 @AutoInjector(GuardaApp.class)
 public class BackupFragment extends BaseFragment {

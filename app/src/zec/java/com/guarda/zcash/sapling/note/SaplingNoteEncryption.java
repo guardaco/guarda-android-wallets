@@ -1,13 +1,13 @@
 package com.guarda.zcash.sapling.note;
 
 import com.goterl.lazycode.lazysodium.LazySodiumAndroid;
-import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.sapling.LsaSingle;
 
 import java.util.Arrays;
 
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.revHex;

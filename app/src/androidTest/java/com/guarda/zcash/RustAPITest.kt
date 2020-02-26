@@ -5,6 +5,7 @@ import com.getkeepsafe.relinker.ReLinker
 import org.junit.Before
 import org.junit.Test
 import timber.log.Timber
+import work.samosudov.rustlib.RustAPI
 import java.util.*
 
 class RustAPITest {
@@ -17,8 +18,8 @@ class RustAPITest {
     @Before
     fun initNativeLibrary() {
         try {
-            val logcatLogger = ReLinker.Logger { message: String? -> Timber.d("ReLinker %s", message) }
-            ReLinker.log(logcatLogger).loadLibrary(ApplicationProvider.getApplicationContext(), "native-lib")
+//            val logcatLogger = ReLinker.Logger { message: String? -> Timber.d("ReLinker %s", message) }
+//            ReLinker.log(logcatLogger).loadLibrary(ApplicationProvider.getApplicationContext(), "native-lib")
         } catch (e: UnsatisfiedLinkError) {
             Timber.e("System.loadLibrary(\"native-lib\") e=%s", e.message)
         }

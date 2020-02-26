@@ -1,12 +1,12 @@
 package com.guarda.zcash.sapling.tree;
 
-import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.crypto.Utils;
 
 import java.util.Arrays;
 import java.util.List;
 
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 public class MerklePath {
 

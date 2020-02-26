@@ -58,11 +58,11 @@ android {
         unitTests.includeAndroidResources = true
     }
 
-    externalNativeBuild {
-        cmake {
-            path "src/zec/CMakeLists.txt"
-        }
-    }
+//    externalNativeBuild {
+//        cmake {
+//            path "src/zec/CMakeLists.txt"
+//        }
+//    }
 
     dexOptions {
         javaMaxHeapSize "4G"

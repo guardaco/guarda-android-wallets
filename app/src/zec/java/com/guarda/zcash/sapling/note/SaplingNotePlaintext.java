@@ -4,7 +4,6 @@ import com.google.common.primitives.Bytes;
 import com.goterl.lazycode.lazysodium.LazySodiumAndroid;
 import com.goterl.lazycode.lazysodium.interfaces.AEAD;
 import com.goterl.lazycode.lazysodium.utils.Key;
-import com.guarda.zcash.RustAPI;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;
@@ -15,6 +14,7 @@ import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
 import java.util.Arrays;
 
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.hexToBytes;

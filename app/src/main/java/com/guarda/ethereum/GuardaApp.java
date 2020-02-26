@@ -32,6 +32,7 @@ import autodagger.AutoComponent;
 import de.adorsys.android.securestoragelibrary.SecurePreferences;
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
+import work.samosudov.rustlib.RustAPI;
 
 @AutoComponent(
         modules = {AppModule.class}
@@ -52,7 +53,7 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
     public GuardaApp instance;
 
     private SharedManager sharedManager;
-    private ReLinker.Logger logcatLogger = (message) -> Timber.d("ReLinker %s", message);
+//    private ReLinker.Logger logcatLogger = (message) -> Timber.d("ReLinker %s", message);
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -127,7 +128,8 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
         }
         //init ndk lib for ZEC
         if (BuildConfig.FLAVOR == "zec") {
-            ReLinker.log(logcatLogger).loadLibrary(getApplicationContext(), "native-lib");
+            RustAPI.init(getApplicationContext());
+//            ReLinker.log(logcatLogger).loadLibrary(getApplicationContext(), "native-lib");
             if (BuildConfig.DEBUG)
                 Stetho.initializeWithDefaults(this);
         }
