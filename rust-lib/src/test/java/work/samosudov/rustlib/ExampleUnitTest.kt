@@ -10,12 +10,6 @@ import org.junit.Test
  */
 class ExampleUnitTest {
 
-    companion object {
-        init {
-            System.loadLibrary("native-lib")
-        }
-    }
-
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)

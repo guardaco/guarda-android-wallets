@@ -16,11 +16,11 @@ import org.junit.Assert.*
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
 
-    companion object {
-        init {
-            System.loadLibrary("native-lib")
-        }
-    }
+//    companion object {
+//        init {
+//            System.loadLibrary("native-lib")
+//        }
+//    }
 
 
     @Test
