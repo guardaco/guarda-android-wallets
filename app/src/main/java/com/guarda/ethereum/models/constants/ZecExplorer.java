@@ -10,4 +10,9 @@ public interface ZecExplorer {
     String ZEC_EXPLORER_BASE_URL = "https://zecblockexplorer.com";
     String ZEC_EXPLORER_API = ZEC_EXPLORER_BASE_URL + "/api/";
     String ZEC_EXPLORER_TX = ZEC_EXPLORER_BASE_URL + "/tx/";
+
+    // https://zecbook.guarda.co/
+    String ZEC_BOOK_BASE_URL = "https://zecbook.guarda.co";
+    String ZEC_BOOK_API = ZEC_BOOK_BASE_URL + "/api/v1/";
+    String ZEC_BOOK_TX = ZEC_BOOK_BASE_URL + "/tx/";
 }

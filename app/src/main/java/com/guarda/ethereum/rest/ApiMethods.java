@@ -281,6 +281,10 @@ public class ApiMethods {
         return getBaseRxApi(ZecExplorer.ZEC_EXPLORER_API).create(ZecApiNew.class);
     }
 
+    static ZecBookApi createZecBookApi() {
+        return getBaseRxApi(ZecExplorer.ZEC_BOOK_API).create(ZecBookApi.class);
+    }
+
     static GuardaCoApi createGuardaCoApi() {
         return getBaseApi(GUARDA_CO_URL).create(GuardaCoApi.class);
     }

@@ -203,7 +203,8 @@ public class SaplingNotePlaintext {
         hexValue = revHex(hexValue);
         String hexR = bytesToHex(rcmbytes);
         hexR = revHex(hexR);
-        return Bytes.concat(bytes, leadingByte, d, hexToBytes(hexValue), hexToBytes(hexR), memobytes);
+        byte[] fullMemoBytes = Bytes.concat(memobytes, new byte[512 - memobytes.length]);
+        return Bytes.concat(bytes, leadingByte, d, hexToBytes(hexValue), hexToBytes(hexR), fullMemoBytes);
     }
 
     @Override

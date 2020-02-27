@@ -18,6 +18,7 @@ import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.TransactionItem;
+import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.views.activity.base.AToolbarMenuActivity;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -130,19 +131,19 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
 
     private void showMemo() {
         compositeDisposable.add(
-                Observable
-                        .fromCallable(new CallGetMemo(transaction.getHash(), dbManager))
+                RequestorBtc
+                        .getOneTx(transaction.getHash())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .flatMap(tx -> Observable.fromCallable(new CallGetMemo(tx, walletManager)))
                         .subscribe(memo -> {
-                            String m = memo.get();
-                            Timber.d("CallGetMemo memo=%s", m);
+                                    Timber.d("CallGetMemo memo=%s", memo);
 
-                            if (m == null) return;
-                            if (m.isEmpty()) return;
+                                    if (memo == null) return;
+                                    if (memo.isEmpty()) return;
 
-                            ll_memo.setVisibility(View.VISIBLE);
-                            et_memo.setText(m);
+                                    ll_memo.setVisibility(View.VISIBLE);
+                                    et_memo.setText(memo);
                         })
         );
     }

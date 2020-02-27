@@ -277,9 +277,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:hint="@string/sending_memo_hint"
-                android:inputType="numberDecimal"
+                android:inputType="text"
                 android:maxLength="512"
                 android:maxLines="10"
+                android:lines="3"
                 android:layout_gravity="start"
                 android:textColor="@color/darkGreyText"
                 android:textSize="14sp"/>
