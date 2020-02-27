@@ -229,7 +229,7 @@ public class SyncManager {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 (res) -> {
-                                    syncProgress = new SyncProgress();
+                                    syncProgress.setProcessPhase(SYNCED_PHASE);
                                     progressPhase.onNext(syncProgress);
                                     stopSync();
                                     Timber.d("revertLastBlocks (all blocks dropped) completed=%s", res);
