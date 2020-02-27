@@ -655,7 +655,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void doToast(final String text) {
-        runOnUiThread(() -> Toast.makeText(SendingCurrencyActivity.this, text, Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> Toast.makeText(SendingCurrencyActivity.this, text, Toast.LENGTH_LONG).show());
     }
 
     private boolean isValueMoreBalance(String amount) {

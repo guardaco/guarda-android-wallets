@@ -56,13 +56,18 @@ public final class CurrencyUtils {
     }
 
     private final static String NOT_IN_THE_BLOCK = "The previous transaction is not in the block yet. Kindly wait till it gets confirmed";
+    private final static String NOT_SYNCED = "Check if the previous transaction was confirmed and sync your wallet";
     private final static String IN_THE_MEMPOOL = "The previous transaction is in the mempool yet. Kindly wait till it gets confirmed";
     private final static String AMOUTN_SMALL = "Amount too small";
     private final static String FEE_SMALL = "Not enough commission fee";
 
     public static String getBtcLikeError(String msg) {
         //catch not json message first
-        if (msg.contains("bad-txns-sapling-binding-signature-invalid")) return NOT_IN_THE_BLOCK;
+        if (msg.contains("bad-txns-sapling-binding-signature-invalid") || msg.contains(". Code:-25"))
+            return NOT_IN_THE_BLOCK;
+
+        if (msg.contains("bad-txns-shielded-requirements-not-met"))
+            return NOT_SYNCED;
 
         //try to parse json
         JsonElement je;
