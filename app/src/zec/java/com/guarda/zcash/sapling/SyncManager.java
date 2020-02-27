@@ -28,6 +28,10 @@ import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 import work.samosudov.rustlib.RustAPI;
 
+import static com.guarda.zcash.sapling.SyncProgress.DOWNLOAD_PHASE;
+import static com.guarda.zcash.sapling.SyncProgress.SEARCH_PHASE;
+import static com.guarda.zcash.sapling.SyncProgress.SYNCED_PHASE;
+
 @AutoInjector(GuardaApp.class)
 public class SyncManager {
 
@@ -46,7 +50,9 @@ public class SyncManager {
     Context context;
 
     private PublishSubject<Boolean> progressSubject = PublishSubject.create();
+    private PublishSubject<SyncProgress> progressPhase = PublishSubject.create();
     private boolean inProgress;
+    private SyncProgress syncProgress = new SyncProgress();
 
     public SyncManager() {
         GuardaApp.getAppComponent().inject(this);
@@ -56,6 +62,8 @@ public class SyncManager {
         Timber.d("startSync inProgress=%b", inProgress);
         if (inProgress) return;
         progressSubject.onNext(true);
+        syncProgress = new SyncProgress();
+        progressPhase.onNext(syncProgress);
         inProgress = true;
 
         saplingParamsInit();
@@ -63,6 +71,8 @@ public class SyncManager {
 
     public void stopSync() {
         progressSubject.onNext(false);
+        syncProgress.setProcessPhase(SYNCED_PHASE);
+        progressPhase.onNext(syncProgress);
         inProgress = false;
 
         compositeDisposable.clear();
@@ -71,6 +81,9 @@ public class SyncManager {
 
     public PublishSubject<Boolean> getProgressSubject() {
         return progressSubject;
+    }
+    public PublishSubject<SyncProgress> getSyncProgress() {
+        return progressPhase;
     }
 
     public boolean isInProgress() {
@@ -102,6 +115,11 @@ public class SyncManager {
                         return;
                     }
 
+                    syncProgress.setFromBlock(latest.getLastFromDb());
+                    syncProgress.setToBlock(latest.getLatest());
+                    syncProgress.setProcessPhase(DOWNLOAD_PHASE);
+                    progressPhase.onNext(syncProgress);
+
                     //if blocks downloading starts from last db height it will rewrite the block with empty tree field
                     protoApi.pageNum = latest.getLastFromDb() + 1;
                     endB = latest.getLatest();
@@ -120,6 +138,10 @@ public class SyncManager {
                     }
 
                     if (protoApi.pageNum <= endB) {
+                        syncProgress.setCurrentBlock(protoApi.pageNum);
+                        syncProgress.setProcessPhase(DOWNLOAD_PHASE);
+                        progressPhase.onNext(syncProgress);
+
                         blockRangeToDb();
                     } else {
                         //blocks downloading ended
@@ -134,11 +156,23 @@ public class SyncManager {
         compositeDisposable.add(
                 Observable.fromCallable(new CallBlocksForSync(dbManager))
                         .flatMap(listBlocks -> {
+                            if (!listBlocks.isEmpty()) {
+                                syncProgress.setFromBlock(listBlocks.get(0).getHeight());
+                                syncProgress.setToBlock(listBlocks.get(listBlocks.size() - 1).getHeight());
+                                syncProgress.setCurrentBlock(listBlocks.get(0).getHeight());
+                                syncProgress.setProcessPhase(SEARCH_PHASE);
+                                progressPhase.onNext(syncProgress);
+                            }
+
                             Timber.d("CallBlocksForSync finished=%s", listBlocks.size());
                             return Observable.fromIterable(listBlocks);
                         })
                         .flatMap(
                                 block -> {
+                                    syncProgress.setCurrentBlock(block.getHeight());
+                                    syncProgress.setProcessPhase(SEARCH_PHASE);
+                                    progressPhase.onNext(syncProgress);
+
                                     Timber.d("block for witnessing: %s", block.getHeight());
                                     return Observable.fromCallable(
                                             new CallFindWitnesses(
@@ -195,6 +229,8 @@ public class SyncManager {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 (res) -> {
+                                    syncProgress = new SyncProgress();
+                                    progressPhase.onNext(syncProgress);
                                     stopSync();
                                     Timber.d("revertLastBlocks (all blocks dropped) completed=%s", res);
                                 },

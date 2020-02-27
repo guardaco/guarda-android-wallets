@@ -460,6 +460,11 @@ public class TransactionHistoryFragment extends BaseFragment {
             Timber.d("getSyncInProgress().observe t=%b", t);
         });
 
+        historyViewModel.getSyncPhaseStatus().observe(getViewLifecycleOwner(), (t) -> {
+            setSyncStatus(t);
+            Timber.d("getSyncPhaseStatus().observe t=%b", t);
+        });
+
         historyViewModel.getUpdateBalance().observe(getViewLifecycleOwner(), (t) -> {
             if (t) loadShieldedBalance();
             Timber.d("getUpdateBalance().observe t=%b", t);
@@ -497,6 +502,10 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     private void setSyncStatus(boolean b) {
         setToolbarTitle(b ? STATUS_SYNCING : STATUS_SYNCED);
+    }
+
+    private void setSyncStatus(String phase) {
+        setToolbarTitle(phase);
     }
 
     private void initRotation(ImageView ivLoader) {

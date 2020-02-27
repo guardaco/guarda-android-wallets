@@ -28,6 +28,11 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
+import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCED;
+import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCING;
+import static com.guarda.zcash.sapling.SyncProgress.SEARCH_PHASE;
+import static com.guarda.zcash.sapling.SyncProgress.SYNCED_PHASE;
+
 public class HistoryViewModel extends ViewModel {
 
     private final WalletManager walletManager;
@@ -41,6 +46,7 @@ public class HistoryViewModel extends ViewModel {
     private MutableLiveData<Boolean> showTxError = new MutableLiveData<>();
     private MutableLiveData<List<TransactionItem>> showActualTxs = new MutableLiveData<>();
     private MutableLiveData<Boolean> syncInProgress = new MutableLiveData<>();
+    private MutableLiveData<String> syncPhaseStatus = new MutableLiveData<>();
     private MutableLiveData<Boolean> isRestored = new MutableLiveData<>();
     private MutableLiveData<Boolean> updateBalance = new MutableLiveData<>();
 
@@ -180,6 +186,29 @@ public class HistoryViewModel extends ViewModel {
             syncInProgress.setValue(t);
             if (!t) updateBalance.setValue(true);
         }));
+
+        compositeDisposable.add(syncManager.getSyncProgress().subscribe(progress -> {
+            Timber.d("getSyncProgress onNext() progress=%s", progress);
+
+            if (progress.getProcessPhase().equals(SYNCED_PHASE)) {
+                syncPhaseStatus.postValue(STATUS_SYNCED);
+            } else {
+                // 50 % - when blocks downloaded, but searching isn't started
+                long range = progress.getToBlock() - progress.getFromBlock();
+                if (range == 0 || progress.getCurrentBlock() == 0) {
+                    syncPhaseStatus.postValue(STATUS_SYNCING);
+                    return;
+                }
+
+                double percent = (double) (progress.getCurrentBlock() - progress.getFromBlock()) / range;
+                percent = percent * 50;
+
+                if (progress.getProcessPhase().equals(SEARCH_PHASE)) percent += 50;
+
+                String status = String.format("%s (%.0f%%)", STATUS_SYNCING, percent);
+                syncPhaseStatus.postValue(status);
+            }
+        }));
     }
 
     public void setCurrentStatus() {
@@ -241,6 +270,10 @@ public class HistoryViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getSyncInProgress() {
         return syncInProgress;
+    }
+
+    public MutableLiveData<String> getSyncPhaseStatus() {
+        return syncPhaseStatus;
     }
 
     public MutableLiveData<Boolean> getIsRestored() {
