@@ -58,12 +58,6 @@ android {
         unitTests.includeAndroidResources = true
     }
 
-//    externalNativeBuild {
-//        cmake {
-//            path "src/zec/CMakeLists.txt"
-//        }
-//    }
-
     dexOptions {
         javaMaxHeapSize "4G"
     }
@@ -74,8 +68,8 @@ android {
 
         zec {
             dimension "version"
-            versionCode 72
-            versionName "1.33"
+            versionCode 74
+            versionName "1.34"
             applicationId "guarda.shielded"
             dimension "tier"
         }
