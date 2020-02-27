@@ -48,8 +48,9 @@ public class ZCashTransaction_ttoz {
   private ECKey ecKey;
   private Long value;
   private Long fee;
+  private String memo;
 
-  public ZCashTransaction_ttoz(ECKey ecKey, SaplingCustomFullKey privKey, String fromAddr, String toAddr, Long value, Long fee, int expiryHeight,
+  public ZCashTransaction_ttoz(ECKey ecKey, SaplingCustomFullKey privKey, String fromAddr, String toAddr, Long value, Long fee, String memo, int expiryHeight,
                                Iterable<ZCashTransactionOutput> outputs) throws IllegalArgumentException {
 
     this.privKey = privKey;
@@ -57,6 +58,7 @@ public class ZCashTransaction_ttoz {
     this.nExpiryHeight = expiryHeight;
     this.value = value;
     this.fee = fee;
+    this.memo = memo;
 
     byte[] fromKeyHash = Arrays.copyOfRange(Base58.decodeChecked(fromAddr), 2, 22);
 
@@ -79,7 +81,7 @@ public class ZCashTransaction_ttoz {
     byte[] pkdToAddress = new byte[32];
     System.arraycopy(addressToBytes, 0, dToAddress, 0, 11);
     System.arraycopy(addressToBytes, 11, pkdToAddress, 0, 32);
-    bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(dToAddress, pkdToAddress, privKey, value, ""));
+    bytesShieldedOutputs = Bytes.concat(bytesShieldedOutputs, ZcashTransactionHelper.buildOutDesc(dToAddress, pkdToAddress, privKey, value, memo));
 
     Timber.d("bytesShieldedOutputs (bytes)=%s %d", Arrays.toString(bytesShieldedOutputs), bytesShieldedOutputs.length); // 948 bytes for an output
     shieldedOutputsBlake = new byte[32];

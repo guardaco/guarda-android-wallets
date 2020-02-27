@@ -18,6 +18,7 @@ public class CreateTransaction_ttoz extends AbstractZCashRequest implements Runn
   private WalletCallback<String, ZCashTransaction_ttoz> callback;
   private long fee;
   private long value;
+  private String memo;
   private List<ZCashTransactionOutput> utxos;
   private int expiryHeight;
 
@@ -25,6 +26,7 @@ public class CreateTransaction_ttoz extends AbstractZCashRequest implements Runn
                                 String toAddr,
                                 long value,
                                 long fee,
+                                String memo,
                                 String privatekey,
                                 SaplingCustomFullKey saplingCustomFullKey,
                                 int expiryHeight,
@@ -34,6 +36,7 @@ public class CreateTransaction_ttoz extends AbstractZCashRequest implements Runn
     this.toAddr = toAddr;
     this.value = value;
     this.fee = fee;
+    this.memo = memo;
     this.privateKey = privatekey;
     this.saplingCustomFullKey = saplingCustomFullKey;
     this.callback = callback;
@@ -58,8 +61,15 @@ public class CreateTransaction_ttoz extends AbstractZCashRequest implements Runn
       throw new ZCashException("Not enough balance.");
     }
 
-    return new ZCashTransaction_ttoz(DumpedPrivateKey.fromBase58(privateKey), saplingCustomFullKey, fromAddr, toAddr,
-            value, fee, expiryHeight, outputs);
+    return new ZCashTransaction_ttoz(DumpedPrivateKey.fromBase58(privateKey),
+            saplingCustomFullKey,
+            fromAddr,
+            toAddr,
+            value,
+            fee,
+            memo,
+            expiryHeight,
+            outputs);
   }
 
 

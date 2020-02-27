@@ -486,6 +486,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
                 getToAddress(),
                 amountSatoshi,
                 currentFeeEth,
+                getMemo(),
                 walletManager.getPrivateKey(),
                 walletManager.getSaplingCustomFullKey(),
                 Common.ZCASH_MIN_CONFIRM, (r1, r2) -> {
