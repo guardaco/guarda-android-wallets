@@ -21,7 +21,7 @@ package org.iota.wallet.api;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.preference.PreferenceManager;
+import androidx.appcompat.preference.PreferenceManager;
 
 import org.iota.wallet.api.handler.AddNeighborsRequestHandler;
 import org.iota.wallet.api.handler.CoolTransactionsRequestHandler;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -15,5 +15,5 @@
             android:layout_height="match_parent"
             android:text="The exchange service is converting one crypto to another one. The variety of exchange services is available in-app. You can select as exchange service provider as coins for conversion.\n\nPlease follow the on-screen instruсtion step-by-step for the exchange.\n\nYou can either top up your wallet using other crypto, either convert your crypto to another blockchain. Please make sure that exchanged amount is greater then min. limit."
             android:padding="20dp"/>
-    </android.support.v7.widget.CardView>
-</android.support.constraint.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

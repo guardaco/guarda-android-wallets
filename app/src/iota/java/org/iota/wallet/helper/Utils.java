@@ -21,8 +21,8 @@ package org.iota.wallet.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.preference.PreferenceManager;
+import androidx.core.widget.SwipeRefreshLayout;
+import androidx.appcompat.preference.PreferenceManager;
 import android.widget.AbsListView;
 import android.widget.ListView;
 

@@ -2,9 +2,10 @@ package com.guarda.ethereum.views.fragments;
 
 
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;

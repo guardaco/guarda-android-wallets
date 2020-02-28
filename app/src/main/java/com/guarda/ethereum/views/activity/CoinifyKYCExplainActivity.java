@@ -4,7 +4,7 @@ package com.guarda.ethereum.views.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
+import androidx.browser.customtabs.CustomTabsIntent;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -20,7 +20,6 @@ import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.CoinifyKYCResponse;
-import com.guarda.ethereum.models.items.CoinifySignUpResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
@@ -30,8 +29,6 @@ import javax.inject.Inject;
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.guarda.ethereum.models.constants.Coinify.COINIFY_GRANT_TYPE_OFFLINE_TOKEN;
 
 @AutoInjector(GuardaApp.class)
 public class CoinifyKYCExplainActivity extends AToolbarActivity {

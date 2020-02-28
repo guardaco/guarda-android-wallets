@@ -1,16 +1,13 @@
 package com.guarda.ethereum.views.adapters;
 
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.guarda.ethereum.BuildConfig;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.models.items.CoinifyBankAcc;
 

@@ -1,12 +1,11 @@
 package com.guarda.ethereum.views.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 

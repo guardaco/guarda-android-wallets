@@ -1,7 +1,6 @@
 package com.guarda.ethereum.managers;
 
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.JsonArray;

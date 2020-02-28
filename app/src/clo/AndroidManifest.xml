@@ -15,7 +15,7 @@
         tools:replace="android:allowBackup">
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.guarda.clo.provider"
             tools:replace="android:authorities"
             android:exported="false"

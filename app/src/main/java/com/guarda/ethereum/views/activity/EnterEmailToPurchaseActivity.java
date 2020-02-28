@@ -3,21 +3,21 @@ package com.guarda.ethereum.views.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.utils.KeyboardManager;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 import com.guarda.ethereum.views.fragments.PurchaseCoinsFragment;
-import com.guarda.ethereum.views.fragments.UserWalletFragment;
 
 import java.util.regex.Matcher;
 

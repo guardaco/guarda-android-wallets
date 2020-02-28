@@ -2,8 +2,9 @@ package com.guarda.ethereum.rest;
 
 
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.models.constants.BchExplorer;
@@ -88,6 +89,24 @@ public class ApiMethods {
                 .build();
 
         return retrofit.create(LightWalletApi.class);
+    }
+
+    static BitcoinNodeApi btcNodeNonCredentials() {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        OkHttpClient client = httpClient
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(NODE_ADDRESS)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+
+        return retrofit.create(BitcoinNodeApi.class);
     }
 
     static BitcoinNodeApi createBitcoinNodeApi() {

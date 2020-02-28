@@ -73,7 +73,7 @@ public class ConfirmPinCodeActivity extends APinCodeActivity {
         });
 
         if (isScreenLocked) {
-            android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+            androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             }

@@ -62,24 +62,6 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     Button btnExclude;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
-    //    @BindView(R.id.ll_gas_container)
-//    LinearLayout gasContainer;
-    @BindView(R.id.ll_fee_container)
-    LinearLayout feeContainer;
-//    @BindView(R.id.switch_gas_fee)
-//    SwitchCompat swGasFee;
-//    @BindView(R.id.et_gas_limit)
-//    EditText etGasLimit;
-//    @BindView(R.id.et_custom_data)
-//    EditText etCustomData;
-//    @BindView(R.id.cl_switch_container)
-//    ConstraintLayout switchContainer;
-//    @BindView(R.id.tv_gas)
-//    TextView tvGas;
-//    @BindView(R.id.tv_fee)
-//    TextView tvFee;
-
-//    private BigDecimal balance = new BigDecimal(0);
 
     @Inject
     WalletManager walletManager;

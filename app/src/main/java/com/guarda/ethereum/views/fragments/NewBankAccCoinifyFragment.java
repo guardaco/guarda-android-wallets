@@ -4,7 +4,6 @@ package com.guarda.ethereum.views.fragments;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.design.widget.TextInputLayout;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;

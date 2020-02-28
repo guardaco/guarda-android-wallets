@@ -1,6 +1,6 @@
 package com.bitshares.bitshareswallet.wallet.common;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.common.primitives.UnsignedInteger;
 

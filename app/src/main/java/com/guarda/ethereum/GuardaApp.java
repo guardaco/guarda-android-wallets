@@ -5,8 +5,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.multidex.MultiDex;
-import android.support.v7.app.AppCompatDelegate;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.multidex.MultiDex;
+
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
@@ -19,19 +20,15 @@ import com.guarda.ethereum.managers.ShapeshiftManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.constants.Const;
 import com.guarda.ethereum.models.constants.Extras;
-import com.guarda.ethereum.models.constants.RequestCode;
-import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.views.activity.ConfirmPinCodeActivity;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import autodagger.AutoComponent;
 import de.adorsys.android.securestoragelibrary.SecurePreferences;
-import de.adorsys.android.securestoragelibrary.SecureStorageException;
 import io.fabric.sdk.android.Fabric;
 
 @AutoComponent(

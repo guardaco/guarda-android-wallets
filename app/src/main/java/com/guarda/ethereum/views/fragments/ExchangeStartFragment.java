@@ -1,8 +1,6 @@
 package com.guarda.ethereum.views.fragments;
 
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,11 +12,9 @@ import com.guarda.ethereum.managers.Callback2;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.ChangenowApi;
 import com.guarda.ethereum.managers.ShapeshiftApi;
-import com.guarda.ethereum.managers.ShapeshiftManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Const;
-import com.guarda.ethereum.models.items.ResponseChangellyMinAmount;
 import com.guarda.ethereum.models.items.ResponseGenerateAddress;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.utils.ClipboardUtils;

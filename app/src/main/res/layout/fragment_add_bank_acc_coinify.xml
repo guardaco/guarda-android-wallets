@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:layout_marginTop="40dp">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cv_int_bank"
@@ -25,9 +25,9 @@
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="20dp"
             app:srcCompat="@drawable/ic_arrow_right_purch"/>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cv_dan_bank"
@@ -45,7 +45,7 @@
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="20dp"
             app:srcCompat="@drawable/ic_arrow_right_purch"/>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <com.guarda.ethereum.customviews.RobotoLightTextView
         android:id="@+id/tv_add_expl"

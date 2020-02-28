@@ -3,45 +3,19 @@ package com.guarda.ethereum.views.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.guarda.ethereum.BuildConfig;
-import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.managers.Callback2;
-import com.guarda.ethereum.managers.ChangellyNetworkManager;
-import com.guarda.ethereum.managers.ChangenowApi;
-import com.guarda.ethereum.managers.IndacoinManager;
-import com.guarda.ethereum.managers.ShapeshiftApi;
-import com.guarda.ethereum.managers.SharedManager;
-import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
-import com.guarda.ethereum.models.constants.Const;
 import com.guarda.ethereum.models.constants.Extras;
-import com.guarda.ethereum.models.items.CoinifyTradeResponse;
-import com.guarda.ethereum.models.items.ResponseGenerateAddress;
-import com.guarda.ethereum.rest.ApiMethods;
-import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import im.delight.android.webview.AdvancedWebView;
-
-import static com.guarda.ethereum.models.constants.Common.MAIN_CURRENCY;
 
 public class CoinifyKYCActivity extends AToolbarActivity implements AdvancedWebView.Listener {
 

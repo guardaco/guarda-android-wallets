@@ -4,10 +4,10 @@ package com.guarda.ethereum.views.activity.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.guarda.ethereum.BuildConfig;
+import androidx.annotation.Nullable;
+
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
@@ -24,7 +24,6 @@ import static com.guarda.ethereum.models.constants.Extras.DISABLE_CHECK;
 public abstract class TrackOnStopActivity extends BaseActivity {
 
 
-//    private final long ALLOWABLE_ABSENCE_TIME = 60000;
     private final long ALLOWABLE_ABSENCE_TIME = 0;
     private boolean isUnblocked = false;
     private final String BACKUP = "backup";
@@ -39,26 +38,8 @@ public abstract class TrackOnStopActivity extends BaseActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-//        isUnblocked = false;
-//        GuardaApp.setTimeOfExit(System.currentTimeMillis());
-    }
-
-    @Override
     protected void onResume() {
-//        if (isShouldToBlockScreen()) {
-//            Log.d("psd", "track onResume - " + ((GuardaApp) getApplication()).isShowPin);
-//            if (((GuardaApp) getApplication()).isShowPin && !isUnblocked && sharedManager.getIsShowPinAfterCongrats()) {
-//                if (!BuildConfig.DEBUG) {
-////                    startPinCodeActivity();
-//                }
-//            }
-//            sharedManager.setIsShowPinAfterCongrats(true);
-//        } else {
-//            GuardaApp.setTimeOfExit(0);
-//            GuardaApp.setTimeOfIgnoreExist(0);
-//        }
+
         super.onResume();
     }
 
@@ -77,22 +58,6 @@ public abstract class TrackOnStopActivity extends BaseActivity {
         }
         return false;
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == RESULT_OK) {
-//            switch (requestCode) {
-//                case RequestCode.RESTORE_FROM_STOP_PIN_CODE_REQUEST:
-//                    GuardaApp.setTimeOfExit(0);
-//                    GuardaApp.setTimeOfIgnoreExist(0);
-//                    isUnblocked = true;
-////                    onResume();
-////                    isUnblocked = false;
-//                    break;
-//            }
-//        }
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
 
     public void startPinCodeActivity() {
         Intent intent = new Intent(this, ConfirmPinCodeActivity.class);

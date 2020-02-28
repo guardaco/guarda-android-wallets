@@ -3,8 +3,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'maven'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
     lintOptions {
         checkReleaseBuilds false
         ignoreWarnings true       // false by default
@@ -12,10 +11,10 @@ android {
     defaultConfig {
         applicationId "com.guarda.ethereum"
         minSdkVersion 18
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 51
         versionName "0.61"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -202,11 +201,6 @@ configurations {
     btgImplementation.exclude group: 'com.google.common.annotations'
     btgImplementation.exclude group: 'com.google.guava'
 
-//    kmdImplementation.exclude group: 'com.squareup.okhttp3'
-//    kmdImplementation.exclude group: 'org.codehaus.mojo'
-//    kmdImplementation.exclude group: 'com.google.common.annotations'
-//    kmdImplementation.exclude group: 'com.google.guava'
-
     dgbImplementation.exclude group: 'com.squareup.okhttp3'
     dgbImplementation.exclude group: 'org.codehaus.mojo'
     dgbImplementation.exclude group: 'com.google.common.annotations'
@@ -219,18 +213,18 @@ repositories {
     maven { url "http://repo.maven.apache.org/maven2" }
 }
 dependencies {
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.google.code.findbugs'
     })
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:gridlayout-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:support-annotations:27.1.1'
-    implementation 'com.jakewharton:butterknife:8.6.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
     implementation 'com.google.dagger:dagger:2.0'
@@ -248,13 +242,13 @@ dependencies {
     implementation 'de.adorsys.android:securestoragelibrary:1.0.2'
     implementation 'com.hbb20:ccp:2.0.3'
     implementation 'com.github.freshdesk:freshchat-android:1.2.1'
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'com.thoughtbot:expandablerecyclerview:1.3'
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
     implementation 'com.scottyab:rootbeer-lib:0.0.6'
-    implementation 'com.android.support:customtabs:27.1.1'
+    implementation 'androidx.browser:browser:1.0.0'
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
 
     ethImplementation 'org.web3j:core-android:2.2.1'
@@ -274,12 +268,12 @@ dependencies {
     btsImplementation 'com.github.bilthon:graphenej:0.4.2'
     btsImplementation 'com.madgag.spongycastle:core:1.52.0.0'
     btsImplementation 'com.madgag.spongycastle:prov:1.56.0.0'
-    btsImplementation 'android.arch.lifecycle:extensions:1.0.0-rc1'
+    btsImplementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     btsImplementation 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
-    btsImplementation 'android.arch.persistence.room:runtime:1.0.0-rc1'
+    btsImplementation 'androidx.room:room-runtime:2.0.0'
     iotaImplementation 'com.github.bitcoinj-cash.bitcoinj:bitcoinj-core:cash-v0.14.5.1'
     iotaImplementation 'com.github.iotaledger:iota~lib~java:0.9.10'
-    iotaImplementation 'com.android.support:preference-v7:27.1.1'
+    iotaImplementation 'androidx.preference:preference:1.0.0'
     iotaImplementation 'org.greenrobot:eventbus:3.0.0'
     iotaImplementation 'org.knowm.xchange:xchange-core:4.3.0'
     iotaImplementation 'org.knowm.xchange:xchange-bitstamp:4.3.0'

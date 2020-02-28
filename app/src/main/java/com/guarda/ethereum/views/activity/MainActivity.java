@@ -1,26 +1,22 @@
 package com.guarda.ethereum.views.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,9 +26,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.customviews.RateDialog;
 import com.guarda.ethereum.customviews.RobotoLightTypefaceSpan;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.CurrencyListHolder;
@@ -48,8 +44,6 @@ import com.guarda.ethereum.views.fragments.DepositFragment;
 import com.guarda.ethereum.views.fragments.DepositFragment_decent;
 import com.guarda.ethereum.views.fragments.DisabledFragment;
 import com.guarda.ethereum.views.fragments.ExchangeFragment;
-import com.guarda.ethereum.views.fragments.PurchaseCoinsFragment;
-import com.guarda.ethereum.views.fragments.PurchaseFragment;
 import com.guarda.ethereum.views.fragments.PurchaseServiceFragment;
 import com.guarda.ethereum.views.fragments.SettingsFragment;
 import com.guarda.ethereum.views.fragments.TransactionHistoryFragment;
@@ -57,15 +51,12 @@ import com.guarda.ethereum.views.fragments.UserWalletFragment;
 import com.guarda.ethereum.views.fragments.WithdrawFragment;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
-import butterknife.OnClick;
-import de.adorsys.android.securestoragelibrary.SecureStorageException;
 
 import static com.guarda.ethereum.models.constants.Const.CHANGELLY_TIMEOUT;
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
@@ -482,7 +473,7 @@ public class MainActivity extends TrackOnStopActivity {
         }
 
         if (!handled) {
-            mDrawerLayout.openDrawer(Gravity.START);
+            mDrawerLayout.openDrawer(GravityCompat.START);
         }
     }
 

@@ -1,7 +1,6 @@
 package com.guarda.ethereum.views.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +9,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.models.ExchangeSpinnerRowModel;
 import com.guarda.ethereum.models.KeysSpinnerRowModel;
-import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
 import java.util.List;
 
 

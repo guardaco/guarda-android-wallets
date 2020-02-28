@@ -2,8 +2,8 @@ package com.guarda.ethereum.views.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;

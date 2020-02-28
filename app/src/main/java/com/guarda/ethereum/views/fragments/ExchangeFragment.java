@@ -2,9 +2,7 @@ package com.guarda.ethereum.views.fragments;
 
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,10 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import androidx.fragment.app.Fragment;
+
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.Callback;
@@ -41,7 +37,6 @@ import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.views.adapters.ExchangeSpinnerAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -56,7 +51,6 @@ import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
-import okhttp3.ResponseBody;
 
 @AutoInjector(GuardaApp.class)
 public class ExchangeFragment extends BaseFragment {

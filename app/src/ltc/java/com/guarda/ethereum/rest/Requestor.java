@@ -1,7 +1,7 @@
 package com.guarda.ethereum.rest;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.JsonArray;

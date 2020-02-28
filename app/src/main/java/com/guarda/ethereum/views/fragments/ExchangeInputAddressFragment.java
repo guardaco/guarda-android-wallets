@@ -3,8 +3,7 @@ package com.guarda.ethereum.views.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.managers.Callback;
 import com.guarda.ethereum.managers.Callback2;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.ChangenowApi;
@@ -42,8 +42,6 @@ import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
-
-import static com.guarda.ethereum.models.constants.Extras.TOKEN_CODE_EXTRA;
 
 @AutoInjector(GuardaApp.class)
 public class ExchangeInputAddressFragment extends BaseFragment {

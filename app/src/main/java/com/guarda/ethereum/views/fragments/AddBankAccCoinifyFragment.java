@@ -2,9 +2,6 @@ package com.guarda.ethereum.views.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.guarda.ethereum.R;
@@ -57,24 +54,6 @@ public class AddBankAccCoinifyFragment extends BaseFragment {
         bundle.putString(Extras.COINIFY_BANK_TYPE, bankType);
         startFragment.setArguments(bundle);
         navigateToFragment(startFragment);
-//        if (getActivity() != null) {
-//            getActivity().getSupportFragmentManager().popBackStack();
-//            navigateToFragment(startFragment);
-//        }
     }
-
-//    @Override
-//    public boolean onBackPressed() {
-//        if (prevFragment != null) {
-//            navigateToFragment(prevFragment);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean onHomePressed() {
-//        return onBackPressed();
-//    }
 
 }

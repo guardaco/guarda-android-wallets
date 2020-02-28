@@ -22,8 +22,8 @@ package org.iota.wallet.api;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.preference.BuildConfig;
-import android.support.v7.preference.PreferenceManager;
+import androidx.appcompat.preference.BuildConfig;
+import androidx.appcompat.preference.PreferenceManager;
 import android.telecom.Call;
 import android.util.Log;
 

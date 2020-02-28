@@ -46,7 +46,7 @@
         <item name="colorControlHighlight">@color/blueSeparatorColor</item>
         <item name="errorEnabled">false</item>
         <item name="colorControlActivated">@color/blueSeparatorColor</item>
-        <item name="textColorError">@color/errorTextColor</item>
+<!--        <item name="textColorError">@color/errorTextColor</item>-->
     </style>
 
     <style name="EditTextHintLightGrey" parent="Widget.Design.TextInputLayout">

@@ -3,7 +3,7 @@ package com.guarda.ethereum.views.fragments;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
+import androidx.core.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;

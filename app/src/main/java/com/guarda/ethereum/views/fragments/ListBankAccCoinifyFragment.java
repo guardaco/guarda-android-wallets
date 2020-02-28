@@ -1,20 +1,19 @@
 package com.guarda.ethereum.views.fragments;
 
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.SharedManager;
-import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.CoinifyBankAcc;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
@@ -28,7 +27,6 @@ import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
-import butterknife.OnClick;
 
 @AutoInjector(GuardaApp.class)
 public class ListBankAccCoinifyFragment extends BaseFragment {

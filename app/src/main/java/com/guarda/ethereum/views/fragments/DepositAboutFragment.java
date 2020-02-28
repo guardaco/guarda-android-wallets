@@ -1,7 +1,8 @@
 package com.guarda.ethereum.views.fragments;
 
-import android.support.v4.app.Fragment;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;

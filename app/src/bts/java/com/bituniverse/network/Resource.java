@@ -16,8 +16,8 @@
 
 package com.bituniverse.network;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static com.bituniverse.network.Status.ERROR;
 import static com.bituniverse.network.Status.LOADING;

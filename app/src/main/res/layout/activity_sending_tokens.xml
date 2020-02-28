@@ -34,7 +34,7 @@
                     android:focusableInTouchMode="true"
                     android:layout_height="wrap_content"
                     android:id="@+id/robotoTextView" />
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -71,7 +71,7 @@
                             android:visibility="visible" />
 
                     </RelativeLayout>
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
             </RelativeLayout>
 
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/robotoTextView2" />
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -130,12 +130,12 @@
                                 android:textSize="18sp"
                                 android:visibility="visible" />
                         </RelativeLayout>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_send_coins_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                     android:textColor="@color/editTextBlueGreyColor"
                     android:textSize="20sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_confirm"

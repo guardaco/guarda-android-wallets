@@ -2,22 +2,22 @@ package com.guarda.ethereum.views.fragments;
 
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.CurrencyListHolder;
 import com.guarda.ethereum.managers.WalletManager;
-import com.guarda.ethereum.models.ExchangeSpinnerRowModel;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.ResponseCurrencyItem;
 import com.guarda.ethereum.rest.ApiMethods;

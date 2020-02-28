@@ -3,9 +3,10 @@ package com.guarda.ethereum.views.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
+
+import androidx.fragment.app.DialogFragment;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;

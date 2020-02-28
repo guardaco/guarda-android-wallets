@@ -2,9 +2,9 @@ package com.guarda.ethereum.views.fragments;
 
 
 import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;

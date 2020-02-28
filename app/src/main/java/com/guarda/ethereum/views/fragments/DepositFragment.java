@@ -2,30 +2,18 @@ package com.guarda.ethereum.views.fragments;
 
 
 import android.content.Intent;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.CurrencyListHolder;
-import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
-import com.guarda.ethereum.models.constants.Common;
-import com.guarda.ethereum.models.constants.Extras;
-import com.guarda.ethereum.models.items.ResponseCurrencyItem;
-import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.utils.QrCodeUtils;
-import com.guarda.ethereum.views.activity.GenerateAddressActivity;
-import com.guarda.ethereum.views.adapters.CryptoAdapter;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
 import javax.inject.Inject;
