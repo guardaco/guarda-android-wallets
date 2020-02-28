@@ -253,7 +253,7 @@ dependencies {
 
     ethImplementation 'org.web3j:core-android:2.2.1'
     etcImplementation 'org.web3j:core-android:2.2.1'
-    btcImplementation 'org.bitcoinj:bitcoinj-core:0.14.5'
+    btcImplementation 'org.bitcoinj:bitcoinj-core:0.14.7'
     btgImplementation files('libs/bitcoinj-core-0.15-SNAPSHOT-bundled.jar')
     btgImplementation 'com.google.guava:guava:23.3-android'
     dctImplementation 'com.madgag.spongycastle:core:1.52.0.0'

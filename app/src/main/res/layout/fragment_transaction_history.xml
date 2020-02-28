@@ -131,18 +131,6 @@
         fab:menu_labels_textColor="@color/baseBlueTextColor">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_buy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_purchase_white_wr"
-            android:tint="#fff"
-            fab:fab_colorNormal="#8d81d5"
-            fab:fab_colorPressed="#6699f8"
-            fab:fab_colorRipple="#c9c1fa"
-            fab:fab_label="@string/fab_buy"
-            fab:fab_size="mini" />
-
-        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_purchase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

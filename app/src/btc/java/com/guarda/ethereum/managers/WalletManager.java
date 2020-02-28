@@ -470,11 +470,7 @@ public class WalletManager {
     }
 
     public String getWalletFriendlyAddress() {
-        if (BuildConfig.DEBUG) {
-            return "36n452uGq1x4mK7bfyZR8wgE47AnBb2pzi";
-        } else {
-            return walletFriendlyAddress;
-        }
+        return walletFriendlyAddress;
     }
 
     public String getWalletAddressForDeposit() {
@@ -577,14 +573,8 @@ public class WalletManager {
         Transaction trx = null;
         String hex = "";
         try {
-            //trx = wallet.sendCoinsOffline(sendRequest);
             wallet.completeTx(sendRequest);
             trx = sendRequest.tx;
-
-//            Log.d("flint", "getInputSum: " + trx.getInputSum().toFriendlyString());
-//            Log.d("flint", "getOutputSum: " + trx.getOutputSum().toFriendlyString());
-//            Log.d("flint", "getFee: " + trx.getFee().toFriendlyString());
-//            Log.d("flint", "getInput.getHash: " + trx.getInput(0).getOutpoint().getHash().toString());
 
             Log.d("svcom", "size = " + trx.bitcoinSerialize().length);
             hex = Hex.toHexString(trx.bitcoinSerialize());

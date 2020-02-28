@@ -208,10 +208,6 @@ public class MainActivity extends TrackOnStopActivity {
         BackupFragment fragment = new BackupFragment();
         setToolBarTitle(R.string.title_backup);
         navigateToFragment(fragment);
-
-        sharedManager.setIsShowBackupAlert(false);
-        ImageView i = (ImageView) mNavigationView.getMenu().getItem(5).getActionView();
-        i.setVisibility(View.GONE);
     }
 
     private void goToPurchaseFragment() {
@@ -297,10 +293,6 @@ public class MainActivity extends TrackOnStopActivity {
         });
 
         mNavigationView.setItemIconTintList(null);
-        if (sharedManager.getIsShowBackupAlert()) {
-            ImageView i = (ImageView) mNavigationView.getMenu().getItem(5).getActionView();
-            i.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
