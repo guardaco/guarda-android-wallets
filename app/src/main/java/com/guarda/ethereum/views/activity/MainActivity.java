@@ -239,16 +239,6 @@ public class MainActivity extends TrackOnStopActivity {
                                     ((TransactionHistoryFragment)currentFragment).scrollToTop();
                                 }
                                 break;
-                            case R.id.menu_buy:
-                                if (SharedManager.flag_disable_buy_menu) {
-                                    setToolBarTitle(getString(R.string.app_purchase_service));
-                                    fragment = new DisabledFragment();
-                                } else {
-                                    if (!(currentFragment instanceof PurchaseServiceFragment)) {
-                                        fragment = new PurchaseServiceFragment();
-                                    }
-                                }
-                                break;
                             case R.id.menu_purchase:
                                 if (SharedManager.flag_disable_purchase_menu) {
                                     setToolBarTitle(R.string.title_purchase);
