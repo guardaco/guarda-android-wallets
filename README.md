@@ -11,6 +11,8 @@ Read the detailed instruction [here](https://guarda.freshdesk.com/support/soluti
 ## About
 Cryptocurrency wallets support:
 - ZEC Shielded (Z-addresses, mainnet) - [/APKs/zec-shielded-mainnet.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-shielded-mainnet.apk)
+
+[![Available on Google Play](https://guarda.co/assets/images/home-poster-play.png)](https://play.google.com/store/apps/details?id=guarda.shielded)
 - ZEC Shielded (Z-addresses, testnet) - [/APKs/zec-shielded-testnet.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/zec-shielded-testnet.apk)
 - BTC (Bitcoin) - [/APKs/btc-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/btc-release.apk)
 - ETH (Ethereum) - [/APKs/eth-release.apk](https://github.com/guardaco/guarda-android-wallets/blob/master/APKs/eth-release.apk)
