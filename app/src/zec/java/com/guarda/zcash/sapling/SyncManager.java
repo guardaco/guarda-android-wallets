@@ -199,6 +199,9 @@ public class SyncManager {
                 .flatMap(it -> {
                             Timber.d("validateSaplingTree height=%d", it.getHeight());
                             String raw = RequestorBtc.getRawBlockByHash(it.getHash()).blockingFirst().getRawblock();
+
+                            if (raw == null || raw.isEmpty()) return Observable.just(true);
+
                             String root = new SaplingMerkleTree(it.getTree()).root();
                             Timber.d("lastBlockWithTree=%d root=%s raw=%s", it.getHeight(), root, raw);
                             boolean isContained = raw.toLowerCase().contains(root.toLowerCase());
