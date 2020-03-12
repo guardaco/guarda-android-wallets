@@ -7,16 +7,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProviders;
+
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
+import com.guarda.ethereum.lifecycle.HistoryViewModel;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.SharedManager;
+import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.zcash.sapling.SyncManager;
+import com.guarda.zcash.sapling.db.DbManager;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -59,6 +64,12 @@ public class UserWalletFragment extends BaseFragment {
     SharedManager sharedManager;
     @Inject
     SyncManager syncManager;
+    @Inject
+    TransactionsManager transactionsManager;
+    @Inject
+    DbManager dbManager;
+
+    private HistoryViewModel historyViewModel;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -73,6 +84,9 @@ public class UserWalletFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        HistoryViewModel.Factory factory = new HistoryViewModel.Factory(walletManager, transactionsManager, dbManager, syncManager);
+        historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
+
         initView();
         setCryptoBalance();
         setUSDBalance();
@@ -106,7 +120,7 @@ public class UserWalletFragment extends BaseFragment {
             tv_wallet_address_z.setText(walletManager.getSaplingAddress());
         }
         if (isWalletExist()) syncManager.startSync();
-        setSyncStatus(true);
+        setSyncStatus(STATUS_SYNCING);
     }
 
     private boolean isWalletExist() {
@@ -177,16 +191,14 @@ public class UserWalletFragment extends BaseFragment {
     }
 
     private void initSubscribers() {
-        compositeDisposable.add(
-                syncManager.getProgressSubject().subscribe(t -> {
-                    setSyncStatus(t);
-                    Timber.d("getProgressSubject onNext() t=%b", t);
-                })
-        );
+        historyViewModel.getSyncPhaseStatus().observe(getViewLifecycleOwner(), (t) -> {
+            setSyncStatus(t);
+            Timber.d("getSyncPhaseStatus().observe t=%s", t);
+        });
     }
 
-    private void setSyncStatus(boolean b) {
-        setToolbarTitle(b ? STATUS_SYNCING : STATUS_SYNCED);
+    private void setSyncStatus(String phase) {
+        setToolbarTitle(phase);
     }
 
     @Override

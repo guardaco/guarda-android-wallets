@@ -462,7 +462,7 @@ public class TransactionHistoryFragment extends BaseFragment {
 
         historyViewModel.getSyncPhaseStatus().observe(getViewLifecycleOwner(), (t) -> {
             setSyncStatus(t);
-            Timber.d("getSyncPhaseStatus().observe t=%b", t);
+            Timber.d("getSyncPhaseStatus().observe t=%s", t);
         });
 
         historyViewModel.getUpdateBalance().observe(getViewLifecycleOwner(), (t) -> {
