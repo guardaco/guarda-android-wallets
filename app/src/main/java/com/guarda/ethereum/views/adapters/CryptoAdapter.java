@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.models.items.CryptoItem;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,15 +78,6 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoItemHolder> {
         holder.tvName.setText(item.getName());
 
         Integer id = view.getContext().getResources().getIdentifier("ic_" + item.getCode().toLowerCase(), "drawable", view.getContext().getPackageName());
-
-        if (id != null && id != 0) {
-            Picasso.with(view.getContext()).load(id).into(holder.ivIcon);
-            holder.ivIcon.setBackground(view.getContext().getResources().getDrawable(R.drawable.ic_empty));
-        } else {
-            Picasso.with(view.getContext()).load(R.drawable.ic_curr_empty).into(holder.ivIcon);
-            holder.ivIcon.setBackground(view.getContext().getResources().getDrawable(R.drawable.ic_curr_empty));
-        }
-
     }
 
     @Override
