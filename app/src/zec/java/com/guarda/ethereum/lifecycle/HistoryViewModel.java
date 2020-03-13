@@ -75,7 +75,6 @@ public class HistoryViewModel extends ViewModel {
     }
 
     public void loadTransactions() {
-
         getTxsFromDb();
 
         RequestorBtc.getTransactionsZecNew(walletManager.getWalletFriendlyAddress(), new ApiMethods.RequestListener() {

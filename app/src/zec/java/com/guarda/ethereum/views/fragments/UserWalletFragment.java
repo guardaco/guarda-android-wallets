@@ -1,13 +1,16 @@
 package com.guarda.ethereum.views.fragments;
 
 
+import android.animation.ObjectAnimator;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
@@ -51,10 +54,14 @@ public class UserWalletFragment extends BaseFragment {
     TextView tvWalletAddress;
     @BindView(R.id.tv_wallet_address_z)
     TextView tv_wallet_address_z;
+    @BindView(R.id.tv_sync_status)
+    TextView tv_sync_status;
     @BindView(R.id.btn_top_up_other_currency)
     Button btn_top_up_other_currency;
     @BindView(R.id.btn_top_up_other_currency_z)
     Button btn_top_up_other_currency_z;
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Inject
     WalletManager walletManager;
@@ -68,6 +75,8 @@ public class UserWalletFragment extends BaseFragment {
     TransactionsManager transactionsManager;
     @Inject
     DbManager dbManager;
+
+    private ObjectAnimator loaderAnimation;
 
     private HistoryViewModel historyViewModel;
 
@@ -88,6 +97,8 @@ public class UserWalletFragment extends BaseFragment {
         historyViewModel = ViewModelProviders.of(this, factory).get(HistoryViewModel.class);
 
         initView();
+        initRotation(ivUpdateAddress);
+        swipeRefreshLayout.setOnRefreshListener(this::openTransactionHistory);
         setCryptoBalance();
         setUSDBalance();
         if (TextUtils.isEmpty(walletManager.getWalletFriendlyAddress())) {
@@ -112,7 +123,6 @@ public class UserWalletFragment extends BaseFragment {
             showExistingWallet();
         });
     }
-
 
     private void showExistingWallet() {
         if (isAdded() && !isDetached()) {
@@ -143,8 +153,7 @@ public class UserWalletFragment extends BaseFragment {
         tvUSDCount.setText(String.format("0.00 %s", sharedManager.getLocalCurrency().toUpperCase()));
     }
 
-    @OnClick({R.id.iv_update_address,
-            R.id.btn_copy_address,
+    @OnClick({R.id.btn_copy_address,
             R.id.btn_copy_address_z,
             R.id.btn_show_address_qr,
             R.id.btn_show_address_qr_z,
@@ -152,9 +161,6 @@ public class UserWalletFragment extends BaseFragment {
             R.id.btn_top_up_other_currency_z})
     void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_update_address:
-                openTransactionHistory();
-                break;
             case R.id.btn_copy_address:
                 copyAddress();
                 break;
@@ -198,7 +204,27 @@ public class UserWalletFragment extends BaseFragment {
     }
 
     private void setSyncStatus(String phase) {
-        setToolbarTitle(phase);
+        tv_sync_status.setText(phase);
+        if (phase.equals(STATUS_SYNCED)) {
+            loaderAnimation.cancel();
+        } else {
+            startClockwiseRotation();
+        }
+    }
+
+    private void initRotation(ImageView ivLoader) {
+        if (loaderAnimation == null) {
+            loaderAnimation = ObjectAnimator.ofFloat(ivLoader, "rotation", 0.0f, 360f);
+            loaderAnimation.setDuration(1500);
+            loaderAnimation.setRepeatCount(ObjectAnimator.INFINITE);
+            loaderAnimation.setInterpolator(new LinearInterpolator());
+        }
+    }
+
+    private void startClockwiseRotation() {
+        if (!loaderAnimation.isRunning()) {
+            loaderAnimation.start();
+        }
     }
 
     @Override
