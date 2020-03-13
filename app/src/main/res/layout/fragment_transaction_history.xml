@@ -83,11 +83,11 @@
                     android:layout_height="wrap_content">
 
                     <com.guarda.ethereum.customviews.RobotoTextView
+                        android:id="@+id/tv_sync_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_margin="15dp"
-                        android:text="@string/transaction_history_your_transactions"
                         android:textColor="#414141"
                         android:textSize="14dp" />
 

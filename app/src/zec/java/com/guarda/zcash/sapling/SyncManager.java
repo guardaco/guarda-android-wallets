@@ -35,8 +35,8 @@ import static com.guarda.zcash.sapling.SyncProgress.SYNCED_PHASE;
 @AutoInjector(GuardaApp.class)
 public class SyncManager {
 
-    public static final String STATUS_SYNCING = "Syncing...";
-    public static final String STATUS_SYNCED = "Synced";
+    public static final String STATUS_SYNCING = "Syncing z-address";
+    public static final String STATUS_SYNCED = "Synced z-address";
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private long endB = 518945;
 

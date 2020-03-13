@@ -74,8 +74,6 @@ import static com.guarda.ethereum.models.constants.Common.EXTRA_TRANSACTION_POSI
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
 import static com.guarda.ethereum.models.constants.Extras.FIRST_ACTION_MAIN_ACTIVITY;
 import static com.guarda.ethereum.models.constants.Extras.KEY;
-import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCED;
-import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCING;
 
 @AutoInjector(GuardaApp.class)
 public class TransactionHistoryFragment extends BaseFragment {
@@ -92,6 +90,8 @@ public class TransactionHistoryFragment extends BaseFragment {
     FloatingActionButton fabDeposit;
     @BindView(R.id.fab_withdraw)
     FloatingActionButton fabWithdraw;
+    @BindView(R.id.tv_sync_status)
+    TextView tv_sync_status;
     @BindView(R.id.iv_update_transactions)
     ImageView tvUpdateTransactions;
     @BindView(R.id.rv_transactions_list)
@@ -160,11 +160,7 @@ public class TransactionHistoryFragment extends BaseFragment {
         initRotation(tvUpdateTransactions);
         initMenuButton();
 
-        swipeRefreshLayout.setProgressViewEndTarget(false, -2000);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            swipeRefreshLayout.setRefreshing(false);
-            updBalanceHistSync();
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::updBalanceHistSync);
 
         String firstAction = null;
         if (getArguments() != null) {
@@ -257,7 +253,7 @@ public class TransactionHistoryFragment extends BaseFragment {
             //check if history updating is in progress
             if (isUpdating) return;
             isUpdating = true;
-            startClockwiseRotation();
+            swipeRefreshLayout.setRefreshing(true);
             loadBalance();
             historyViewModel.loadTransactions();
         } else {
@@ -428,24 +424,19 @@ public class TransactionHistoryFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.iv_update_transactions)
-    public void onUpdateClick() {
-        updBalanceHistSync();
-    }
-
     private void subscribeUi() {
         historyViewModel.getShowHistory().observe(getViewLifecycleOwner(), (v) -> {
             if (v) {
                 isUpdating = false;
                 updateFromDbOrEmpty();
-                loaderAnimation.cancel();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
         historyViewModel.getShowTxError().observe(getViewLifecycleOwner(), (v) -> {
             if (v) {
                 isUpdating = false;
-                loaderAnimation.cancel();
+                swipeRefreshLayout.setRefreshing(false);
                 ((MainActivity) getActivity()).showCustomToast(getStringIfAdded(R.string.err_get_history), R.drawable.err_history);
             }
         });
@@ -501,11 +492,14 @@ public class TransactionHistoryFragment extends BaseFragment {
     }
 
     private void setSyncStatus(boolean b) {
-        setToolbarTitle(b ? STATUS_SYNCING : STATUS_SYNCED);
+        if (b)
+            startClockwiseRotation();
+        else
+            loaderAnimation.cancel();
     }
 
     private void setSyncStatus(String phase) {
-        setToolbarTitle(phase);
+        tv_sync_status.setText(phase);
     }
 
     private void initRotation(ImageView ivLoader) {
