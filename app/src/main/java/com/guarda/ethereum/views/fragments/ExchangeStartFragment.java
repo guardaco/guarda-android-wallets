@@ -214,7 +214,7 @@ public class ExchangeStartFragment extends BaseFragment {
                                     depositAddress = resp.depositAddress;
                                 } else {
                                     showQrCode = false;
-                                    depositAddress = getResources().getString(R.string.fragment_disabled_text);
+                                    depositAddress = getString(R.string.fragment_disabled_text);
                                 }
                                 updateDepositAddressView();
                                 closeProgress();
@@ -299,6 +299,7 @@ public class ExchangeStartFragment extends BaseFragment {
     private void updateDepositAddressView() {
         try {
             if (showQrCode) {
+                if (depositAddress.equals(getString(R.string.fragment_disabled_text))) return;
                 textViewAddressWallet.setVisibility(View.GONE);
                 textViewTapToCopy.setVisibility(View.GONE);
                 ivQrCode.setVisibility(View.VISIBLE);
