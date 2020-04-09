@@ -109,11 +109,9 @@ public class WalletManager {
             walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
             saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
         } catch (IllegalArgumentException iae) {
-            callback.onWalletCreated();
             iae.printStackTrace();
             Timber.e("restoreFromBlock IllegalArgumentException e=%s", iae.getMessage());
         } catch (ZCashException zce) {
-            callback.onWalletCreated();
             zce.printStackTrace();
             Timber.e("restoreFromBlock ZCashException e=%s", zce.getMessage());
         }
@@ -126,14 +124,12 @@ public class WalletManager {
             BrainKeyDict.init(context.getAssets());
             mnemonicKey = ZCashWalletManager.generateNewPrivateKey_taddr();
             walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
+            callback.run();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (ZCashException zce) {
             zce.printStackTrace();
         }
-//        sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
-
-        callback.run();
     }
 
     public void restoreFromBlock2(String mnemonicCode, final Runnable callback) {
@@ -150,18 +146,14 @@ public class WalletManager {
                             Timber.d("RESPONSE CODE %s", r1);
                         } catch (IllegalArgumentException iae) {
                             iae.printStackTrace();
-                            callback.run();
                         } catch (ZCashException zce) {
                             zce.printStackTrace();
-                            callback.run();
                         }
                     });
         } catch (IllegalArgumentException iae) {
-            callback.run();
             iae.printStackTrace();
         } catch (ZCashException zce) {
             zce.printStackTrace();
-            callback.run();
         }
     }
 

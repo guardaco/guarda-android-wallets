@@ -19,7 +19,7 @@ public class DebugHelper {
                 Bundle params = new Bundle();
 
                 params.putString("device", "brand: " + Build.BRAND + " device: " + Build.DEVICE + " model: " + Build.MODEL);
-                params.putString("time",String.valueOf(System.currentTimeMillis()));
+                params.putString("time", String.valueOf(System.currentTimeMillis()));
                 params.putString("full_text", "sharedManager.getLastSyncedBlock() is empty");
                 firebaseAnalytics.logEvent("lastBlockEmpty", params);
             } catch (Exception e) {
