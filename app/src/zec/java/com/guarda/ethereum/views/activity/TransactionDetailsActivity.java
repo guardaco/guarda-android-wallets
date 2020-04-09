@@ -144,7 +144,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
 
                                     ll_memo.setVisibility(View.VISIBLE);
                                     et_memo.setText(memo);
-                        })
+                        }, (error) -> Timber.e("showMemo %s", error.getMessage()))
         );
     }
 
