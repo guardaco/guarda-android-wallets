@@ -240,6 +240,10 @@ public class ZCashWalletManager {
       throw new ZCashException("Invalid private key.");
     }
 
+    if (saplingCustomFullKey == null) {
+      throw new ZCashException("Invalid spending key.");
+    }
+
     if (!fromAddr.equals(publicKeyFromPrivateKey_taddr(privateKey))) {
       throw new ZCashException("fromAddr does not correspond to privateKey in createTransaction_taddr");
     }
@@ -297,6 +301,10 @@ public class ZCashWalletManager {
                                        final DbManager dbManager,
                                        final WalletCallback<String, ZcashTransaction> onComplete) throws ZCashException {
 
+    if (privateKey == null) {
+      throw new ZCashException("Invalid spending key.");
+    }
+
     if (amount < 0) {
       throw new ZCashException("Cannot send negative amount of coins.");
     }
@@ -341,6 +349,10 @@ public class ZCashWalletManager {
     checkArgumentNonNull(amount, "amount", methodName);
     checkArgumentNonNull(fee, "fee", methodName);
     checkArgumentNonNull(onComplete, "onComplete", methodName);
+
+    if (privateKey == null) {
+      throw new ZCashException("Invalid spending key.");
+    }
 
     try {
       Base58.decodeChecked(toAddr);
