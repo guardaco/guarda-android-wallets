@@ -97,8 +97,11 @@ public class SyncManager {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((latest) -> {
                     Timber.d("saplingParamsInit done=%s", latest);
-                    saplingKeyInit();
-                    getBlocks();
+                    if (saplingKeyInit()) {
+                        getBlocks();
+                    } else {
+                        stopSync();
+                    }
                 }, (e) -> stopAndLogError("saplingParamsInit", e)));
     }
 
@@ -242,13 +245,18 @@ public class SyncManager {
         );
     }
 
-    private void saplingKeyInit() {
+    private boolean saplingKeyInit() {
         if (walletManager.getSaplingCustomFullKey() == null) {
             byte[] p = RustAPI.dPart(walletManager.getPrivateKey().getBytes());
+            if (p.length != 235) {
+                Timber.e("saplingKeyInit wrong key length=%d", p.length);
+                return false;
+            }
             SaplingCustomFullKey k = new SaplingCustomFullKey(p);
             walletManager.setSaplingCustomFullKey(k);
             Timber.d("saplingKeyInit inited");
         }
+        return true;
     }
 
     private void stopAndLogError(String method, Throwable t) {
