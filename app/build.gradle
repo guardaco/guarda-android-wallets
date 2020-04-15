@@ -27,6 +27,8 @@ android {
             }
         }
 
+//        ndk.abiFilters 'armeabi'
+
         // used by Room, to test migrations
         javaCompileOptions {
             annotationProcessorOptions {
