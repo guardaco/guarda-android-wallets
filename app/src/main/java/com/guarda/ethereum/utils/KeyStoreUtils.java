@@ -10,7 +10,6 @@ import androidx.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 
 import java.io.ByteArrayInputStream;
@@ -52,7 +51,6 @@ public class KeyStoreUtils {
     private static final String AndroidKeyStore = "AndroidKeyStore";
     private static final String AES_MODE = "AES/GCM/NoPadding";
     private static final String KEY_ALIAS = "GUARDA_KEY_ALIS_V2";
-    private static final String XEALTH_KEY_ALIAS = "XEALTH_GUARDA_KEY_ALIS";
     private static final String FIXED_IV = "wvhoZu807WTa";
     private static final String RSA_MODE =  "RSA/ECB/PKCS1Padding";
     private static final String AES_MODE_OLD = "AES/ECB/PKCS7Padding";
@@ -62,7 +60,6 @@ public class KeyStoreUtils {
 
     private KeyStore keyStore;
     private KeyGenerator keyGenerator;
-    private byte[] iv;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public KeyStoreUtils() {
@@ -95,7 +92,6 @@ public class KeyStoreUtils {
                             .setStartDate(start.getTime())
                             .setEndDate(end.getTime())
                             .build();
-//                    KeyPairGenerator kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, AndroidKeyStore);
                     KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", AndroidKeyStore);
                     kpg.initialize(spec);
                     kpg.generateKeyPair();
@@ -113,15 +109,11 @@ public class KeyStoreUtils {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public String encryptData(String data) {
-        if (BuildConfig.DEBUG) {
-//            Log.d("psd", "KeyStoreUtils.encryptData() - data = " + data);
-        }
         try {
             final Cipher c = Cipher.getInstance(AES_MODE);
             final GCMParameterSpec spec = new GCMParameterSpec(128, FIXED_IV.getBytes());
             c.init(Cipher.ENCRYPT_MODE, getSecretKey(), spec);
             byte[] encodedBytes = c.doFinal(data.getBytes("UTF-8"));
-//            Log.d("psd", "KeyStoreUtils.encryptData() - return = " + Base64.encodeToString(encodedBytes, Base64.DEFAULT) + " data = " + data);
             return Base64.encodeToString(encodedBytes, Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,7 +128,6 @@ public class KeyStoreUtils {
             final GCMParameterSpec spec = new GCMParameterSpec(128, FIXED_IV.getBytes());
             c.init(Cipher.DECRYPT_MODE, getSecretKey(), spec);
             byte[] decodedBytes = c.doFinal(Base64.decode(data, Base64.DEFAULT));
-//            Log.d("psd", "KeyStoreUtils.decryptData() - return = " + new String(decodedBytes, "UTF-8") + " data = " + data);
             return new String(decodedBytes, "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,7 +174,6 @@ public class KeyStoreUtils {
                     .setStartDate(start.getTime())
                     .setEndDate(end.getTime())
                     .build();
-//            KeyPairGenerator kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, AndroidKeyStore);
             KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", AndroidKeyStore);
             kpg.initialize(spec);
             kpg.generateKeyPair();
@@ -202,8 +192,7 @@ public class KeyStoreUtils {
         cipherOutputStream.write(secret);
         cipherOutputStream.close();
 
-        byte[] vals = outputStream.toByteArray();
-        return vals;
+        return outputStream.toByteArray();
     }
 
     private  byte[]  rsaDecrypt(byte[] encrypted) throws Exception {
