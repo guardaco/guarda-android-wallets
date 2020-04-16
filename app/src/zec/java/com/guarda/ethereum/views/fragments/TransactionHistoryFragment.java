@@ -364,12 +364,12 @@ public class TransactionHistoryFragment extends BaseFragment {
         rvTransactionsList.setLayoutManager(layoutManager);
 
         adapter = new TransHistoryAdapter();
-        adapter.setItemClickListener((position) -> {
-                Intent detailsIntent = new Intent(getActivity(), TransactionDetailsActivity.class);
-                detailsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                detailsIntent.putExtra(EXTRA_TRANSACTION_POSITION, position);
-                startActivity(detailsIntent);
-                getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.no_slide);
+        adapter.setItemClickListener((txItem) -> {
+            transactionsManager.setTxDeatailsItem(txItem);
+            Intent detailsIntent = new Intent(getActivity(), TransactionDetailsActivity.class);
+            detailsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(detailsIntent);
+            getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.no_slide);
         });
 
         rvTransactionsList.setAdapter(adapter);

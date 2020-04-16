@@ -65,7 +65,7 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
         Long txSum = item.getSum();
         holder.rootView.setOnClickListener((v) -> {
                 if (listener != null) {
-                    listener.OnItemClick(position);
+                    listener.OnItemClick(item);
                 }
         });
 
@@ -124,7 +124,7 @@ public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapte
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(int position);
+        void OnItemClick(TransactionItem item);
     }
 }
 

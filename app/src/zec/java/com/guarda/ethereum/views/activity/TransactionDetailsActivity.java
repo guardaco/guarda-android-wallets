@@ -89,8 +89,7 @@ public class TransactionDetailsActivity extends AToolbarMenuActivity {
     protected void init(Bundle savedInstanceState) {
         GuardaApp.getAppComponent().inject(this);
         setToolBarTitle(getString(R.string.title_transaction_detail));
-        int transactionPosition = getIntent().getIntExtra(EXTRA_TRANSACTION_POSITION, 0);
-        transaction = transactionsManager.getTxByPosition(transactionPosition);
+        transaction = transactionsManager.getTxDeatailsItem();
         updateViews();
     }
 

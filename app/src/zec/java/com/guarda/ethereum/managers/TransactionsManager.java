@@ -28,6 +28,7 @@ public class TransactionsManager {
 
     private List<TransactionItem> transactionsList = new ArrayList<>();
     private List<TransactionItem> txFriendlyList = new ArrayList<>();
+    private TransactionItem txDeatailsItem;
 
     public TransactionsManager() {
         transactionsList = new ArrayList<>();
@@ -262,6 +263,11 @@ public class TransactionsManager {
         return res;
     }
 
+    public TransactionItem getTxDeatailsItem() {
+        return txDeatailsItem;
+    }
 
-
+    public void setTxDeatailsItem(TransactionItem txDeatailsItem) {
+        this.txDeatailsItem = txDeatailsItem;
+    }
 }
