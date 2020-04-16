@@ -1,7 +1,6 @@
 package com.guarda.zcash
 
 import androidx.test.core.app.ApplicationProvider
-import com.guarda.zcash.sapling.note.SaplingNoteEncryption.KDFSapling
 import com.guarda.zcash.sapling.note.SaplingOutgoingPlaintext.PRF_ock
 import org.junit.Before
 import org.junit.Test
@@ -26,8 +25,6 @@ class RustAPITest {
 
     @Test
     fun testKdf() {
-        val res1 = KDFSapling(ByteArray(32), ByteArray(32))
-        println("testKdf res1 = ${Arrays.toString(res1)}")
         val res2 = RustAPI.kdfSapling(ByteArray(32), ByteArray(32))
         println("testKdf res2 = ${Arrays.toString(res2)}")
         // res1 = [64, 80, -35, 4, 81, 3, -32, 1, 98, -119, 50, 67, -101, 58, 116, 98, -71, 88, -76, 119, -72, 117, 26, -113, 126, 68, 18, 76, -31, -121, -114, 15]

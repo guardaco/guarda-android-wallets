@@ -145,7 +145,8 @@ public class SaplingNotePlaintext {
     private static byte[] epkIvkToKey(String ivkHex, String epkHex) {
         String dhsecretHex = RustAPI.kagree(epkHex, ivkHex);
 
-        byte[] K = SaplingNoteEncryption.KDFSapling(reverseByteArray(Utils.hexToBytes(dhsecretHex)), reverseByteArray(Utils.hexToBytes(epkHex)));
+        byte[] K = RustAPI.kdfSapling(reverseByteArray(Utils.hexToBytes(dhsecretHex)), reverseByteArray(Utils.hexToBytes(epkHex)));
+
         Timber.d("epkIvkToKey K=%s s=%d", Arrays.toString(K), K.length);
         return K;
     }
