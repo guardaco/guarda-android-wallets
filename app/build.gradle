@@ -27,7 +27,7 @@ android {
             }
         }
 
-//        ndk.abiFilters 'armeabi'
+        ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64', 'x86'
 
         // used by Room, to test migrations
         javaCompileOptions {
@@ -196,6 +196,8 @@ dependencies {
     zecImplementation "com.goterl.lazycode:lazysodium-android:3.6.3@aar"
     zecImplementation "net.java.dev.jna:jna:5.3.1@aar"
     zecImplementation 'com.facebook.stetho:stetho:1.5.1'
+
+    zecImplementation project(path: ':rust-lib-release')
     //lifecycle
     zecImplementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     zecAnnotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0'
@@ -205,8 +207,6 @@ dependencies {
     androidTestZecImplementation 'androidx.test:rules:1.2.0'
     androidTestZecImplementation 'androidx.test:core:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-//    implementation project(path: ':rust-lib')
-    implementation project(path: ':rust-lib-release')
 }
 
 apply plugin: 'com.google.gms.google-services'
