@@ -132,7 +132,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
                                 null,
                                 TypeConvert.bytesToLong(snp.vbytes),
                                 nf,
-                                new String(snp.getMemobytes(), Charset.forName("UTF-16BE"))
+                                new String(snp.getMemobytes())
                         )
                 );
 

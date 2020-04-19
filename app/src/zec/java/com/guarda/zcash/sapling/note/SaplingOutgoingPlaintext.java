@@ -22,9 +22,7 @@ public class SaplingOutgoingPlaintext {
     public static byte[] encryptToOurselves(byte[] ovk, byte[] cv, byte[] cm,  byte[] epk, byte[] message) {
         byte[] K = RustAPI.prfOck(ovk, cv, cm, epk);
 
-        byte[] nPub = new byte[AEAD.CHACHA20POLY1305_IETF_NPUBBYTES]; // should be 12 bytes
-        LazySodiumAndroid lazySodium = LsaSingle.getInstance();
-        byte[] sec = lazySodium.toBinary(lazySodium.encrypt(lazySodium.str(message),null, nPub, Key.fromBytes(K), AEAD.Method.CHACHA20_POLY1305_IETF));
+        byte[] sec = RustAPI.encryptOutgoing(K, message);
 
         return sec;
     }

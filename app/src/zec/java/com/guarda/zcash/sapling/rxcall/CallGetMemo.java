@@ -41,7 +41,6 @@ public class CallGetMemo implements Callable<String> {
             SaplingNotePlaintext snp = tryNoteDecrypt(txOutRoom, walletManager.getSaplingCustomFullKey());
             if (snp == null) continue;
 
-//            memo = new String(snp.getMemobytes(), Charset.forName("UTF-16BE"));
             memo = new String(snp.getMemobytes());
             Timber.d("memo=%s", memo);
             return memo;

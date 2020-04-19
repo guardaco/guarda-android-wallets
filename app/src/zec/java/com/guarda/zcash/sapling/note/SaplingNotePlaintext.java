@@ -1,13 +1,9 @@
 package com.guarda.zcash.sapling.note;
 
 import com.google.common.primitives.Bytes;
-import com.goterl.lazycode.lazysodium.LazySodiumAndroid;
-import com.goterl.lazycode.lazysodium.interfaces.AEAD;
-import com.goterl.lazycode.lazysodium.utils.Key;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.crypto.Utils;
 import com.guarda.zcash.globals.TypeConvert;
-import com.guarda.zcash.sapling.LsaSingle;
 import com.guarda.zcash.sapling.db.model.TxOutRoom;
 import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
 
@@ -152,13 +148,16 @@ public class SaplingNotePlaintext {
     }
 
     private static byte[] decryptFullCipher(String ciphertextHex, byte[] K) {
-        byte[] nPub = new byte[AEAD.CHACHA20POLY1305_IETF_NPUBBYTES]; // should be 12 bytes
-        LazySodiumAndroid lazySodium = LsaSingle.getInstance();
+        byte[] decrypted = RustAPI.fullDecrypt(K, hexToBytes(ciphertextHex));
 
-        String decrypt = lazySodium.decrypt(ciphertextHex, null, nPub, Key.fromBytes(K), AEAD.Method.CHACHA20_POLY1305_IETF);
-        Timber.d("decryptFullCipher lazySodium.decrypt hex=%s", decrypt);
+        Timber.d("decryptFullCipher decrypted=%s size=%d", Arrays.toString(decrypted), decrypted.length);
 
-        return lazySodium.bytes(decrypt);
+        byte[] decCut = new byte[564];
+        if (decrypted.length == ENC_CIPHERTEXT_SIZE) {
+            System.arraycopy(decrypted, 0, decCut, 0, 564);
+        }
+
+        return decCut;
     }
 
     private static byte[] decryptCompactCipher(String ciphertextHex, byte[] K) {

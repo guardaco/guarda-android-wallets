@@ -10,7 +10,7 @@ public class LsaSingle {
 
     public static synchronized LazySodiumAndroid getInstance() {
         if (instance == null) {
-            instance = new LazySodiumAndroid(new SodiumAndroid(), Charset.forName("UTF-16BE"));
+            instance = new LazySodiumAndroid(new SodiumAndroid());
         }
         return instance;
     }
