@@ -74,19 +74,9 @@ android {
             versionName "1.37"
             applicationId "guarda.shielded"
             dimension "tier"
+            setProperty("archivesBaseName", "guarda-shielded-$versionName")
         }
 
-    }
-
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            def flavor = variant.productFlavors[0].name
-            def buildType = variant.variantData.variantConfiguration.buildType.name
-
-            def newApkName = flavor + "-" + buildType + ".apk"
-
-            outputFileName = newApkName
-        }
     }
 
     packagingOptions {
