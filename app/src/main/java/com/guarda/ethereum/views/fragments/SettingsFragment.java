@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import androidx.appcompat.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,32 +14,28 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SwitchCompat;
+
 import com.freshchat.consumer.sdk.Freshchat;
 import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
+import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.views.activity.ConfirmPinCodeActivity;
 import com.guarda.ethereum.views.activity.CreateAccessCodeActivity;
 import com.guarda.ethereum.views.activity.SettingsWebViewActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
-import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
-import com.guarda.zcash.sapling.rxcall.CallDropLastBlockRange;
 
 import javax.inject.Inject;
 
 import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.PRIVACY_POLICE_LINK;
 import static com.guarda.ethereum.models.constants.Common.TERM_OF_USE_LINK;
@@ -158,21 +153,6 @@ public class SettingsFragment extends BaseFragment {
                 openCustomNode();
                 break;
         }
-    }
-
-    @OnLongClick(R.id.ll_about_app)
-    public boolean zecResync(View view) {
-        if (!BuildConfig.DEBUG || syncManager.isInProgress()) return true;
-
-        compositeDisposable.add(
-                Observable
-                        .fromCallable(new CallDropLastBlockRange(dbManager))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe((res) -> Timber.d("CallDropLastBlockRange res=%b", res))
-        );
-
-        return true;
     }
 
     private void openCustomNode() {
