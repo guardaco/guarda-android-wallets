@@ -8,14 +8,12 @@ import com.guarda.ethereum.R;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 
 /**
  * Created by psd on 13.12.2017.
  */
 
-@AutoInjector(GuardaApp.class)
 public class SettingsWebViewActivity extends AToolbarActivity {
 
     @BindView(R.id.wv_settings)

@@ -14,9 +14,7 @@ import com.guarda.ethereum.views.activity.base.AToolbarExtMenuActivity;
 import com.guarda.ethereum.views.fragments.AddBankAccCoinifyFragment;
 import com.guarda.ethereum.views.fragments.ListBankAccCoinifyFragment;
 
-import autodagger.AutoInjector;
 
-@AutoInjector(GuardaApp.class)
 public class BankAccCoinifyActivity extends AToolbarExtMenuActivity {
 
     @Override

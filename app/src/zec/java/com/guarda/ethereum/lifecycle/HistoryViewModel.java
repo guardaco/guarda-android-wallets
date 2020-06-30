@@ -214,14 +214,6 @@ public class HistoryViewModel extends ViewModel {
         syncInProgress.setValue(syncManager.isInProgress());
     }
 
-    public void startSync() {
-        syncManager.startSync();
-    }
-
-    public void stopSync() {
-        syncManager.stopSync();
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();
@@ -282,5 +274,7 @@ public class HistoryViewModel extends ViewModel {
     public MutableLiveData<Boolean> getUpdateBalance() {
         return updateBalance;
     }
+
+
 
 }

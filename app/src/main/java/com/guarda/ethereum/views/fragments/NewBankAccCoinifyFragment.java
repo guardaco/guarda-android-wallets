@@ -31,11 +31,9 @@ import com.hbb20.CountryCodePicker;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@AutoInjector(GuardaApp.class)
 public class NewBankAccCoinifyFragment extends BaseFragment {
 
     @BindView(R.id.tv_bank_name)

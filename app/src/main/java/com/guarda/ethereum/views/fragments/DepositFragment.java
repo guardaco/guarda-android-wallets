@@ -17,13 +17,11 @@ import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl;
 import timber.log.Timber;
 
-@AutoInjector(GuardaApp.class)
 public class DepositFragment extends BaseFragment {
 
     @BindView(R.id.segmented_control)

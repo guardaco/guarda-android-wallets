@@ -17,10 +17,8 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 
-@AutoInjector(GuardaApp.class)
 public class ConfirmPinCodeActivity extends APinCodeActivity {
 
     private static final int MAX_WRONG_ATTEMPTS = 3;

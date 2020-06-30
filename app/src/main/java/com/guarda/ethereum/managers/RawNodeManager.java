@@ -21,13 +21,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 
 /**
  * Created by SV on 03.10.2017.
  */
 
-@AutoInjector(GuardaApp.class)
 public class RawNodeManager {
 
     private static final String BALANCE_OF_PREFIX = "0x70a08231000000000000000000000000";

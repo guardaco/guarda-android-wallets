@@ -10,12 +10,10 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 
 /**
  * Created by samosudovd on 08/06/2018.
  */
-@AutoInjector(GuardaApp.class)
 public class GsonUtils {
 
     private Gson gson;

@@ -31,7 +31,6 @@ import java.math.RoundingMode;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.disposables.CompositeDisposable;
@@ -41,7 +40,6 @@ import static com.guarda.ethereum.models.constants.Common.BLOCK;
 import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCED;
 import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCING;
 
-@AutoInjector(GuardaApp.class)
 public class UserWalletFragment extends BaseFragment {
 
     @BindView(R.id.tv_wallet_count)

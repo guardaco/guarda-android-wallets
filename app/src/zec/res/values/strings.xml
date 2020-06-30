@@ -10,6 +10,12 @@
     <string name="app_currency_name" translatable="false">Zcash</string>
     <string name="et_error_wrong_private_key">Wrong private key</string>
 
+    <string name="sync_service_description">Sync a wallet with a blockchain</string>
+    <string name="sync_push_channel_id">Sync push notification channel ID</string>
+    <string name="sync_push_fallback_title">Sync push notification</string>
+    <string name="sync_push_title">Syncing z-address</string>
+    <string name="sync_push_body">-</string>
+
     <string-array name="field_type_array_data">
         <item>T-ADDRESS</item>
         <item>Z-ADDRESS</item>

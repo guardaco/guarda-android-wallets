@@ -10,7 +10,6 @@ import java.util.Iterator;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import cash.z.wallet.sdk.rpc.CompactFormats;
 import cash.z.wallet.sdk.rpc.CompactTxStreamerGrpc;
 import cash.z.wallet.sdk.rpc.Service;
@@ -18,7 +17,6 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import timber.log.Timber;
 
-@AutoInjector(GuardaApp.class)
 public class ProtoApi {
 
     public long pageNum = 551912; //height

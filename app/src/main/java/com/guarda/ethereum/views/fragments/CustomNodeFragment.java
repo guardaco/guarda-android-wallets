@@ -17,14 +17,12 @@ import java.net.URL;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.guarda.ethereum.models.constants.Extras.FIRST_ACTION_MAIN_ACTIVITY;
 import static com.guarda.ethereum.models.constants.Extras.GO_TO_SETTINGS;
 
-@AutoInjector(GuardaApp.class)
 public class CustomNodeFragment extends BaseFragment {
 
     @BindView(R.id.et_server)

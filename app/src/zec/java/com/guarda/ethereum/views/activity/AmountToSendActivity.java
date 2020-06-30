@@ -30,7 +30,6 @@ import java.math.BigDecimal;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -39,7 +38,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-@AutoInjector(GuardaApp.class)
 public class AmountToSendActivity extends AToolbarMenuActivity {
 
     @BindView(R.id.et_amount_to_send)

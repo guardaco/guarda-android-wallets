@@ -37,7 +37,6 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -45,7 +44,6 @@ import static com.guarda.ethereum.models.constants.Extras.GO_TO_PURCHASE;
 import static com.guarda.ethereum.models.constants.Extras.GO_TO_TRANS_HISTORY;
 import static com.guarda.ethereum.models.constants.Extras.NAVIGATE_TO_FRAGMENT;
 
-@AutoInjector(GuardaApp.class)
 public class ReceiptCoinifyActivity extends AToolbarActivity {
 
     @BindView(R.id.rl_card_receipt)

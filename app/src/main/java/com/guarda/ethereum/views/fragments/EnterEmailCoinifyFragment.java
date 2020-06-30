@@ -43,13 +43,11 @@ import java.util.regex.Matcher;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.guarda.ethereum.models.constants.Coinify.COINIFY_GRANT_TYPE_EMAIL_PASS;
 
-@AutoInjector(GuardaApp.class)
 public class EnterEmailCoinifyFragment extends BaseFragment {
 
     @BindView(R.id.ccp_country)

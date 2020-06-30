@@ -3,7 +3,6 @@ package com.guarda.ethereum.views.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.textfield.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,13 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.guarda.zcash.WalletCallback;
-import com.guarda.zcash.ZCashException;
-import com.guarda.zcash.ZCashTransaction_taddr;
-import com.guarda.zcash.ZCashWalletManager;
-import com.guarda.zcash.crypto.Utils;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.BitcoinNodeManager;
@@ -36,6 +31,11 @@ import com.guarda.ethereum.models.items.TxFeeResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
+import com.guarda.zcash.WalletCallback;
+import com.guarda.zcash.ZCashException;
+import com.guarda.zcash.ZCashTransaction_taddr;
+import com.guarda.zcash.ZCashWalletManager;
+import com.guarda.zcash.crypto.Utils;
 
 import org.bitcoinj.core.Coin;
 
@@ -47,11 +47,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@AutoInjector(GuardaApp.class)
 public class SellConfirmCoinifyActivity extends AToolbarActivity {
 
     @BindView(R.id.coinify_send)

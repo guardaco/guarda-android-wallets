@@ -29,11 +29,9 @@ import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@AutoInjector(GuardaApp.class)
 public class DepositFragment_decent extends BaseFragment {
 
     public String TAG = "DepositFragment";

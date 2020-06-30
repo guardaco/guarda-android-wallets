@@ -40,12 +40,10 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 import javax.security.auth.x500.X500Principal;
 
-import autodagger.AutoInjector;
 
 import static com.guarda.ethereum.managers.SharedManager.ENCRYPTED_AES;
 import static com.guarda.ethereum.managers.SharedManager.GUARDA_SHAR_PREF;
 
-@AutoInjector(GuardaApp.class)
 public class KeyStoreUtils {
 
     private static final String AndroidKeyStore = "AndroidKeyStore";

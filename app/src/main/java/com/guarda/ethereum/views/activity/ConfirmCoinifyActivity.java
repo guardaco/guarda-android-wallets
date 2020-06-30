@@ -34,11 +34,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@AutoInjector(GuardaApp.class)
 public class ConfirmCoinifyActivity extends AToolbarActivity {
 
     @BindView(R.id.coinify_send)

@@ -32,14 +32,12 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl;
 
 import static com.guarda.ethereum.models.constants.Extras.TOKEN_CODE_EXTRA;
 
-@AutoInjector(GuardaApp.class)
 public class WithdrawFragment extends BaseFragment{
 
 

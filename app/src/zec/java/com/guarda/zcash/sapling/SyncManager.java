@@ -19,7 +19,6 @@ import com.guarda.zcash.sapling.tree.SaplingMerkleTree;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -32,7 +31,6 @@ import static com.guarda.zcash.sapling.SyncProgress.DOWNLOAD_PHASE;
 import static com.guarda.zcash.sapling.SyncProgress.SEARCH_PHASE;
 import static com.guarda.zcash.sapling.SyncProgress.SYNCED_PHASE;
 
-@AutoInjector(GuardaApp.class)
 public class SyncManager {
 
     public static final String STATUS_SYNCING = "Syncing z-address";

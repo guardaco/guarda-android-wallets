@@ -13,10 +13,8 @@ import com.guarda.ethereum.managers.SharedManager;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 
-@AutoInjector(GuardaApp.class)
 public class AccessCodeAgainActivity extends APinCodeActivity {
 
     @BindView(R.id.gpl_pin_code)

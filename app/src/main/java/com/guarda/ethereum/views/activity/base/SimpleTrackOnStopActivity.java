@@ -13,9 +13,7 @@ import com.guarda.ethereum.views.activity.ConfirmPinCodeActivity;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 
-@AutoInjector(GuardaApp.class)
 public abstract class SimpleTrackOnStopActivity extends SimpleBaseActivity {
 
 

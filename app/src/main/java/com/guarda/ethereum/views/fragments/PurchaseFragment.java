@@ -18,10 +18,8 @@ import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 
-@AutoInjector(GuardaApp.class)
 public class PurchaseFragment extends BaseFragment {
 
     private String TAG = "PurchaseFragment";
@@ -42,7 +40,7 @@ public class PurchaseFragment extends BaseFragment {
     @Override
     protected void init() {
         GuardaApp.getAppComponent().inject(this);
-            initRecycler();
+        initRecycler();
     }
 
     private void initRecycler() {

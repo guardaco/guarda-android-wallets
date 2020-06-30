@@ -42,13 +42,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.guarda.ethereum.models.constants.Common.ETH_SHOW_PATTERN;
 
-@AutoInjector(GuardaApp.class)
 public class AmountCoinifyActivity extends AToolbarMenuActivity {
 
     @BindView(R.id.et_amount_to_send)

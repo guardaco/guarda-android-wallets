@@ -15,11 +15,9 @@ import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@AutoInjector(GuardaApp.class)
 public class AddrBtcCoinifyActivity extends AToolbarActivity {
 
     @BindView(R.id.et_send_coins_address)

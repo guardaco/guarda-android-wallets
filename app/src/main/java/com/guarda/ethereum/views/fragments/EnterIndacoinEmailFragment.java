@@ -8,18 +8,15 @@ import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
 import java.util.regex.Matcher;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@AutoInjector(GuardaApp.class)
 public class EnterIndacoinEmailFragment extends BaseFragment {
 
     @BindView(R.id.et_email)

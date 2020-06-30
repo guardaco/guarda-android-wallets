@@ -13,13 +13,11 @@ import com.guarda.ethereum.views.activity.base.TrackOnStopActivity;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 
 import static com.guarda.ethereum.models.constants.Extras.GO_TO_TRANS_HISTORY;
 import static com.guarda.ethereum.models.constants.Extras.NAVIGATE_TO_FRAGMENT;
 
-@AutoInjector(GuardaApp.class)
 public class CongratsActivity extends TrackOnStopActivity {
 
     @BindView(R.id.tv_congrats_text)

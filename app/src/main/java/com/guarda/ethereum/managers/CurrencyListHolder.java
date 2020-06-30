@@ -4,7 +4,6 @@ package com.guarda.ethereum.managers;
 import android.content.Context;
 import android.util.Log;
 
-import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.items.CryptoItem;
 import com.guarda.ethereum.models.items.ResponseCurrencyItem;
@@ -18,11 +17,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 
 import static com.guarda.ethereum.models.constants.Common.MAIN_CURRENCY;
 
-@AutoInjector(GuardaApp.class)
 public class CurrencyListHolder {
 
     @Inject

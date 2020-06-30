@@ -22,7 +22,6 @@ import com.guarda.ethereum.managers.SharedManager;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,7 +30,6 @@ import butterknife.OnClick;
  * Created by psd on 06.12.2017.
  */
 
-@AutoInjector(GuardaApp.class)
 public class RateDialog extends DialogFragment {
 
     @BindView(R.id.const_rate)
@@ -86,7 +84,6 @@ public class RateDialog extends DialogFragment {
 
     @Inject
     Context context;
-
     @Inject
     SharedManager sharedManager;
 

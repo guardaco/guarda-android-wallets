@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: 'maven'
 apply plugin: 'com.google.protobuf'
@@ -99,18 +99,25 @@ crashlytics {
 }
 
 protobuf {
-    protoc { artifact = 'com.google.protobuf:protoc:3.6.1' }
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.11.4"
+    }
     plugins {
         javalite { artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0" }
         grpc {
-            artifact = 'io.grpc:protoc-gen-grpc-java:1.18.0'
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.27.1'
         }
     }
     generateProtoTasks {
         all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
             task.plugins {
-                javalite {}
-                grpc { // Options added to --grpc_out
+                grpc {
+                    // Options added to --grpc_out
                     option 'lite'
                 }
             }
@@ -131,10 +138,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.github.clans:fab:1.6.4'
-    implementation 'com.google.dagger:dagger:2.24'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.24'
-    implementation 'com.github.arok:Auto-Dagger2:master-SNAPSHOT'
-    annotationProcessor 'com.github.arok:Auto-Dagger2:master-SNAPSHOT'
+    implementation 'com.google.dagger:dagger:2.27'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.27'
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -157,9 +162,12 @@ dependencies {
     }
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
 
-    implementation 'io.grpc:grpc-okhttp:1.21.0'
-    implementation 'io.grpc:grpc-protobuf-lite:1.21.0'
-    implementation 'io.grpc:grpc-stub:1.21.0'
+    implementation 'io.grpc:grpc-okhttp:1.30.1'
+    implementation ('io.grpc:grpc-protobuf-lite:1.30.1') {
+        exclude module: "protobuf-lite"
+    }
+    implementation 'io.grpc:grpc-stub:1.30.1'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
 
     implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
     //Glide

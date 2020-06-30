@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.utils.Coders;
-import com.guarda.ethereum.utils.DebugHelper;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.ZCashWalletManager;
 import com.guarda.zcash.crypto.BrainKeyDict;
@@ -27,7 +26,6 @@ import java.math.BigDecimal;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import timber.log.Timber;
 import work.samosudov.rustlib.RustAPI;
 
@@ -41,7 +39,6 @@ import work.samosudov.rustlib.RustAPI;
  * 09.10.2017.
  */
 
-@AutoInjector(GuardaApp.class)
 public class WalletManager {
 
     private Wallet wallet;
@@ -64,7 +61,6 @@ public class WalletManager {
     }
 
     public void createWallet(String passphrase, WalletCreationCallback callback) {
-        DebugHelper.checkEmptyLastSyncedBlock(sharedManager.getLastSyncedBlock(), context);
         restoreFromBlock(Coders.decodeBase64(sharedManager.getLastSyncedBlock()), callback);
     }
 

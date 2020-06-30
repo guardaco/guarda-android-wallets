@@ -7,10 +7,8 @@ import com.guarda.ethereum.R;
 import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 
-@AutoInjector(GuardaApp.class)
 public class ExchangeAboutFragment extends BaseFragment {
 
     @BindView(R.id.textViewAbout)

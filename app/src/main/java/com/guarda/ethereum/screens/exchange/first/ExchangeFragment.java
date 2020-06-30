@@ -34,12 +34,10 @@ import java.util.SortedMap;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-@AutoInjector(GuardaApp.class)
 public class ExchangeFragment extends BaseFragment {
 
     @BindView(R.id.textViewExchange)

@@ -26,13 +26,11 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.guarda.ethereum.models.constants.Extras.DISABLE_CHECK;
 
-@AutoInjector(GuardaApp.class)
 public class RestoreFromBackupActivity extends AToolbarActivity {
 
     @BindView(R.id.et_backup_phrase)

@@ -63,7 +63,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.ResponseBody;
@@ -71,7 +70,6 @@ import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.ETH_SHOW_PATTERN;
 
-@AutoInjector(GuardaApp.class)
 public class PurchaseCoinsFragment extends BaseFragment {
 
     @BindView(R.id.et_amount_to_purchase)

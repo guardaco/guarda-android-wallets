@@ -29,14 +29,13 @@ import com.guarda.ethereum.views.activity.AuthorizationTypeActivity;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.ButterKnife;
 
 import static com.guarda.ethereum.models.constants.Extras.DISABLE_CHECK;
 
 
-@AutoInjector(GuardaApp.class)
 public abstract class BaseActivity extends ABaseActivity {
+
     @Inject
     WalletManager walletManager;
 

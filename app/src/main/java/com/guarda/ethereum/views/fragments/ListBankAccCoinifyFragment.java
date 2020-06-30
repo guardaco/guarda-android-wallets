@@ -24,10 +24,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 
-@AutoInjector(GuardaApp.class)
 public class ListBankAccCoinifyFragment extends BaseFragment {
 
     @BindView(R.id.tv_noacc)

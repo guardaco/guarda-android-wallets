@@ -10,9 +10,6 @@ import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
-
-@AutoInjector(GuardaApp.class)
 public class CreateNewWalletActivity extends AToolbarActivity {
 
     @Inject

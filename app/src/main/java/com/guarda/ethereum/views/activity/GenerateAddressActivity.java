@@ -46,7 +46,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,7 +53,6 @@ import butterknife.OnClick;
 import static com.guarda.ethereum.models.constants.Common.ETH_SHOW_PATTERN;
 import static com.guarda.ethereum.models.constants.Common.MAIN_CURRENCY;
 
-@AutoInjector(GuardaApp.class)
 public class GenerateAddressActivity extends AToolbarActivity {
 
     public String TAG = "GenerateAddressActivity";

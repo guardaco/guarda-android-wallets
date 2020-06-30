@@ -16,11 +16,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import cash.z.wallet.sdk.rpc.CompactFormats;
 import timber.log.Timber;
 
-@AutoInjector(GuardaApp.class)
 public class DbManager {
 
     private AppDb appDb;

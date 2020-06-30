@@ -16,7 +16,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,13 +48,13 @@ import com.guarda.ethereum.views.fragments.UserWalletFragment;
 import com.guarda.ethereum.views.fragments.WithdrawFragment;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.zcash.sapling.SyncManager;
+import com.guarda.zcash.sapling.SyncService;
 import com.guarda.zcash.sapling.db.DbManager;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -70,7 +69,6 @@ import static com.guarda.ethereum.models.constants.Extras.KEY;
 import static com.guarda.ethereum.models.constants.Extras.NAVIGATE_TO_FRAGMENT;
 import static com.guarda.ethereum.models.constants.Extras.RESTORE_WALLET;
 
-@AutoInjector(GuardaApp.class)
 public class MainActivity extends TrackOnStopActivity {
 
     @BindView(R.id.drawer_layout)
@@ -323,7 +321,7 @@ public class MainActivity extends TrackOnStopActivity {
 
         logOut.setOnClickListener((v) -> {
             showProgress("Processing...");
-            syncManager.stopSync();
+            stopSyncService();
             walletManager.clearWallet();
             sharedManager.setLastSyncedBlock("");
             sharedManager.setIsPinCodeEnable(false);
@@ -363,6 +361,14 @@ public class MainActivity extends TrackOnStopActivity {
                         }
                 )
         );
+    }
+
+    public void startSyncService() {
+        startService(new Intent(this, SyncService.class));
+    }
+
+    public void stopSyncService() {
+        stopService(new Intent(this, SyncService.class));
     }
 
     private void navigateToFragment(Fragment fragment) {
@@ -449,7 +455,7 @@ public class MainActivity extends TrackOnStopActivity {
         }
 
         if (!handled) {
-            mDrawerLayout.openDrawer(Gravity.START);
+            mDrawerLayout.openDrawer(GravityCompat.START);
         }
     }
 

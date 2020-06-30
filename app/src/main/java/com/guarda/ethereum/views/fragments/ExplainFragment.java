@@ -1,17 +1,15 @@
 package com.guarda.ethereum.views.fragments;
 
-import androidx.fragment.app.Fragment;
 import android.widget.TextView;
 
-import com.guarda.ethereum.GuardaApp;
+import androidx.fragment.app.Fragment;
+
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 
-@AutoInjector(GuardaApp.class)
 public class ExplainFragment extends BaseFragment {
 
     @BindView(R.id.textViewAbout)

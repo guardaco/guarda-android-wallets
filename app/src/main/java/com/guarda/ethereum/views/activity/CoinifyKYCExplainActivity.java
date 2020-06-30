@@ -26,11 +26,9 @@ import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@AutoInjector(GuardaApp.class)
 public class CoinifyKYCExplainActivity extends AToolbarActivity {
 
     @BindView(R.id.ll_coinify_kyc_status)

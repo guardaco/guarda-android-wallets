@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.Callback2;
@@ -37,12 +36,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 
 import static com.guarda.ethereum.models.constants.Common.MAIN_CURRENCY;
 
-@AutoInjector(GuardaApp.class)
 public class PurchaseWemovecoinsActivity extends AToolbarActivity {
 
     private final String MAIN_ENDPOINT = "app.guarda.co";

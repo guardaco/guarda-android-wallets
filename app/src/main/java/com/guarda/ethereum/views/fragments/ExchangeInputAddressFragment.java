@@ -45,14 +45,12 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import timber.log.Timber;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 import static com.guarda.ethereum.screens.exchange.first.ExchangeFragment.EXCHANGE_DIVIDER_DOUBLE;
 
-@AutoInjector(GuardaApp.class)
 public class ExchangeInputAddressFragment extends BaseFragment {
 
     @Inject

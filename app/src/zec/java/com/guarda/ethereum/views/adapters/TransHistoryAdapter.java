@@ -22,11 +22,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-@AutoInjector(GuardaApp.class)
 public class TransHistoryAdapter extends RecyclerView.Adapter<TransHistoryAdapter.TransHistoryItemHolder> {
 
     @Inject

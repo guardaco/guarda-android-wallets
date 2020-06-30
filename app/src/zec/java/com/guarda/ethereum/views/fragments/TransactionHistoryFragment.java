@@ -60,7 +60,6 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -70,12 +69,10 @@ import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.BLOCK;
-import static com.guarda.ethereum.models.constants.Common.EXTRA_TRANSACTION_POSITION;
 import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
 import static com.guarda.ethereum.models.constants.Extras.FIRST_ACTION_MAIN_ACTIVITY;
 import static com.guarda.ethereum.models.constants.Extras.KEY;
 
-@AutoInjector(GuardaApp.class)
 public class TransactionHistoryFragment extends BaseFragment {
 
     @BindView(R.id.tv_wallet_count)
@@ -216,7 +213,7 @@ public class TransactionHistoryFragment extends BaseFragment {
     private void updBalanceHistSync() {
         if (isWalletExist()) {
             showBalanceHistory();
-            historyViewModel.startSync();
+            ((MainActivity) getActivity()).startSyncService();
         }
     }
 
@@ -464,13 +461,11 @@ public class TransactionHistoryFragment extends BaseFragment {
         historyViewModel.setCurrentStatus();
 
         historyViewModel.getIsRestored().observe(getViewLifecycleOwner(), (t) -> {
-
             closeProgress();
             updBalanceHistSync();
 
             Timber.d("getIsRestored().observe t=%b", t);
         });
-
     }
 
     @Override

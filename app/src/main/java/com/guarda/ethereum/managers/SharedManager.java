@@ -12,10 +12,8 @@ import com.guarda.ethereum.utils.KeyStoreUtils;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import de.adorsys.android.securestoragelibrary.SecurePreferences;
 
-@AutoInjector(GuardaApp.class)
 public class SharedManager {
 
     public static final String GUARDA_SHAR_PREF = "SecureSharedPrefName";

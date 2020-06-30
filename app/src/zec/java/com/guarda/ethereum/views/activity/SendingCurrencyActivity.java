@@ -52,7 +52,6 @@ import java.util.IllegalFormatConversionException;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -74,7 +73,6 @@ import static com.guarda.ethereum.models.constants.Guarda.SENDING_SUCCESS;
 import static com.guarda.ethereum.models.guarda.LogMessageRequest.LOGGER_ENV;
 import static com.guarda.ethereum.models.guarda.LogMessageRequest.LOGGER_PLATFORM;
 
-@AutoInjector(GuardaApp.class)
 public class SendingCurrencyActivity extends AToolbarMenuActivity {
 
     @BindView(R.id.et_sum_send)

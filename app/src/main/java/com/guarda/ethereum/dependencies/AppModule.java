@@ -14,6 +14,7 @@ import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.utils.GsonUtils;
 import com.guarda.ethereum.utils.KeyStoreUtils;
 import com.guarda.zcash.sapling.SyncManager;
+import com.guarda.zcash.sapling.SyncService;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
 
@@ -88,6 +89,11 @@ public class AppModule {
     @Singleton
     SyncManager provideSyncManager() {
         return new SyncManager();
+    }
+
+    @Provides
+    SyncService provideSyncService() {
+        return new SyncService();
     }
 
     @Provides

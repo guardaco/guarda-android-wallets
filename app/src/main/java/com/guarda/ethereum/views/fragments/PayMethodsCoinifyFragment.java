@@ -20,11 +20,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@AutoInjector(GuardaApp.class)
 public class PayMethodsCoinifyFragment extends BaseFragment {
 
     @BindView(R.id.cv_card)

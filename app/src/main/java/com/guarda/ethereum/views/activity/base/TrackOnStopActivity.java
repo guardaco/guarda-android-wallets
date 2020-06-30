@@ -14,11 +14,8 @@ import com.guarda.ethereum.managers.SharedManager;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 
-@AutoInjector(GuardaApp.class)
 public abstract class TrackOnStopActivity extends BaseActivity {
-
 
     private final long ALLOWABLE_ABSENCE_TIME = 0;
     private boolean isUnblocked = false;

@@ -22,7 +22,6 @@ import com.guarda.zcash.sapling.SyncManager;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import timber.log.Timber;
@@ -31,7 +30,6 @@ import static com.guarda.ethereum.models.constants.Extras.CREATE_WALLET;
 import static com.guarda.ethereum.models.constants.Extras.DISABLE_CHECK;
 import static com.guarda.ethereum.models.constants.Extras.FIRST_ACTION_MAIN_ACTIVITY;
 
-@AutoInjector(GuardaApp.class)
 public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
 
     @BindView(R.id.btn_create_wallet) Button btn_create_wallet;

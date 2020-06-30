@@ -33,7 +33,6 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -45,7 +44,6 @@ import timber.log.Timber;
 import static com.guarda.ethereum.models.constants.Common.EXTRA_TRANSACTION_POSITION;
 import static com.guarda.ethereum.models.constants.ZecExplorer.ZEC_EXPLORER_TX;
 
-@AutoInjector(GuardaApp.class)
 public class TransactionDetailsActivity extends AToolbarMenuActivity {
 
     @BindView(R.id.et_trans_details_sum)

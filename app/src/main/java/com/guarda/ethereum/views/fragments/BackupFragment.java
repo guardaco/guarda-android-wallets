@@ -22,12 +22,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import work.samosudov.rustlib.RustAPI;
 
-@AutoInjector(GuardaApp.class)
 public class BackupFragment extends BaseFragment {
 
     @BindView(R.id.btn_show_pass_phrase)

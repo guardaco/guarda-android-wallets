@@ -32,7 +32,6 @@ import com.guarda.zcash.sapling.db.DbManager;
 
 import javax.inject.Inject;
 
-import autodagger.AutoInjector;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.disposables.CompositeDisposable;
@@ -40,7 +39,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import static com.guarda.ethereum.models.constants.Common.PRIVACY_POLICE_LINK;
 import static com.guarda.ethereum.models.constants.Common.TERM_OF_USE_LINK;
 
-@AutoInjector(GuardaApp.class)
 public class SettingsFragment extends BaseFragment {
 
     @BindView(R.id.switch_security_code)
