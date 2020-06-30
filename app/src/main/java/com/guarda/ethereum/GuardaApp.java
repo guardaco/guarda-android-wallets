@@ -5,9 +5,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.multidex.MultiDex;
-import androidx.appcompat.app.AppCompatDelegate;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -24,8 +25,6 @@ import com.guarda.ethereum.views.activity.ConfirmPinCodeActivity;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.inject.Singleton;
 
 import de.adorsys.android.securestoragelibrary.SecurePreferences;
 import io.fabric.sdk.android.Fabric;
@@ -62,7 +61,11 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
     @Override
     public void onCreate() {
         super.onCreate();
-        appComponent = DaggerGuardaAppComponent.builder().build();
+        appComponent = DaggerGuardaAppComponent
+                .builder()
+                .appModule(new AppModule(this))
+                .build();
+
         registerActivityLifecycleCallbacks(this);
         sharedManager = new SharedManager();
 

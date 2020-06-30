@@ -9,15 +9,14 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.res.ResourcesCompat
+import com.guarda.ethereum.GuardaApp
 import com.guarda.ethereum.R
 import com.guarda.zcash.sapling.SyncProgress.Companion.SYNCED_PHASE
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 
-class SyncService @Inject constructor(
-//        private val syncManager: SyncManager
-) : Service() {
+class SyncService : Service() {
 
     @Inject lateinit var syncManager: SyncManager
 
@@ -26,8 +25,7 @@ class SyncService @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate() {
-//        GuardaApp.appComponent.inject(this)
-//        syncManager = SyncManager()
+        GuardaApp.appComponent.inject(this)
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationBuilder = buildNotification()
@@ -61,7 +59,6 @@ class SyncService @Inject constructor(
 
         val notificationBuilder = NotificationCompat.Builder(applicationContext, getString(R.string.sync_push_channel_id))
                 .setContentTitle(getString(R.string.sync_push_title))
-                .setContentText(getString(R.string.sync_push_body))
                 .setAutoCancel(true)
 
         val typeDraw: Int = R.mipmap.ic_launcher

@@ -2,7 +2,6 @@ package com.guarda.ethereum;
 
 import com.guarda.ethereum.customviews.RateDialog;
 import com.guarda.ethereum.dependencies.AppModule;
-import com.guarda.ethereum.dependencies.RetrofitServicesModule;
 import com.guarda.ethereum.managers.RawNodeManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
@@ -52,6 +51,7 @@ import com.guarda.ethereum.views.fragments.TransactionHistoryFragment;
 import com.guarda.ethereum.views.fragments.UserWalletFragment;
 import com.guarda.ethereum.views.fragments.WithdrawFragment;
 import com.guarda.zcash.sapling.SyncManager;
+import com.guarda.zcash.sapling.SyncService;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
 
@@ -121,4 +121,5 @@ public interface GuardaAppComponent {
 
     //
     void inject(TransHistoryAdapter transHistoryAdapter);
+    void inject(SyncService syncService);
 }
