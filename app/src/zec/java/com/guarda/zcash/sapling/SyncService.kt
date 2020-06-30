@@ -32,10 +32,11 @@ class SyncService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        startForeground(SYNC_NOTIFICATION_ID, notificationBuilder.build())
+//        notificationManager.notify(SYNC_NOTIFICATION_ID, notificationBuilder.build())
+
         subscribeSync()
         syncManager.startSync()
-
-        notificationManager.notify(SYNC_NOTIFICATION_ID, notificationBuilder.build())
 
         return START_STICKY
     }
@@ -83,7 +84,7 @@ class SyncService : Service() {
 
             val channelId = getString(R.string.sync_push_channel_id)
             val name = getString(R.string.app_name)
-            val importance = NotificationManager.IMPORTANCE_LOW
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelId, name, importance)
 
             val description = getString(R.string.sync_push_fallback_title)
