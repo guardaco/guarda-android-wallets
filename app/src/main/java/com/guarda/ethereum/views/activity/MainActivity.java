@@ -5,14 +5,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import com.google.android.material.navigation.NavigationView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -25,6 +17,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.navigation.NavigationView;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.customviews.RobotoLightTypefaceSpan;
@@ -35,12 +36,12 @@ import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.rxcall.CallCleanDbLogOut;
+import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.views.activity.base.TrackOnStopActivity;
 import com.guarda.ethereum.views.fragments.BackupFragment;
 import com.guarda.ethereum.views.fragments.DepositFragment;
 import com.guarda.ethereum.views.fragments.DepositFragment_decent;
 import com.guarda.ethereum.views.fragments.DisabledFragment;
-import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.views.fragments.PurchaseServiceFragment;
 import com.guarda.ethereum.views.fragments.SettingsFragment;
 import com.guarda.ethereum.views.fragments.TransactionHistoryFragment;
@@ -68,6 +69,7 @@ import static com.guarda.ethereum.models.constants.Extras.GO_TO_SETTINGS;
 import static com.guarda.ethereum.models.constants.Extras.KEY;
 import static com.guarda.ethereum.models.constants.Extras.NAVIGATE_TO_FRAGMENT;
 import static com.guarda.ethereum.models.constants.Extras.RESTORE_WALLET;
+import static com.guarda.ethereum.models.constants.Extras.STOP_SYNC_SERVICE;
 
 public class MainActivity extends TrackOnStopActivity {
 
@@ -105,18 +107,7 @@ public class MainActivity extends TrackOnStopActivity {
         setupSideMenu();
         setToolBarTitle(R.string.app_name);
 
-        if (getIntent().getExtras() != null) {
-            firstAction = getIntent().getExtras().getString(FIRST_ACTION_MAIN_ACTIVITY);
-            key = getIntent().getExtras().getString(KEY);
-        }
-
-        if (firstAction == null || firstAction.equals(CREATE_WALLET)) {
-            goToUserWallet();
-        } else if (firstAction.equals(RESTORE_WALLET)) {
-            goToTransactionHistory(key, firstAction);
-        } else if (firstAction.equals(GO_TO_SETTINGS)) {
-            goToSettingsFragment();
-        }
+        handleIntent();
 
         changeMenuFontFamily();
     }
@@ -138,6 +129,25 @@ public class MainActivity extends TrackOnStopActivity {
                     goToPurchaseFragment();
                     break;
             }
+        }
+    }
+
+    private void handleIntent() {
+        if (getIntent().getExtras() != null) {
+            firstAction = getIntent().getExtras().getString(FIRST_ACTION_MAIN_ACTIVITY);
+            key = getIntent().getExtras().getString(KEY);
+        }
+
+        if (firstAction == null || firstAction.equals(CREATE_WALLET)) {
+            goToUserWallet();
+        } else if (firstAction.equals(RESTORE_WALLET)) {
+            goToTransactionHistory(key, firstAction);
+        } else if (firstAction.equals(GO_TO_SETTINGS)) {
+            goToSettingsFragment();
+        }
+
+        if (firstAction.equals(STOP_SYNC_SERVICE)) {
+            stopSyncService();
         }
     }
 

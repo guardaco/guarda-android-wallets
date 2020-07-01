@@ -15,6 +15,7 @@ public interface Extras {
     String RESTORE_WALLET = "comeFromRestore";
     String CREATE_WALLET = "comeFromCreateWallet";
     String GO_TO_SETTINGS = "goToSettingsFlag";
+    String STOP_SYNC_SERVICE = "STOP_SYNC_SERVICE";
     String GO_TO_TRANS_HISTORY = "goToTransHistory";
     String GO_TO_PURCHASE = "GO_TO_PURCHASE";
     String FROM_PIN_CODE = "comeFromPinCode";
