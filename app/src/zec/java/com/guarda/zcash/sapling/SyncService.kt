@@ -14,7 +14,6 @@ import com.guarda.ethereum.GuardaApp
 import com.guarda.ethereum.R
 import com.guarda.ethereum.models.constants.Extras.FIRST_ACTION_MAIN_ACTIVITY
 import com.guarda.ethereum.models.constants.Extras.STOP_SYNC_SERVICE
-import com.guarda.ethereum.views.activity.MainActivity
 import com.guarda.zcash.sapling.SyncProgress.Companion.SYNCED_PHASE
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -76,11 +75,11 @@ class SyncService : Service() {
     private fun buildNotification() : NotificationCompat.Builder {
         createNotificationChannel()
 
-        val stopSyncIntent = Intent(this, MainActivity::class.java).apply {
+        val stopSyncIntent = Intent(this, SyncBroadcastReceiver::class.java).apply {
             putExtra(FIRST_ACTION_MAIN_ACTIVITY, STOP_SYNC_SERVICE)
         }
         val stopSyncPendingIntent: PendingIntent =
-                PendingIntent.getActivity(this, 0, stopSyncIntent, 0)
+                PendingIntent.getBroadcast(this, 0, stopSyncIntent, 0)
 
         val notificationBuilder = NotificationCompat.Builder(applicationContext, getString(R.string.sync_push_channel_id))
                 .setContentTitle(getString(R.string.sync_push_title))

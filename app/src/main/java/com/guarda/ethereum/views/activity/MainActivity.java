@@ -69,7 +69,6 @@ import static com.guarda.ethereum.models.constants.Extras.GO_TO_SETTINGS;
 import static com.guarda.ethereum.models.constants.Extras.KEY;
 import static com.guarda.ethereum.models.constants.Extras.NAVIGATE_TO_FRAGMENT;
 import static com.guarda.ethereum.models.constants.Extras.RESTORE_WALLET;
-import static com.guarda.ethereum.models.constants.Extras.STOP_SYNC_SERVICE;
 
 public class MainActivity extends TrackOnStopActivity {
 
@@ -144,10 +143,6 @@ public class MainActivity extends TrackOnStopActivity {
             goToTransactionHistory(key, firstAction);
         } else if (firstAction.equals(GO_TO_SETTINGS)) {
             goToSettingsFragment();
-        }
-
-        if (firstAction.equals(STOP_SYNC_SERVICE)) {
-            stopSyncService();
         }
     }
 

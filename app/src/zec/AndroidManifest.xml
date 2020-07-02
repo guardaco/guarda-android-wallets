@@ -19,6 +19,8 @@
             android:exported="false"
             android:description="@string/sync_service_description" />
 
+        <receiver android:name="com.guarda.zcash.sapling.SyncBroadcastReceiver"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="guarda.shielded.provider"
