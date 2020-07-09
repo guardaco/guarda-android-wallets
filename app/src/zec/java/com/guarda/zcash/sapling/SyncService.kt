@@ -108,7 +108,7 @@ class SyncService : Service() {
 
             val channelId = getString(R.string.sync_push_channel_id)
             val name = getString(R.string.app_name)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val importance = NotificationManager.IMPORTANCE_LOW
             val channel = NotificationChannel(channelId, name, importance)
 
             val description = getString(R.string.sync_push_fallback_title)
