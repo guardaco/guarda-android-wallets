@@ -12,7 +12,6 @@ import org.spongycastle.crypto.digests.Blake2bDigest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Vector;
 
 public class ZCashTransaction_taddr {
@@ -41,8 +40,8 @@ public class ZCashTransaction_taddr {
 
     this.privKey = privKey;
     this.nExpiryHeight = expiryHeight;
-    byte[] fromKeyHash = Arrays.copyOfRange(Base58.decodeChecked(fromAddr), 2, 22);
-    byte[] toKeyHash = Arrays.copyOfRange(Base58.decodeChecked(toAddr), 2, 22);
+    byte[] fromKeyHash = Base58.decodeChecked(fromAddr);
+    byte[] toKeyHash = Base58.decodeChecked(toAddr);
     long value_pool = 0;
 
     for (ZCashTransactionOutput out : outputs) {

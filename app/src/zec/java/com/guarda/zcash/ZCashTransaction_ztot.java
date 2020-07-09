@@ -70,7 +70,7 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
 
         valueBalance = value + fee;
 
-        byte[] toKeyHash = Arrays.copyOfRange(Base58.decodeChecked(toAddress), 2, 22);
+        byte[] toKeyHash = Base58.decodeChecked(toAddress);
         long valuePool = 0;
 
         //Initialization sapling proving context (it's free after fail or completed)
