@@ -21,10 +21,10 @@ public class ZCashTransaction_taddr {
   private static final byte[] ZCASH_SIGNATURE_HASH_PERSONALIZATION = {'Z', 'c', 'a', 's', 'h', 'S', 'i', 'g', 'H', 'a', 's', 'h'}; // ZcashSigHash (12 bytes)
 
   private static final int VERSION_BRANCH_ID_BLOSSOM = 0x892F2085;
-  private static final int CONSENSUS_BRANCH_ID_BLOSSOM = 0x2BB40E60;
+  private static final int CONSENSUS_BRANCH_ID_HEARTWOOD = 0xF5B9230B;
   private static final int header = 0x80000004; //version=4, fooverwintered=1
   private static final int versionGroupId = VERSION_BRANCH_ID_BLOSSOM;
-  private static final int consensusBranchId = CONSENSUS_BRANCH_ID_BLOSSOM;
+  private static final int consensusBranchId = CONSENSUS_BRANCH_ID_HEARTWOOD;
   private static final int SIGHASH_ALL = 1;
 
   private byte[] tx_sig_bytes;

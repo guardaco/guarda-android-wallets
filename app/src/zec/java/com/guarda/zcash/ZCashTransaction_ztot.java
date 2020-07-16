@@ -37,10 +37,10 @@ public class ZCashTransaction_ztot implements ZcashTransaction {
     private static final byte[] ZCASH_SHIELDED_OUTPUTS_HASH_PERSONALIZATION = {'Z','c','a','s','h','S','O','u','t','p','u','t','H','a','s','h'}; // ZcashSOutputHash
 
     private static final int VERSION_BRANCH_ID_BLOSSOM = 0x892F2085;
-    private static final int CONSENSUS_BRANCH_ID_BLOSSOM = 0x2BB40E60;
+    private static final int CONSENSUS_BRANCH_ID_HEARTWOOD = 0xF5B9230B;
     private static final int header = 0x80000004; //version=4, fooverwintered=1
     private static final int versionGroupId = VERSION_BRANCH_ID_BLOSSOM;
-    private static final int consensusBranchId = CONSENSUS_BRANCH_ID_BLOSSOM;
+    private static final int consensusBranchId = CONSENSUS_BRANCH_ID_HEARTWOOD;
     private static final int SIGHASH_ALL = 1;
 
     private byte[] tx_sig_bytes;
