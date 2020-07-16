@@ -97,3 +97,5 @@
 
 -keep class com.guarda.ethereum.models.items.* { *; }
 -keep class com.guarda.ethereum.models.guarda.* { *; }
+
+-keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
