@@ -15,7 +15,7 @@ buildscript {
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath 'com.google.gms:google-services:4.3.3'
         classpath 'io.fabric.tools:gradle:1.29.0'
-        classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.8"
+        classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.12"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
