@@ -84,20 +84,22 @@ class SyncService : Service() {
         val notificationBuilder = NotificationCompat.Builder(applicationContext, getString(R.string.sync_push_channel_id))
                 .setContentTitle(getString(R.string.sync_push_title))
                 .setAutoCancel(true)
-                .addAction(R.drawable.ic_guarda_wallet, "STOP", stopSyncPendingIntent)
+                .addAction(R.drawable.ic_guarda_white, "STOP", stopSyncPendingIntent)
 
-        val typeDraw: Int = R.drawable.ic_guarda_wallet
+        val typeDraw: Int = R.mipmap.ic_launcher
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             notificationBuilder
                     .setLargeIcon(BitmapFactory.decodeResource(resources, typeDraw))
-                    .setSmallIcon(R.drawable.ic_guarda_wallet).color = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
+                    .setSmallIcon(R.drawable.ic_guarda_white)
+                    .color = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             notificationBuilder
                     .setLargeIcon(BitmapFactory.decodeResource(resources, typeDraw))
-                    .setSmallIcon(R.drawable.ic_guarda_wallet).color = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
+                    .setSmallIcon(R.drawable.ic_guarda_wallet)
+                    .color = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
         } else {
-            notificationBuilder.setSmallIcon(R.drawable.ic_guarda_wallet)
+            notificationBuilder.setSmallIcon(R.drawable.ic_guarda_white)
         }
 
         return notificationBuilder
