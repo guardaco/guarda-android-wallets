@@ -12,7 +12,7 @@ import com.guarda.zcash.sapling.rxcall.CallBlockRange;
 import com.guarda.zcash.sapling.rxcall.CallBlocksForSync;
 import com.guarda.zcash.sapling.rxcall.CallFindWitnesses;
 import com.guarda.zcash.sapling.rxcall.CallLastBlock;
-import com.guarda.zcash.sapling.rxcall.CallRevertLastBlocks;
+import com.guarda.zcash.sapling.rxcall.CallRevertLastBlock;
 import com.guarda.zcash.sapling.rxcall.CallSaplingParamsInit;
 import com.guarda.zcash.sapling.rxcall.CallValidateSaplingTree;
 import com.guarda.zcash.sapling.tree.SaplingMerkleTree;
@@ -165,7 +165,7 @@ public class SyncManager {
                                 progressPhase.onNext(syncProgress);
                             }
 
-                            Timber.d("CallBlocksForSync finished=%s", listBlocks.size());
+                            Timber.d("CallBlocksForSync finished=%s thread=%s", listBlocks.size(), Thread.currentThread());
                             return Observable.fromIterable(listBlocks);
                         })
                         .flatMap(
@@ -174,7 +174,7 @@ public class SyncManager {
                                     syncProgress.setProcessPhase(SEARCH_PHASE);
                                     progressPhase.onNext(syncProgress);
 
-                                    Timber.d("block for witnessing: %s", block.getHeight());
+                                    Timber.d("block for witnessing: %s thread=%s", block.getHeight(), Thread.currentThread());
                                     return Observable.fromCallable(
                                             new CallFindWitnesses(
                                                     dbManager,
@@ -185,11 +185,17 @@ public class SyncManager {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                (b) -> Timber.d("CallFindWitnesses block witnessed=%s", b),
+                                (blockRoom) -> {
+                                    if (!blockRoom.isEmpty()) {
+                                        validateSaplingTree();
+                                        Timber.d("CallFindWitnesses block blockRoom height=%d", blockRoom.get().getHeight());
+                                    }
+                                },
                                 (e) -> stopAndLogError("CallFindWitnesses", e),
                                 () -> {
                                     Timber.d("CallFindWitnesses completed");
                                     validateSaplingTree();
+                                    stopSync();
                                 })
         );
     }
@@ -198,7 +204,7 @@ public class SyncManager {
         compositeDisposable.add(Observable
                 .fromCallable(new CallValidateSaplingTree(dbManager))
                 .flatMap(it -> {
-                            Timber.d("validateSaplingTree height=%d", it.getHeight());
+                            Timber.d("validateSaplingTree height=%d thread=%s", it.getHeight(), Thread.currentThread());
                             String raw = RequestorBtc.getRawBlockByHash(it.getHash()).blockingFirst().getRawblock();
 
                             if (raw == null || raw.isEmpty()) return Observable.just(true);
@@ -212,10 +218,10 @@ public class SyncManager {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        (res) -> {
-                            Timber.d("validateSaplingTree finished isContained(right)=%s", res);
-                            if (res) {
-                                stopSync();
+                        (isContained) -> {
+                            Timber.d("validateSaplingTree finished isContained(right)=%s", isContained);
+                            if (isContained) {
+
                             } else {
                                 revertLastBlocks();
                             }
@@ -228,14 +234,13 @@ public class SyncManager {
     private void revertLastBlocks() {
         compositeDisposable.add(
                 Observable
-                        .fromCallable(new CallRevertLastBlocks(dbManager))
+                        .fromCallable(new CallRevertLastBlock(dbManager))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 (res) -> {
                                     syncProgress.setProcessPhase(SYNCED_PHASE);
                                     progressPhase.onNext(syncProgress);
-                                    stopSync();
                                     Timber.d("revertLastBlocks (all blocks dropped) completed=%s", res);
                                 },
                                 (e) -> stopAndLogError("revertLastBlocks", e)

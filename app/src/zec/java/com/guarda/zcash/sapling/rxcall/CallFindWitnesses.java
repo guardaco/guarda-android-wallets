@@ -1,7 +1,7 @@
 package com.guarda.zcash.sapling.rxcall;
 
 import com.guarda.zcash.ZCashException;
-import com.guarda.zcash.crypto.Utils;
+import com.guarda.zcash.globals.Optional;
 import com.guarda.zcash.globals.TypeConvert;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.db.model.BlockRoom;
@@ -17,7 +17,6 @@ import com.guarda.zcash.sapling.note.SaplingNotePlaintext;
 import com.guarda.zcash.sapling.tree.IncrementalWitness;
 import com.guarda.zcash.sapling.tree.SaplingMerkleTree;
 
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,24 +28,24 @@ import static com.guarda.zcash.crypto.Utils.bytesToHex;
 import static com.guarda.zcash.crypto.Utils.revHex;
 import static com.guarda.zcash.sapling.note.SaplingNotePlaintext.tryNoteDecrypt;
 
-public class CallFindWitnesses implements Callable<Boolean> {
+public class CallFindWitnesses implements Callable<Optional<BlockRoom>> {
 
     private DbManager dbManager;
     private SaplingCustomFullKey saplingKey;
-    private BlockRoom br;
+    private BlockRoom blockRoom;
 
     private Long defaultStartHeight = 551912L;
 //    private Long defaultStartHeight = 620000L; //testnet
     private Long startScanBlocksHeight = defaultStartHeight;
 
-    public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey, BlockRoom br) {
+    public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey, BlockRoom blockRoom) {
         this.dbManager = dbManager;
         this.saplingKey = saplingKey;
-        this.br = br;
+        this.blockRoom = blockRoom;
     }
 
     @Override
-    public Boolean call() throws Exception {
+    public Optional<BlockRoom> call() throws Exception {
         Timber.d("started");
         SaplingMerkleTree saplingTree;
         List<SaplingWitnessesRoom> existingWitnesses = dbManager.getAppDb().getSaplingWitnessesDao().getAllWitnesses();
@@ -66,7 +65,7 @@ public class CallFindWitnesses implements Callable<Boolean> {
         // SCAN BLOCK
         // map for saving wintesses by note commitment hex for current block
         Map<String, IncrementalWitness> wtxs = new HashMap<>();
-        List<TxRoom> blockTxs = dbManager.getAppDb().getTxDao().getAllBlockTxs(br.getHash());
+        List<TxRoom> blockTxs = dbManager.getAppDb().getTxDao().getAllBlockTxs(blockRoom.getHash());
         List<String> nullifiers = dbManager.getAppDb().getReceivedNotesDao().getAllNf();
 
         for (TxRoom tx : blockTxs) {
@@ -85,32 +84,32 @@ public class CallFindWitnesses implements Callable<Boolean> {
                 for (SaplingWitnessesRoom ew : existingWitnesses) {
                     IncrementalWitness iw = IncrementalWitness.fromJson(ew.getWitness());
                     try {
-                        iw.append(Utils.revHex(out.getCmu()));
+                        iw.append(revHex(out.getCmu()));
                     } catch (ZCashException e) {
                         Timber.e("getWintesses existingWitnesses.entrySet e=%s", e.getMessage());
                     }
                     ew.setWitness(IncrementalWitness.toJson(iw));
-                    ew.setWitnessHeight(br.getHeight());
+                    ew.setWitnessHeight(blockRoom.getHeight());
                 }
                 //append every previous wintess
                 //like blockWitnesses in original rust code
                 for (Map.Entry<String, IncrementalWitness> wx : wtxs.entrySet()) {
                     IncrementalWitness iw = wx.getValue();
                     try {
-                        iw.append(Utils.revHex(out.getCmu()));
+                        iw.append(revHex(out.getCmu()));
                     } catch (ZCashException e) {
                         Timber.e("getWintesses iw.append(Utils.revHex(out.getCmu())) e=%s", e.getMessage());
                     }
                 }
                 //append to main tree
                 try {
-                    saplingTree.append(Utils.revHex(out.getCmu()));
+                    saplingTree.append(revHex(out.getCmu()));
                 } catch (ZCashException zce) {
                     zce.printStackTrace();
                     Timber.e("getWintesses saplingTree.append(out.getCmu()); err=%s", zce.getMessage());
                 }
 
-                if (br.getHeight() < 551937) continue;
+                if (blockRoom.getHeight() < 551937) continue;
                 SaplingNotePlaintext snp = tryNoteDecrypt(out, saplingKey);
 
                 //skip if it's not our note
@@ -142,18 +141,31 @@ public class CallFindWitnesses implements Callable<Boolean> {
 
         //save updated witnesses to DB
         for (Map.Entry<String, IncrementalWitness> wx : wtxs.entrySet()) {
-            SaplingWitnessesRoom sw = new SaplingWitnessesRoom(wx.getKey(), IncrementalWitness.toJson(wx.getValue()), br.getHeight());
+            SaplingWitnessesRoom sw = new SaplingWitnessesRoom(wx.getKey(), IncrementalWitness.toJson(wx.getValue()), blockRoom.getHeight());
             existingWitnesses.add(sw);
-            Timber.d("iw root=%s at height=%d", wx.getValue().root(), br.getHeight());
+            Timber.d("iw root=%s at height=%d", wx.getValue().root(), blockRoom.getHeight());
         }
         dbManager.getAppDb().getSaplingWitnessesDao().insertList(existingWitnesses);
 
-        br.setTree(saplingTree.serialize());
-        dbManager.getAppDb().getBlockDao().update(br);
+        blockRoom.setTree(saplingTree.serialize());
+        dbManager.getAppDb().getBlockDao().update(blockRoom);
 
-        Timber.d("save tree lastBlock=%d root=%s tree=%s", br.getHeight(), saplingTree.root(), saplingTree.serialize());
+        Timber.d("save tree lastBlock=%d root=%s tree=%s", blockRoom.getHeight(), saplingTree.root(), saplingTree.serialize());
 
-        return true;
+        // Remove previous block if it isn't contain wallet's transactions
+        long previousHeight = blockRoom.getHeight() - 1;
+        int witnessesByBlock = dbManager.getAppDb().getSaplingWitnessesDao().countByBlockHeight(previousHeight);
+        if (witnessesByBlock == 0) {
+            dbManager.getAppDb().getBlockDao().deleteByHeight(previousHeight);
+        } else {
+            Timber.d("previous block has transactions previousHeight=%d", previousHeight);
+        }
+
+        if (wtxs.isEmpty()) {
+            return new Optional<>(null);
+        } else {
+            return new Optional<>(blockRoom);
+        }
     }
 
     //mainnet

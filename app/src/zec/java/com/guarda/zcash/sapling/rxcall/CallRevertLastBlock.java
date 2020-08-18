@@ -7,18 +7,18 @@ import java.util.concurrent.Callable;
 import timber.log.Timber;
 
 
-public class CallRevertLastBlocks implements Callable<Boolean> {
+public class CallRevertLastBlock implements Callable<Boolean> {
 
     private DbManager dbManager;
 
-    public CallRevertLastBlocks(DbManager dbManager) {
+    public CallRevertLastBlock(DbManager dbManager) {
         this.dbManager = dbManager;
     }
 
     @Override
     public Boolean call() throws Exception {
         Timber.d("started");
-        dbManager.getAppDb().getBlockDao().dropAll();
+        dbManager.getAppDb().getBlockDao().deleteLastWithThree();
         return true;
     }
 

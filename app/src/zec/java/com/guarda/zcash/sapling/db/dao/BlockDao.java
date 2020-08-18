@@ -38,8 +38,11 @@ public interface BlockDao {
     @Query("UPDATE blocks SET tree = :tree WHERE height = :height")
     void setTreeByHeight(String tree, Long height);
 
-    @Query("DELETE FROM blocks WHERE hash in (SELECT hash FROM blocks order by height DESC LIMIT :number)")
-    void dropLastNumber(int number);
+    @Query("DELETE FROM blocks WHERE height = :blockHeight")
+    void deleteByHeight(long blockHeight);
+
+    @Query("DELETE FROM blocks WHERE height = (SELECT height FROM blocks WHERE tree <> '' AND tree IS NOT NULL order by height DESC LIMIT 1)")
+    void deleteLastWithThree();
 
     @Query("UPDATE blocks SET tree = '' WHERE tree <> ''")
     void dropAllTrees();

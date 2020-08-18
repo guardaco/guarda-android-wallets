@@ -31,6 +31,9 @@ public interface SaplingWitnessesDao {
     @Query("SELECT * FROM sapling_witnesses WHERE cm LIKE :cm")
     SaplingWitnessesRoom getWitness(String cm);
 
+    @Query("SELECT COUNT(*) FROM sapling_witnesses WHERE witnessHeight = :blockHeight")
+    int countByBlockHeight(long blockHeight);
+
     @Query("SELECT witnessHeight FROM sapling_witnesses order by witnessHeight desc LIMIT 1")
     Long getLastHeight();
 

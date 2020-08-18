@@ -17,9 +17,9 @@ public class Optional<M> {
     }
 
     public M get() {
-//        if (optional == null) {
-//            throw new NoSuchElementException("No value present");
-//        }
+        if (optional == null) {
+            throw new NoSuchElementException("No value present");
+        }
         return optional;
     }
 }
