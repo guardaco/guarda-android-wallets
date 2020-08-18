@@ -16,3 +16,5 @@ google-services.json
 /app/.cxx
 /rust-lib/.cxx
 /rust-lib-release/build
+
+/local
