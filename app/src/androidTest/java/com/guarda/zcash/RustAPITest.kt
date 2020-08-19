@@ -1,6 +1,7 @@
 package com.guarda.zcash
 
 import androidx.test.core.app.ApplicationProvider
+import com.guarda.zcash.sapling.tree.SaplingMerkleTree
 import org.junit.Before
 import org.junit.Test
 import work.samosudov.rustlib.RustAPI
@@ -11,6 +12,8 @@ class RustAPITest {
     companion object {
         val note = byteArrayOf(1, 49, -56, 16, 72, -122, 103, 46, 68, 17, 99, 117, -96, 105, 117, 0, 0, 0, 0, 0, 76, -96, 22, 106, 90, -59, 124, 1, -55, 48, 96, 10, -60, 49, -63, 1, 15, -41, -72, -75, -104, -57, 42, 47, 3, 54, -24, -65, -62, -52, 77, 14)
         val key = byteArrayOf(69, 121, -20, 127, -124, -3, 114, -88, 7, -102, 47, 22, -12, -31, -92, -93, -41, 62, 32, -6, -80, -24, 115, 22, 115, -83, -91, -43, 98, 103, -54, -15)
+
+        private const val treeOnHeight900000main = "0162267b975eb64d5e602e9bfa63c56b1326e8eab6fa971847f2d4f8f27d26f90101cc33a70cde4e4e5f5347034f44b503e8660c7380e596961ccab15d7a64044371120140d08a6c2958e7283c3e95053eeb3e5cf502d5857a961e107c8b37ae00dcb30700019f7e8cf60fb1b31d852d6786fe74078ff1cae30fd982ed2ee11176f96103622301d3f9f17d782359f08d500309ded4ddc1488c86906f3bd742aa95b8de0f189524000001b64361426e35478691ef23c34cf977afab4962c0d7d1998b08ccac635149524201a73426649efdd3a6bda5f8a253a4823f8558dc16d8042ba071f13c0575a3955d0181e81df06e97ade7989e0ce8790f75f1d34e6cfeb4347205c4aaa7adf90a180e0001ecd87912a28cfbe4f34bf57bad9827e4013d8d4c8e85c48bfdd06c35eade9920010d393867f4f2bebf9f603bf827dd015aaf3a46dfa8b68d86cdce07aa4fbb97240001d3ddf137881180d7c5fd73d188c4346291168bde688643855eb3cd5f680f9c0001166bb2e71749ab956e549119ce9099df3dbb053409ff89d0d86a17d5b02d015d0000011323ddf890bfd7b94fc609b0d191982cb426b8bf4d900d04709a8b9cb1a27625"
     }
 
     @Before
@@ -49,5 +52,11 @@ class RustAPITest {
 
         println("res=${Arrays.toString(res)}")
         assert(res.contentEquals(expected))
+    }
+
+    @Test
+    fun root() {
+        val saplingTree = SaplingMerkleTree(treeOnHeight900000main)
+        println(saplingTree.root())
     }
 }

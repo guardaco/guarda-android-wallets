@@ -32,6 +32,9 @@ public interface BlockDao {
     @Query("SELECT * FROM blocks order by height DESC LIMIT 1")
     BlockRoom getLatestBlock();
 
+    @Query("SELECT * FROM blocks WHERE height < :blockHeight order by height DESC LIMIT 1")
+    BlockRoom previousBlock(long blockHeight);
+
     @Query("SELECT * FROM blocks WHERE tree <> '' AND tree IS NOT NULL order by height DESC LIMIT 1")
     BlockRoom getLatestBlockWithTree();
 

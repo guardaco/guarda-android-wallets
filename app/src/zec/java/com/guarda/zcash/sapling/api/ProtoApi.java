@@ -19,7 +19,8 @@ import timber.log.Timber;
 
 public class ProtoApi {
 
-    public long pageNum = 551912; //height
+//    public long pageNum = 551912; //height
+    public long pageNum = 900000; //height
     private ManagedChannel channel;
 
     @Inject

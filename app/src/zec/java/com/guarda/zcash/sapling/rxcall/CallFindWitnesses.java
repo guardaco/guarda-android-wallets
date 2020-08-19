@@ -34,7 +34,8 @@ public class CallFindWitnesses implements Callable<Optional<BlockRoom>> {
     private SaplingCustomFullKey saplingKey;
     private BlockRoom blockRoom;
 
-    private Long defaultStartHeight = 551912L;
+//    private Long defaultStartHeight = 551912L;
+    private Long defaultStartHeight = 900000L;
 //    private Long defaultStartHeight = 620000L; //testnet
     private Long startScanBlocksHeight = defaultStartHeight;
 
@@ -56,7 +57,7 @@ public class CallFindWitnesses implements Callable<Optional<BlockRoom>> {
             startScanBlocksHeight = lastBlockWithTree.getHeight();
             saplingTree = new SaplingMerkleTree(lastBlockWithTree.getTree());
         } else {
-            saplingTree = new SaplingMerkleTree(treeOnHeight551912main);
+            saplingTree = new SaplingMerkleTree(treeOnHeight900000main);
             dbManager.getAppDb().getBlockDao().setTreeByHeight(saplingTree.serialize(), defaultStartHeight);
         }
 
@@ -153,12 +154,14 @@ public class CallFindWitnesses implements Callable<Optional<BlockRoom>> {
         Timber.d("save tree lastBlock=%d root=%s tree=%s", blockRoom.getHeight(), saplingTree.root(), saplingTree.serialize());
 
         // Remove previous block if it isn't contain wallet's transactions
-        long previousHeight = blockRoom.getHeight() - 1;
-        int witnessesByBlock = dbManager.getAppDb().getSaplingWitnessesDao().countByBlockHeight(previousHeight);
-        if (witnessesByBlock == 0) {
-            dbManager.getAppDb().getBlockDao().deleteByHeight(previousHeight);
-        } else {
-            Timber.d("previous block has transactions previousHeight=%d", previousHeight);
+        BlockRoom previousBlock = dbManager.getAppDb().getBlockDao().previousBlock(blockRoom.getHeight());
+        if (previousBlock != null) {
+            int witnessesByBlock = dbManager.getAppDb().getSaplingWitnessesDao().countByBlockHeight(previousBlock.getHeight());
+            if (witnessesByBlock == 0) {
+                dbManager.getAppDb().getBlockDao().deleteByHeight(previousBlock.getHeight());
+            } else {
+                Timber.d("previous block has transactions previous height=%d", previousBlock.getHeight());
+            }
         }
 
         if (wtxs.isEmpty()) {
@@ -170,6 +173,7 @@ public class CallFindWitnesses implements Callable<Optional<BlockRoom>> {
 
     //mainnet
     private static final String treeOnHeight551912main = "01d192b19aef282b71be4330345048b2e2c11ad7e7919a989eb616b9fe9f6ab2580170b5e8deedb2780affc0a81f27d7c46dc73ad618368c9aad820b079cb558ce580f000188349ea325f12f3f9bc64a17965da7756244a2742f4547928f3fe0f38ca956270126729ec7710ba839684f2522da582c2aa3dc88fc7c6c202ea47f2df40c1e5f0d000000019ec91f70592f5010f156684754b9c584d0caedda479b16e9629e1761eed46c21013a85c25ee7bee68f899b713868e2923ea16ce53b6d8ddb9ecdb4c0f7cc7f4047018fbd5b7f31ba10a344ed1070e5ac858b5fbf137f6609ab40dbf6699efc2ca42b01175555acb7f78f4a9720549438cc73bba265ce4737b9541307a71a5ec40e5c58012557fe4d4cd152a6c7bc0b99fc93c6a84fff74d91962a424dfe8c78184465c3100013457c7289a51a355b01114a154e1666f5a83dd19257db331ccef1ec7a72caa420143359e122f3e93ad3b9dbf673c12c1551a31efde6e4195d98e571e0db70dee47014bc8cc7ccc3f42d408bd00d811eafff7cd23b0d0d656ef383ac81a7789d0011a";
+    private static final String treeOnHeight900000main = "0162267b975eb64d5e602e9bfa63c56b1326e8eab6fa971847f2d4f8f27d26f90101cc33a70cde4e4e5f5347034f44b503e8660c7380e596961ccab15d7a64044371120140d08a6c2958e7283c3e95053eeb3e5cf502d5857a961e107c8b37ae00dcb30700019f7e8cf60fb1b31d852d6786fe74078ff1cae30fd982ed2ee11176f96103622301d3f9f17d782359f08d500309ded4ddc1488c86906f3bd742aa95b8de0f189524000001b64361426e35478691ef23c34cf977afab4962c0d7d1998b08ccac635149524201a73426649efdd3a6bda5f8a253a4823f8558dc16d8042ba071f13c0575a3955d0181e81df06e97ade7989e0ce8790f75f1d34e6cfeb4347205c4aaa7adf90a180e0001ecd87912a28cfbe4f34bf57bad9827e4013d8d4c8e85c48bfdd06c35eade9920010d393867f4f2bebf9f603bf827dd015aaf3a46dfa8b68d86cdce07aa4fbb97240001d3ddf137881180d7c5fd73d188c4346291168bde688643855eb3cd5f680f9c0001166bb2e71749ab956e549119ce9099df3dbb053409ff89d0d86a17d5b02d015d0000011323ddf890bfd7b94fc609b0d191982cb426b8bf4d900d04709a8b9cb1a27625";
 
     //testnet
     private static final String treeOnHeight620000test = "0170cf036ea1ea3c6e08432e18b6a372ca0b8b83671cc13ab0cf9e28c182f6c36f00100000013f3fc2c16ac4780f1c472ca65534ab08911f325a9edde5ea7f24364b47c9a95300017621b12e518cbbbdb7511ab423e0bddda412ed61ed3cff5be2140de65d6a0069010576153a5a2098812e7a028c37c3398e186f398c9b07bc199784ab97e5535c3e0000019a6ce2f0f7dbb2de493a315abf62d8ca96ccc701f116b6ddfae33870a2183d3c01c9d3564eff54ebc328eab2e4f1150c3637f4f47516f879a0cfebdf49fe7b1d5201c104705fac60a85596010e41260d07f3a64f38f37a112eaef41cd9d736edc5270145e3d4899fcd7f0f1236ae31eafb3f4b65ad6b11a17eae1729cec09bd3afa01a000000011f8322ef806eb2430dc4a7a41c1b344bea5be946efc7b4349c1c9edb14ff9d39";

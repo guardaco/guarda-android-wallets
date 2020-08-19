@@ -13,4 +13,9 @@ class SyncProgress(
         const val SYNCED_PHASE = "Synced"
     }
 
+    override fun toString(): String {
+        return "SyncProgress(fromBlock=$fromBlock, toBlock=$toBlock, currentBlock=$currentBlock, processPhase='$processPhase')"
+    }
+
+
 }

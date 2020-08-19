@@ -12,7 +12,8 @@ import timber.log.Timber;
 public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
 
     private final static long FIRST_BLOCK_TO_SYNC_TESTNET = 490131; //block for current wallet, all users create their new wallets after the height
-    private final static long FIRST_BLOCK_TO_SYNC_MAINNET = 551912; //block for current wallet, all users create their new wallets after the height
+//    private final static long FIRST_BLOCK_TO_SYNC_MAINNET = 551912; //block for current wallet, all users create their new wallets after the height
+    private final static long FIRST_BLOCK_TO_SYNC_MAINNET = 900000; //block for current wallet, all users create their new wallets after the height
 
     private DbManager dbManager;
     private ProtoApi protoApi;
