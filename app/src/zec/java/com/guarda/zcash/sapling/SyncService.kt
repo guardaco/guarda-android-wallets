@@ -12,6 +12,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.res.ResourcesCompat
 import com.guarda.ethereum.GuardaApp
 import com.guarda.ethereum.R
+import com.guarda.ethereum.lifecycle.HistoryViewModel.DOWNLOADING_PHASE_PERCENT_RANGE
+import com.guarda.ethereum.lifecycle.HistoryViewModel.SYNCING_PHASE_PERCENT_RANGE
 import com.guarda.ethereum.models.constants.Extras.FIRST_ACTION_MAIN_ACTIVITY
 import com.guarda.ethereum.models.constants.Extras.STOP_SYNC_SERVICE
 import com.guarda.zcash.sapling.SyncProgress.Companion.SYNCED_PHASE
@@ -57,9 +59,11 @@ class SyncService : Service() {
                         }
 
                         var percent = (it.currentBlock - it.fromBlock).toDouble() / range
-                        percent *= 50
-
-                        if (it.processPhase == SyncProgress.SEARCH_PHASE) percent += 50.0
+                        if (it.processPhase == SyncProgress.DOWNLOAD_PHASE) {
+                            percent *= DOWNLOADING_PHASE_PERCENT_RANGE
+                        } else if (it.processPhase == SyncProgress.SEARCH_PHASE) {
+                            percent *= SYNCING_PHASE_PERCENT_RANGE
+                        }
 
                         updateNotification("%s (%.0f%%)".format(SyncManager.STATUS_SYNCING, percent))
                     }

@@ -30,6 +30,7 @@ import timber.log.Timber;
 
 import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCED;
 import static com.guarda.zcash.sapling.SyncManager.STATUS_SYNCING;
+import static com.guarda.zcash.sapling.SyncProgress.DOWNLOAD_PHASE;
 import static com.guarda.zcash.sapling.SyncProgress.SEARCH_PHASE;
 import static com.guarda.zcash.sapling.SyncProgress.SYNCED_PHASE;
 
@@ -200,9 +201,11 @@ public class HistoryViewModel extends ViewModel {
                 }
 
                 double percent = (double) (progress.getCurrentBlock() - progress.getFromBlock()) / range;
-                percent = percent * 50;
-
-                if (progress.getProcessPhase().equals(SEARCH_PHASE)) percent += 50;
+                if (progress.getProcessPhase().equals(DOWNLOAD_PHASE)) {
+                    percent = percent * DOWNLOADING_PHASE_PERCENT_RANGE;
+                } else if (progress.getProcessPhase().equals(SEARCH_PHASE)) {
+                    percent = percent * SYNCING_PHASE_PERCENT_RANGE;
+                }
 
                 String status = String.format("%s (%.0f%%)", STATUS_SYNCING, percent);
                 syncPhaseStatus.postValue(status);
@@ -219,6 +222,9 @@ public class HistoryViewModel extends ViewModel {
         super.onCleared();
         compositeDisposable.clear();
     }
+
+    public static final int DOWNLOADING_PHASE_PERCENT_RANGE = 15;
+    public static final int SYNCING_PHASE_PERCENT_RANGE = 100;
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
 
