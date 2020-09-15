@@ -14,7 +14,7 @@ public class CallCleanDbLogOut implements Callable<Boolean> {
     }
 
     @Override
-    public Boolean call() throws Exception {
+    public Boolean call() {
         dbManager.getAppDb().getDetailsTxDao().dropAll();
         dbManager.getAppDb().getTxDetailsDao().dropAll();
         dbManager.getAppDb().getReceivedNotesDao().dropAll();
