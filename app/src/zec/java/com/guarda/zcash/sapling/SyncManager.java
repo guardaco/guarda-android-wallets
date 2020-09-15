@@ -3,6 +3,7 @@ package com.guarda.zcash.sapling;
 import android.content.Context;
 
 import com.guarda.ethereum.GuardaApp;
+import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.zcash.sapling.api.ProtoApi;
@@ -44,6 +45,8 @@ public class SyncManager {
     ProtoApi protoApi;
     @Inject
     WalletManager walletManager;
+    @Inject
+    SharedManager sharedManager;
     @Inject
     Context context;
 
@@ -105,25 +108,25 @@ public class SyncManager {
 
     private void getBlocks() {
         compositeDisposable.add(Observable
-                .fromCallable(new CallLastBlock(dbManager, protoApi))
+                .fromCallable(new CallLastBlock(dbManager, protoApi, sharedManager))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((latest) -> {
-                    Timber.d("getBlocks latest=%s", latest);
+                .subscribe((blockSyncRange) -> {
+                    Timber.d("getBlocks blockSyncRange=%s", blockSyncRange);
 
-                    if (latest.getLatest() == 0) {
+                    if (blockSyncRange.getLatest() == 0) {
                         stopAndLogError("getBlocks", new Exception("can't get last block from litenode"));
                         return;
                     }
 
-                    syncProgress.setFromBlock(latest.getLastFromDb());
-                    syncProgress.setToBlock(latest.getLatest());
+                    syncProgress.setFromBlock(blockSyncRange.getFirsSyncBlockHeight());
+                    syncProgress.setToBlock(blockSyncRange.getLatest());
                     syncProgress.setProcessPhase(DOWNLOAD_PHASE);
                     progressPhase.onNext(syncProgress);
 
                     //if blocks downloading starts from last db height it will rewrite the block with empty tree field
-                    protoApi.pageNum = latest.getLastFromDb() + 1;
-                    endB = latest.getLatest();
+                    protoApi.pageNum = blockSyncRange.getLastFromDb() + 1;
+                    endB = blockSyncRange.getLatest();
                     blockRangeToDb();
                 }, (e) -> stopAndLogError("getBlocks", e)));
     }
@@ -158,7 +161,6 @@ public class SyncManager {
                 Observable.fromCallable(new CallBlocksForSync(dbManager))
                         .flatMap(listBlocks -> {
                             if (!listBlocks.isEmpty()) {
-                                syncProgress.setFromBlock(listBlocks.get(0).getHeight());
                                 syncProgress.setToBlock(listBlocks.get(listBlocks.size() - 1).getHeight());
                                 syncProgress.setCurrentBlock(listBlocks.get(0).getHeight());
                                 syncProgress.setProcessPhase(SEARCH_PHASE);

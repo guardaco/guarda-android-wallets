@@ -54,6 +54,7 @@ public class SharedManager {
     private static final String CUSTOM_NODE = "CUSTOM_NODE";
     private static final String LAST_CHANGELLY_CURR_LIST = "LAST_CHANGELLY_CURR_LIST";
     private static final String TIME_UPDATE_CURR = "TIME_UPDATE_CURR";
+    private static final String FIRST_SYNC_BLOCK_HEIGHT = "FIRST_SYNC_BLOCK_HEIGHT";
     private static final String LIST_CURRENCIES = "LIST_CURRENCIES";
 
     public static boolean flag_disable_buy_menu = false;
@@ -415,5 +416,13 @@ public class SharedManager {
 
     public void setListCurrencies(String listCurrencies) {
         settings.edit().putString(LIST_CURRENCIES, listCurrencies).apply();
+    }
+
+    public long getFirstSyncBlockHeight() {
+        return settings.getLong(FIRST_SYNC_BLOCK_HEIGHT, 0);
+    }
+
+    public void setFirstSyncBlockHeight(long firstSyncBlockHeight) {
+        settings.edit().putLong(FIRST_SYNC_BLOCK_HEIGHT, firstSyncBlockHeight).apply();
     }
 }
