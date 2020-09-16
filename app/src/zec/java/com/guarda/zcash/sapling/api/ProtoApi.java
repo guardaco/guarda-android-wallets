@@ -33,7 +33,7 @@ public class ProtoApi {
         channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
     }
 
-    public Boolean gB(long fBlock, long tBlock) {
+    public Boolean callBlockRangeAndSave(long fBlock, long tBlock) {
         Timber.d("ProtoApi getBlocks started");
         Iterator<CompactFormats.CompactBlock> l;
         try {

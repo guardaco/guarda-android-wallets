@@ -5,6 +5,8 @@ import android.content.Context;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
+import com.guarda.ethereum.models.items.SaplingBlockTree;
+import com.guarda.ethereum.repository.RawResourceRepository;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -31,6 +33,7 @@ import work.samosudov.rustlib.RustAPI;
 import static com.guarda.zcash.sapling.SyncProgress.DOWNLOAD_PHASE;
 import static com.guarda.zcash.sapling.SyncProgress.SEARCH_PHASE;
 import static com.guarda.zcash.sapling.SyncProgress.SYNCED_PHASE;
+import static com.guarda.zcash.sapling.rxcall.CallLastBlock.FIRST_BLOCK_TO_SYNC_MAINNET;
 
 public class SyncManager {
 
@@ -49,11 +52,14 @@ public class SyncManager {
     SharedManager sharedManager;
     @Inject
     Context context;
+    @Inject
+    RawResourceRepository rawResourceRepository;
 
     private PublishSubject<Boolean> progressSubject = PublishSubject.create();
     private PublishSubject<SyncProgress> progressPhase = PublishSubject.create();
     private boolean inProgress;
     private SyncProgress syncProgress = new SyncProgress();
+    private SaplingBlockTree nearStateHeightForStartSync;
 
     public SyncManager() {
         GuardaApp.getAppComponent().inject(this);
@@ -66,6 +72,8 @@ public class SyncManager {
         syncProgress = new SyncProgress();
         progressPhase.onNext(syncProgress);
         inProgress = true;
+
+        nearStateHeightForStartSync = nearStateHeightForStartSync();
 
         saplingParamsInit();
     }
@@ -108,25 +116,25 @@ public class SyncManager {
 
     private void getBlocks() {
         compositeDisposable.add(Observable
-                .fromCallable(new CallLastBlock(dbManager, protoApi, sharedManager))
+                .fromCallable(new CallLastBlock(dbManager, protoApi, sharedManager, nearStateHeightForStartSync.getHeight()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((blockSyncRange) -> {
                     Timber.d("getBlocks blockSyncRange=%s", blockSyncRange);
 
-                    if (blockSyncRange.getLatest() == 0) {
+                    if (blockSyncRange.getLastFromServer() == 0) {
                         stopAndLogError("getBlocks", new Exception("can't get last block from litenode"));
                         return;
                     }
 
                     syncProgress.setFromBlock(blockSyncRange.getFirsSyncBlockHeight());
-                    syncProgress.setToBlock(blockSyncRange.getLatest());
+                    syncProgress.setToBlock(blockSyncRange.getLastFromServer());
                     syncProgress.setProcessPhase(DOWNLOAD_PHASE);
                     progressPhase.onNext(syncProgress);
 
                     //if blocks downloading starts from last db height it will rewrite the block with empty tree field
                     protoApi.pageNum = blockSyncRange.getLastFromDb() + 1;
-                    endB = blockSyncRange.getLatest();
+                    endB = blockSyncRange.getLastFromServer();
                     blockRangeToDb();
                 }, (e) -> stopAndLogError("getBlocks", e)));
     }
@@ -158,7 +166,7 @@ public class SyncManager {
 
     private void getWintesses() {
         compositeDisposable.add(
-                Observable.fromCallable(new CallBlocksForSync(dbManager))
+                Observable.fromCallable(new CallBlocksForSync(dbManager, nearStateHeightForStartSync.getHeight()))
                         .flatMap(listBlocks -> {
                             if (!listBlocks.isEmpty()) {
                                 syncProgress.setToBlock(listBlocks.get(listBlocks.size() - 1).getHeight());
@@ -181,7 +189,7 @@ public class SyncManager {
                                             new CallFindWitnesses(
                                                     dbManager,
                                                     walletManager.getSaplingCustomFullKey(),
-                                                    block));
+                                                    nearStateHeightForStartSync));
                                 }
                         )
                         .subscribeOn(Schedulers.io())
@@ -267,6 +275,29 @@ public class SyncManager {
     private void stopAndLogError(String method, Throwable t) {
         stopSync();
         Timber.e("%s error=%s", method, t.getMessage());
+    }
+
+    /**
+     * Find nearest tree state in list of states {@code treeStates} from which we can to start
+     * syncing wallet.
+     */
+    private SaplingBlockTree nearStateHeightForStartSync() {
+        long firsSyncBlockHeight = sharedManager.getFirstSyncBlockHeight();
+        if (firsSyncBlockHeight == 0) {
+            sharedManager.setFirstSyncBlockHeight(FIRST_BLOCK_TO_SYNC_MAINNET);
+            firsSyncBlockHeight = FIRST_BLOCK_TO_SYNC_MAINNET;
+        }
+
+        SaplingBlockTree nearestTreeStateHeight = rawResourceRepository.treeStates.get(0);
+        for (SaplingBlockTree saplingBlockTree : rawResourceRepository.treeStates) {
+            long height = saplingBlockTree.getHeight();
+            if (height > nearestTreeStateHeight.getHeight() &&
+                    height <= firsSyncBlockHeight) {
+                nearestTreeStateHeight = saplingBlockTree;
+            }
+        }
+
+        return nearestTreeStateHeight;
     }
 
 }

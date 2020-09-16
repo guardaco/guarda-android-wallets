@@ -25,7 +25,7 @@ public class CallBlockRange implements Callable<Boolean> {
         if (endLocal >= end)
             endLocal = end;
 
-        protoApi.gB(protoApi.pageNum, endLocal);
+        protoApi.callBlockRangeAndSave(protoApi.pageNum, endLocal);
 
         return true;
     }

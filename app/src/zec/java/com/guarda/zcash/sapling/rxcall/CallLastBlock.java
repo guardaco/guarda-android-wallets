@@ -14,16 +14,18 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
 
     private final static long FIRST_BLOCK_TO_SYNC_TESTNET = 490131; //block for current wallet, all users create their new wallets after the height
 //    private final static long FIRST_BLOCK_TO_SYNC_MAINNET = 551912; //block for current wallet, all users create their new wallets after the height
-    private final static long FIRST_BLOCK_TO_SYNC_MAINNET = 900000; //block for current wallet, all users create their new wallets after the height
+    public final static long FIRST_BLOCK_TO_SYNC_MAINNET = 900000; //block for current wallet, all users create their new wallets after the height
 
     private DbManager dbManager;
     private ProtoApi protoApi;
     private SharedManager sharedManager;
+    private long nearStateHeightForStartSync = FIRST_BLOCK_TO_SYNC_MAINNET;
 
-    public CallLastBlock(DbManager dbManager, ProtoApi protoApi, SharedManager sharedManager) {
+    public CallLastBlock(DbManager dbManager, ProtoApi protoApi, SharedManager sharedManager, long nearStateHeightForStartSync) {
         this.dbManager = dbManager;
         this.protoApi = protoApi;
         this.sharedManager = sharedManager;
+        this.nearStateHeightForStartSync = nearStateHeightForStartSync;
     }
 
     @Override
@@ -33,34 +35,32 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
         long latestFromServer = protoApi.getLastBlock();
         Timber.d("latestFromServer = %d", latestFromServer);
 
+        long firsSyncBlockHeight = nearStateHeightForStartSync;
+
         BlockRoom blockRoom = dbManager.getAppDb().getBlockDao().getLatestBlockWithTree();
 
-        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : FIRST_BLOCK_TO_SYNC_MAINNET;
+        // firsSyncBlockHeight minus one, because of there is no blocks in database.
+        // downloading will start from lastFromDb height (excluded)
+        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : firsSyncBlockHeight - 1;
 //        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : FIRST_BLOCK_TO_SYNC_TESTNET;
-
-        long firsSyncBlockHeight = sharedManager.getFirstSyncBlockHeight();
-        if (firsSyncBlockHeight == 0) {
-            sharedManager.setFirstSyncBlockHeight(FIRST_BLOCK_TO_SYNC_MAINNET);
-            firsSyncBlockHeight = FIRST_BLOCK_TO_SYNC_MAINNET;
-        }
 
         Timber.d("lastFromDb = %d", lastFromDb);
         return new BlockSyncRange(latestFromServer, lastFromDb, firsSyncBlockHeight);
     }
 
     public class BlockSyncRange {
-        long latest;
+        long lastFromServer;
         long lastFromDb;
         long firsSyncBlockHeight;
 
-        private BlockSyncRange(long latest, long lastFromDb, long firsSyncBlockHeight) {
-            this.latest = latest;
+        private BlockSyncRange(long lastFromServer, long lastFromDb, long firsSyncBlockHeight) {
+            this.lastFromServer = lastFromServer;
             this.lastFromDb = lastFromDb;
             this.firsSyncBlockHeight = firsSyncBlockHeight;
         }
 
-        public long getLatest() {
-            return latest;
+        public long getLastFromServer() {
+            return lastFromServer;
         }
         public long getLastFromDb() {
             return lastFromDb;
@@ -72,7 +72,7 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
         @Override
         public String toString() {
             return "BlockSyncRange{" +
-                    "latest=" + latest +
+                    "lastFromServer=" + lastFromServer +
                     ", lastFromDb=" + lastFromDb +
                     ", firsSyncBlockHeight=" + firsSyncBlockHeight +
                     '}';

@@ -2,15 +2,18 @@ package com.guarda.ethereum.dependencies;
 
 import android.content.Context;
 import android.os.Build;
+
 import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
 import com.guarda.ethereum.managers.CurrencyListHolder;
 import com.guarda.ethereum.managers.EthereumNetworkManager;
+import com.guarda.ethereum.managers.FileProvider;
 import com.guarda.ethereum.managers.RawNodeManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
+import com.guarda.ethereum.repository.RawResourceRepository;
 import com.guarda.ethereum.utils.GsonUtils;
 import com.guarda.ethereum.utils.KeyStoreUtils;
 import com.guarda.zcash.sapling.SyncManager;
@@ -89,6 +92,21 @@ public class AppModule {
     @Singleton
     SyncManager provideSyncManager() {
         return new SyncManager();
+    }
+
+    @Provides
+    @Singleton
+    FileProvider provideFileProvider(Context context) {
+        return new FileProvider(context);
+    }
+
+    @Provides
+    @Singleton
+    RawResourceRepository provideRawResourceRepository(
+            FileProvider fileProvider,
+            GsonUtils gsonUtils
+    ) {
+        return new RawResourceRepository(fileProvider, gsonUtils);
     }
 
     @Provides

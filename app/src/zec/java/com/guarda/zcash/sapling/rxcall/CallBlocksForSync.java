@@ -8,6 +8,8 @@ import java.util.concurrent.Callable;
 
 import timber.log.Timber;
 
+import static com.guarda.zcash.sapling.rxcall.CallLastBlock.FIRST_BLOCK_TO_SYNC_MAINNET;
+
 
 public class CallBlocksForSync implements Callable<List<BlockRoom>> {
 
@@ -16,9 +18,11 @@ public class CallBlocksForSync implements Callable<List<BlockRoom>> {
 //    private Long startScanBlocksHeight = 620000L; //testnet
 //    private Long startScanBlocksHeight = 551912L;
     private Long startScanBlocksHeight = 900000L;
+    private Long nearStateHeightForStartSync = FIRST_BLOCK_TO_SYNC_MAINNET;
 
-    public CallBlocksForSync(DbManager dbManager) {
+    public CallBlocksForSync(DbManager dbManager, long nearStateHeightForStartSync) {
         this.dbManager = dbManager;
+        this.nearStateHeightForStartSync = nearStateHeightForStartSync;
     }
 
     @Override
@@ -29,6 +33,8 @@ public class CallBlocksForSync implements Callable<List<BlockRoom>> {
         BlockRoom lastBlockWithTree = dbManager.getAppDb().getBlockDao().getLatestBlockWithTree();
         if (lastBlockWithTree != null && !lastBlockWithTree.getTree().isEmpty()) {
             startScanBlocksHeight = lastBlockWithTree.getHeight();
+        } else {
+            startScanBlocksHeight = nearStateHeightForStartSync;
         }
 
         Timber.d("startScanBlocksHeight=%d", startScanBlocksHeight);
