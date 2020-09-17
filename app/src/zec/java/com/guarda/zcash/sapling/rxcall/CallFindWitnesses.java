@@ -41,9 +41,10 @@ public class CallFindWitnesses implements Callable<Optional<BlockRoom>> {
     private Long startScanBlocksHeight = defaultStartHeight;
     private SaplingBlockTree nearStateHeightForStartSync;
 
-    public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey, SaplingBlockTree nearStateHeightForStartSync) {
+    public CallFindWitnesses(DbManager dbManager, SaplingCustomFullKey saplingKey, BlockRoom blockRoom, SaplingBlockTree nearStateHeightForStartSync) {
         this.dbManager = dbManager;
         this.saplingKey = saplingKey;
+        this.blockRoom = blockRoom;
         this.nearStateHeightForStartSync = nearStateHeightForStartSync;
     }
 
@@ -158,8 +159,9 @@ public class CallFindWitnesses implements Callable<Optional<BlockRoom>> {
         // Remove previous block if it isn't contain wallet's transactions
         BlockRoom previousBlock = dbManager.getAppDb().getBlockDao().previousBlock(blockRoom.getHeight());
         if (previousBlock != null) {
-            int witnessesByBlock = dbManager.getAppDb().getSaplingWitnessesDao().countByBlockHeight(previousBlock.getHeight());
-            if (witnessesByBlock == 0) {
+            int blockTxsByInputNote = dbManager.getAppDb().getReceivedNotesDao().blockTxsByInputNote(previousBlock.getHash());
+            int blockTxsByOutputNote = dbManager.getAppDb().getReceivedNotesDao().blockTxsByOutputNote(previousBlock.getHash());
+            if (blockTxsByInputNote + blockTxsByOutputNote == 0) {
                 dbManager.getAppDb().getBlockDao().deleteByHeight(previousBlock.getHeight());
             } else {
                 Timber.d("previous block has transactions previous height=%d", previousBlock.getHeight());
