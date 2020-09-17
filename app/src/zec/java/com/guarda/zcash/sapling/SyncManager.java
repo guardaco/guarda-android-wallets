@@ -127,13 +127,13 @@ public class SyncManager {
                         return;
                     }
 
-                    syncProgress.setFromBlock(blockSyncRange.getFirsSyncBlockHeight());
+                    syncProgress.setFromBlock(blockSyncRange.getLastFromDb());
                     syncProgress.setToBlock(blockSyncRange.getLastFromServer());
                     syncProgress.setProcessPhase(DOWNLOAD_PHASE);
                     progressPhase.onNext(syncProgress);
 
                     //if blocks downloading starts from last db height it will rewrite the block with empty tree field
-                    protoApi.pageNum = blockSyncRange.getLastFromDb() + 1;
+                    protoApi.pageNum = blockSyncRange.getLastFromDb();
                     endB = blockSyncRange.getLastFromServer();
                     blockRangeToDb();
                 }, (e) -> stopAndLogError("getBlocks", e)));
@@ -189,6 +189,7 @@ public class SyncManager {
                                             new CallFindWitnesses(
                                                     dbManager,
                                                     walletManager.getSaplingCustomFullKey(),
+                                                    block,
                                                     nearStateHeightForStartSync));
                                 }
                         )
@@ -197,14 +198,14 @@ public class SyncManager {
                         .subscribe(
                                 (blockRoom) -> {
                                     if (!blockRoom.isEmpty()) {
-                                        validateSaplingTree();
+//                                        validateSaplingTree();
                                         Timber.d("CallFindWitnesses block blockRoom height=%d", blockRoom.get().getHeight());
                                     }
                                 },
                                 (e) -> stopAndLogError("CallFindWitnesses", e),
                                 () -> {
                                     Timber.d("CallFindWitnesses completed");
-                                    validateSaplingTree();
+//                                    validateSaplingTree();
                                     stopSync();
                                 })
         );

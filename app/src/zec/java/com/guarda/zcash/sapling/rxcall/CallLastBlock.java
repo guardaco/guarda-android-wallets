@@ -35,28 +35,26 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
         long latestFromServer = protoApi.getLastBlock();
         Timber.d("latestFromServer = %d", latestFromServer);
 
-        long firsSyncBlockHeight = nearStateHeightForStartSync;
+        long firstSyncBlockHeight = nearStateHeightForStartSync;
 
         BlockRoom blockRoom = dbManager.getAppDb().getBlockDao().getLatestBlockWithTree();
 
-        // firsSyncBlockHeight minus one, because of there is no blocks in database.
+        // firstSyncBlockHeight minus one, because of there is no blocks in a database.
         // downloading will start from lastFromDb height (excluded)
-        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : firsSyncBlockHeight - 1;
+        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : firstSyncBlockHeight;
 //        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : FIRST_BLOCK_TO_SYNC_TESTNET;
 
         Timber.d("lastFromDb = %d", lastFromDb);
-        return new BlockSyncRange(latestFromServer, lastFromDb, firsSyncBlockHeight);
+        return new BlockSyncRange(latestFromServer, lastFromDb);
     }
 
     public class BlockSyncRange {
         long lastFromServer;
         long lastFromDb;
-        long firsSyncBlockHeight;
 
-        private BlockSyncRange(long lastFromServer, long lastFromDb, long firsSyncBlockHeight) {
+        private BlockSyncRange(long lastFromServer, long lastFromDb) {
             this.lastFromServer = lastFromServer;
             this.lastFromDb = lastFromDb;
-            this.firsSyncBlockHeight = firsSyncBlockHeight;
         }
 
         public long getLastFromServer() {
@@ -65,16 +63,12 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
         public long getLastFromDb() {
             return lastFromDb;
         }
-        public long getFirsSyncBlockHeight() {
-            return firsSyncBlockHeight;
-        }
 
         @Override
         public String toString() {
             return "BlockSyncRange{" +
                     "lastFromServer=" + lastFromServer +
                     ", lastFromDb=" + lastFromDb +
-                    ", firsSyncBlockHeight=" + firsSyncBlockHeight +
                     '}';
         }
     }

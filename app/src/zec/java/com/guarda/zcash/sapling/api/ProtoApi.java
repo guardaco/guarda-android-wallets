@@ -52,7 +52,6 @@ public class ProtoApi {
             pw.flush();
             return false;
         }
-        pageNum = tBlock + 1;
 
         Timber.d("ProtoApi getBlocks done");
 
@@ -75,6 +74,7 @@ public class ProtoApi {
 
             return false;
         }
+        pageNum = tBlock + 1;
 
         return true;
     }
