@@ -204,7 +204,7 @@ public class HistoryViewModel extends ViewModel {
                 if (progress.getProcessPhase().equals(DOWNLOAD_PHASE)) {
                     percent = percent * DOWNLOADING_PHASE_PERCENT_RANGE;
                 } else if (progress.getProcessPhase().equals(SEARCH_PHASE)) {
-                    percent = percent * SYNCING_PHASE_PERCENT_RANGE;
+                    percent = 15 + percent * SYNCING_PHASE_PERCENT_RANGE;
                 }
 
                 String status = String.format("%s (%.0f%%)", STATUS_SYNCING, percent);
@@ -224,7 +224,7 @@ public class HistoryViewModel extends ViewModel {
     }
 
     public static final int DOWNLOADING_PHASE_PERCENT_RANGE = 15;
-    public static final int SYNCING_PHASE_PERCENT_RANGE = 100;
+    public static final int SYNCING_PHASE_PERCENT_RANGE = 85;
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
 

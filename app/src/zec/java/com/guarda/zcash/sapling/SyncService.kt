@@ -62,7 +62,7 @@ class SyncService : Service() {
                         if (it.processPhase == SyncProgress.DOWNLOAD_PHASE) {
                             percent *= DOWNLOADING_PHASE_PERCENT_RANGE
                         } else if (it.processPhase == SyncProgress.SEARCH_PHASE) {
-                            percent *= SYNCING_PHASE_PERCENT_RANGE
+                            percent = 15 + percent * SYNCING_PHASE_PERCENT_RANGE
                         }
 
                         updateNotification("%s (%.0f%%)".format(SyncManager.STATUS_SYNCING, percent))
