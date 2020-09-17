@@ -15,7 +15,7 @@ public class CallSaplingBalance implements Callable<Long> {
     }
 
     @Override
-    public Long call() throws Exception {
+    public Long call() {
         Long saplingBalance = dbManager.getAppDb().getReceivedNotesDao().getBalance();
         Timber.d("saplingBalance = %d", saplingBalance);
         return saplingBalance != null ? saplingBalance : 0;

@@ -26,7 +26,7 @@ public class CallBlocksForSync implements Callable<List<BlockRoom>> {
     }
 
     @Override
-    public List<BlockRoom> call() throws Exception {
+    public List<BlockRoom> call() {
         Timber.d("started");
 
         //get last with stored tree state

@@ -16,7 +16,7 @@ public class CallNotesFromDb implements Callable<Set<String>> {
     }
 
     @Override
-    public Set<String> call() throws Exception {
+    public Set<String> call() {
         Set<String> inouts = new HashSet<>();
         inouts.addAll(dbManager.getAppDb().getTxInputDao().getInputTxIds());
         inouts.addAll(dbManager.getAppDb().getTxOutputDao().getOutputTxIds());
