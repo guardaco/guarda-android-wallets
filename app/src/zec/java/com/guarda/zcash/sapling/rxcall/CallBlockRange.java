@@ -19,10 +19,10 @@ public class CallBlockRange implements Callable<Boolean> {
     }
 
     @Override
-    public Boolean call() throws Exception {
+    public Boolean call() {
         Timber.d("started");
         long endLocal = protoApi.pageNum + BLOCK_RANGE_STEP;
-        if (endLocal >= end)
+        if (endLocal > end)
             endLocal = end;
 
         protoApi.callBlockRangeAndSave(protoApi.pageNum, endLocal);
