@@ -47,6 +47,22 @@ public interface ReceivedNotesDao {
             "WHERE ins.txHash like :hash or outs.txHash like :hash")
     String getMemoByHash(String hash);
 
+    @Query("SELECT COUNT(*) " +
+            "FROM blocks WHERE hash in " +
+            "(SELECT blockHash FROM txs WHERE hash in " +
+            "(SELECT txHash FROM txins WHERE nf in " +
+            "(SELECT nf FROM received_notes))) " +
+            "AND hash = :blockHash")
+    int blockTxsByInputNote(String blockHash);
+
+    @Query("SELECT COUNT(*) " +
+            "FROM blocks WHERE hash in " +
+            "(SELECT blockHash FROM txs WHERE hash in " +
+            "(SELECT txHash FROM txouts WHERE cmu in " +
+            "(SELECT cm FROM received_notes))) " +
+            "AND hash = :blockHash")
+    int blockTxsByOutputNote(String blockHash);
+
     @Query("DELETE FROM received_notes")
     void dropAll();
 
