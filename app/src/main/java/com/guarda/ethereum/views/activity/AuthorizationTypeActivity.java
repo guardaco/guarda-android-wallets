@@ -52,7 +52,7 @@ public class AuthorizationTypeActivity extends SimpleTrackOnStopActivity {
     protected void init(Bundle savedInstanceState) {
         GuardaApp.getAppComponent().inject(this);
 
-        AuthorizationViewModel.Factory factory = new AuthorizationViewModel.Factory(walletManager, protoApi, sharedManager);
+        AuthorizationViewModel.Factory factory = new AuthorizationViewModel.Factory(walletManager, protoApi);
         authorizationViewModel = ViewModelProviders.of(this, factory).get(AuthorizationViewModel.class);
 
         walletManager.clearWallet();

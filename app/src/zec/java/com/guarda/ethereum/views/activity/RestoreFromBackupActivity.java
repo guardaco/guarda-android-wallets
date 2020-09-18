@@ -86,26 +86,22 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
     @OnClick(R.id.btn_restore)
     public void restore(View btn) {
         if (!TextUtils.isEmpty(etBackupPhrase.getText().toString().trim())) {
-                if (walletManager.isValidPrivateKey(etBackupPhrase.getText().toString())) {
-                    btnRestore.setEnabled(false);
-                    showProgress();
-                    AsyncTask.execute(() ->
-                            walletManager.restoreFromBlock2(etBackupPhrase.getText().toString(), () ->
-                                    runOnUiThread(() -> {
-                                            closeProgress();
-                                            if (!"".equals(Coders.decodeBase64(sharedManager.getLastSyncedBlock()))) {
-                                                goToMainActivity(etBackupPhrase.getText().toString());
-                                                btnRestore.setEnabled(false);
-                                            } else {
-                                                showError(etBackupPhrase, getString(R.string.et_error_wrong_private_key));
-                                                btnRestore.setEnabled(true);
-                                            }
-                                    })
-                            )
-                    );
-                } else {
-                    showError(etBackupPhrase, getString(R.string.et_error_wrong_private_key));
-                }
+            btnRestore.setEnabled(false);
+            showProgress();
+            AsyncTask.execute(() ->
+                    walletManager.restoreFromBlock2(etBackupPhrase.getText().toString(), () ->
+                            runOnUiThread(() -> {
+                                closeProgress();
+                                if (!"".equals(Coders.decodeBase64(sharedManager.getLastSyncedBlock()))) {
+                                    goToMainActivity(etBackupPhrase.getText().toString());
+                                    btnRestore.setEnabled(false);
+                                } else {
+                                    showError(etBackupPhrase, getString(R.string.et_error_wrong_private_key));
+                                    btnRestore.setEnabled(true);
+                                }
+                            })
+                    )
+            );
         } else {
             showError(etBackupPhrase, getString(R.string.et_error_private_key_is_empty));
         }

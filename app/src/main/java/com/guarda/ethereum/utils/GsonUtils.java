@@ -38,4 +38,13 @@ public class GsonUtils {
         Type type = new TypeToken<SaplingTreeModel>(){}.getType();
         return gson.fromJson(stringSaplingTreeModel, type);
     }
+
+    public String addressBirthdayMapString(Map<String, Long> addressBirthdayMapString) {
+        return gson.toJson(addressBirthdayMapString);
+    }
+
+    public Map<String, Long> addressBirthdayMapFromString(String addressBirthdayMapString) {
+        Type type = new TypeToken<Map<String, Long>>(){}.getType();
+        return gson.fromJson(addressBirthdayMapString, type);
+    }
 }

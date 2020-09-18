@@ -3,7 +3,6 @@ package com.guarda.zcash.sapling;
 import android.content.Context;
 
 import com.guarda.ethereum.GuardaApp;
-import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.items.SaplingBlockTree;
 import com.guarda.ethereum.repository.RawResourceRepository;
@@ -48,8 +47,6 @@ public class SyncManager {
     ProtoApi protoApi;
     @Inject
     WalletManager walletManager;
-    @Inject
-    SharedManager sharedManager;
     @Inject
     Context context;
     @Inject
@@ -116,7 +113,7 @@ public class SyncManager {
 
     private void getBlocks() {
         compositeDisposable.add(Observable
-                .fromCallable(new CallLastBlock(dbManager, protoApi, sharedManager, nearStateHeightForStartSync.getHeight()))
+                .fromCallable(new CallLastBlock(dbManager, protoApi, nearStateHeightForStartSync.getHeight()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((blockSyncRange) -> {
@@ -283,9 +280,9 @@ public class SyncManager {
      * syncing wallet.
      */
     private SaplingBlockTree nearStateHeightForStartSync() {
-        long firsSyncBlockHeight = sharedManager.getFirstSyncBlockHeight();
+        long firsSyncBlockHeight = walletManager.getCreateHeight();
         if (firsSyncBlockHeight == 0) {
-            sharedManager.setFirstSyncBlockHeight(FIRST_BLOCK_TO_SYNC_MAINNET);
+            walletManager.setCreateHeight(FIRST_BLOCK_TO_SYNC_MAINNET);
             firsSyncBlockHeight = FIRST_BLOCK_TO_SYNC_MAINNET;
         }
 

@@ -5,10 +5,13 @@ import android.net.Credentials;
 import android.util.Log;
 
 import com.guarda.ethereum.GuardaApp;
+import com.guarda.ethereum.rxcall.CallCleanDbLogOut;
 import com.guarda.ethereum.utils.Coders;
+import com.guarda.ethereum.utils.GsonUtils;
 import com.guarda.zcash.ZCashException;
 import com.guarda.zcash.ZCashWalletManager;
 import com.guarda.zcash.crypto.BrainKeyDict;
+import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.key.SaplingCustomFullKey;
 
 import org.bitcoinj.core.Address;
@@ -23,9 +26,13 @@ import org.spongycastle.util.encoders.Hex;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 import work.samosudov.rustlib.RustAPI;
 
@@ -47,6 +54,10 @@ public class WalletManager {
 
     @Inject
     SharedManager sharedManager;
+    @Inject
+    GsonUtils gsonUtils;
+    @Inject
+    DbManager dbManager;
 
     private Coin myBalance;
     private Context context;
@@ -142,7 +153,22 @@ public class WalletManager {
                             walletFriendlyAddress = ZCashWalletManager.publicKeyFromPrivateKey_taddr(mnemonicKey);
                             saplingAddress = RustAPI.zAddrFromWif(mnemonicKey.getBytes());
                             sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
-                            callback.run();
+
+                            Observable
+                                    .fromCallable(new CallCleanDbLogOut(dbManager))
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            (latest) -> {
+                                                callback.run();
+                                                Timber.d("cleanDbLogOut done=%s", latest);
+                                            },
+                                            (e) -> {
+                                                callback.run();
+                                                Timber.d("cleanDbLogOut err=%s", e.getMessage());
+                                            }
+                                    );
+
                             Timber.d("RESPONSE CODE %s", r1);
                         } catch (IllegalArgumentException iae) {
                             iae.printStackTrace();
@@ -155,6 +181,10 @@ public class WalletManager {
         } catch (ZCashException zce) {
             zce.printStackTrace();
         }
+    }
+
+    private void cleanDbLogOut() {
+
     }
 
     public static String getFriendlyBalance(Coin coin) {
@@ -278,6 +308,23 @@ public class WalletManager {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public long getCreateHeight() {
+        String addressBirthdayMapString = sharedManager.getAddressBirthdayMapString();
+        if (addressBirthdayMapString.isEmpty()) return 0;
+        Map<String, Long> mapAddressBirthday = gsonUtils.addressBirthdayMapFromString(addressBirthdayMapString);
+        Long birthdayHeight = mapAddressBirthday.get(walletFriendlyAddress);
+        if (birthdayHeight == null) return 0;
+        return birthdayHeight;
+    }
+
+    public void setCreateHeight(long createHeight) {
+        String addressBirthdayMapString = sharedManager.getAddressBirthdayMapString();
+        if (addressBirthdayMapString.isEmpty()) return;
+        Map<String, Long> mapAddressBirthday = gsonUtils.addressBirthdayMapFromString(addressBirthdayMapString);
+        mapAddressBirthday.put(walletFriendlyAddress, createHeight);
+        sharedManager.setAddressBirthdayMapString(gsonUtils.addressBirthdayMapString(mapAddressBirthday));
     }
 
     public static String SMALL_SENDING = "insufficientMoney";

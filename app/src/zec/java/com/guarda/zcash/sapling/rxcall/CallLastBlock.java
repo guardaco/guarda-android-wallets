@@ -1,6 +1,5 @@
 package com.guarda.zcash.sapling.rxcall;
 
-import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.zcash.sapling.api.ProtoApi;
 import com.guarda.zcash.sapling.db.DbManager;
 import com.guarda.zcash.sapling.db.model.BlockRoom;
@@ -18,13 +17,11 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
 
     private DbManager dbManager;
     private ProtoApi protoApi;
-    private SharedManager sharedManager;
     private long nearStateHeightForStartSync = FIRST_BLOCK_TO_SYNC_MAINNET;
 
-    public CallLastBlock(DbManager dbManager, ProtoApi protoApi, SharedManager sharedManager, long nearStateHeightForStartSync) {
+    public CallLastBlock(DbManager dbManager, ProtoApi protoApi, long nearStateHeightForStartSync) {
         this.dbManager = dbManager;
         this.protoApi = protoApi;
-        this.sharedManager = sharedManager;
         this.nearStateHeightForStartSync = nearStateHeightForStartSync;
     }
 
