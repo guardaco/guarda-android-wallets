@@ -2,6 +2,7 @@ package com.guarda.ethereum;
 
 import com.guarda.ethereum.customviews.RateDialog;
 import com.guarda.ethereum.dependencies.AppModule;
+import com.guarda.ethereum.lifecycle.ResyncViewModel;
 import com.guarda.ethereum.managers.RawNodeManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
@@ -108,6 +109,9 @@ public interface GuardaAppComponent {
     void inject(UserWalletFragment userWalletFragment);
     void inject(TransactionHistoryFragment transactionHistoryFragment);
     void inject(RateDialog rateDialog);
+
+    //viewmodel
+    void inject(ResyncViewModel resyncViewModel);
 
     //manager
     void inject(WalletManager walletManager);

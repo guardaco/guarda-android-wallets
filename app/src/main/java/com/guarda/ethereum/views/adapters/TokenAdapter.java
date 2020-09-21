@@ -29,6 +29,7 @@ import static com.guarda.ethereum.models.constants.Common.ETH_SHOW_PATTERN;
 public class TokenAdapter extends ExpandableRecyclerViewAdapter<TokenAdapter.TokenHeaderViewHolder, TokenAdapter.TokenBodyViewHolder> {
 
     private String tokensSum;
+    public View.OnClickListener onClickListener;
 
     public TokenAdapter(List<? extends ExpandableGroup> groups) {
         super(groups);
@@ -51,13 +52,15 @@ public class TokenAdapter extends ExpandableRecyclerViewAdapter<TokenAdapter.Tok
     @Override
     public void onBindChildViewHolder(TokenBodyViewHolder holder, int flatPosition,
                                       ExpandableGroup group, int childIndex) {
-
         final TokenBodyItem token = ((TokenHeaderItem) group).getItems().get(childIndex);
         holder.setTokenName(token.getTokenName());
+
+        holder.setIvQuestionVisibility(flatPosition == 2 ? View.VISIBLE : View.GONE);
+        if (flatPosition == 2) holder.itemView.setOnClickListener(onClickListener);
+
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
         symbols.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat(ETH_SHOW_PATTERN, symbols);
-
         holder.setTokenNum(decimalFormat.format(token.getTokenNum()));
 
         SharedManager sharedManager = new SharedManager();
@@ -152,12 +155,14 @@ public class TokenAdapter extends ExpandableRecyclerViewAdapter<TokenAdapter.Tok
         private TextView tvTokenName;
         private TextView tvTokenNum;
         private TextView tvTokenSum;
+        private ImageView ivQuestion;
 
         private TokenBodyViewHolder(View itemView) {
             super(itemView);
-            tvTokenName = (TextView) itemView.findViewById(R.id.tv_token_name);
-            tvTokenNum = (TextView) itemView.findViewById(R.id.tv_token_num);
-            tvTokenSum = (TextView) itemView.findViewById(R.id.tv_token_sum);
+            tvTokenName = itemView.findViewById(R.id.tv_token_name);
+            tvTokenNum = itemView.findViewById(R.id.tv_token_num);
+            tvTokenSum = itemView.findViewById(R.id.tv_token_sum);
+            ivQuestion = itemView.findViewById(R.id.iv_question);
         }
 
         public void setTokenName(String name) {
@@ -170,6 +175,10 @@ public class TokenAdapter extends ExpandableRecyclerViewAdapter<TokenAdapter.Tok
 
         public void setTokenSum(String sum) {
             tvTokenSum.setText(sum);
+        }
+
+        public void setIvQuestionVisibility(int visibility) {
+            ivQuestion.setVisibility(visibility);
         }
     }
 }

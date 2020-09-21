@@ -26,6 +26,7 @@ import org.spongycastle.util.encoders.Hex;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -155,7 +156,7 @@ public class WalletManager {
                             sharedManager.setLastSyncedBlock(Coders.encodeBase64(mnemonicKey));
 
                             Observable
-                                    .fromCallable(new CallCleanDbLogOut(dbManager))
+                                    .fromCallable(new CallCleanDbLogOut(dbManager, true))
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(
@@ -321,8 +322,10 @@ public class WalletManager {
 
     public void setCreateHeight(long createHeight) {
         String addressBirthdayMapString = sharedManager.getAddressBirthdayMapString();
-        if (addressBirthdayMapString.isEmpty()) return;
-        Map<String, Long> mapAddressBirthday = gsonUtils.addressBirthdayMapFromString(addressBirthdayMapString);
+        Map<String, Long> mapAddressBirthday = new HashMap<>();
+        if (!addressBirthdayMapString.isEmpty()) {
+            mapAddressBirthday = gsonUtils.addressBirthdayMapFromString(addressBirthdayMapString);
+        }
         mapAddressBirthday.put(walletFriendlyAddress, createHeight);
         sharedManager.setAddressBirthdayMapString(gsonUtils.addressBirthdayMapString(mapAddressBirthday));
     }

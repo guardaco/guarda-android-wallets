@@ -8,9 +8,11 @@ import java.util.concurrent.Callable;
 public class CallCleanDbLogOut implements Callable<Boolean> {
 
     private DbManager dbManager;
+    private boolean isDropBlocks;
 
-    public CallCleanDbLogOut(DbManager dbManager) {
+    public CallCleanDbLogOut(DbManager dbManager, boolean isDropBlocks) {
         this.dbManager = dbManager;
+        this.isDropBlocks = isDropBlocks;
     }
 
     @Override
@@ -19,7 +21,11 @@ public class CallCleanDbLogOut implements Callable<Boolean> {
         dbManager.getAppDb().getTxDetailsDao().dropAll();
         dbManager.getAppDb().getReceivedNotesDao().dropAll();
         dbManager.getAppDb().getSaplingWitnessesDao().dropAll();
-        dbManager.getAppDb().getBlockDao().dropAllTrees();
+        if (isDropBlocks) {
+            dbManager.getAppDb().getBlockDao().dropAll();
+        } else {
+            dbManager.getAppDb().getBlockDao().dropAllTrees();
+        }
         return true;
     }
 

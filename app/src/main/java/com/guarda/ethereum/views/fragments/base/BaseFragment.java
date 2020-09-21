@@ -4,19 +4,20 @@ package com.guarda.ethereum.views.fragments.base;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.views.activity.MainActivity;
 import com.guarda.ethereum.views.fragments.UserWalletFragment;
@@ -73,7 +74,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected void navigateToFragment(Fragment fragment) {
         if (isFragmentVisible) {
-            if (getActivity().getSupportFragmentManager() != null) {
+            if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
 
@@ -82,7 +83,6 @@ public abstract class BaseFragment extends Fragment {
             fragmentTransaction.commit();
         }
     }
-
 
     public void showProgress(String msg) {
         if (!progressDialog.isShowing() && isAdded()) {

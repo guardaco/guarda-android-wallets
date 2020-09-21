@@ -173,7 +173,7 @@ public class MainActivity extends TrackOnStopActivity {
         navigateToFragment(fragment);
     }
 
-    private void goToTransactionHistory() {
+    public void goToTransactionHistory() {
         setToolBarTitle(R.string.title_transaction_history);
         navigateToFragment(new TransactionHistoryFragment());
     }
@@ -350,7 +350,7 @@ public class MainActivity extends TrackOnStopActivity {
 
     private void cleanDbLogOut() {
         compositeDisposable.add(Observable
-                .fromCallable(new CallCleanDbLogOut(dbManager))
+                .fromCallable(new CallCleanDbLogOut(dbManager, false))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

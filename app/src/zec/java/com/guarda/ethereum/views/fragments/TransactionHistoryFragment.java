@@ -5,21 +5,22 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.core.widget.NestedScrollView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -197,6 +198,8 @@ public class TransactionHistoryFragment extends BaseFragment {
         }
 
         tokenAdapter = new TokenAdapter(generateTokensGroup(tokens));
+        tokenAdapter.onClickListener = v -> openResyncFragment();
+
         rvTokens.setLayoutManager(layoutManager);
         rvTokens.setAdapter(tokenAdapter);
         Timber.d("initTokens end");
@@ -419,6 +422,10 @@ public class TransactionHistoryFragment extends BaseFragment {
                 mainActivity.setToolBarTitle(R.string.app_your_address);
                 break;
         }
+    }
+
+    private void openResyncFragment() {
+        navigateToFragment(new ResyncFragment());
     }
 
     private void subscribeUi() {

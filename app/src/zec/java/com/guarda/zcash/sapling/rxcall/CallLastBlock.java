@@ -34,12 +34,19 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
 
         long firstSyncBlockHeight = nearStateHeightForStartSync;
 
-        BlockRoom blockRoom = dbManager.getAppDb().getBlockDao().getLatestBlockWithTree();
+        BlockRoom blockRoomWithTree = dbManager.getAppDb().getBlockDao().getLatestBlockWithTree();
+        BlockRoom blockRoomNewest = dbManager.getAppDb().getBlockDao().getLatestBlock();
 
-        // firstSyncBlockHeight minus one, because of there is no blocks in a database.
-        // downloading will start from lastFromDb height (excluded)
-        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : firstSyncBlockHeight;
-//        long lastFromDb = blockRoom != null ? blockRoom.getHeight() : FIRST_BLOCK_TO_SYNC_TESTNET;
+        long lastFromDb;
+        // for new created wallet
+        if (blockRoomWithTree == null && blockRoomNewest == null) {
+            lastFromDb = firstSyncBlockHeight;
+        // wallet started searching transactions
+        } else if (blockRoomWithTree != null) {
+            lastFromDb = blockRoomWithTree.getHeight();
+        } else {
+            lastFromDb = blockRoomNewest.getHeight();
+        }
 
         Timber.d("lastFromDb = %d", lastFromDb);
         return new BlockSyncRange(latestFromServer, lastFromDb);

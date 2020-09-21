@@ -31,10 +31,10 @@ public class CallBlocksForSync implements Callable<List<BlockRoom>> {
 
         //get last with stored tree state
         BlockRoom lastBlockWithTree = dbManager.getAppDb().getBlockDao().getLatestBlockWithTree();
-        if (lastBlockWithTree != null && !lastBlockWithTree.getTree().isEmpty()) {
-            startScanBlocksHeight = lastBlockWithTree.getHeight();
-        } else {
+        if (lastBlockWithTree == null) {
             startScanBlocksHeight = nearStateHeightForStartSync;
+        } else {
+            startScanBlocksHeight = lastBlockWithTree.getHeight();
         }
 
         Timber.d("startScanBlocksHeight=%d", startScanBlocksHeight);

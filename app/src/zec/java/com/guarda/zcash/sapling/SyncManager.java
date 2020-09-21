@@ -166,6 +166,7 @@ public class SyncManager {
                 Observable.fromCallable(new CallBlocksForSync(dbManager, nearStateHeightForStartSync.getHeight()))
                         .flatMap(listBlocks -> {
                             if (!listBlocks.isEmpty()) {
+                                syncProgress.setFromBlock(listBlocks.get(0).getHeight());
                                 syncProgress.setToBlock(listBlocks.get(listBlocks.size() - 1).getHeight());
                                 syncProgress.setCurrentBlock(listBlocks.get(0).getHeight());
                                 syncProgress.setProcessPhase(SEARCH_PHASE);
