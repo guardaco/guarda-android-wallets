@@ -129,10 +129,4 @@ public class Requestor {
         Log.d("Request", "path " + call.request());
         ApiMethods.makeRequest(call, listener);
     }
-
-    public static void getTxFee(ApiMethods.RequestListener listener) {
-        Call call = ApiMethods.createGuardaCoApi().getFeeList();
-        Log.d("Request", "path " + call.request());
-        ApiMethods.makeRequest(call, listener);
-    }
 }

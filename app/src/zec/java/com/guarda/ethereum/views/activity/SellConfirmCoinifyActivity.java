@@ -27,7 +27,6 @@ import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.items.CoinifyTradeRespForList;
 import com.guarda.ethereum.models.items.CoinifyTradeRespSell;
 import com.guarda.ethereum.models.items.SendRawTxResponse;
-import com.guarda.ethereum.models.items.TxFeeResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
@@ -42,7 +41,6 @@ import org.bitcoinj.core.Coin;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -242,7 +240,7 @@ public class SellConfirmCoinifyActivity extends AToolbarActivity {
                         @Override
                         public void run() {
                             if ("ok".equals(status)) {
-                                getTxFee(resp.depositAddress);
+
                             } else {
                                 Toast.makeText(getApplicationContext(), getString(R.string.exchange_error_generate_address), Toast.LENGTH_LONG).show();
                                 closeProgress();
@@ -254,34 +252,6 @@ public class SellConfirmCoinifyActivity extends AToolbarActivity {
                     Toast.makeText(getApplicationContext(), getString(R.string.exchange_error_generate_address), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
-            }
-        });
-    }
-
-    private void getTxFee(String depAddr) {
-        Requestor.getTxFee(new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                try {
-                    HashMap<String, TxFeeResponse> feesMap = (HashMap<String, TxFeeResponse>) response;
-                    BigDecimal fee = new BigDecimal(feesMap.get(Common.MAIN_CURRENCY.toLowerCase()).getFee());
-                    //fee to fee per Kb (1 Kb is 1000 bytes)
-//                    fee = fee.divide(avgTxSizeKb, BigDecimal.ROUND_HALF_UP);
-                    fee = fee.setScale(8, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
-                    sendTx(depAddr, fee);
-                } catch (Exception e) {
-                    closeProgress();
-                    Toast.makeText(getApplicationContext(), "Can not get exchange fee. Please, try later", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                    Log.d("psd", "getTxFee - onSuccess: " + e.getMessage());
-                }
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                closeProgress();
-                Toast.makeText(getApplicationContext(), "Can not get exchange fee. Please, try later", Toast.LENGTH_LONG).show();
-                Log.d("psd", "getTxFee - onFailure: " + msg);
             }
         });
     }

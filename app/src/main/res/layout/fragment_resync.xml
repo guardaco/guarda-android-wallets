@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/whiteTextColor">
 
     <TextView
         android:id="@+id/resync_title"
@@ -27,48 +29,33 @@
         app:layout_constraintTop_toBottomOf="@id/resync_title"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/ll_faq"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintStart_toStartOf="@id/resync_desc"
-        app:layout_constraintTop_toBottomOf="@id/resync_desc"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:id="@+id/faq_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/resync_faq"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_open_in_new"
-            app:layout_constraintStart_toEndOf="@id/faq_title"
-            app:layout_constraintTop_toTopOf="@id/faq_title"
-            app:layout_constraintBottom_toBottomOf="@id/faq_title"/>
-
-    </LinearLayout>
-
     <EditText
         android:id="@+id/et_resync_height"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:text="915000"
         android:hint="@string/resync_height_hint"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/ll_faq"
-        app:layout_constraintTop_toBottomOf="@id/ll_faq"
+        android:maxLength="10"
+        android:maxLines="1"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/baseTextColor"
+        android:padding="5dp"
+        android:paddingEnd="25dp"
+        app:layout_constraintStart_toStartOf="@+id/resync_desc"
+        app:layout_constraintTop_toBottomOf="@id/resync_desc"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/height_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/greyHintColor"
+        tools:text="@string/restore_sync_date"
+        app:layout_constraintStart_toStartOf="@id/et_resync_height"
+        app:layout_constraintTop_toBottomOf="@id/et_resync_height"/>
 
     <Button
         android:id="@+id/btn_resync"

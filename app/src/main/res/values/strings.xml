@@ -166,9 +166,8 @@
     <string name="logo_wallet" translatable="false">Wallet</string>
 
 <!--    ResyncFragment-->
-    <string name="resync_title">Resync Z-address</string>
-    <string name="resync_text_title">Resync text title</string>
-    <string name="resync_description">Resync description\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="resync_text_title">Resync Z-address</string>
+    <string name="resync_description">If your z-address balance is incorrect you can try to resync the blockchain.\n<i><u>What is a ZCash blockchain synchronization?</u></i>\n\n<b>Attention:</b>\nThe process may take up to 24 hours. You will not be able to send transactions from the wallet until the scanning process is completed.</string>
     <string name="resync_height_hint">Block height</string>
     <string name="resync_button">Resync</string>
     <string name="resync_faq">FAQ</string>

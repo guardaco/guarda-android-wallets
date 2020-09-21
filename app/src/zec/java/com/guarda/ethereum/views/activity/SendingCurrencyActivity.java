@@ -25,10 +25,8 @@ import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.guarda.LogMessageBody;
 import com.guarda.ethereum.models.guarda.LogMessageRequest;
 import com.guarda.ethereum.models.items.SendRawTxResponse;
-import com.guarda.ethereum.models.items.TxFeeResponse;
 import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.rest.GuardaLoggingApi;
-import com.guarda.ethereum.rest.Requestor;
 import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.rxcall.CallUpdateTxDetails;
 import com.guarda.ethereum.utils.CurrencyUtils;
@@ -45,9 +43,7 @@ import com.guarda.zcash.sapling.db.DbManager;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.WrongNetworkException;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.IllegalFormatConversionException;
 
 import javax.inject.Inject;
@@ -166,28 +162,6 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         currentFeeEth = defaultFee.getValue();
         etFeeAmount.setText(defaultFee.toPlainString());
         updateArrivalField();
-
-        Requestor.getTxFee(new ApiMethods.RequestListener() {
-            @Override
-            public void onSuccess(Object response) {
-                try {
-                    HashMap<String, TxFeeResponse> feesMap = (HashMap<String, TxFeeResponse>) response;
-                    BigDecimal fee = new BigDecimal(feesMap.get(Common.MAIN_CURRENCY.toLowerCase()).getFee());
-                    fee = fee.setScale(8, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
-                    etFeeAmount.setText(fee.toPlainString());
-
-                    updateArrivalField();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Timber.d("getTxFee - onSuccess: %s", e.getMessage());
-                }
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                Timber.d("getTxFee - onFailure: %s", msg);
-            }
-        });
 
         etFeeAmount.addTextChangedListener(new TextWatcher() {
             @Override

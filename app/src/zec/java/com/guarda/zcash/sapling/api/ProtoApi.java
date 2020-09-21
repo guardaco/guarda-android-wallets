@@ -33,19 +33,19 @@ public class ProtoApi {
         channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
     }
 
-    public Boolean callBlockRangeAndSave(long fBlock, long tBlock) {
+    public Boolean callBlockRangeAndSave(long fromBlock, long toBlock) {
         Timber.d("ProtoApi getBlocks started");
-        Iterator<CompactFormats.CompactBlock> l;
+        Iterator<CompactFormats.CompactBlock> compactBlockIterator;
         try {
             CompactTxStreamerGrpc.CompactTxStreamerBlockingStub stub = CompactTxStreamerGrpc.newBlockingStub(channel);
 
-            Service.BlockID from = Service.BlockID.newBuilder().setHeight(fBlock).build();
-            Service.BlockID to = Service.BlockID.newBuilder().setHeight(tBlock).build();
+            Service.BlockID from = Service.BlockID.newBuilder().setHeight(fromBlock).build();
+            Service.BlockID to = Service.BlockID.newBuilder().setHeight(toBlock).build();
             Service.BlockRange br = Service.BlockRange.newBuilder().setStart(from).setEnd(to).build();
 
-            l = stub.getBlockRange(br);
+            compactBlockIterator = stub.getBlockRange(br);
         } catch (Exception e) {
-            Timber.e("gB from=" + fBlock + " to=" + tBlock + " e=" + e.getMessage());
+            Timber.e("gB from=" + fromBlock + " to=" + toBlock + " e=" + e.getMessage());
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
@@ -55,26 +55,26 @@ public class ProtoApi {
 
         Timber.d("ProtoApi getBlocks done");
 
-        CompactFormats.CompactBlock cb = null;
+        CompactFormats.CompactBlock compactBlock = null;
         try {
-            while (l.hasNext()) {
-                cb = l.next();
-                if (cb.getVtxCount() == 0) continue;
-                Timber.d("checkBlocks block height=%d", cb.getHeight());
-                dbManager.addBlockWithTxs(cb);
+            while (compactBlockIterator.hasNext()) {
+                compactBlock = compactBlockIterator.next();
+                if (compactBlock.getVtxCount() == 0) continue;
+                Timber.d("checkBlocks block height=%d", compactBlock.getHeight());
+                dbManager.addBlockWithTxs(compactBlock);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Timber.e("protoApi.checkBlocks(items); from=" + fBlock + " to=" + tBlock + " e=" + e.getMessage());
+            Timber.e("protoApi.checkBlocks(items); from=" + fromBlock + " to=" + toBlock + " e=" + e.getMessage());
             // sometimes we get UNKNOWN: context deadline exceeded from server
             // https://github.com/zcash-hackworks/lightwalletd/blob/51614ecd2bff7595114c30a70eaf3c7488af12dd/frontend/service.go#L107
             // workaround: recall previous block, so we set last block number
-            if (cb != null)
-                pageNum = cb.getHeight();
+            if (compactBlock != null)
+                pageNum = compactBlock.getHeight();
 
             return false;
         }
-        pageNum = tBlock + 1;
+        pageNum = toBlock + 1;
 
         return true;
     }

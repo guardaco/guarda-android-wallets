@@ -221,4 +221,9 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
         return address;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
 }

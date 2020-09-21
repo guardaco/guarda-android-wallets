@@ -45,7 +45,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.NODE_ADDRESS;
-import static com.guarda.ethereum.models.constants.Guarda.GUARDA_CO_URL;
 import static com.guarda.ethereum.models.constants.Guarda.GUARDA_ETC_URL;
 import static com.guarda.ethereum.models.constants.Guarda.GUARDA_ETH_URL;
 
@@ -285,10 +284,6 @@ public class ApiMethods {
 
     static ZecBookApi createZecBookApi() {
         return getBaseRxApi(ZecExplorer.ZEC_BOOK_API).create(ZecBookApi.class);
-    }
-
-    static GuardaCoApi createGuardaCoApi() {
-        return getBaseApi(GUARDA_CO_URL).create(GuardaCoApi.class);
     }
 
     static GuardaEthApi createGuardaEthApi() {
