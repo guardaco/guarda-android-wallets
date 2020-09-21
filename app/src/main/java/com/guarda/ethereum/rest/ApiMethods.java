@@ -2,8 +2,9 @@ package com.guarda.ethereum.rest;
 
 
 import android.os.Build;
-import androidx.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.models.constants.BchExplorer;
@@ -12,15 +13,15 @@ import com.guarda.ethereum.models.constants.BtgExplorer;
 import com.guarda.ethereum.models.constants.Callistoexplorer;
 import com.guarda.ethereum.models.constants.Changelly;
 import com.guarda.ethereum.models.constants.Coinify;
-import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Coinmarketcap;
+import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Cryptocompare;
 import com.guarda.ethereum.models.constants.DgbExplorer;
 import com.guarda.ethereum.models.constants.Etcchain;
 import com.guarda.ethereum.models.constants.Etherscan;
 import com.guarda.ethereum.models.constants.KmdExplorer;
-import com.guarda.ethereum.models.constants.QtumExplorer;
 import com.guarda.ethereum.models.constants.LtcExplorer;
+import com.guarda.ethereum.models.constants.QtumExplorer;
 import com.guarda.ethereum.models.constants.SbtcExplorer;
 import com.guarda.ethereum.models.constants.Wemovecoins;
 import com.guarda.ethereum.models.constants.ZecExplorer;
@@ -34,6 +35,7 @@ import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -316,22 +318,24 @@ public class ApiMethods {
     }
 
     private static Retrofit getBaseRxApi(String baseUrl) {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        OkHttpClient client = httpClient
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = builder
+                .addInterceptor(httpLoggingInterceptor)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build();
 
-        Retrofit retrofit = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
-
-        return retrofit;
     }
 
     private static Retrofit getBaseApiAuth(String baseUrl, final String accessToken) {

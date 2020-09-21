@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
@@ -18,7 +19,10 @@ import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
+import com.guarda.ethereum.rest.RequestorBtc;
 import com.guarda.ethereum.utils.Coders;
+import com.guarda.ethereum.utils.CurrencyUtils;
+import com.guarda.ethereum.utils.DateTimeUtil;
 import com.guarda.ethereum.views.activity.base.AToolbarActivity;
 
 import java.util.regex.Matcher;
@@ -28,6 +32,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Extras.DISABLE_CHECK;
 
@@ -39,42 +47,99 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
     Button btnRestore;
     @BindView(R.id.imageViewScanQr)
     ImageView imageViewScanQr;
+    @BindView(R.id.et_restore_height)
+    EditText et_restore_height;
+    @BindView(R.id.height_date)
+    TextView height_date;
 
     @Inject
     WalletManager walletManager;
-
     @Inject
     SharedManager sharedManager;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected void init(Bundle savedInstanceState) {
         GuardaApp.getAppComponent().inject(this);
+        initView();
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_restore_from_backup;
+    }
+
+    private void initView() {
         setFocusToPassPhrase();
-
         setToolBarTitle(R.string.title_restore_backup);
-        etBackupPhrase.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+        etBackupPhrase.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 hideError(etBackupPhrase);
             }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+            @Override public void afterTextChanged(Editable s) { }
+        });
 
+        et_restore_height.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                blockDataByHeight(s.toString());
             }
+
+            @Override public void afterTextChanged(Editable s) { }
         });
 
         imageViewScanQr.setOnClickListener((view) -> scanQr_onClick());
     }
 
-    @Override
-    protected int getLayout() {
-        return R.layout.activity_restore_from_backup;
+    private void blockDataByHeight(String input) {
+        if (input.length() < 6) {
+            height_date.setText("");
+            return;
+        }
+
+        Long blockHeight = CurrencyUtils.parseLongOrNull(input);
+        if (blockHeight == null || blockHeight < 500_000L) {
+            height_date.setText("");
+            return;
+        }
+
+        compositeDisposable.add(
+                RequestorBtc.getBlockBookBlock(blockHeight.toString())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                blockBookBlock ->
+                                        height_date.setText(
+                                                String.format(
+                                                        getString(R.string.restore_sync_date),
+                                                        DateTimeUtil.INSTANCE.dateFromTimestamp(
+                                                                blockBookBlock.getTime()
+                                                        )
+                                                )
+                                        ),
+                                error -> {
+                                    height_date.setText("");
+                                    Timber.e("getBlockBookBlock error=%s", error.getMessage());
+                                }
+                ));
+    }
+
+    private void saveSyncBlockHeight() {
+        String input = et_restore_height.getText().toString();
+        if (input.length() < 6) return;
+
+        Long blockHeight = CurrencyUtils.parseLongOrNull(input);
+        if (blockHeight == null || blockHeight < 419_200L) return;
+
+        walletManager.setCreateHeight(blockHeight);
     }
 
     @Override
@@ -91,6 +156,7 @@ public class RestoreFromBackupActivity extends AToolbarActivity {
             AsyncTask.execute(() ->
                     walletManager.restoreFromBlock2(etBackupPhrase.getText().toString(), () ->
                             runOnUiThread(() -> {
+                                saveSyncBlockHeight();
                                 closeProgress();
                                 if (!"".equals(Coders.decodeBase64(sharedManager.getLastSyncedBlock()))) {
                                     goToMainActivity(etBackupPhrase.getText().toString());

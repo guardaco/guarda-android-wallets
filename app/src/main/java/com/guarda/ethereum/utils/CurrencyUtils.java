@@ -2,11 +2,8 @@ package com.guarda.ethereum.utils;
 
 
 import android.content.Context;
-import android.util.Log;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
@@ -94,6 +91,22 @@ public final class CurrencyUtils {
                 break;
         }
         return explain;
+    }
+
+    public static Long parseLongOrNull(String string) {
+        try {
+            return Long.parseLong(string);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    public static Integer parseIntegerOrNull(String string) {
+        try {
+            return Integer.parseInt(string);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
 }

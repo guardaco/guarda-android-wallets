@@ -1,6 +1,7 @@
 package com.guarda.ethereum.rest;
 
 
+import com.guarda.ethereum.models.items.BlockBookBlock;
 import com.guarda.ethereum.models.items.ZecTxResponse;
 
 import io.reactivex.Observable;
@@ -20,5 +21,8 @@ interface ZecBookApi {
 
     @GET("tx/{hash}")
     Observable<ZecTxResponse> getOneTx(@Path("hash") String hash);
+
+    @GET("block/{blockHeight}")
+    Observable<BlockBookBlock> block(@Path("blockHeight") String blockHeight);
 
 }

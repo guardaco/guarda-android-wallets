@@ -42,3 +42,8 @@ data class BlockBookScriptPk(
     @SerializedName("addresses")
     val addresses: List<String>
 )
+
+data class BlockBookBlock(
+        val height: Long,
+        val time: Long
+)

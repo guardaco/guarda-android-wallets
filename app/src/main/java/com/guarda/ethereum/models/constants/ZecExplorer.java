@@ -13,6 +13,6 @@ public interface ZecExplorer {
 
     // https://zecbook.guarda.co/
     String ZEC_BOOK_BASE_URL = "https://zecbook.guarda.co";
-    String ZEC_BOOK_API = ZEC_BOOK_BASE_URL + "/api/v1/";
+    String ZEC_BOOK_API = ZEC_BOOK_BASE_URL + "/api/v2/";
     String ZEC_BOOK_TX = ZEC_BOOK_BASE_URL + "/tx/";
 }

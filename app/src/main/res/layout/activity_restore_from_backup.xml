@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/whiteTextColor"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -95,6 +96,44 @@
             android:scaleY="0.6"
             android:tint="@color/baseTextColor"
             app:srcCompat="@drawable/ic_btn_scan_qr_wr" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_restore_height"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:id="@+id/height_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/restore_sync_height_desc"/>
+
+        <com.guarda.ethereum.customviews.RobotoEditText
+            android:id="@+id/et_restore_height"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_below="@+id/height_desc"
+            android:inputType="number"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:background="@drawable/edit_text_background"
+            android:textColor="@color/baseTextColor"
+            android:padding="5dp"
+            android:hint="@string/resync_height_hint"
+            android:paddingEnd="25dp" />
+
+        <TextView
+            android:id="@+id/height_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_restore_height"
+            android:textColor="@color/greyHintColor"
+            tools:text="@string/restore_sync_date"/>
+
     </RelativeLayout>
 
     <RelativeLayout

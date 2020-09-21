@@ -15,7 +15,7 @@ public final class DateUtils {
     private DateUtils() {
     }
 
-    public static Date stringToDate(String dateStr){
+    public static Date stringToDate(String dateStr) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date;
         try {
@@ -25,5 +25,7 @@ public final class DateUtils {
         }
         return date;
     }
+
+
 
 }

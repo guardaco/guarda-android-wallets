@@ -33,12 +33,14 @@ class ResyncFragment : BaseFragment() {
         et_resync_height.setText(resyncViewModel.blockHeightPreset().toString())
 
         btn_resync.setOnClickListener {
+            showProgress()
             resyncViewModel.resyncFromHeight(et_resync_height.text.toString().toLongOrNull())
         }
     }
 
     private fun initSubscribers() {
         resyncViewModel.resync.observe(viewLifecycleOwner, Observer {
+            closeProgress()
             (activity as MainActivity?)?.goToTransactionHistory()
         })
     }

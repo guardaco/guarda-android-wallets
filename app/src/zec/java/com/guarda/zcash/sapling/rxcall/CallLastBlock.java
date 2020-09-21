@@ -41,11 +41,11 @@ public class CallLastBlock implements Callable<CallLastBlock.BlockSyncRange> {
         // for new created wallet
         if (blockRoomWithTree == null && blockRoomNewest == null) {
             lastFromDb = firstSyncBlockHeight;
-        // wallet started searching transactions
+        // height from DB increasing (plus one) to prevent overriding block tree state
         } else if (blockRoomWithTree != null) {
-            lastFromDb = blockRoomWithTree.getHeight();
+            lastFromDb = blockRoomWithTree.getHeight() + 1;
         } else {
-            lastFromDb = blockRoomNewest.getHeight();
+            lastFromDb = blockRoomNewest.getHeight() + 1;
         }
 
         Timber.d("lastFromDb = %d", lastFromDb);

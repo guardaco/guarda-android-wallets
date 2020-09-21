@@ -31,7 +31,7 @@ class ResyncViewModel private constructor() : ViewModel() {
     fun blockHeightPreset() : Long {
         val height = walletManager.createHeight
         return if (height == 0L) {
-            915000L
+            SYNC_HEIGHT_PRESET
         } else {
             height
         }
@@ -71,6 +71,7 @@ class ResyncViewModel private constructor() : ViewModel() {
 
     companion object {
         const val GUARDA_SHIELDED_FIRST_SYNC_BLOCK = 551912L
+        const val SYNC_HEIGHT_PRESET = 915000L
     }
 
 }

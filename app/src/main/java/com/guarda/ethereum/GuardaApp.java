@@ -22,6 +22,7 @@ import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.constants.Const;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.views.activity.ConfirmPinCodeActivity;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -142,6 +143,8 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
         Fabric.with(this, crashlyticsKit);
 
         Timber.plant(new Timber.DebugTree());
+
+        AndroidThreeTen.init(this);
     }
 
 

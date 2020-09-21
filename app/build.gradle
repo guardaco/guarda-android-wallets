@@ -149,6 +149,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation("com.squareup.okio:okio:2.6.0")
     implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
+
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
 
@@ -193,6 +195,7 @@ dependencies {
     zecImplementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     zecImplementation 'io.reactivex.rxjava2:rxjava:2.2.6'
     zecImplementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
     zecImplementation 'androidx.room:room-runtime:2.2.4'
     zecAnnotationProcessor 'androidx.room:room-compiler:2.2.4'
     zecImplementation "com.goterl.lazycode:lazysodium-android:3.6.3@aar"

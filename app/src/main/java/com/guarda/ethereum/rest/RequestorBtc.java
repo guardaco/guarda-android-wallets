@@ -1,6 +1,7 @@
 package com.guarda.ethereum.rest;
 
 
+import com.guarda.ethereum.models.items.BlockBookBlock;
 import com.guarda.ethereum.models.items.RawBlockResponse;
 import com.guarda.ethereum.models.items.ZecTxResponse;
 
@@ -8,6 +9,36 @@ import io.reactivex.Observable;
 import retrofit2.Call;
 
 public class RequestorBtc {
+
+    // BlockBook
+    public static Observable<BlockBookBlock> getBlockBookBlock(String blockHeight) {
+        return ApiMethods.createZecBookApi().block(blockHeight);
+    }
+
+    // Insight
+    public static void broadcastRawTxZexNew(String hexTx, ApiMethods.RequestListener listener) {
+        Call call = ApiMethods.createZecInsightApiNew().broadcastRawTx(hexTx);
+        ApiMethods.makeRequest(call, listener);
+    }
+
+
+    public static void getBalanceZecNew(String address, ApiMethods.RequestListener listener) {
+        Call call = ApiMethods.createZecApiNew().getBalance(address);
+        ApiMethods.makeRequest(call, listener);
+    }
+
+    public static void getTransactionsZecNew(String address, ApiMethods.RequestListener listener) {
+        Call call = ApiMethods.createZecApiNew().getTransactions(address);
+        ApiMethods.makeRequest(call, listener);
+    }
+
+    public static Observable<ZecTxResponse> getOneTx(String hash) {
+        return ApiMethods.createZecApiNew().getOneTx(hash);
+    }
+
+    public static Observable<RawBlockResponse> getRawBlockByHash(String hash) {
+        return ApiMethods.createZecApiNew().getRawBlockByHash(hash);
+    }
 
     public static void getBalanceAndTx(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createBlockChainInfoApi().getBalance(address);
@@ -79,11 +110,6 @@ public class RequestorBtc {
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getBalanceZecNew(String address, ApiMethods.RequestListener listener) {
-        Call call = ApiMethods.createZecApiNew().getBalance(address);
-        ApiMethods.makeRequest(call, listener);
-    }
-
     public static void getTransactionsBtgNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createBtgApiNew().getTransactions(address);
         ApiMethods.makeRequest(call, listener);
@@ -129,19 +155,6 @@ public class RequestorBtc {
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void getTransactionsZecNew(String address, ApiMethods.RequestListener listener) {
-        Call call = ApiMethods.createZecApiNew().getTransactions(address);
-        ApiMethods.makeRequest(call, listener);
-    }
-
-    public static Observable<ZecTxResponse> getOneTx(String hash) {
-        return ApiMethods.createZecApiNew().getOneTx(hash);
-    }
-
-    public static Observable<RawBlockResponse> getRawBlockByHash(String hash) {
-        return ApiMethods.createZecApiNew().getRawBlockByHash(hash);
-    }
-
     public static void getUTXOList(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createBlockChainInfoApi().getUTXOByAddress(address);
         ApiMethods.makeRequest(call, listener);
@@ -177,11 +190,6 @@ public class RequestorBtc {
         ApiMethods.makeRequest(call, listener);
     }
 
-    public static void broadcastRawTxZexNew(String hexTx, ApiMethods.RequestListener listener) {
-        Call call = ApiMethods.createZecInsightApiNew().broadcastRawTx(hexTx);
-        ApiMethods.makeRequest(call, listener);
-    }
-
     public static void getUTXOListKmdNew(String address, ApiMethods.RequestListener listener) {
         Call call = ApiMethods.createKmdApi().getUTXOByAddress(address);
         ApiMethods.makeRequest(call, listener);
@@ -206,5 +214,4 @@ public class RequestorBtc {
         Call call = ApiMethods.createBchApi().getCurrentBlockHeight();
         ApiMethods.makeRequest(call, listener);
     }
-
 }
