@@ -289,8 +289,7 @@
                 android:id="@+id/btn_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginTop="15dp"
                 style="@style/colorButtonStyle"
                 android:elevation="5dp"
@@ -298,7 +297,6 @@
                 android:text="@string/withdraw_confirm" />
 
         </LinearLayout>
-
 
     </RelativeLayout>
 </ScrollView>
