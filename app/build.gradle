@@ -82,8 +82,8 @@ android {
 
         zec {
             dimension "version"
-            versionCode 83
-            versionName "1.43"
+            versionCode 84
+            versionName "1.44"
             applicationId "guarda.shielded"
             dimension "tier"
             setProperty("archivesBaseName", "guarda-shielded-$versionName")
