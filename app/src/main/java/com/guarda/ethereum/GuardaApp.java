@@ -10,11 +10,9 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
-
 import com.facebook.stetho.Stetho;
 import com.freshchat.consumer.sdk.Freshchat;
 import com.freshchat.consumer.sdk.FreshchatConfig;
-import com.google.firebase.crash.FirebaseCrash;
 import com.guarda.ethereum.dependencies.AppModule;
 import com.guarda.ethereum.managers.ShapeshiftManager;
 import com.guarda.ethereum.managers.SharedManager;
@@ -131,20 +129,10 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
         userMeta.put("platform", "android");
         Freshchat.getInstance(getApplicationContext()).setUserProperties(userMeta);
 
-        FirebaseCrash.setCrashCollectionEnabled(!BuildConfig.DEBUG);
-
         Timber.plant(new Timber.DebugTree());
 
         AndroidThreeTen.init(this);
     }
-
-
-
-//    private GuardaAppComponent buildAppComponent() {
-//        return DaggerGuardaAppComponent.create();
-//                .appModule(new AppModule(this))
-//                .build();
-//    }
 
     @Override
     public Context getApplicationContext() {
