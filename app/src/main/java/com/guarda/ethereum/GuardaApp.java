@@ -10,8 +10,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
+
 import com.facebook.stetho.Stetho;
 import com.freshchat.consumer.sdk.Freshchat;
 import com.freshchat.consumer.sdk.FreshchatConfig;
@@ -28,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.adorsys.android.securestoragelibrary.SecurePreferences;
-import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 import work.samosudov.rustlib.RustAPI;
 
@@ -134,13 +132,6 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
         Freshchat.getInstance(getApplicationContext()).setUserProperties(userMeta);
 
         FirebaseCrash.setCrashCollectionEnabled(!BuildConfig.DEBUG);
-
-        // Set up Crashlytics, disabled for debug builds
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-        // Initialize Fabric with the debug-disabled crashlytics.
-        Fabric.with(this, crashlyticsKit);
 
         Timber.plant(new Timber.DebugTree());
 

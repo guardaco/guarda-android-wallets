@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'maven'
 apply plugin: 'com.google.protobuf'
 
@@ -59,8 +60,6 @@ android {
             applicationIdSuffix ".debug"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // Disable fabric build ID generation for debug builds
-            ext.enableCrashlytics = false
         }
     }
 
@@ -107,10 +106,6 @@ android {
 
 }
 
-crashlytics {
-    enableNdk true
-}
-
 protobuf {
     protoc { artifact = 'com.google.protobuf:protoc:3.12.3' }
     plugins {
@@ -155,16 +150,14 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
 
     implementation files('libs/jsonrpc2-base-1.38.jar')
-    implementation 'com.google.firebase:firebase-core:17.2.3'
-    implementation 'com.google.firebase:firebase-crash:16.2.1'
+    implementation 'com.google.firebase:firebase-core:17.5.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
     implementation 'de.adorsys.android:securestoragelibrary:1.0.2'
     implementation 'com.hbb20:ccp:2.3.4'
     implementation 'com.github.freshdesk:freshchat-android:1.2.1'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.thoughtbot:expandablerecyclerview:1.3'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
-        transitive = true
-    }
+
     implementation ('androidx.browser:browser:1.2.0') {
         exclude group: 'com.google.guava', module: 'listenablefuture'
     }
