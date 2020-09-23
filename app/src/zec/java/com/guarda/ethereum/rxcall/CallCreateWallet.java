@@ -18,14 +18,15 @@ public class CallCreateWallet implements Callable<Boolean> {
 
     @Override
     public Boolean call() {
-        long lastBlock = protoApi.getLastBlock();
-        if (lastBlock != 0) {
-            // save block height when wallet created
-            walletManager.setCreateHeight(lastBlock);
-            return walletManager.createWallet();
-        } else {
-            return false;
+        boolean isWalletCrated = walletManager.createWallet();
+        if (isWalletCrated) {
+            long lastBlock = protoApi.getLastBlock();
+            if (lastBlock != 0) {
+                walletManager.setCreateHeight(lastBlock);
+                return true;
+            }
         }
+        return false;
     }
 
 }

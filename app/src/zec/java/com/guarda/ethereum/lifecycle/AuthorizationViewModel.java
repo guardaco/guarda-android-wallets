@@ -37,7 +37,7 @@ public class AuthorizationViewModel extends ViewModel {
                         .subscribe(
                                 (created) -> isCreated.setValue(created),
                                 (e) -> {
-                                    Timber.d("cleanDbLogOut err=%s", e.getMessage());
+                                    Timber.d("CallCreateWallet err=%s", e.getMessage());
                                 }
                         )
         );
