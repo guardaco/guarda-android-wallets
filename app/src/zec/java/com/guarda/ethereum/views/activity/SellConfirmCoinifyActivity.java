@@ -232,7 +232,7 @@ public class SellConfirmCoinifyActivity extends AToolbarActivity {
     }
 
     private void changeNowGenAddr(String coinifyBtcAddr) {
-        ChangenowApi.generateAddress(Common.MAIN_CURRENCY, "BTC", coinifyBtcAddr, null, new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
+        ChangenowApi.generateAddress(Common.MAIN_CURRENCY, "BTC", "", coinifyBtcAddr, null, new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
             @Override
             public void onResponse(final String status, final ChangenowApi.GenerateAddressRespModel resp) {
                 try {

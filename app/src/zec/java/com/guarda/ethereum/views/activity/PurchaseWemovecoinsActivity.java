@@ -122,7 +122,7 @@ public class PurchaseWemovecoinsActivity extends AToolbarActivity {
     private void getBtcAddress_changenow(final String walletNum) {
         Log.d("flint", "PurchaseWemovecoinsActivity.getBtcAddress_changenow()...");
         String code = "btc";
-        ChangenowApi.generateAddress(code.toLowerCase(), MAIN_CURRENCY, walletNum, null, new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
+        ChangenowApi.generateAddress(code.toLowerCase(), MAIN_CURRENCY, "", walletNum, null, new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
             @Override
             public void onResponse(String status, ChangenowApi.GenerateAddressRespModel resp) {
                 Log.d("flint", "PurchaseWemovecoinsActivity.getBtcAddress_changenow()... onResponse: status="+status);

@@ -1,7 +1,6 @@
 package com.guarda.ethereum.views.fragments;
 
 import android.app.Activity;
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.drawable.PictureDrawable;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -210,7 +211,7 @@ public class ExchangeInputAddressFragment extends BaseFragment {
                     }
                 });
             } else if ("changenow".equalsIgnoreCase(selectedExchange)) {
-                ChangenowApi.generateAddress(coinFrom.symbol, coinTo.symbol, address, extraId, new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
+                ChangenowApi.generateAddress(coinFrom.symbol, coinTo.symbol, "", address, extraId, new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
                     @Override
                     public void onResponse(final String status, final ChangenowApi.GenerateAddressRespModel resp) {
                         try {

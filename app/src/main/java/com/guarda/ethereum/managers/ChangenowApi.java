@@ -116,13 +116,13 @@ public class ChangenowApi {
         });
     }
 
-    public static void generateAddress(final String fromCoin, final String toCoin, final String toAddress, final String extraId, final Callback2<String, ChangenowApi.GenerateAddressRespModel> onComplete) {
+    public static void generateAddress(final String fromCoin, final String toCoin, String amount,  final String toAddress, final String extraId, final Callback2<String, ChangenowApi.GenerateAddressRespModel> onComplete) {
         Log.d("flint", "ChangenowApi.generateAddress...");
         HashMap<String, String> params = new HashMap<>();
         params.put("from", fromCoin);
         params.put("to", toCoin);
         params.put("address", toAddress);
-        params.put("amount", "12");
+        params.put("amount", amount.isEmpty() ? "12" : amount);
         if (extraId != null)
             params.put("extraId", extraId);
         makePostQuery("/api/v1/transactions/"+PUBLIC_API_KEY, params, new Callback2<String, String>() {

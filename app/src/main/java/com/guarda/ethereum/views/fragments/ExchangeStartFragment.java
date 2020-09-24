@@ -1,26 +1,21 @@
 package com.guarda.ethereum.views.fragments;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.graphics.drawable.PictureDrawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProviders;
+
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
-import com.guarda.ethereum.managers.Callback2;
-import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.ChangenowApi;
 import com.guarda.ethereum.managers.ChangenowManager;
-import com.guarda.ethereum.managers.ShapeshiftApi;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
-import com.guarda.ethereum.models.constants.Const;
-import com.guarda.ethereum.models.items.ResponseGenerateAddress;
-import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.utils.ClipboardUtils;
 import com.guarda.ethereum.utils.QrCodeUtils;
@@ -146,84 +141,32 @@ public class ExchangeStartFragment extends BaseFragment {
         });
         sharedViewModel.selectedExchange.observe(this, exchange -> {
             selectedExchange = exchange;
-            createExchange();
             getMinAmount();
             updateSelectedPairRateChangenow();
             updateIconsFromTo();
         });
     }
 
-    private void createExchange() {
+    private void createExchange(String amount) {
         if (coinFrom == null || coinTo == null || selectedExchange == null) {
             Timber.e("createExchange: coinFrom == null || coinTo == null || selectedExchange == null");
         }
-        String returnAddress = Const.COIN_TO_RETURN_ADDRESS.get(fromCoin.toUpperCase()) == null ? "" : Const.COIN_TO_RETURN_ADDRESS.get(fromCoin.toUpperCase());
-        if ("shapeshift".equalsIgnoreCase(selectedExchange)) {
-            ShapeshiftApi.generateAddress(coinFrom.symbol, coinTo.symbol, walletManager.getWalletAddressForDeposit(), returnAddress, new Callback2<String, ShapeshiftApi.GenerateAddressRespModel>() {
-                @Override
-                public void onResponse(final String status, final ShapeshiftApi.GenerateAddressRespModel resp) {
-                    try {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if ("ok".equals(status)) {
-                                    depositAddress = resp.depositAddress;
-                                } else {
-                                    showQrCode = false;
-                                    depositAddress = getResources().getString(R.string.fragment_disabled_text);
-                                }
-                                updateDepositAddressView();
-                                closeProgress();
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        if ("changenow".equalsIgnoreCase(selectedExchange)) {
+            ChangenowApi.generateAddress(coinFrom.symbol, coinTo.symbol, amount, walletManager.getWalletAddressForDeposit(), "", (status, resp) -> {
+                try {
+                    getActivity().runOnUiThread(() -> {
+                        if ("ok".equals(status)) {
+                            depositAddress = resp.depositAddress;
+                        } else {
+                            showQrCode = false;
+                            depositAddress = getString(R.string.fragment_disabled_text);
+                        }
+                        updateDepositAddressView();
                         closeProgress();
-                    }
-                }
-            });
-        } else if ("changelly".equalsIgnoreCase(selectedExchange)) {
-            ChangellyNetworkManager.generateAddress(coinFrom.symbol.toLowerCase(), coinTo.symbol.toLowerCase(), walletManager.getWalletFriendlyAddress(), null, new ApiMethods.RequestListener() {
-                @Override
-                public void onSuccess(Object response) {
-                    ResponseGenerateAddress addressItem = (ResponseGenerateAddress) response;
-                    if (addressItem.getAddress() != null && addressItem.getAddress().getAddress() != null) {
-                        depositAddress = addressItem.getAddress().getAddress();
-                    } else {
-                        showQrCode = false;
-                        depositAddress = getResources().getString(R.string.exchange_service_unavailable);
-                    }
-                    updateDepositAddressView();
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
                     closeProgress();
-                }
-
-                @Override
-                public void onFailure(String msg) {
-                    closeProgress();
-                }
-            });
-        } else if ("changenow".equalsIgnoreCase(selectedExchange)) {
-            ChangenowApi.generateAddress(coinFrom.symbol, coinTo.symbol, walletManager.getWalletAddressForDeposit(), "", new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
-                @Override
-                public void onResponse(final String status, final ChangenowApi.GenerateAddressRespModel resp) {
-                    try {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if ("ok".equals(status)) {
-                                    depositAddress = resp.depositAddress;
-                                } else {
-                                    showQrCode = false;
-                                    depositAddress = getString(R.string.fragment_disabled_text);
-                                }
-                                updateDepositAddressView();
-                                closeProgress();
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        closeProgress();
-                    }
                 }
             });
         }
@@ -232,7 +175,10 @@ public class ExchangeStartFragment extends BaseFragment {
     private void getMinAmount() {
         ChangenowManager.getInstance().getMinAmount(coinFrom.symbol, coinTo.symbol, response -> {
             try {
-                getActivity().runOnUiThread(() -> setMinAmount(response));
+                getActivity().runOnUiThread(() -> {
+                    setMinAmount(response);
+                    createExchange(response.minimum.toPlainString());
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
