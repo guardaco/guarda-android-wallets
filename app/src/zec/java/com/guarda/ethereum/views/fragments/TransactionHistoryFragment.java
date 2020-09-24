@@ -177,15 +177,13 @@ public class TransactionHistoryFragment extends BaseFragment {
 
     @TargetApi(Build.VERSION_CODES.M)
     private void initFabHider() {
-        nsvMainScrollLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    fabMenu.setVisibility(View.GONE);
-                } else {
-                    fabMenu.setVisibility(View.VISIBLE);
-                }
-            }
+        nsvMainScrollLayout.setOnScrollChangeListener(
+                (View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                    if (scrollY > oldScrollY) {
+                        fabMenu.setVisibility(View.GONE);
+                    } else {
+                        fabMenu.setVisibility(View.VISIBLE);
+                    }
         });
     }
 

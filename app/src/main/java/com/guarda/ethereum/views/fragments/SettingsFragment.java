@@ -21,11 +21,10 @@ import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.SharedManager;
-import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
+import com.guarda.ethereum.utils.IntentUtil;
 import com.guarda.ethereum.views.activity.ConfirmPinCodeActivity;
 import com.guarda.ethereum.views.activity.CreateAccessCodeActivity;
-import com.guarda.ethereum.views.activity.SettingsWebViewActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
 import com.guarda.zcash.sapling.SyncManager;
 import com.guarda.zcash.sapling.db.DbManager;
@@ -137,11 +136,11 @@ public class SettingsFragment extends BaseFragment {
                 break;
             case R.id.ll_terms_of_use:
                 ll_terms_of_use.setEnabled(false);
-                openWebURL(TERM_OF_USE_LINK);
+                IntentUtil.Companion.openWebUrl(requireContext(), TERM_OF_USE_LINK);
                 break;
             case R.id.ll_privacy_policy:
                 ll_privacy_policy.setEnabled(false);
-                openWebURL(PRIVACY_POLICE_LINK);
+                IntentUtil.Companion.openWebUrl(requireContext(), PRIVACY_POLICE_LINK);
                 break;
             case R.id.ll_support:
                 ll_support.setEnabled(false);
@@ -172,13 +171,6 @@ public class SettingsFragment extends BaseFragment {
                 swSecureCode.setChecked(true);
             }
         }
-    }
-
-    public void openWebURL(String inURL) {
-        Intent intent = new Intent(getActivity(), SettingsWebViewActivity.class);
-        intent.putExtra(Extras.WEB_VIEW_URL, inURL);
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.no_slide);
     }
 
     private void setVersion() {

@@ -27,7 +27,6 @@ import com.guarda.ethereum.views.activity.ReceiptCoinifyActivity;
 import com.guarda.ethereum.views.activity.RestoreFromBackupActivity;
 import com.guarda.ethereum.views.activity.SellConfirmCoinifyActivity;
 import com.guarda.ethereum.views.activity.SendingCurrencyActivity;
-import com.guarda.ethereum.views.activity.SettingsWebViewActivity;
 import com.guarda.ethereum.views.activity.TransactionDetailsActivity;
 import com.guarda.ethereum.views.activity.base.BaseActivity;
 import com.guarda.ethereum.views.activity.base.SimpleTrackOnStopActivity;
@@ -69,7 +68,6 @@ public interface GuardaAppComponent {
     void inject(BaseActivity baseActivity);
     void inject(CongratsActivity congratsActivity);
     void inject(ConfirmCoinifyActivity confirmCoinifyActivity);
-    void inject(SettingsWebViewActivity settingsWebViewActivity);
     void inject(BankAccCoinifyActivity bankAccCoinifyActivity);
     void inject(AccessCodeAgainActivity accessCodeAgainActivity);
     void inject(ReceiptCoinifyActivity receiptCoinifyActivity);
