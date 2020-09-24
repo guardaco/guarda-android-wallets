@@ -11,8 +11,8 @@
         android:layout_height="60dp"
         android:spinnerMode="dropdown"
         android:background="@android:color/white"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="52dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginStart="5dp"
         tools:text="textViewExchange"
         app:layout_constraintStart_toStartOf="@id/spinnerExchange"
         app:layout_constraintBottom_toTopOf="@id/spinnerExchange"/>
@@ -32,7 +31,7 @@
         android:id="@+id/imageViewAbout"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="0dp"
         android:padding="5dp"
         android:foregroundGravity="center"
         app:srcCompat="@drawable/ic_help_icon_wr"
@@ -46,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/img_change"
         android:layout_marginBottom="10dp"
-        android:layout_marginStart="5dp"
         tools:text="textViewSend"
         app:layout_constraintBottom_toTopOf="@id/spinnerFromCoin"
         app:layout_constraintStart_toStartOf="@id/spinnerFromCoin"/>
@@ -58,8 +56,8 @@
         android:layout_alignParentStart="true"
         android:spinnerMode="dropdown"
         android:background="@drawable/ic_exchangespinner_background_wr"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="45dp"
         app:layout_constraintTop_toBottomOf="@id/spinnerExchange" />
 
@@ -80,7 +78,6 @@
         android:layout_above="@+id/spinnerToCoin"
         android:layout_alignStart="@+id/spinnerToCoin"
         android:layout_marginBottom="10dp"
-        android:layout_marginStart="5dp"
         tools:text="textViewReceive"
         app:layout_constraintBottom_toTopOf="@id/spinnerToCoin"
         app:layout_constraintStart_toStartOf="@id/spinnerToCoin"/>
@@ -90,8 +87,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/ic_exchangespinner_background_wr"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/img_change"/>
 
@@ -124,16 +121,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:padding="10dp"
             android:clipToPadding="false"
             android:clipChildren="false"
+            android:paddingBottom="20dp"
             android:layout_gravity="bottom">
 
             <Button
                 android:id="@+id/buttonStartExchange"
                 style="@style/colorButtonStyle"
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:drawableEnd="@drawable/ic_arrow_right_wr"

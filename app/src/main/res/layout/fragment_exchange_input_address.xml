@@ -103,7 +103,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_inputs"
-        android:paddingBottom="25dp"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="373dp"
         android:background="@color/baseWhiteBgColor"
@@ -212,12 +212,14 @@
         <Button
             android:id="@+id/buttonNext"
             style="@style/colorButtonStyle"
-            android:layout_width="280dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="20dp"
             android:drawableEnd="@drawable/ic_arrow_right_wr"
             android:elevation="5dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="10dp"
             android:text="@string/app_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
