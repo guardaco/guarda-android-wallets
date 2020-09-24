@@ -118,10 +118,12 @@ public class ExchangeStartFragment extends BaseFragment {
         });
 
         textViewTapToCopy.setOnClickListener((View view) -> {
+            if (depositAddress.equals(getString(R.string.fragment_disabled_text))) return;
             ClipboardUtils.copyToClipBoard(getContext(), depositAddress);
         });
 
         textViewAddressWallet.setOnClickListener((View view) -> {
+            if (depositAddress.equals(getString(R.string.fragment_disabled_text))) return;
             ClipboardUtils.copyToClipBoard(getContext(), depositAddress);
         });
 
