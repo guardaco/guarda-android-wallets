@@ -1,17 +1,16 @@
 package com.guarda.ethereum.views.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
-import androidx.appcompat.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -80,21 +79,14 @@ public class ExchangeSpinnerAdapter extends BaseAdapter implements SpinnerAdapte
             ExchangeSpinnerRowModel item = rows.get(i);
 
             String cnTicker = item.symbol;
-            Integer id = inflater.getContext().getResources().getIdentifier("ic_" + cnTicker.toLowerCase(), "drawable", inflater.getContext().getPackageName());
-            if (id != null && id != 0) {
-                coinIcon = inflater.getContext().getResources().getDrawable(id);
-                coinIcon.setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+            //only for first spinner with services list (changenow only now)
+            if (rows.size() == 1 && rows.get(0).text.equalsIgnoreCase("changenow")) {
+                coinIcon = inflater.getContext().getResources().getDrawable(R.drawable.ic_change_now);
                 icon.setImageDrawable(coinIcon);
             } else {
-                //only for first spinner with services list (changenow only now)
-                if (rows.size() == 1 && rows.get(0).text.equalsIgnoreCase("changenow")) {
-                    coinIcon = inflater.getContext().getResources().getDrawable(R.drawable.ic_change_now);
-                    icon.setImageDrawable(coinIcon);
-                } else {
-                    requestBuilder
-                            .load(item.url)
-                            .into(icon);
-                }
+                requestBuilder
+                        .load(item.url)
+                        .into(icon);
             }
 
             TextView name = view.findViewById(R.id.textView);
