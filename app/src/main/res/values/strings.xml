@@ -173,7 +173,8 @@
     <string name="resync_faq">FAQ</string>
 
 <!--    RestoreFromBackupActivity-->
-    <string name="restore_sync_height_desc">Block height of the 1st transaction (leave empty to sync the max period)</string>
+    <string name="restore_sync_height_title">Block height of the 1st transaction</string>
+    <string name="restore_sync_height_desc">(leave empty to sync the max period)</string>
     <string name="restore_sync_date">Date: %s</string>
 
     <string-array name="currencies">
