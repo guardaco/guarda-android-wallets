@@ -320,7 +320,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
         etSumSend.setText(amountToSend);
         etWalletAddress.setText(walletNumber);
         String addr = getToAddress();
-        if (addr.substring(0, 2).equalsIgnoreCase("zs") && isSaplingAddress) {
+        if (addr.substring(0, 2).equalsIgnoreCase("zs")) {
             et_memo.setVisibility(View.VISIBLE);
         }
     }

@@ -283,7 +283,8 @@
                 android:lines="3"
                 android:layout_gravity="start"
                 android:textColor="@color/darkGreyText"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_confirm"
