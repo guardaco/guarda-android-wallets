@@ -149,7 +149,6 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
 
-    implementation files('libs/jsonrpc2-base-1.38.jar')
     implementation 'com.google.firebase:firebase-core:17.5.0'
     implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
     implementation 'de.adorsys.android:securestoragelibrary:1.0.2'
