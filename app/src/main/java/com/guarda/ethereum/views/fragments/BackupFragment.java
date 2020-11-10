@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.SharedManager;
@@ -168,9 +167,7 @@ public class BackupFragment extends BaseFragment {
             }
         }
 
-        if (BuildConfig.FLAVOR == "zec") {
-            listTitles.add(new KeysSpinnerRowModel("zec", "Spending key"));
-        }
+        listTitles.add(new KeysSpinnerRowModel("zec", "Spending key"));
 
         return listTitles;
     }

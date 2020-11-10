@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="restore_backup_passphrase">Verschlüsselungskennwort</string>
+    <string name="app_top_up_width_other_currency">mit anderer Währung aufladen</string>
+    <string name="top_up_width_other_currency">mit anderer Währung aufladen</string>
+    <string name="et_error_wrong_private_key">Ungültiger eigener Schlüssel</string>
        <string name="start_create_wallet">Geldbörse erstellen</string>
        <string name="start_login_from_backup">Login vom Backup</string> (würdest du hier so lassen oder übersetzen?)
        <string name="title_restore_backup">Wiederherstellen</string>
        <string name="restore_backup_enter_backup_passphrase">Verschlüsselungskennwort für Backup eingeben</string>
        <string name="restore_backup_restore">Wiederherstellen</string>
        <string name="transaction_history_your_transactions">Ihre Transaktionen</string>
-       <string name="restore_backup_passphrase">Verschlüsselungskennwort</string>
        <string name="app_usd_currency">USD</string>
        <string name="app_your_address">Ihre Adresse</string>
        <string name="wallet_your_address">@string/app_your_address</string>
        <string name="app_copy">Kopieren</string>
        <string name="app_show_qr">QR-Code zeigen</string>
-       <string name="app_top_up_width_other_currency">mit anderer Währung aufladen</string>
-       <string name="top_up_width_other_currency">mit anderer Währung aufladen</string>
        <string name="app_transaction_history">Hausseite</string>
        <string name="app_purchase">Kaufen</string>
        <string name="app_withdraw">Abheben</string>
@@ -132,7 +133,6 @@
     <string name="withdraw_address_not_valid">Die Adresse der Geldbörse kann nicht leer sein</string>
     <string name="withdraw_amount_can_not_be_empty">Die Menge kann nicht leer sein</string>
     <string name="app_about"><b>About Company</b>\n\nÜber das Unternehmen 2017 gegründet, ist Guarda ein Innovationsunternehmen mit dem Schwerpunkt Blockchain von Blockchain-Enthusiasten in der EU. Wir verfügen über ein Team von IT, Blockchain und Fintech, was unser Erfolgsfaktor zum Anbieten von hervorragenden Blockchain-Leistungen ist.</string>
-    <string name="et_error_wrong_private_key">Ungültiger eigener Schlüssel</string>
     <string name="et_error_private_key_is_empty">Eigener Schlüssel kann nicht leer sein</string>
     <string name="et_error_fee_more_than_amount">Die Gebühr kann nicht höher als die Menge zu versenden sein</string>
     <string name="et_error_fee_more_than">Die Gebühr kann nicht höher als aktuell gültig sein</string>

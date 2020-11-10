@@ -1,5 +1,28 @@
 <resources>
-    <string name="app_name" translatable="false">Ethereum Wallet</string>
+
+    <string name="app_name" translatable="false">Guarda Shielded</string>
+    <string name="app_coin_currency" translatable="false">ZEC</string>
+    <string name="app_fee_kb_currency" translatable="false">ZEC</string>
+    <string name="freshchat_file_provider_authority" translatable="false">guarda.shielded.provider</string>
+
+    <string name="restore_backup_passphrase">ZEC wallet private key</string>
+    <string name="app_top_up_width_other_currency">Top Up Your ZEC Wallet With:</string>
+    <string name="top_up_width_other_currency">Purchase ZEC</string>
+    <string name="app_currency_name" translatable="false">Zcash</string>
+    <string name="et_error_wrong_private_key">Wrong private key</string>
+
+    <string name="sync_service_description">Sync a wallet with a blockchain</string>
+    <string name="sync_push_channel_id">Sync push notification channel ID</string>
+    <string name="sync_push_fallback_title">Sync push notification</string>
+    <string name="sync_push_title">Syncing z-address</string>
+    <string name="sync_push_body">-</string>
+
+    <string-array name="field_type_array_data">
+        <item>T-ADDRESS</item>
+        <item>Z-ADDRESS</item>
+    </string-array>
+
+
     <string name="start_create_wallet">Create wallet</string>
     <string name="start_login_from_backup">Restore wallet</string>
     <string name="title_restore_backup">Restore</string>
@@ -13,17 +36,13 @@
     <string name="restore_backup_json_more_info">More information about JSON-file</string>
     <string name="restore_backup_restore">Restore</string>
     <string name="transaction_history_your_transactions">Your Transactions</string>
-    <string name="restore_backup_passphrase">ETH wallet private key</string>
     <string name="deposit_address_share">Share</string>
-    <string name="app_coin_currency" translatable="false">ETH</string>
     <string name="app_usd_currency">USD</string>
     <string name="app_your_address">Your address</string>
     <string name="app_your_address_alt">Encrypted alternate</string>
     <string name="app_display_your_address">Display Address</string>
     <string name="app_display_your_address_alt">Display Encrypted alternate</string>
     <string name="app_show_qr">Show QR</string>
-    <string name="app_top_up_width_other_currency">Top Up Your ETH Wallet With:</string>
-    <string name="top_up_width_other_currency">Purchase ETH</string>
     <string name="app_transaction_history">Home</string>
     <string name="app_purchase">Exchange</string>
     <string name="app_withdraw">Send</string>
@@ -160,9 +179,7 @@
     <string name="gas" translatable="false">GAS</string>
     <string name="fee" translatable="false">FEE</string>
     <string name="hotline_file_provider_authority" translatable="false">com.example.demoapp.provider</string>
-    <string name="freshchat_file_provider_authority" translatable="false">com.guarda.ethereum.provider</string>
 
-    <string name="app_currency_name" translatable="false">Ethereum</string>
     <string name="logo_wallet" translatable="false">Wallet</string>
 
 <!--    ResyncFragment-->
@@ -225,7 +242,6 @@
     <string name="withdraw_address_not_valid">Wallet address can not be empty</string>
     <string name="withdraw_amount_can_not_be_empty">Amount can not be empty</string>
     <string name="app_about"><b>About Company</b>\n\nFounded in 2017, Guarda is innovation company focused on blockchain technologies. Founded by blockchain enthusiasts, based in EU. We have on board professionals from IT, blockchain and fintech that is key success factor for building exciting blockchain services.</string>
-    <string name="et_error_wrong_private_key">Wrong private key (only 0x, a&#8211;f, 0&#8211;9)</string>
     <string name="et_error_wrong_private_key_or_email">Wrong private key or email</string>
     <string name="et_error_private_key_is_empty">Private key can not be empty</string>
     <string name="et_error_fee_more_than_amount">Fee can not be more than amount to send</string>

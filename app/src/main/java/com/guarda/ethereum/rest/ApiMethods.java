@@ -1,29 +1,15 @@
 package com.guarda.ethereum.rest;
 
 
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import com.guarda.ethereum.BuildConfig;
-import com.guarda.ethereum.models.constants.BchExplorer;
-import com.guarda.ethereum.models.constants.BlockChainInfo;
-import com.guarda.ethereum.models.constants.BtgExplorer;
-import com.guarda.ethereum.models.constants.Callistoexplorer;
 import com.guarda.ethereum.models.constants.Changelly;
-import com.guarda.ethereum.models.constants.Coinify;
 import com.guarda.ethereum.models.constants.Coinmarketcap;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Cryptocompare;
-import com.guarda.ethereum.models.constants.DgbExplorer;
-import com.guarda.ethereum.models.constants.Etcchain;
-import com.guarda.ethereum.models.constants.Etherscan;
-import com.guarda.ethereum.models.constants.KmdExplorer;
-import com.guarda.ethereum.models.constants.LtcExplorer;
-import com.guarda.ethereum.models.constants.QtumExplorer;
-import com.guarda.ethereum.models.constants.SbtcExplorer;
-import com.guarda.ethereum.models.constants.Wemovecoins;
 import com.guarda.ethereum.models.constants.ZecExplorer;
 
 import java.io.IOException;
@@ -45,8 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 import static com.guarda.ethereum.models.constants.Common.NODE_ADDRESS;
-import static com.guarda.ethereum.models.constants.Guarda.GUARDA_ETC_URL;
-import static com.guarda.ethereum.models.constants.Guarda.GUARDA_ETH_URL;
+import static com.guarda.ethereum.models.constants.Const.MAINNET_FLAVOR;
 
 public class ApiMethods {
 
@@ -125,78 +110,6 @@ public class ApiMethods {
         return retrofit.create(BitcoinNodeApi.class);
     }
 
-    static EtcchainApi createEtcchainApi() {
-        String url = new String(Etcchain.ETCCHAIN_BASE_URL);
-        if (Build.VERSION.SDK_INT <= 18)
-            url = url.replace("https://", "http://");
-        return getBaseApi(url).create(EtcchainApi.class);
-    }
-
-    static GastrackerApi createGastrackerApi() {
-        String url = new String("https://api.gastracker.io");
-        if (Build.VERSION.SDK_INT <= 18)
-            url = url.replace("https://", "http://");
-        return getBaseApi(url).create(GastrackerApi.class);
-    }
-
-
-    static EtherScanApi createEtherScanApi() {
-        String url = new String(Etherscan.ETHERSCAN_BASE_URL);
-        if (Build.VERSION.SDK_INT <= 18)
-            url = url.replace("https://", "http://");
-        return getBaseApi(url).create(EtherScanApi.class);
-    }
-
-    static EthPlorerApi createEthplorerService() {
-        String url = new String(Etherscan.ETHPLORER_BASE_URL);
-        if (Build.VERSION.SDK_INT <= 18)
-            url = url.replace("https://", "http://");
-        return getBaseApi(url).create(EthPlorerApi.class);
-    }
-
-    static EthPlorerApi createEthplorerApi() {
-        String url = new String(Etherscan.ETHPLORER_API_URL);
-        if (Build.VERSION.SDK_INT <= 18)
-            url = url.replace("https://", "http://");
-        return getBaseApi(url).create(EthPlorerApi.class);
-    }
-
-    static CallistoExplorerApi createCallistoExplorerApiNew() {
-//        final String credentials = Credentials.basic(Common.BTC_NODE_LOGIN, Common.BTC_NODE_PASS);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-
-                Request.Builder requestBuilder = original.newBuilder()
-                        .addHeader("Content-type", "application/x-www-form-urlencoded");
-//                        .addHeader("Authorization", credentials);
-
-                Request request = requestBuilder.build();
-                return chain.proceed(request);
-            }
-        });
-
-        OkHttpClient client = httpClient
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Callistoexplorer.CALLISTOEXPLORER_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
-        return retrofit.create(CallistoExplorerApi.class);
-    }
-
-    static CallistoExplorerApi createCallistoExplorerApi() {
-        return getBaseApi(Callistoexplorer.CALLISTOEXPLORER_BASE_URL).create(CallistoExplorerApi.class);
-    }
-
     static NodeApi createNodeApi(){
         return getBaseApi(NODE_ADDRESS).create(NodeApi.class);
     }
@@ -209,89 +122,28 @@ public class ApiMethods {
         return getBaseApi(Cryptocompare.CRYPTOCOMPARE_BASE_URL).create(CryptocompareApi.class);
     }
 
-    static WemovecoinsApi createWemovecoinApi() {
-        return getBaseApi(Wemovecoins.WEMOVECOINS_BASE_URL).create(WemovecoinsApi.class);
-    }
-
-    static CoinifyApi createCoinifyApi() {
-        if (BuildConfig.DEBUG) {
-            return getBaseApi(Coinify.SANDBOX_COINIFY_BASE_URL).create(CoinifyApi.class);
-        } else {
-            return getBaseApi(Coinify.COINIFY_BASE_URL).create(CoinifyApi.class);
-        }
-    }
-
-    static CoinifyApi createCoinifyApiAuth(String accessToken) {
-        if (BuildConfig.DEBUG) {
-            return getBaseApiAuth(Coinify.SANDBOX_COINIFY_BASE_URL, accessToken).create(CoinifyApi.class);
-        } else {
-            return getBaseApiAuth(Coinify.COINIFY_BASE_URL, accessToken).create(CoinifyApi.class);
-        }
-    }
-
-    static BlockChainInfoApi createBlockChainInfoApi() {
-        return getBaseApi(BlockChainInfo.BLOCKCHAIN_INFO_BASE_URL).create(BlockChainInfoApi.class);
-    }
-
-    static BtgApi createBtgApi() {
-        return getBaseApi(BtgExplorer.BTG_EXPLORER_BASE_URL).create(BtgApi.class);
-    }
-
-    static BchApi createBchApi() {
-        return getBaseApi(BchExplorer.BCH_EXPLORER_BASE_URL).create(BchApi.class);
-    }
-
-    static QtumApi createQtumApi() {
-        return getBaseApi(QtumExplorer.QTUM_EXPLORER_BASE_URL).create(QtumApi.class);
-    }
-
-    static KmdApi createKmdApi() {
-        return getBaseApi(KmdExplorer.KMD_EXPLORER_BASE_URL).create(KmdApi.class);
-//        return getBaseApi(KmdExplorer.KMD_TEST_EXPLORER_BASE_URL).create(KmdApi.class);
-    }
-
-    static SbtcApi createSbtcApi() {
-        return getBaseApi(SbtcExplorer.SBTC_EXPLORER_BASE_URL).create(SbtcApi.class);
-    }
-
-    static LtcApi createLtcApi() {
-        return getBaseApi(LtcExplorer.LTC_EXPLORER_BASE_URL).create(LtcApi.class);
-    }
-
-    static BtgApiNew createBtgApiNew() {
-        return getBaseApi(BtgExplorer.BTG_EXPLORER_BASE_URL).create(BtgApiNew.class);
-    }
-
-    static InsightApiNew createDgbApiNew() {
-        return getBaseApi(DgbExplorer.DGB_EXPLORER_BASE_URL).create(InsightApiNew.class);
-    }
-
     static InsightApiNew createZecInsightApiNew() {
-        return getBaseApi(ZecExplorer.ZEC_EXPLORER_API).create(InsightApiNew.class);
-    }
-
-    static SbtcApiNew createSbtcApiNew() {
-        return getBaseApi(SbtcExplorer.SBTC_EXPLORER_BASE_URL).create(SbtcApiNew.class);
-    }
-
-    static LtcApiNew createLtcApiNew() {
-        return getBaseApi(LtcExplorer.LTC_EXPLORER_BASE_URL).create(LtcApiNew.class);
+        if (BuildConfig.FLAVOR.equals(MAINNET_FLAVOR)) {
+            return getBaseApi(ZecExplorer.ZEC_EXPLORER_API).create(InsightApiNew.class);
+        } else {
+            return getBaseApi(ZecExplorer.ZEC_EXPLORER_API_TESTNET).create(InsightApiNew.class);
+        }
     }
 
     static ZecApiNew createZecApiNew() {
-        return getBaseRxApi(ZecExplorer.ZEC_EXPLORER_API).create(ZecApiNew.class);
+        if (BuildConfig.FLAVOR.equals(MAINNET_FLAVOR)) {
+            return getBaseRxApi(ZecExplorer.ZEC_EXPLORER_API).create(ZecApiNew.class);
+        } else {
+            return getBaseRxApi(ZecExplorer.ZEC_EXPLORER_API_TESTNET).create(ZecApiNew.class);
+        }
     }
 
     static ZecBookApi createZecBookApi() {
-        return getBaseRxApi(ZecExplorer.ZEC_BOOK_API).create(ZecBookApi.class);
-    }
-
-    static GuardaEthApi createGuardaEthApi() {
-        return getBaseApi(GUARDA_ETH_URL).create(GuardaEthApi.class);
-    }
-
-    static GuardaEtcApi createGuardaEtcApi() {
-        return getBaseApi(GUARDA_ETC_URL).create(GuardaEtcApi.class);
+        if (BuildConfig.FLAVOR.equals(MAINNET_FLAVOR)) {
+            return getBaseRxApi(ZecExplorer.ZEC_BOOK_API).create(ZecBookApi.class);
+        } else {
+            return getBaseRxApi(ZecExplorer.ZEC_BOOK_API_TESTNET).create(ZecBookApi.class);
+        }
     }
 
     private static Retrofit getBaseApi(String baseUrl) {

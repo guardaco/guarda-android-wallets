@@ -22,6 +22,8 @@ import butterknife.OnClick;
 import segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl;
 import timber.log.Timber;
 
+import static com.guarda.ethereum.models.constants.Const.MAINNET_FLAVOR;
+
 public class DepositFragment extends BaseFragment {
 
     @BindView(R.id.segmented_control)
@@ -59,7 +61,7 @@ public class DepositFragment extends BaseFragment {
             transparent();
         }
 
-        if (BuildConfig.FLAVOR == "zec") {
+        if (BuildConfig.FLAVOR.equals(MAINNET_FLAVOR)) {
             segmented_control.setVisibility(View.VISIBLE);
             segmented_control
                     .addOnSegmentClickListener(

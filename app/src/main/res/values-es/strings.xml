@@ -1,16 +1,17 @@
 <resources>
+    <string name="restore_backup_passphrase">Clave privada del monedero ZEC</string>
+    <string name="app_top_up_width_other_currency">Recarga tu monedero ZEC con</string>
+    <string name="top_up_width_other_currency">Recarga tu monedero ZEC con</string>
+    <string name="et_error_wrong_private_key">Llave privada incorrecta</string>
     <string name="start_create_wallet">Crear un monedero</string>
     <string name="start_login_from_backup">Inicia la sesión con tu clave privada</string>
     <string name="title_restore_backup">Recuperar</string>
     <string name="restore_backup_enter_backup_passphrase">Introduzca la clave privada</string>
     <string name="restore_backup_restore">Recuperar</string>
     <string name="transaction_history_your_transactions">Tus transacciones</string>
-    <string name="restore_backup_passphrase">Clave privada del monedero ETH</string>
     <string name="app_usd_currency">USD</string>
     <string name="app_your_address">Tu dirección</string>
     <string name="app_show_qr">Mostrar Qr</string>
-    <string name="app_top_up_width_other_currency">Recarga tu monedero ETH con:</string>
-    <string name="top_up_width_other_currency">Recarga tu monedero ETH con:</string>
     <string name="app_transaction_history">Inicio</string>
     <string name="app_purchase">Intercambio</string>
     <string name="app_withdraw">Enviar</string>
@@ -124,7 +125,6 @@
     <string name="withdraw_address_not_valid">La dirección de la billetera no puede estar vacía</string>
     <string name="withdraw_amount_can_not_be_empty">La cantidad no puede estar vacía</string>
     <string name="app_about"><b>About Company</b>\n\nFundada en 2017, Guarda es una empresa de innovación enfocada en las tecnologías de bloques. Fundada por entusiastas de blockchain de Europa. Tenemos a bordo profesionales de TI, blockchain y fintech que es factor clave de éxito para la construcción de emocionantes servicios blockchain.</string>
-    <string name="et_error_wrong_private_key">Llave privada incorrecta</string>
     <string name="et_error_private_key_is_empty">La clave privada no puede estar vacía</string>
     <string name="et_error_fee_more_than_amount">La tarifa no puede ser más que la cantidad a enviar</string>
     <string name="et_error_fee_more_than">Fee can not be more than current</string>

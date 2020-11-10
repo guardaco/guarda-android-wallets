@@ -14,7 +14,6 @@ import com.facebook.stetho.Stetho;
 import com.freshchat.consumer.sdk.Freshchat;
 import com.freshchat.consumer.sdk.FreshchatConfig;
 import com.guarda.ethereum.dependencies.AppModule;
-import com.guarda.ethereum.managers.ShapeshiftManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.constants.Const;
 import com.guarda.ethereum.models.constants.Extras;
@@ -67,26 +66,7 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
         sharedManager = new SharedManager();
 
         String packageName = getApplicationContext().getPackageName();
-        Log.d("flint", "GuardaApp.onCreate()... packageName: " + packageName);
-        if ("com.guarda.dct".equals(packageName)) {
-            SharedManager.flag_create_new_wallet_screen = true;
-        } else if ("com.guarda.etc".equals(packageName)) {
-            SharedManager.flag_etc_eth_private_key_showing_fix = true;
-        } else if ("com.guarda.ethereum".equals(packageName)) {
-            SharedManager.flag_etc_eth_private_key_showing_fix = true;
-        } else if ("com.guarda.clo".equals(packageName)) {
-            SharedManager.flag_etc_eth_private_key_showing_fix = true;
-        } else if ("com.guarda.bts".equals(packageName)) {
-            SharedManager.flag_create_new_wallet_screen = true;
-        }
-        // [initially both are disabled. check and enable function is placed in CurrencyListHolder.castResponseCurrencyToCryptoItem]
-        SharedManager.flag_disable_buy_menu = false; // !!! since we have 3 exchange services, make buy menu initially enabled
-        //SharedManager.flag_disable_purchase_menu = true;
-        SharedManager.flag_disable_purchase_menu = false; // !!! since we have two exchange services, changelly's check for exchange activity was disabled
 
-        if ("com.guarda.clo".equals(packageName)) {
-            SharedManager.flag_disable_buy_menu = true;
-        }
         try {
             /////////////////
             // chinese crutch: force java lazy initialization of SecurePreferences, it's needed for old versions of android
@@ -100,25 +80,11 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
             //for devices that are not support SecurePreferences
             sharedManager.setIsSecureStorageSupported(false);
         }
-        if ("com.guarda.btc".equals(packageName) ||
-                "com.guarda.bch".equals(packageName) ||
-                "com.guarda.btg".equals(packageName) ||
-                "com.guarda.ltc".equals(packageName) ||
-                "com.guarda.sbtc".equals(packageName) ||
-                "com.guarda.dgb".equals(packageName) ||
-                "com.guarda.kmd".equals(packageName) ||
-                "com.guarda.bts".equals(packageName) ||
-                "com.guarda.qtum".equals(packageName)) {
-            sharedManager.setHasWifXprvKeys(true);
-        }
-        //init ndk lib for ZEC
-        if (BuildConfig.FLAVOR == "zec") {
-            RustAPI.init(getApplicationContext());
-            if (BuildConfig.DEBUG)
-                Stetho.initializeWithDefaults(this);
-        }
 
-        ShapeshiftManager.getInstance().updateSupportedCoinsList(null);
+        //init ndk lib for ZEC
+        RustAPI.init(getApplicationContext());
+        if (BuildConfig.DEBUG)
+            Stetho.initializeWithDefaults(this);
 
         FreshchatConfig freshchatConfig = new FreshchatConfig(Const.FRESHCHAT_APP_ID, Const.FRESHCHAT_APP_KEY);
         freshchatConfig.setGallerySelectionEnabled(true);

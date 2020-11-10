@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="restore_backup_passphrase">Password</string>
-    <string name="app_top_up_width_other_currency">Ricarica con un\'altra valuta</string>
-    <string name="top_up_width_other_currency">Ricarica con un\'altra valuta</string>
-    <string name="et_error_wrong_private_key">Chiave privata errata</string>
-</resources>

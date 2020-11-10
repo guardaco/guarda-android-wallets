@@ -1,8 +1,8 @@
 package com.guarda.ethereum.rest;
 
 
+import com.guarda.ethereum.models.constants.items.ZecTxResponse;
 import com.guarda.ethereum.models.items.BlockBookBlock;
-import com.guarda.ethereum.models.items.ZecTxResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

@@ -36,21 +36,18 @@ import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
 import com.guarda.ethereum.rxcall.CallCleanDbLogOut;
+import com.guarda.ethereum.sapling.SyncManager;
+import com.guarda.ethereum.sapling.SyncService;
+import com.guarda.ethereum.sapling.db.DbManager;
 import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.views.activity.base.TrackOnStopActivity;
 import com.guarda.ethereum.views.fragments.BackupFragment;
 import com.guarda.ethereum.views.fragments.DepositFragment;
-import com.guarda.ethereum.views.fragments.DepositFragment_decent;
-import com.guarda.ethereum.views.fragments.DisabledFragment;
-import com.guarda.ethereum.views.fragments.PurchaseServiceFragment;
 import com.guarda.ethereum.views.fragments.SettingsFragment;
 import com.guarda.ethereum.views.fragments.TransactionHistoryFragment;
 import com.guarda.ethereum.views.fragments.UserWalletFragment;
 import com.guarda.ethereum.views.fragments.WithdrawFragment;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
-import com.guarda.zcash.sapling.SyncManager;
-import com.guarda.zcash.sapling.SyncService;
-import com.guarda.zcash.sapling.db.DbManager;
 
 import java.util.List;
 
@@ -123,9 +120,6 @@ public class MainActivity extends TrackOnStopActivity {
             switch (navigateTo) {
                 case Extras.GO_TO_TRANS_HISTORY:
                     goToTransactionHistory();
-                    break;
-                case Extras.GO_TO_PURCHASE:
-                    goToPurchaseFragment();
                     break;
             }
         }
@@ -200,12 +194,6 @@ public class MainActivity extends TrackOnStopActivity {
         navigateToFragment(fragment);
     }
 
-    private void goToPurchaseFragment() {
-        PurchaseServiceFragment fragment = new PurchaseServiceFragment();
-        setToolBarTitle(getString(R.string.app_purchase_service));
-        navigateToFragment(fragment);
-    }
-
     public void setupSideMenu() {
         mNavigationView.setNavigationItemSelectedListener((menuItem) -> {
                 mDrawerLayout.closeDrawers();
@@ -222,14 +210,9 @@ public class MainActivity extends TrackOnStopActivity {
                         }
                         break;
                     case R.id.menu_purchase:
-                        if (SharedManager.flag_disable_purchase_menu) {
+                        if (!(currentFragment instanceof ExchangeFragment)) {
                             setToolBarTitle(R.string.title_purchase);
-                            fragment = new DisabledFragment();
-                        } else {
-                            if (!(currentFragment instanceof ExchangeFragment)) {
-                                setToolBarTitle(R.string.title_purchase);
-                                fragment = new ExchangeFragment();
-                            }
+                            fragment = new ExchangeFragment();
                         }
                         break;
                     case R.id.menu_withdraw:
@@ -241,10 +224,7 @@ public class MainActivity extends TrackOnStopActivity {
                     case R.id.menu_deposit:
                         if (!(currentFragment instanceof DepositFragment)) {
                             setToolBarTitle(R.string.title_deposit);
-                            if ("com.guarda.dct".equals(packageName))
-                                fragment = new DepositFragment_decent();
-                            else
-                                fragment = new DepositFragment();
+                            fragment = new DepositFragment();
                         }
                         break;
                     case R.id.menu_backup:

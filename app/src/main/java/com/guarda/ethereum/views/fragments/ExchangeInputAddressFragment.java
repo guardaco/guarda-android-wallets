@@ -17,16 +17,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.Callback2;
-import com.guarda.ethereum.managers.ChangellyNetworkManager;
 import com.guarda.ethereum.managers.ChangenowApi;
 import com.guarda.ethereum.managers.ChangenowManager;
-import com.guarda.ethereum.managers.ShapeshiftApi;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Common;
 import com.guarda.ethereum.models.constants.Extras;
 import com.guarda.ethereum.models.constants.RequestCode;
-import com.guarda.ethereum.models.items.ResponseGenerateAddress;
-import com.guarda.ethereum.rest.ApiMethods;
 import com.guarda.ethereum.screens.exchange.first.ExchangeFragment;
 import com.guarda.ethereum.utils.svg.GlideApp;
 import com.guarda.ethereum.utils.svg.SvgSoftwareLayerSetter;
@@ -168,49 +164,7 @@ public class ExchangeInputAddressFragment extends BaseFragment {
         } else {
             showProgress(getString(R.string.exchange_progress_generate_address));
 
-            if ("shapeshift".equalsIgnoreCase(selectedExchange)) {
-                String shapeshiftDestAddress = address;
-                if (extraId != null)
-                    shapeshiftDestAddress += "?dt="+extraId;
-                ShapeshiftApi.generateAddress(coinFrom.symbol, coinTo.symbol, shapeshiftDestAddress, walletManager.getWalletFriendlyAddress(), new Callback2<String, ShapeshiftApi.GenerateAddressRespModel>() {
-                    @Override
-                    public void onResponse(final String status, final ShapeshiftApi.GenerateAddressRespModel resp) {
-                        try {
-                            getActivity().runOnUiThread(() -> {
-                                if ("ok".equals(status)) {
-                                    depositAddress = resp.depositAddress;
-                                    openAmountToSendActivity(depositAddress);
-                                } else {
-                                    Toast.makeText(getContext(), getString(R.string.exchange_error_generate_address), Toast.LENGTH_LONG).show();
-                                }
-                                closeProgress();
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            } else if ("changelly".equalsIgnoreCase(selectedExchange)) {
-                ChangellyNetworkManager.generateAddress(coinFrom.symbol.toLowerCase(), coinTo.symbol.toLowerCase(), address, extraId, new ApiMethods.RequestListener() {
-                    @Override
-                    public void onSuccess(Object response) {
-                        ResponseGenerateAddress addressItem = (ResponseGenerateAddress) response;
-                        if (addressItem.getAddress() != null && addressItem.getAddress().getAddress() != null) {
-                            depositAddress = addressItem.getAddress().getAddress();
-                            openAmountToSendActivity(depositAddress);
-                        } else {
-                            Toast.makeText(getContext(), getString(R.string.exchange_error_generate_address), Toast.LENGTH_LONG).show();
-                        }
-                        closeProgress();
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
-                        Toast.makeText(getContext(), getString(R.string.exchange_error_generate_address), Toast.LENGTH_LONG).show();
-                        closeProgress();
-                    }
-                });
-            } else if ("changenow".equalsIgnoreCase(selectedExchange)) {
+            if ("changenow".equalsIgnoreCase(selectedExchange)) {
                 ChangenowApi.generateAddress(coinFrom.symbol, coinTo.symbol, "", address, extraId, new Callback2<String, ChangenowApi.GenerateAddressRespModel>() {
                     @Override
                     public void onResponse(final String status, final ChangenowApi.GenerateAddressRespModel resp) {

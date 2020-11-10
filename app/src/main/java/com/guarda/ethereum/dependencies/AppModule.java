@@ -14,12 +14,12 @@ import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.TransactionsManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.repository.RawResourceRepository;
+import com.guarda.ethereum.sapling.SyncManager;
+import com.guarda.ethereum.sapling.SyncService;
+import com.guarda.ethereum.sapling.api.ProtoApi;
+import com.guarda.ethereum.sapling.db.DbManager;
 import com.guarda.ethereum.utils.GsonUtils;
 import com.guarda.ethereum.utils.KeyStoreUtils;
-import com.guarda.zcash.sapling.SyncManager;
-import com.guarda.zcash.sapling.SyncService;
-import com.guarda.zcash.sapling.api.ProtoApi;
-import com.guarda.zcash.sapling.db.DbManager;
 
 import javax.inject.Singleton;
 

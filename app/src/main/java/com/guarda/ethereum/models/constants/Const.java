@@ -19,6 +19,9 @@ public interface Const {
     byte[] ZEC_MAINNET_ADDR_PREFIX = {(byte) 0x1c, (byte) 0xb8};
     byte[] ZEC_TESTNET_ADDR_PREFIX = {(byte) 0x1d, (byte) 0x25};
 
+    String MAINNET_FLAVOR = "zec";
+    String TESTNET_FLAVOR = "zecTestnet";
+
     //Exchange
     Map<String, String> COIN_TO_RETURN_ADDRESS = new HashMap<String, String>() {{
         put("ZRX", "");

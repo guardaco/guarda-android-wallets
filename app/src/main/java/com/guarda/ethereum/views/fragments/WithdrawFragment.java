@@ -3,7 +3,6 @@ package com.guarda.ethereum.views.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -16,7 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
-import com.guarda.ethereum.BuildConfig;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.RawNodeManager;
@@ -203,8 +203,6 @@ public class WithdrawFragment extends BaseFragment{
     }
 
     private void initAddressToggle() {
-        if (BuildConfig.FLAVOR != "zec") return;
-
         cl_address_toggle.setVisibility(View.VISIBLE);
         segmented_control.setVisibility(View.VISIBLE);
         segmented_control

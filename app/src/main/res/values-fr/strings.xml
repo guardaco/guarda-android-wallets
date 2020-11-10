@@ -1,18 +1,19 @@
 <resources>
+    <string name="restore_backup_passphrase">Phrase secrète</string>
+    <string name="app_top_up_width_other_currency">Recharger avec une autre devise</string>
+    <string name="top_up_width_other_currency">Recharger avec une autre devise</string>
+    <string name="et_error_wrong_private_key">Clé privée n’est pas correcte</string>
        <string name="start_create_wallet">Créer le portefeuille</string>
        <string name="start_login_from_backup">Se connecter de backup</string>
        <string name="title_restore_backup">Restaurer</string>
        <string name="restore_backup_enter_backup_passphrase">Entrer la phrase secrète backup</string>
        <string name="restore_backup_restore">Restaurer</string>
        <string name="transaction_history_your_transactions">Vos transactions</string>
-       <string name="restore_backup_passphrase">Phrase secrète</string>
        <string name="app_usd_currency">USD</string>
        <string name="app_your_address">Votre adresse</string>
        <string name="wallet_your_address">@string/app_your_address</string>
        <string name="app_copy">Copier</string>
        <string name="app_show_qr">Montrer le QR-code</string>
-       <string name="app_top_up_width_other_currency">Recharger avec une autre devise</string>
-       <string name="top_up_width_other_currency">Recharger avec une autre devise</string>
        <string name="app_transaction_history">Accueil</string>
        <string name="app_purchase">Échanger</string>
        <string name="app_withdraw">Envoyer</string>
@@ -132,7 +133,6 @@
     <string name="withdraw_amount_can_not_be_empty">Somme ne peut pas être vide</string>
 
     <string name="app_about"><b>About Company</b>\n\nFondée en 2017, Guarda est une companie d\’innovation qui travaille avec les technologies de blockchain. La companie est fondée par les passionnés de blockchain et se trouve dans l\’UE. Nous avons des professionnels de la technologie de l\’information, de la blockchain et de la technologie financière, et c’est la clé principale pour la création des services utiles.</string>
-    <string name="et_error_wrong_private_key">Clé privée n’est pas correcte</string>
     <string name="et_error_private_key_is_empty">Clé privée ne peut pas être vide</string>
     <string name="et_error_fee_more_than_amount">Frais de commission ne peut pas être plus grand que la somme</string>
     <string name="et_error_fee_more_than">Fee can not be more than current</string>

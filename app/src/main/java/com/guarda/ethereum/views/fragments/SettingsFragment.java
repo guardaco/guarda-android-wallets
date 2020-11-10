@@ -22,12 +22,12 @@ import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.models.constants.RequestCode;
+import com.guarda.ethereum.sapling.SyncManager;
+import com.guarda.ethereum.sapling.db.DbManager;
 import com.guarda.ethereum.utils.IntentUtil;
 import com.guarda.ethereum.views.activity.ConfirmPinCodeActivity;
 import com.guarda.ethereum.views.activity.CreateAccessCodeActivity;
 import com.guarda.ethereum.views.fragments.base.BaseFragment;
-import com.guarda.zcash.sapling.SyncManager;
-import com.guarda.zcash.sapling.db.DbManager;
 
 import javax.inject.Inject;
 

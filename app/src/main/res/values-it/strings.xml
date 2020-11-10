@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="restore_backup_passphrase">Password</string>
+    <string name="app_top_up_width_other_currency">Ricarica con un\'altra valuta</string>
+    <string name="top_up_width_other_currency">Ricarica con un\'altra valuta</string>
+    <string name="et_error_wrong_private_key">Chiave privata errata</string>
        <string name="start_create_wallet">Crea portafoglio</string>
        <string name="start_login_from_backup">Login da backup</string>
        <string name="title_restore_backup">Ripristina</string>
        <string name="restore_backup_enter_backup_passphrase">Inserisci password di backup</string>
        <string name="restore_backup_restore">Ripristina</string>
        <string name="transaction_history_your_transactions">Le tue  transazioni</string>
-       <string name="restore_backup_passphrase">Chiave privata per portafoglio ETH</string>
        <string name="app_usd_currency">USD</string>
        <string name="app_your_address">Il tuo indirizzo</string>
        <string name="wallet_your_address">@string/app_your_address</string>
        <string name="app_copy">Copia</string>
        <string name="app_show_qr">Visualizza QR</string>
-       <string name="app_top_up_width_other_currency">Ricarica con un\'altra valuta</string>
-       <string name="top_up_width_other_currency">Ricarica con un\'altra valuta</string>
        <string name="app_transaction_history">Casa</string>
        <string name="app_purchase">Acquista</string>
        <string name="app_withdraw">Preleva</string>
@@ -132,7 +133,6 @@
     <string name="withdraw_address_not_valid">Indirizzo del portafoglio non può essere vuoto</string>
     <string name="withdraw_amount_can_not_be_empty">Import non può essere vuoto</string>
     <string name="app_about"><b>Azienda</b>\n\nL\'azienda Guarda con sede nell\'UE è una realtà innovativa specializzata nelle tecnologie blockchain. È stata fondata nell\'anno 2017 da un gruppo di entusiasti di blockchain. A bordo abbiamo professionisti nei settori IT, blockchain e fintech che sono il fattore chiave per poter realizzare con successo servizi blockchain eccezionali.</string>
-    <string name="et_error_wrong_private_key">Chiave privata errata</string>
     <string name="et_error_private_key_is_empty">La chiave privata non può essere vuota</string>
     <string name="et_error_fee_more_than_amount">La commissione non può eccedere l\'importo da inviare</string>
     <string name="et_error_fee_more_than">La commissione non può eccedere quella corrente</string>

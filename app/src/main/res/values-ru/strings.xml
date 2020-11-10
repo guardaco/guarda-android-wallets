@@ -1,11 +1,14 @@
 <resources>
+    <string name="restore_backup_passphrase">Приватный ключ ZEC кошелька</string>
+    <string name="app_top_up_width_other_currency">Пополните свой ZEC кошелек с помощью:</string>
+    <string name="top_up_width_other_currency">Купить ZEC</string>
+    <string name="et_error_wrong_private_key">Недействительный приватный ключ</string>
     <string name="start_create_wallet">Создать кошелек</string>
     <string name="start_login_from_backup">Восстановить кошелек</string>
     <string name="title_restore_backup">Восстановление</string>
     <string name="restore_backup_enter_backup_passphrase">Ввести приватный ключ</string>
     <string name="restore_backup_restore">Восстановить</string>
     <string name="transaction_history_your_transactions">Ваши транзакции</string>
-    <string name="restore_backup_passphrase">Приватный ключ ETH кошелька</string>
     <string name="app_usd_currency">USD</string>
     <string name="app_your_address">Ваш адрес</string>
     <string name="app_your_address_alt">Альтернативный адрес</string>
@@ -13,8 +16,6 @@
     <string name="app_display_your_address_alt">Показать Альтернативный адрес</string>
     <string name="app_copy">Копировать</string>
     <string name="app_show_qr">Показать QR-код</string>
-    <string name="app_top_up_width_other_currency">Пополните свой ETH кошелек с помощью:</string>
-    <string name="top_up_width_other_currency">Купить ETH</string>
     <string name="app_purchase">Обмен</string>
     <string name="app_withdraw">Отправить</string>
     <string name="app_deposit">Пополнить</string>
@@ -157,7 +158,6 @@
     <string name="withdraw_amount_can_not_be_empty">Сумма не может быть пустой</string>
 
     <string name="app_about"><b>About Company</b>\n\nFounded in 2017, Guarda is innovation company focused on blockchain technologies. Founded by blockchain enthusiasts, based in EU. We have on board professionals from IT, blockchain and fintech that is key success factor for building exciting blockchain services.</string>
-    <string name="et_error_wrong_private_key">Недействительный приватный ключ (только 0x, a&#8211;f и 0&#8211;9)</string>
     <string name="et_error_private_key_is_empty">Поле Приватный ключ не может быть пустым</string>
     <string name="et_error_fee_more_than_amount">Поле \"комиссия\" не может превышать сумму к отправке</string>
     <string name="et_error_fee_more_than">Поле \"комиссия\" не может превышать баланс</string>

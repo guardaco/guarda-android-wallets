@@ -16,10 +16,10 @@ import com.guarda.ethereum.managers.EthereumNetworkManager;
 import com.guarda.ethereum.managers.SharedManager;
 import com.guarda.ethereum.managers.WalletManager;
 import com.guarda.ethereum.models.constants.Extras;
+import com.guarda.ethereum.sapling.SyncManager;
+import com.guarda.ethereum.sapling.api.ProtoApi;
 import com.guarda.ethereum.utils.Coders;
 import com.guarda.ethereum.views.activity.base.SimpleTrackOnStopActivity;
-import com.guarda.zcash.sapling.SyncManager;
-import com.guarda.zcash.sapling.api.ProtoApi;
 
 import javax.inject.Inject;
 

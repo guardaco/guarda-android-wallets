@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -38,13 +39,22 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.guarda.ethereum.provider"
+            android:authorities="guarda.shielded.provider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/freshchat_file_provider_paths" />
         </provider>
+
+        <receiver android:name="com.guarda.ethereum.sapling.SyncBroadcastReceiver"/>
+
+        <service
+            android:name="com.guarda.ethereum.sapling.SyncService"
+            android:enabled="true"
+            android:exported="false"
+            android:description="@string/sync_service_description" />
 
         <activity
             android:name=".views.activity.AuthorizationTypeActivity"

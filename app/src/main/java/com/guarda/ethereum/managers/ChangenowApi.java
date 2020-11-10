@@ -131,7 +131,6 @@ public class ChangenowApi {
                 try {
                     Log.d("flint", "ChangenowApi.generateAddress... resp: " + resp);
                     if ("ok".equals(status)) {
-                        HashMap<String, ShapeshiftApi.SupportedCoinModel> res = new HashMap<>();
                         JSONObject obj = new JSONObject(resp);
                         ChangenowApi.GenerateAddressRespModel respModel = new ChangenowApi.GenerateAddressRespModel();
                         respModel.depositAddress = obj.getString("payinAddress");

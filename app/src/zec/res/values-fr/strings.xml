@@ -1,6 +1,0 @@
-<resources>
-    <string name="restore_backup_passphrase">Phrase secrète</string>
-    <string name="app_top_up_width_other_currency">Recharger avec une autre devise</string>
-    <string name="top_up_width_other_currency">Recharger avec une autre devise</string>
-    <string name="et_error_wrong_private_key">Clé privée n’est pas correcte</string>
-</resources>
