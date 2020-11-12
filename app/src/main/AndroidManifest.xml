@@ -94,9 +94,6 @@
         <activity
             android:name="com.guarda.ethereum.views.activity.SendingCurrencyActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.guarda.ethereum.views.activity.SendingTokensActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.guarda.ethereum.views.activity.CongratsActivity"
@@ -131,57 +128,6 @@
 
         <activity
             android:name="com.guarda.ethereum.views.activity.TransactionDetailsActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.GenerateAddressActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.EnterNameToPurchaseActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.EnterEmailToPurchaseActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.EnterPhoneToPurchaseActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.guarda.ethereum.views.activity.PurchaseWemovecoinsActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.ConfirmCoinifyActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.CoinifyKYCExplainActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.CoinifyKYCActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.ReceiptCoinifyActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.AmountCoinifyActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.BankAccCoinifyActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.SellConfirmCoinifyActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.guarda.ethereum.views.activity.AddrBtcCoinifyActivity"
             android:screenOrientation="portrait" />
 
         <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />

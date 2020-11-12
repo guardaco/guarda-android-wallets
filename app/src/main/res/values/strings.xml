@@ -3,7 +3,6 @@
     <string name="app_name" translatable="false">Guarda Shielded</string>
     <string name="app_coin_currency" translatable="false">ZEC</string>
     <string name="app_fee_kb_currency" translatable="false">ZEC</string>
-    <string name="freshchat_file_provider_authority" translatable="false">guarda.shielded.provider</string>
 
     <string name="restore_backup_passphrase">ZEC wallet private key</string>
     <string name="app_top_up_width_other_currency">Top Up Your ZEC Wallet With:</string>
