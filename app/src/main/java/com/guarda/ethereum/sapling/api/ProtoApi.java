@@ -39,7 +39,7 @@ public class ProtoApi {
             host = "lightwalletd.testnet.electriccoin.co";
         }
         int port = 9067;
-        channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+        channel = ManagedChannelBuilder.forAddress(host, port).useTransportSecurity().build();
     }
 
     public Boolean callBlockRangeAndSave(long fromBlock, long toBlock) {
