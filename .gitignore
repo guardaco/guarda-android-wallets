@@ -17,5 +17,6 @@ google-services.json
 /rust-lib/.cxx
 /rust-lib-release/build
 /rust-lib-release-testnet/build
+/zec-rust-lib/build
 
 /local

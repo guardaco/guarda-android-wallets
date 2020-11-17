@@ -1,2 +1,3 @@
+include ':zec-rust-lib'
 include ':rust-lib-release-testnet'
 include ':app', ':rust-lib-release'

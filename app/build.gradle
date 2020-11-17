@@ -194,6 +194,8 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.1'
 
     zecImplementation project(path: ':rust-lib-release')
+    zecImplementation project(path: ':zec-rust-lib')
+    zecTestnetImplementation project(path: ':zec-rust-lib')
     zecTestnetImplementation project(path: ':rust-lib-release-testnet')
     //lifecycle
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'

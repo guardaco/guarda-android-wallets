@@ -15,6 +15,10 @@ import java.util.Arrays;
 
 import timber.log.Timber;
 import work.samosudov.rustlib.RustAPI;
+import work.samosudov.zecrustlib.ZecLibRustApi;
+
+import static com.guarda.ethereum.crypto.Utils.bytesToHex;
+import static com.guarda.ethereum.crypto.Utils.reverseByteArray;
 
 public class ZcashTransactionHelper {
 
@@ -58,11 +62,9 @@ public class ZcashTransactionHelper {
         byte[] zkproof = pacv.proof;
         byte[] cv = pacv.cv;
 
-        String cmhex = RustAPI.cm(
-                Utils.bytesToHex(dToAddress),
-                Utils.bytesToHex(pkdToAddress),
-                value.toString(),
-                snp.getRcmStr());
+        byte[] plainTextBytes = snp.toBytesV2();
+        byte[] cmRseedBytes = ZecLibRustApi.cmRseed(privKey.getIvk(), plainTextBytes);
+        String cmhex = bytesToHex(reverseByteArray(cmRseedBytes));
         Timber.d("getUotputs cmhex=%s", cmhex);
         byte[] cmrust = Utils.reverseByteArray(Utils.hexToBytes(cmhex));
 

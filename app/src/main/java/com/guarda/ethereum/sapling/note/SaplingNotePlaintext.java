@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import timber.log.Timber;
 import work.samosudov.rustlib.RustAPI;
+import work.samosudov.zecrustlib.ZecLibRustApi;
 
 import static com.guarda.ethereum.crypto.Utils.bytesToHex;
 import static com.guarda.ethereum.crypto.Utils.hexToBytes;
@@ -39,6 +40,7 @@ public class SaplingNotePlaintext {
     private static final int ENC_CIPHERTEXT_SIZE = ZC_SAPLING_ENCPLAINTEXT_SIZE + 16;
     private static final int COMPACT_NOTE_SIZE = 1 + 11 + 8 + 32; // version + diversifier + value + rcv
     private static final byte[] T01 = {(byte) 0x01};
+    private static final byte[] T02 = {(byte) 0x02};
 
     public SaplingNotePlaintext(byte[] d, byte[] vbytes, byte[] rcmbytes, byte[] memobytes, String rHex) {
         this.d = d;
@@ -64,7 +66,8 @@ public class SaplingNotePlaintext {
      */
 
     public static SaplingNotePlaintext fromBytes(byte[] fromByteArray) throws ZCashException {
-        if (fromByteArray[0] != 0x01) throw new ZCashException("SaplingNotePlaintext first byte is not 0x01 = " + fromByteArray[0]);
+        if (fromByteArray[0] != 0x01 && fromByteArray[0] != 0x02)
+            throw new ZCashException("SaplingNotePlaintext first byte is not 0x01 or 0x02 = " + fromByteArray[0]);
 
         byte[] d = new byte[11];
         byte[] vbytes = new byte[8];
@@ -106,7 +109,8 @@ public class SaplingNotePlaintext {
         Timber.d("decrypt: ciphertextHex=%s ivkHex=%s epkHex=%s cmuHex=%s", ciphertextHex, ivkHex, epkHex, cmuHex);
         byte[] pt = attemptSaplingEncDecryption(ciphertextHex, ivkHex, epkHex);
         Timber.d("decrypt pt=%s, %s", Arrays.toString(pt), pt.length);
-        if (pt.length != ZC_SAPLING_ENCPLAINTEXT_SIZE && pt.length != COMPACT_NOTE_SIZE) throw new ZCashException("SaplingNotePlaintext.decrypt() pt incorrect, length=" + pt.length);
+        if (pt.length != ZC_SAPLING_ENCPLAINTEXT_SIZE && pt.length != COMPACT_NOTE_SIZE)
+            throw new ZCashException("SaplingNotePlaintext.decrypt() pt incorrect, length=" + pt.length);
 
         SaplingNotePlaintext snp = fromBytes(pt);
         Timber.d("SaplingNotePlaintext decrypt snp= " + snp);
@@ -116,7 +120,17 @@ public class SaplingNotePlaintext {
         String pkdHex = RustAPI.ivkToPdk(ivkHex, dHex);
         snp.setPkdbytes(reverseByteArray(Utils.hexToBytes(pkdHex)));
         Timber.d("snp.decrypt() pkdHex=%s", pkdHex);
-        String cmhexExpected = RustAPI.cm(dHex, pkdHex, String.valueOf(TypeConvert.bytesToLong(snp.vbytes)), bytesToHex(snp.rcmbytes));
+
+        String cmhexExpected;
+        if (pt[0] == 0x01) {
+            cmhexExpected = RustAPI.cm(dHex, pkdHex, String.valueOf(TypeConvert.bytesToLong(snp.vbytes)), bytesToHex(snp.rcmbytes));
+        } else if (pt[0] == 0x02) {
+            byte[] cmRseedBytes = ZecLibRustApi.cmRseed(saplingKey.getIvk(), pt);
+            cmhexExpected = bytesToHex(reverseByteArray(cmRseedBytes));
+        } else {
+            throw new ZCashException("SaplingNotePlaintext: plaintext start byte is not 0x01 or 0x02");
+        }
+
         Timber.d("snp.decrypt() cmuHex=%s", cmuHex);
         Timber.d("snp.decrypt() cmhexExpected=%s", cmhexExpected);
         return cmuHex.equals(cmhexExpected) ? snp : null;
@@ -199,6 +213,17 @@ public class SaplingNotePlaintext {
     byte[] toBytes() {
         byte[] bytes = new byte[0];
         byte[] leadingByte = T01;
+        String hexValue = bytesToHex(vbytes);
+        hexValue = revHex(hexValue);
+        String hexR = bytesToHex(rcmbytes);
+        hexR = revHex(hexR);
+        byte[] fullMemoBytes = Bytes.concat(memobytes, new byte[512 - memobytes.length]);
+        return Bytes.concat(bytes, leadingByte, d, hexToBytes(hexValue), hexToBytes(hexR), fullMemoBytes);
+    }
+
+    public byte[] toBytesV2() {
+        byte[] bytes = new byte[0];
+        byte[] leadingByte = T02;
         String hexValue = bytesToHex(vbytes);
         hexValue = revHex(hexValue);
         String hexR = bytesToHex(rcmbytes);
