@@ -221,15 +221,14 @@ public class SaplingNotePlaintext {
         return Bytes.concat(bytes, leadingByte, d, hexToBytes(hexValue), hexToBytes(hexR), fullMemoBytes);
     }
 
-    public byte[] toBytesV2() {
+    /**
+     * Returns compact form of the Note plaintext (52 bytes without memo bytes)
+     */
+    public byte[] toBytesCompactV2() {
         byte[] bytes = new byte[0];
-        byte[] leadingByte = T02;
-        String hexValue = bytesToHex(vbytes);
-        hexValue = revHex(hexValue);
-        String hexR = bytesToHex(rcmbytes);
-        hexR = revHex(hexR);
-        byte[] fullMemoBytes = Bytes.concat(memobytes, new byte[512 - memobytes.length]);
-        return Bytes.concat(bytes, leadingByte, d, hexToBytes(hexValue), hexToBytes(hexR), fullMemoBytes);
+        byte[] valueBytes = vbytes.clone();
+        byte[] rcmBytes = rcmbytes.clone();
+        return Bytes.concat(bytes, T02, d, reverseByteArray(valueBytes), reverseByteArray(rcmBytes));
     }
 
     @Override

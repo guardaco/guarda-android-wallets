@@ -1,7 +1,7 @@
 package com.guarda.ethereum.sapling.note;
 
-import com.guarda.ethereum.crypto.Utils;
 import com.guarda.ethereum.globals.TypeConvert;
+import com.guarda.ethereum.sapling.key.SaplingCustomFullKey;
 import com.guarda.ethereum.sapling.key.SaplingFullViewingKey;
 
 import java.math.BigInteger;
@@ -9,6 +9,10 @@ import java.util.Arrays;
 
 import timber.log.Timber;
 import work.samosudov.rustlib.RustAPI;
+import work.samosudov.zecrustlib.ZecLibRustApi;
+
+import static com.guarda.ethereum.crypto.Utils.bytesToHex;
+import static com.guarda.ethereum.crypto.Utils.reverseByteArray;
 
 public class SaplingNote {
     public byte[] d;
@@ -39,16 +43,35 @@ public class SaplingNote {
         String nk = fvk.getNk();
 
         String result = RustAPI.computeNf(
-                Utils.bytesToHex(this.d), //TODO: check d when you get from decrypt
-                Utils.bytesToHex(Utils.reverseByteArray(this.pk)), // reverse because this pk from native method ivkToPdk
+                bytesToHex(this.d), //TODO: check d when you get from decrypt
+                bytesToHex(reverseByteArray(this.pk)), // reverse because this pk from native method ivkToPdk
                 String.valueOf(TypeConvert.bytesToLong(this.vbytes)),
-                Utils.bytesToHex(this.r),
+                bytesToHex(this.r),
                 ak,
                 nk,
                 String.valueOf(position));
         Timber.d("SaplingNote nullifier result=%s", result);
 
         return result;
+    }
+
+    public String nullifierCanopy(SaplingCustomFullKey fullKey, SaplingNotePlaintext snp, int position) {
+        byte[] ivkBytes = fullKey.getIvk().clone();
+        byte[] plainTextBytes = snp.toBytesCompactV2();
+        byte[] akBytes = fullKey.getAk().clone();
+        byte[] nkBytes = fullKey.getNk().clone();
+
+        byte[] nfBytes = ZecLibRustApi.nullifier(
+                ivkBytes,
+                plainTextBytes,
+                akBytes,
+                nkBytes,
+                position
+        );
+        String nfString = bytesToHex(nfBytes);
+        Timber.d("SaplingNote nullifier nfString=%s", nfString);
+
+        return nfString;
     }
 
     @Override

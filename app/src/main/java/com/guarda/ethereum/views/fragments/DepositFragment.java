@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.guarda.ethereum.BuildConfig;
 import com.guarda.ethereum.GuardaApp;
 import com.guarda.ethereum.R;
 import com.guarda.ethereum.managers.WalletManager;
@@ -21,8 +20,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl;
 import timber.log.Timber;
-
-import static com.guarda.ethereum.models.constants.Const.MAINNET_FLAVOR;
 
 public class DepositFragment extends BaseFragment {
 
@@ -61,23 +58,21 @@ public class DepositFragment extends BaseFragment {
             transparent();
         }
 
-        if (BuildConfig.FLAVOR.equals(MAINNET_FLAVOR)) {
-            segmented_control.setVisibility(View.VISIBLE);
-            segmented_control
-                    .addOnSegmentClickListener(
-                            (segmentViewHolder) -> {
-                                switch (segmentViewHolder.getAbsolutePosition()) {
-                                    case 0:
-                                        transparent();
-                                        break;
-                                    case 1:
-                                        sapling();
-                                        break;
-                                }
+        segmented_control.setVisibility(View.VISIBLE);
+        segmented_control
+                .addOnSegmentClickListener(
+                        (segmentViewHolder) -> {
+                            switch (segmentViewHolder.getAbsolutePosition()) {
+                                case 0:
+                                    transparent();
+                                    break;
+                                case 1:
+                                    sapling();
+                                    break;
                             }
-                    );
-            segmented_control.setSelectedSegment(0);
-        }
+                        }
+                );
+        segmented_control.setSelectedSegment(0);
     }
 
     private void transparent() {

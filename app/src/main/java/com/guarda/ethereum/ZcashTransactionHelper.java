@@ -62,8 +62,9 @@ public class ZcashTransactionHelper {
         byte[] zkproof = pacv.proof;
         byte[] cv = pacv.cv;
 
-        byte[] plainTextBytes = snp.toBytesV2();
-        byte[] cmRseedBytes = ZecLibRustApi.cmRseed(privKey.getIvk(), plainTextBytes);
+        byte[] plainTextBytes = snp.toBytesCompactV2();
+        byte[] ivkBytes = privKey.getIvk().clone();
+        byte[] cmRseedBytes = ZecLibRustApi.cmRseed(reverseByteArray(ivkBytes), plainTextBytes);
         String cmhex = bytesToHex(reverseByteArray(cmRseedBytes));
         Timber.d("getUotputs cmhex=%s", cmhex);
         byte[] cmrust = Utils.reverseByteArray(Utils.hexToBytes(cmhex));

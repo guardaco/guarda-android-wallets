@@ -12,7 +12,6 @@ import com.guarda.ethereum.sapling.db.model.TxInRoom;
 import com.guarda.ethereum.sapling.db.model.TxOutRoom;
 import com.guarda.ethereum.sapling.db.model.TxRoom;
 import com.guarda.ethereum.sapling.key.SaplingCustomFullKey;
-import com.guarda.ethereum.sapling.key.SaplingFullViewingKey;
 import com.guarda.ethereum.sapling.note.SaplingNote;
 import com.guarda.ethereum.sapling.note.SaplingNotePlaintext;
 import com.guarda.ethereum.sapling.tree.IncrementalWitness;
@@ -25,7 +24,6 @@ import java.util.concurrent.Callable;
 
 import timber.log.Timber;
 
-import static com.guarda.ethereum.crypto.Utils.bytesToHex;
 import static com.guarda.ethereum.crypto.Utils.revHex;
 import static com.guarda.ethereum.sapling.note.SaplingNotePlaintext.tryNoteDecrypt;
 
@@ -122,12 +120,8 @@ public class CallFindWitnesses implements Callable<Optional<BlockRoom>> {
                 IncrementalWitness iw = saplingTree.witness();
                 int position = iw.position();
                 SaplingNote sNote = snp.getSaplingNote();
-                String nf = sNote.nullifier(
-                        new SaplingFullViewingKey(
-                                revHex(bytesToHex(saplingKey.getAk())),
-                                revHex(bytesToHex(saplingKey.getNk())),
-                                revHex(bytesToHex(saplingKey.getOvk()))),
-                        position);
+
+                String nf = sNote.nullifierCanopy(saplingKey, snp, position);
                 //add new received note
                 dbManager.getAppDb().getReceivedNotesDao().insertAll(
                         new ReceivedNotesRoom(

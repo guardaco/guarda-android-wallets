@@ -26,6 +26,7 @@ import java.util.Map;
 import de.adorsys.android.securestoragelibrary.SecurePreferences;
 import timber.log.Timber;
 import work.samosudov.rustlib.RustAPI;
+import work.samosudov.zecrustlib.ZecLibRustApi;
 
 public class GuardaApp extends Application implements Application.ActivityLifecycleCallbacks {
 
@@ -83,6 +84,8 @@ public class GuardaApp extends Application implements Application.ActivityLifecy
 
         //init ndk lib for ZEC
         RustAPI.init(getApplicationContext());
+        ZecLibRustApi.init(getApplicationContext());
+
         if (BuildConfig.DEBUG)
             Stetho.initializeWithDefaults(this);
 

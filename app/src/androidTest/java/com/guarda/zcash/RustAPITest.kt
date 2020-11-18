@@ -1,7 +1,7 @@
 package com.guarda.zcash
 
 import androidx.test.core.app.ApplicationProvider
-import com.guarda.zcash.sapling.tree.SaplingMerkleTree
+import com.guarda.ethereum.sapling.tree.SaplingMerkleTree
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
