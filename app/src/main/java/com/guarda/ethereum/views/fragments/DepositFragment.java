@@ -59,8 +59,7 @@ public class DepositFragment extends BaseFragment {
         }
 
         segmented_control.setVisibility(View.VISIBLE);
-        segmented_control
-                .addOnSegmentClickListener(
+        segmented_control.addOnSegmentClickListener(
                         (segmentViewHolder) -> {
                             switch (segmentViewHolder.getAbsolutePosition()) {
                                 case 0:
