@@ -158,7 +158,7 @@ public class SendingCurrencyActivity extends AToolbarMenuActivity {
     }
 
     private void initFeeField() {
-        if (isSaplingAddress) defaultFee = Coin.valueOf(10000);
+        if (isSaplingAddress) defaultFee = Coin.valueOf(1000);
         currentFeeEth = defaultFee.getValue();
         etFeeAmount.setText(defaultFee.toPlainString());
         updateArrivalField();
