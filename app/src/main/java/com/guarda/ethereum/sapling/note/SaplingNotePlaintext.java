@@ -125,7 +125,8 @@ public class SaplingNotePlaintext {
         if (pt[0] == 0x01) {
             cmhexExpected = RustAPI.cm(dHex, pkdHex, String.valueOf(TypeConvert.bytesToLong(snp.vbytes)), bytesToHex(snp.rcmbytes));
         } else if (pt[0] == 0x02) {
-            byte[] cmRseedBytes = ZecLibRustApi.cmRseed(saplingKey.getIvk(), pt);
+            byte[] epkBytes = hexToBytes(epkHex);
+            byte[] cmRseedBytes = ZecLibRustApi.cmRseed(saplingKey.getIvk(), pt, reverseByteArray(epkBytes));
             cmhexExpected = bytesToHex(reverseByteArray(cmRseedBytes));
         } else {
             throw new ZCashException("SaplingNotePlaintext: plaintext start byte is not 0x01 or 0x02");

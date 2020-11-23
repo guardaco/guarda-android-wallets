@@ -20,6 +20,10 @@ import java.util.List;
 
 import timber.log.Timber;
 import work.samosudov.rustlib.RustAPI;
+import work.samosudov.zecrustlib.ZecLibRustApi;
+
+import static com.guarda.ethereum.crypto.Utils.bytesToHex;
+import static com.guarda.ethereum.crypto.Utils.revHex;
 
 public class ZCashTransaction_zaddr implements ZcashTransaction {
 
@@ -214,7 +218,7 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
     }
 
     private byte[] calcSpendAuthSig(byte[] alpha) {
-        return RustAPI.spendSig(Utils.revHex(Utils.bytesToHex(privKey.getAsk())), Utils.bytesToHex(alpha), Utils.bytesToHex(getSignatureHash()));
+        return RustAPI.spendSig(revHex(bytesToHex(privKey.getAsk())), bytesToHex(alpha), bytesToHex(getSignatureHash()));
     }
 
     private byte[] getSignatureHash() {
@@ -238,19 +242,20 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
         Timber.d("addSpendS anchor=%s", anchor);
         TxOutRoom out = dbManager.getAppDb().getTxOutputDao().getOut(in.getCm());
         SaplingNotePlaintext snp = SaplingNotePlaintext.tryNoteDecrypt(out, privKey);
-        byte[] r = snp.getRcmbytes();
+        byte[] r = snp.getRcmbytes().clone();
+        byte[] preZip212rcm = ZecLibRustApi.convertRseed(r);
         String alpha = RustAPI.genr();
         Timber.d("addSpendS alpha=%s", alpha);
         String v = in.getValue().toString();
 
         byte[] spProof = RustAPI.spendProof(
-                Utils.revHex(Utils.bytesToHex(privKey.getAk())),
-                Utils.revHex(Utils.bytesToHex(privKey.getNsk())),
-                Utils.bytesToHex(privKey.getD()),
-                (Utils.bytesToHex(r)),
+                revHex(bytesToHex(privKey.getAk())),
+                revHex(bytesToHex(privKey.getNsk())),
+                bytesToHex(privKey.getD()),
+                revHex(bytesToHex(preZip212rcm)),
                 alpha,
                 v,
-                Utils.revHex(anchor),
+                revHex(anchor),
                 mp.getAuthPathPrimitive(),
                 mp.getIndexPrimitive()
         );
@@ -268,7 +273,7 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
         System.arraycopy(spProof, 64, zkproof, 0, 192);
         System.arraycopy(spProof, 64 + 192, nullifier, 0, 32);
 
-        Timber.d("addSpendS nf=%s, %s", in.getNf(), Utils.bytesToHex(nullifier));
+        Timber.d("addSpendS nf=%s, %s", in.getNf(), bytesToHex(nullifier));
         return new SpendProof(cv, Utils.hexToBytes(anchor), nullifier, rk, zkproof, al);
     }
 

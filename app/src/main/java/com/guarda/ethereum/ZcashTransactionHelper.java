@@ -18,6 +18,7 @@ import work.samosudov.rustlib.RustAPI;
 import work.samosudov.zecrustlib.ZecLibRustApi;
 
 import static com.guarda.ethereum.crypto.Utils.bytesToHex;
+import static com.guarda.ethereum.crypto.Utils.hexToBytes;
 import static com.guarda.ethereum.crypto.Utils.reverseByteArray;
 
 public class ZcashTransactionHelper {
@@ -64,7 +65,8 @@ public class ZcashTransactionHelper {
 
         byte[] plainTextBytes = snp.toBytesCompactV2();
         byte[] ivkBytes = privKey.getIvk().clone();
-        byte[] cmRseedBytes = ZecLibRustApi.cmRseed(reverseByteArray(ivkBytes), plainTextBytes);
+        byte[] epkBytes = reverseByteArray(hexToBytes(epkstr));
+        byte[] cmRseedBytes = ZecLibRustApi.cmRseed(reverseByteArray(ivkBytes), plainTextBytes, epkBytes);
         String cmhex = bytesToHex(reverseByteArray(cmRseedBytes));
         Timber.d("getUotputs cmhex=%s", cmhex);
         byte[] cmrust = Utils.reverseByteArray(Utils.hexToBytes(cmhex));
