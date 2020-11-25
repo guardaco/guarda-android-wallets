@@ -14,6 +14,7 @@ import com.guarda.ethereum.sapling.tree.MerklePath;
 
 import org.spongycastle.crypto.digests.Blake2bDigest;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -261,6 +262,7 @@ public class ZCashTransaction_zaddr implements ZcashTransaction {
         );
 
         Timber.d("addSpendS spProof=%s %d", Arrays.toString(spProof), spProof.length);
+        Timber.d("addSpendS spProof=%s", new String(spProof, Charset.forName("UTF-8")));
 
         byte[] cv = new byte[32];
         byte[] rk = new byte[32];

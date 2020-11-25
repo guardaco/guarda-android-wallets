@@ -1,5 +1,6 @@
 package com.guarda.ethereum.crypto;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,10 @@ public class BrainKeyDict {
       }
 
       words = out.toString();
+  }
+
+  public static void initFromContext(Context context) throws IOException {
+    init(context.getAssets());
   }
 
   @NonNull
