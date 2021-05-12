@@ -1,3 +1,7 @@
+# DEPRECATED
+Please note that these applications are deprecated. Support for the android single wallets has been suspended. Issues and pull-requests are no longer reviewed by our team.
+Commercial proposals for the development of such applications can be sent to partners@guarda.com 
+
 # Android SPV wallets by [Guarda](https://guarda.co)
 All Guarda single-currency wallets are available in open-source. 
 The wallets are designed to store, manage, transfer and receive cryptocurrency. The applications also include an option to purchase coins with a banking card and top up wallets via the built-in Exchange service.
